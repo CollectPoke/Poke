@@ -150,6 +150,13 @@ export function SiteHeader() {
                   Sign in
                 </Link>
               )}
+              <div className="mt-2 flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3">
+                <span className="flex items-center gap-2 text-sm text-white/80">
+                  <span aria-hidden="true">{theme === "dark" ? "🌙" : "☀️"}</span>
+                  {theme === "dark" ? "Night mode" : "Day mode"}
+                </span>
+                <ThemeToggle />
+              </div>
             </nav>
           </div>
         ) : null}
