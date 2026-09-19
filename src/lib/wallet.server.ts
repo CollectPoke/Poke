@@ -185,6 +185,7 @@ export async function signSimulateAndSendTransaction(
   from: WalletRow,
   base64Transaction: string,
   maxDebitLamports: number,
+  onPrepared?: (signature: string) => Promise<void>,
 ): Promise<string> {
   const raw = new Uint8Array(Buffer.from(base64Transaction, "base64"));
   const [signatureCount, signaturesStart] = readCompactLen(raw, 0);
@@ -228,6 +229,10 @@ export async function signSimulateAndSendTransaction(
   }
 
   const signedBase64 = Buffer.from(signed).toString("base64");
+  const transactionSignature = bs58.encode(
+    signed.subarray(signaturesStart, signaturesStart + 64),
+  );
+  if (onPrepared) await onPrepared(transactionSignature);
   const beforeLamports = Math.round((await getBalanceSol(from.public_key)) * LAMPORTS_PER_SOL);
   const simulation = await rpc<{
     value: { err: unknown; logs?: string[]; accounts?: Array<{ lamports: number } | null> | null };
@@ -252,10 +257,14 @@ export async function signSimulateAndSendTransaction(
     throw new Error("The launch would exceed the 0.1 SOL limit. No SOL was spent.");
   }
 
-  return rpc<string>("sendTransaction", [
+  const submittedSignature = await rpc<string>("sendTransaction", [
     signedBase64,
     { encoding: "base64", maxRetries: 3, preflightCommitment: "confirmed" },
   ]);
+  if (submittedSignature !== transactionSignature) {
+    throw new Error("Solana returned an unexpected launch receipt");
+  }
+  return submittedSignature;
 }
 
 export async function confirmSignature(signature: string): Promise<void> {

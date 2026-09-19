@@ -135,16 +135,36 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           throw new Error("Pump.fun returned an unexpected launch amount. No SOL was spent.");
         }
         mintAddress = built.mintPublicKey;
-        signature = await signSimulateAndSendTransaction(wallet, built.transaction, LAUNCH_BUDGET_LAMPORTS);
+        signature = await signSimulateAndSendTransaction(
+          wallet,
+          built.transaction,
+          LAUNCH_BUDGET_LAMPORTS,
+          async (preparedSignature) => {
+            const saved = await supabaseAdmin
+              .from("coin_launches")
+              .update({ mint_address: mintAddress, tx_signature: preparedSignature })
+              .eq("id", launchId);
+            if (saved.error) throw saved.error;
+            signature = preparedSignature;
+          },
+        );
         transactionSent = true;
-        const saved = await supabaseAdmin
-          .from("coin_launches")
-          .update({ mint_address: mintAddress, tx_signature: signature })
-          .eq("id", launchId);
-        if (saved.error) throw saved.error;
       }
 
       await confirmSignature(signature);
+      const existingCard = await supabaseAdmin
+        .from("cards")
+        .select("*")
+        .eq("launch_id", launchId)
+        .maybeSingle();
+      if (existingCard.error) throw existingCard.error;
+      if (existingCard.data) {
+        await supabaseAdmin
+          .from("coin_launches")
+          .update({ status: "launched", error_message: null })
+          .eq("id", launchId);
+        return { card: existingCard.data, signature, mintAddress };
+      }
       const card = await supabaseAdmin
         .from("cards")
         .insert({
