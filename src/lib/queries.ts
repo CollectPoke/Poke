@@ -37,16 +37,20 @@ export type CardEvent = {
   counterparty: { username: string } | null;
 };
 
-export async function getCardEvents(cardId: string) {
-  const { data, error } = await supabase
-    .from("card_events")
-    .select(
-      "id, kind, price, created_at, tx_signature, actor:profiles!card_events_actor_id_fkey(username), counterparty:profiles!card_events_counterparty_id_fkey(username)",
-    )
-    .eq("card_id", cardId)
-    .order("created_at", { ascending: false });
-  if (error) throw error;
-  return (data ?? []) as unknown as CardEvent[];
+export async function getCardEvents(cardId: string): Promise<CardEvent[]> {
+  // card_events is locked to trade participants; public history comes from
+  // the server with usernames only (no user IDs).
+  const { getCardEventsPublic } = await import("@/lib/card-events.functions");
+  const rows = await getCardEventsPublic({ data: { cardId } });
+  return rows.map((r) => ({
+    id: r.id,
+    kind: r.kind,
+    price: r.price,
+    created_at: r.created_at,
+    tx_signature: r.tx_signature,
+    actor: r.actor ? { username: r.actor } : null,
+    counterparty: r.counterparty ? { username: r.counterparty } : null,
+  }));
 }
 
 export async function myCards(userId: string) {
