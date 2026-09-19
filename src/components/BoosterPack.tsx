@@ -1,18 +1,22 @@
+import type { CSSProperties } from "react";
+
 // CSS-drawn Poke booster pack — the same pack style as the purchase animation,
 // made to float around the homepage hero.
 export function BoosterPack({
   className = "",
   label,
   delay = 0,
+  tilt = "-6deg",
 }: {
   className?: string;
   label: string;
   delay?: number;
+  tilt?: string;
 }) {
   return (
     <div
       className={`pack-float pointer-events-none relative select-none ${className}`}
-      style={{ animationDelay: `${delay}s` }}
+      style={{ animationDelay: `${delay}s`, "--pack-tilt": tilt } as CSSProperties}
     >
       <div className="relative flex aspect-[3/4.2] w-full flex-col overflow-hidden rounded-lg border-2 border-white/25 shadow-2xl">
         {/* crimped foil top */}
