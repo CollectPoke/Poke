@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 import { PokeCard } from "@/components/PokeCard";
@@ -7,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { rarityStyle } from "@/lib/cards";
 import { getCard, getCardEvents } from "@/lib/queries";
+import { buyCardWithSol } from "@/lib/wallet.functions";
 
 export const Route = createFileRoute("/card/$cardId")({
   head: () => ({
@@ -41,6 +43,8 @@ function CardPage() {
   const queryClient = useQueryClient();
   const [price, setPrice] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [txSig, setTxSig] = useState<string | null>(null);
+  const buyOnChain = useServerFn(buyCardWithSol);
 
   const { data: card, isLoading } = useQuery({
     queryKey: ["card", cardId],
@@ -62,8 +66,8 @@ function CardPage() {
     mutationFn: async (kind: "buy" | "list" | "unlist" | "burn") => {
       if (!user) throw new Error("Sign in first.");
       if (kind === "buy") {
-        const { error: err } = await supabase.rpc("buy_card", { _card_id: cardId });
-        if (err) throw err;
+        const res = await buyOnChain({ data: { cardId } });
+        setTxSig(res.signature);
         return;
       }
       if (kind === "list") {
@@ -246,6 +250,9 @@ function CardPage() {
                 >
                   {action.isPending ? "Buying…" : "Buy this card"}
                 </button>
+                <span className="w-full text-xs text-muted-foreground">
+                  Paid straight from your Poke wallet to the owner, on Solana.
+                </span>
               </div>
             ) : (
               <p className="text-sm text-muted-foreground">
@@ -253,6 +260,16 @@ function CardPage() {
               </p>
             )}
             {error && <p className="mt-3 text-sm font-medium text-poke-red">{error}</p>}
+            {txSig && (
+              <a
+                href={`https://solscan.io/tx/${txSig}`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 block text-sm font-bold text-poke-blue underline"
+              >
+                Payment confirmed — view on Solscan
+              </a>
+            )}
           </div>
 
           {/* History */}
