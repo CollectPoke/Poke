@@ -61,7 +61,7 @@ export function SiteHeader() {
                 <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.2" />
                 <circle cx="12" cy="12" r="3.2" />
               </svg>
-              <span className="mono-num hidden sm:inline">{caCopied ? "CA copied!" : "CA EoqZ…FPoke"}</span>
+              <span className="mono-num hidden sm:inline">{caCopied ? "CA copied!" : "CA HNPF…dpoke"}</span>
               <span className="mono-num sm:hidden">CA</span>
             </button>
             <Link
