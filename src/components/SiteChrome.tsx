@@ -11,7 +11,6 @@ const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/pair", label: "Mint" },
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
-  { to: "/pairings", label: "Directory" },
   { to: "/buyback", label: "Buybacks" },
   { to: "/docs", label: "How to" },
 ];
@@ -252,7 +251,6 @@ const footerExplore: { to: string; label: string; exact?: boolean }[] = [
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
   { to: "/pair", label: "Pair a coin" },
-  { to: "/pairings", label: "Directory" },
   { to: "/buyback", label: "Buybacks" },
 ];
 

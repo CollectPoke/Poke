@@ -67,8 +67,8 @@ function PairPage() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pairings"] });
-      toast.success("Pairing added to the directory.");
-      navigate({ to: "/pairings" });
+      toast.success("Pairing saved.");
+      navigate({ to: "/cards" });
     },
     onError: (e: Error) => toast.error(e.message || "Could not save the pairing."),
   });
@@ -82,8 +82,8 @@ function PairPage() {
         <h1 className="font-display text-4xl font-bold text-poke-navy">Pokémon pairing engine</h1>
         <p className="mt-2 max-w-2xl text-muted-foreground">
           Tell us about your memecoin and we&apos;ll match it to the Pokémon that fits its vibe,
-          with a typing, a rarity and the reasoning behind the call. Save it and it joins the public
-          directory.
+          with a typing, a rarity and the reasoning behind the call. Save it, then mint it into
+          a one-of-one card.
         </p>
       </div>
 
@@ -205,7 +205,7 @@ function PairPage() {
                     disabled={save.isPending}
                     className="poke-btn disabled:opacity-50"
                   >
-                    {save.isPending ? "Saving…" : "Add to directory"}
+                    {save.isPending ? "Saving…" : "Save pairing"}
                   </button>
                 ) : (
                   <Link to="/auth" className="poke-btn">
@@ -221,8 +221,8 @@ function PairPage() {
             <div className="dex-card flex h-full min-h-[320px] flex-col items-center justify-center gap-3 p-6 text-center text-muted-foreground">
               <img src="/favicon.png" alt="" className="h-12 w-12 opacity-60" />
               <p>Your pairing will appear here.</p>
-              <Link to="/pairings" className="text-poke-blue underline">
-                Browse the pairing directory
+              <Link to="/cards" className="text-poke-blue underline">
+                Browse all cards
               </Link>
             </div>
           )}
