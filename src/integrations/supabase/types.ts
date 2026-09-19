@@ -127,7 +127,6 @@ export type Database = {
           created_at: string
           creator_id: string
           description: string | null
-          hp: number
           id: string
           image_url: string | null
           last_price: number | null
@@ -146,7 +145,6 @@ export type Database = {
           created_at?: string
           creator_id: string
           description?: string | null
-          hp?: number
           id?: string
           image_url?: string | null
           last_price?: number | null
@@ -165,7 +163,6 @@ export type Database = {
           created_at?: string
           creator_id?: string
           description?: string | null
-          hp?: number
           id?: string
           image_url?: string | null
           last_price?: number | null
@@ -303,7 +300,6 @@ export type Database = {
           created_at: string
           creator_id: string
           description: string | null
-          hp: number
           id: string
           image_url: string | null
           last_price: number | null

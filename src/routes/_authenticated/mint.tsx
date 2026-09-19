@@ -40,7 +40,6 @@ function MintPage() {
   const [description, setDescription] = useState("");
   const [cardType, setCardType] = useState<string>("Fire");
   const [rarity, setRarity] = useState<string>("Common");
-  const [hp, setHp] = useState(60);
   const [imageUrl, setImageUrl] = useState("");
   const [listPrice, setListPrice] = useState("");
   const [available, setAvailable] = useState<boolean | null>(null);
@@ -75,7 +74,6 @@ function MintPage() {
     description: description || null,
     card_type: cardType,
     rarity,
-    hp,
     image_url: imageUrl || null,
     contract_address: "PokeXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     creator_id: "",
@@ -103,7 +101,6 @@ function MintPage() {
           description: description.trim() || null,
           card_type: cardType,
           rarity,
-          hp,
           image_url: imageUrl.trim() || null,
           contract_address: generateContractAddress(),
           creator_id: user.id,
@@ -162,27 +159,15 @@ function MintPage() {
             )}
           </Field>
 
-          <div className="grid gap-5 sm:grid-cols-2">
-            <Field label="Ticker">
-              <input
-                value={ticker}
-                onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                placeholder="DOG"
-                maxLength={10}
-                className={inputClass}
-              />
-            </Field>
-            <Field label="HP">
-              <input
-                type="number"
-                min={10}
-                max={340}
-                value={hp}
-                onChange={(e) => setHp(Number(e.target.value))}
-                className={inputClass}
-              />
-            </Field>
-          </div>
+          <Field label="Ticker">
+            <input
+              value={ticker}
+              onChange={(e) => setTicker(e.target.value.toUpperCase())}
+              placeholder="DOG"
+              maxLength={10}
+              className={inputClass}
+            />
+          </Field>
 
           <Field label="Description">
             <textarea

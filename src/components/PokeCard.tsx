@@ -25,11 +25,10 @@ export function PokeCard({ card, compact = false }: Props) {
               ${card.ticker}
             </span>
           </div>
-          <div className="flex shrink-0 items-center gap-1.5">
+          <div className="flex shrink-0 items-center">
             <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${t.chip}`}>
               {card.card_type}
             </span>
-            <span className="mono-num text-sm font-bold">{card.hp} HP</span>
           </div>
         </div>
 
