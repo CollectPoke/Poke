@@ -10,73 +10,96 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as CardsSentRouteImport } from './routes/cards-sent'
-import { Route as CoinsRouteImport } from './routes/coins'
-import { Route as LaunchRouteImport } from './routes/launch'
-import { Route as CoinCoinIdRouteImport } from './routes/coin.$coinId'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as CardsRouteImport } from './routes/cards'
+import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
+import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CardsSentRoute = CardsSentRouteImport.update({
-  id: '/cards-sent',
-  path: '/cards-sent',
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoinsRoute = CoinsRouteImport.update({
-  id: '/coins',
-  path: '/coins',
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const LaunchRoute = LaunchRouteImport.update({
-  id: '/launch',
-  path: '/launch',
+const CardsRoute = CardsRouteImport.update({
+  id: '/cards',
+  path: '/cards',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoinCoinIdRoute = CoinCoinIdRouteImport.update({
-  id: '/coin/$coinId',
-  path: '/coin/$coinId',
+const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
+  id: '/account',
+  path: '/account',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMintRoute = AuthenticatedMintRouteImport.update({
+  id: '/mint',
+  path: '/mint',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const CardCardIdRoute = CardCardIdRouteImport.update({
+  id: '/card/$cardId',
+  path: '/card/$cardId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/cards-sent': typeof CardsSentRoute
-  '/coins': typeof CoinsRoute
-  '/launch': typeof LaunchRoute
-  '/coin/$coinId': typeof CoinCoinIdRoute
+  '/auth': typeof AuthRoute
+  '/cards': typeof CardsRoute
+  '/account': typeof AuthenticatedAccountRoute
+  '/mint': typeof AuthenticatedMintRoute
+  '/card/$cardId': typeof CardCardIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/cards-sent': typeof CardsSentRoute
-  '/coins': typeof CoinsRoute
-  '/launch': typeof LaunchRoute
-  '/coin/$coinId': typeof CoinCoinIdRoute
+  '/auth': typeof AuthRoute
+  '/cards': typeof CardsRoute
+  '/account': typeof AuthenticatedAccountRoute
+  '/mint': typeof AuthenticatedMintRoute
+  '/card/$cardId': typeof CardCardIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/cards-sent': typeof CardsSentRoute
-  '/coins': typeof CoinsRoute
-  '/launch': typeof LaunchRoute
-  '/coin/$coinId': typeof CoinCoinIdRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/cards': typeof CardsRoute
+  '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/mint': typeof AuthenticatedMintRoute
+  '/card/$cardId': typeof CardCardIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/cards-sent' | '/coins' | '/launch' | '/coin/$coinId'
+  fullPaths: '/' | '/auth' | '/cards' | '/account' | '/mint' | '/card/$cardId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/cards-sent' | '/coins' | '/launch' | '/coin/$coinId'
-  id: '__root__' | '/' | '/cards-sent' | '/coins' | '/launch' | '/coin/$coinId'
+  to: '/' | '/auth' | '/cards' | '/account' | '/mint' | '/card/$cardId'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/cards'
+    | '/_authenticated/account'
+    | '/_authenticated/mint'
+    | '/card/$cardId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  CardsSentRoute: typeof CardsSentRoute
-  CoinsRoute: typeof CoinsRoute
-  LaunchRoute: typeof LaunchRoute
-  CoinCoinIdRoute: typeof CoinCoinIdRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  CardsRoute: typeof CardsRoute
+  CardCardIdRoute: typeof CardCardIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -88,43 +111,70 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/cards-sent': {
-      id: '/cards-sent'
-      path: '/cards-sent'
-      fullPath: '/cards-sent'
-      preLoaderRoute: typeof CardsSentRouteImport
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/coins': {
-      id: '/coins'
-      path: '/coins'
-      fullPath: '/coins'
-      preLoaderRoute: typeof CoinsRouteImport
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/launch': {
-      id: '/launch'
-      path: '/launch'
-      fullPath: '/launch'
-      preLoaderRoute: typeof LaunchRouteImport
+    '/cards': {
+      id: '/cards'
+      path: '/cards'
+      fullPath: '/cards'
+      preLoaderRoute: typeof CardsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/coin/$coinId': {
-      id: '/coin/$coinId'
-      path: '/coin/$coinId'
-      fullPath: '/coin/$coinId'
-      preLoaderRoute: typeof CoinCoinIdRouteImport
+    '/_authenticated/account': {
+      id: '/_authenticated/account'
+      path: '/account'
+      fullPath: '/account'
+      preLoaderRoute: typeof AuthenticatedAccountRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/mint': {
+      id: '/_authenticated/mint'
+      path: '/mint'
+      fullPath: '/mint'
+      preLoaderRoute: typeof AuthenticatedMintRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/card/$cardId': {
+      id: '/card/$cardId'
+      path: '/card/$cardId'
+      fullPath: '/card/$cardId'
+      preLoaderRoute: typeof CardCardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedMintRoute: typeof AuthenticatedMintRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedMintRoute: AuthenticatedMintRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  CardsSentRoute: CardsSentRoute,
-  CoinsRoute: CoinsRoute,
-  LaunchRoute: LaunchRoute,
-  CoinCoinIdRoute: CoinCoinIdRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  CardsRoute: CardsRoute,
+  CardCardIdRoute: CardCardIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
