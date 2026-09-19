@@ -352,8 +352,88 @@
   }
 }
 
+/* ---------- Purchased card booster reveal ---------- */
+@keyframes purchase-card-rise {
+  0%, 42% { opacity: 0; transform: translateY(13rem) scale(0.72) rotate(-3deg); }
+  58% { opacity: 1; transform: translateY(-1rem) scale(1.04) rotate(1deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+}
+@keyframes purchase-pack-drop {
+  0%, 40% { transform: translateY(0); opacity: 1; }
+  65%, 100% { transform: translateY(22rem); opacity: 0; }
+}
+@keyframes purchase-flap-left {
+  0%, 28% { transform: translate(0, 0) rotate(-8deg); opacity: 1; }
+  55%, 100% { transform: translate(-11rem, -7rem) rotate(-55deg); opacity: 0; }
+}
+@keyframes purchase-flap-right {
+  0%, 28% { transform: translate(0, 0) rotate(8deg); opacity: 1; }
+  55%, 100% { transform: translate(11rem, -7rem) rotate(55deg); opacity: 0; }
+}
+@keyframes purchase-result-in {
+  0%, 65% { opacity: 0; transform: translateY(1rem); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes purchase-spark-fly {
+  0%, 35% { opacity: 0; transform: translate(0, 8rem) scale(0.3); }
+  55% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--spark-x), -15rem) scale(1.4); }
+}
+.purchase-reveal {
+  background: radial-gradient(circle at 50% 42%, oklch(0.55 0.13 250 / 0.42), transparent 42%), var(--color-poke-navy-deep);
+}
+.purchase-reveal-glow {
+  position: absolute;
+  width: min(130vw, 42rem);
+  aspect-ratio: 1;
+  border-radius: 999px;
+  background: oklch(0.7 0.13 240 / 0.22);
+  filter: blur(5rem);
+}
+.purchase-card-stage { animation: purchase-card-rise 2.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+.purchase-pack {
+  background: linear-gradient(to bottom, var(--color-poke-blue), var(--color-poke-navy), var(--color-poke-navy-deep));
+  animation: purchase-pack-drop 2.7s ease-in forwards;
+}
+.purchase-pack-lines {
+  background: repeating-linear-gradient(45deg, transparent, transparent 10px, oklch(1 0 0 / 0.09) 10px, oklch(1 0 0 / 0.09) 11px);
+}
+.purchase-pack-flap {
+  position: absolute;
+  top: 40%;
+  z-index: 35;
+  height: 5rem;
+  width: 8rem;
+  background: var(--color-poke-blue);
+  border-top: 2px solid oklch(1 0 0 / 0.25);
+}
+.purchase-pack-flap-left { left: 0.5rem; animation: purchase-flap-left 2.7s ease-out forwards; }
+.purchase-pack-flap-right { right: 0.5rem; animation: purchase-flap-right 2.7s ease-out forwards; }
+.purchase-result { animation: purchase-result-in 3.1s ease-out forwards; }
+.purchase-opening-label { animation: purchase-result-in 900ms ease-out reverse forwards 1.5s; }
+.purchase-spark {
+  --spark-x: 0rem;
+  position: absolute;
+  left: 50%;
+  top: 52%;
+  z-index: 45;
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: var(--color-poke-yellow);
+  box-shadow: 0 0 1rem var(--color-poke-yellow);
+  animation: purchase-spark-fly 2.4s ease-out forwards;
+}
+.purchase-spark-one { --spark-x: -8rem; animation-delay: 200ms; }
+.purchase-spark-two { --spark-x: 7rem; animation-delay: 350ms; }
+.purchase-spark-three { --spark-x: 1rem; animation-delay: 500ms; }
+
 @media (prefers-reduced-motion: reduce) {
   .gate-aurora, .gate-ring, .ball-float, .ball-shake, .gate-pulse, .sprite-bob {
     animation: none !important;
+  }
+  .purchase-card-stage, .purchase-pack, .purchase-pack-flap, .purchase-result, .purchase-opening-label, .purchase-spark {
+    animation-duration: 1ms !important;
+    animation-delay: 0ms !important;
   }
 }
