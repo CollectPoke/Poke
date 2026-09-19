@@ -124,13 +124,7 @@ function PairingTile({
   card,
 }: {
   pairing: PairingRow;
-  card?: {
-    id: string;
-    ticker: string;
-    list_price: number | null;
-    last_price: number | null;
-    owner?: { username: string } | null;
-  };
+  card: CardWithPeople | undefined;
 }) {
   const art = pokemonArtwork(pairing.pokedex_id);
   const type = typeStyle(pairing.card_type ?? "Normal");
