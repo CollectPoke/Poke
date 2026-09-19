@@ -151,10 +151,9 @@ function DocsPage() {
                 set a price in SOL.
               </li>
               <li>
-                Hit <strong>Launch coin + mint card</strong>. The total cost is{" "}
-                <strong>0.1 SOL maximum</strong>, taken from your Poke wallet —
-                that covers the real Pump.fun launch, the initial buy and
-                network fees.
+                Hit <strong>Launch coin + mint card</strong>. The cost is a flat{" "}
+                <strong>0.1 SOL launch fee</strong>, taken from your Poke wallet —
+                that covers the real Pump.fun launch and network fees.
               </li>
               <li>
                 Once Solana confirms, the real contract address appears at the

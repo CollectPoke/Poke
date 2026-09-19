@@ -3,10 +3,8 @@ import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-// Network + Pump.fun fees held back on top of the dev buy.
-export const LAUNCH_FEE_LAMPORTS = 25_000_000;
-export const DEFAULT_DEV_BUY_SOL = 0.075;
-export const MAX_DEV_BUY_SOL = 5;
+// Flat mandatory launch fee — covers the launch, network + Pump.fun fees.
+export const LAUNCH_FEE_LAMPORTS = 100_000_000;
 
 // Pump.fun's indexer fetches the metadata URI from the public internet, so it
 // can never point at a dev/preview origin or the coin launches with no image.
@@ -18,7 +16,7 @@ const launchSchema = z.object({
   description: z.string().trim().max(600),
   imageUrl: z.string().trim().regex(/^\/api\/public\/artwork\/[0-9a-f-]{36}$/i),
   listPrice: z.number().positive().max(1_000_000).nullable(),
-  devBuySol: z.number().min(0).max(MAX_DEV_BUY_SOL).default(DEFAULT_DEV_BUY_SOL),
+  devBuySol: z.number().min(0).max(0).default(0),
 });
 
 export const launchCoinAndMintCard = createServerFn({ method: "POST" })
