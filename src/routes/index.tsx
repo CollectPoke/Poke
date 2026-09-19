@@ -31,42 +31,15 @@ export const Route = createFileRoute("/")({
 const HERO_CARD_COUNT = 10;
 
 function Home() {
-  const { data: cards } = useQuery({
-    queryKey: ["cards"],
-    queryFn: () => listCards(),
-  });
-  const { data: priciest } = useQuery({
-    queryKey: ["cards", "priciest"],
-    queryFn: () => listCards({ limit: 3, sort: "priciest" }),
-  });
-
   const latest = cards ?? [];
-  const topCards = priciest ?? [];
+  const heroCards = latest.slice(0, HERO_CARD_COUNT);
   const forSale = latest.filter((c) => c.list_price !== null);
 
   return (
     <main>
       {/* Hero */}
       <section className="relative overflow-hidden bg-poke-blue">
-        {/* floating booster packs with Pokémon on the wrapper */}
-        <div className="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden>
-          {PACKS.map((p, i) => (
-            <div
-              key={p.id}
-              className="absolute"
-              style={{ left: p.left, right: p.right, top: p.top, bottom: p.bottom }}
-            >
-              <BoosterPack
-                label="Series 01"
-                delay={i * 1.1}
-                tilt={p.tilt}
-                art={ART(p.id)}
-                className={`${p.width} opacity-95`}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr]">
           <div className="text-white">
             <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
               One name, one card, forever
@@ -91,16 +64,15 @@ function Home() {
               </Link>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[300px]">
-            {topCards.length > 0 ? (
-              <div className="flex flex-col items-center gap-4">
-                {topCards.map((card, i) => (
+          <div className="mx-auto w-full max-w-[560px]">
+            {heroCards.length > 0 ? (
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {heroCards.map((card) => (
                   <Link
                     key={card.id}
                     to="/card/$cardId"
                     params={{ cardId: card.id }}
-                    className="w-full max-w-[240px] transition-transform hover:scale-[1.03]"
-                    style={{ transform: `rotate(${[-3, 2, -2][i % 3]}deg)` }}
+                    className="transition-transform hover:scale-[1.03]"
                   >
                     <PokeCard card={card} compact />
                   </Link>
