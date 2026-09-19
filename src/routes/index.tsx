@@ -60,7 +60,7 @@ function Home() {
                 top: s.top,
                 width: s.size,
                 animationDelay: `${i * 0.7}s`,
-                opacity: 0.35,
+                opacity: 0.28,
               }}
             />
           ))}
