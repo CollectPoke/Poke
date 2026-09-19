@@ -230,7 +230,7 @@ function GalleryPage() {
                     ) : (
                       <p className="mt-2 text-sm text-muted-foreground">
                         No pairing yet.{" "}
-                        <Link to="/pair" className="font-bold text-poke-blue underline">
+                        <Link to="/mint" className="font-bold text-poke-blue underline">
                           Pair this coin
                         </Link>
                       </p>

@@ -8,7 +8,7 @@ const POKE_CA = "EoqZPcCZnvntyR8zybqr38aXF1fMhP1ckyu7zFWFPoke";
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/cards", label: "All cards" },
-  { to: "/pair", label: "Mint" },
+  { to: "/mint", label: "Mint" },
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
   { to: "/buyback", label: "Buybacks" },
@@ -251,7 +251,6 @@ const footerExplore: { to: string; label: string; exact?: boolean }[] = [
   { to: "/cards", label: "All cards" },
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
-  { to: "/pair", label: "Pair a coin" },
   { to: "/buyback", label: "Buybacks" },
 ];
 
