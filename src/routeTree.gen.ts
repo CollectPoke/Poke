@@ -13,9 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CardsSentRouteImport } from './routes/cards-sent'
 import { Route as CoinsRouteImport } from './routes/coins'
 import { Route as LaunchRouteImport } from './routes/launch'
-import { Route as VaultRouteImport } from './routes/vault'
 import { Route as CoinCoinIdRouteImport } from './routes/coin.$coinId'
-import { Route as DexCoinIdRouteImport } from './routes/dex.$coinId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -37,19 +35,9 @@ const LaunchRoute = LaunchRouteImport.update({
   path: '/launch',
   getParentRoute: () => rootRouteImport,
 } as any)
-const VaultRoute = VaultRouteImport.update({
-  id: '/vault',
-  path: '/vault',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CoinCoinIdRoute = CoinCoinIdRouteImport.update({
   id: '/coin/$coinId',
   path: '/coin/$coinId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const DexCoinIdRoute = DexCoinIdRouteImport.update({
-  id: '/dex/$coinId',
-  path: '/dex/$coinId',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -58,18 +46,14 @@ export interface FileRoutesByFullPath {
   '/cards-sent': typeof CardsSentRoute
   '/coins': typeof CoinsRoute
   '/launch': typeof LaunchRoute
-  '/vault': typeof VaultRoute
   '/coin/$coinId': typeof CoinCoinIdRoute
-  '/dex/$coinId': typeof DexCoinIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/cards-sent': typeof CardsSentRoute
   '/coins': typeof CoinsRoute
   '/launch': typeof LaunchRoute
-  '/vault': typeof VaultRoute
   '/coin/$coinId': typeof CoinCoinIdRoute
-  '/dex/$coinId': typeof DexCoinIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -77,38 +61,14 @@ export interface FileRoutesById {
   '/cards-sent': typeof CardsSentRoute
   '/coins': typeof CoinsRoute
   '/launch': typeof LaunchRoute
-  '/vault': typeof VaultRoute
   '/coin/$coinId': typeof CoinCoinIdRoute
-  '/dex/$coinId': typeof DexCoinIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/'
-    | '/cards-sent'
-    | '/coins'
-    | '/launch'
-    | '/vault'
-    | '/coin/$coinId'
-    | '/dex/$coinId'
+  fullPaths: '/' | '/cards-sent' | '/coins' | '/launch' | '/coin/$coinId'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/cards-sent'
-    | '/coins'
-    | '/launch'
-    | '/vault'
-    | '/coin/$coinId'
-    | '/dex/$coinId'
-  id:
-    | '__root__'
-    | '/'
-    | '/cards-sent'
-    | '/coins'
-    | '/launch'
-    | '/vault'
-    | '/coin/$coinId'
-    | '/dex/$coinId'
+  to: '/' | '/cards-sent' | '/coins' | '/launch' | '/coin/$coinId'
+  id: '__root__' | '/' | '/cards-sent' | '/coins' | '/launch' | '/coin/$coinId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -116,9 +76,7 @@ export interface RootRouteChildren {
   CardsSentRoute: typeof CardsSentRoute
   CoinsRoute: typeof CoinsRoute
   LaunchRoute: typeof LaunchRoute
-  VaultRoute: typeof VaultRoute
   CoinCoinIdRoute: typeof CoinCoinIdRoute
-  DexCoinIdRoute: typeof DexCoinIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -151,25 +109,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LaunchRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/vault': {
-      id: '/vault'
-      path: '/vault'
-      fullPath: '/vault'
-      preLoaderRoute: typeof VaultRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/coin/$coinId': {
       id: '/coin/$coinId'
       path: '/coin/$coinId'
       fullPath: '/coin/$coinId'
       preLoaderRoute: typeof CoinCoinIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/dex/$coinId': {
-      id: '/dex/$coinId'
-      path: '/dex/$coinId'
-      fullPath: '/dex/$coinId'
-      preLoaderRoute: typeof DexCoinIdRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -180,9 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   CardsSentRoute: CardsSentRoute,
   CoinsRoute: CoinsRoute,
   LaunchRoute: LaunchRoute,
-  VaultRoute: VaultRoute,
   CoinCoinIdRoute: CoinCoinIdRoute,
-  DexCoinIdRoute: DexCoinIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
