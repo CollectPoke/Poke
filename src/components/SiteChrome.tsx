@@ -159,7 +159,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            <Link to="/mint" className="poke-btn !py-1.5 !px-3.5 text-xs">
+            <Link to="/mint" className="poke-btn !py-2.5 !px-4 text-xs">
               Mint
             </Link>
             <button
@@ -167,7 +167,7 @@ export function SiteHeader() {
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              className="grid h-10 w-10 place-items-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
+              className="grid h-11 w-11 place-items-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-5 w-5" aria-hidden="true">
                 {open ? (
@@ -405,7 +405,7 @@ function FooterLink({
       <Link
         to={to}
         activeOptions={{ exact: exact ?? false, includeSearch: false }}
-        className="footer-link"
+        className="footer-link inline-block py-1"
         activeProps={{ className: "footer-link footer-link-active" }}
       >
         {children}
