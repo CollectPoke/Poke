@@ -4,6 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 import { PokeCard } from "@/components/PokeCard";
+import { PurchaseReveal } from "@/components/PurchaseReveal";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { getCard, getCardEvents } from "@/lib/queries";
@@ -43,6 +44,7 @@ function CardPage() {
   const [price, setPrice] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [txSig, setTxSig] = useState<string | null>(null);
+  const [showReveal, setShowReveal] = useState(false);
   const buyOnChain = useServerFn(buyCardWithSol);
 
   const { data: card, isLoading } = useQuery({
@@ -67,6 +69,7 @@ function CardPage() {
       if (kind === "buy") {
         const res = await buyOnChain({ data: { cardId } });
         setTxSig(res.signature);
+        setShowReveal(true);
         return;
       }
       if (kind === "list") {
@@ -132,6 +135,7 @@ function CardPage() {
         ];
 
   return (
+    <>
     <main className="mx-auto max-w-5xl px-5 py-10">
       <Link to="/cards" className="text-xs font-semibold text-muted-foreground hover:underline">
         ← All cards
@@ -355,6 +359,10 @@ function CardPage() {
         </div>
       </div>
     </main>
+    {showReveal && txSig ? (
+      <PurchaseReveal card={{ ...card, owner_id: user?.id ?? card.owner_id, owner: { username: "you" } }} signature={txSig} onClose={() => setShowReveal(false)} />
+    ) : null}
+    </>
   );
 }
 
