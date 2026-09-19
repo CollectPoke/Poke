@@ -232,7 +232,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           })
           .eq("id", launchId);
         throw new Error(
-          "The launch didn't go through, so your SOL is still in your wallet. You can try again.",
+          `${message} The launch didn't go through, so your SOL is still in your wallet. You can try again.`,
         );
       }
 
