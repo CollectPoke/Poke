@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { BoosterPack } from "@/components/BoosterPack";
 import { BuybackTicker } from "@/components/BuybackTicker";
 import { PokeCard } from "@/components/PokeCard";
 import { listCards } from "@/lib/queries";
@@ -28,63 +27,25 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const ART = (id: number) =>
-  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-
-// floating booster packs around the hero, each with a Pokémon on the wrapper
-const PACKS: {
-  id: number;
-  left?: string;
-  right?: string;
-  top?: string;
-  bottom?: string;
-  width: string;
-  tilt: string;
-}[] = [
-  { id: 25, left: "2.5%", top: "3%", width: "w-20 md:w-24", tilt: "-10deg" },
-  { id: 6, right: "30%", top: "8%", width: "w-16 md:w-20", tilt: "8deg" },
-  { id: 150, right: "3.5%", bottom: "6%", width: "w-20 md:w-28", tilt: "-4deg" },
-  { id: 94, left: "2.5%", bottom: "3%", width: "w-14 md:w-20", tilt: "6deg" },
-  { id: 143, left: "56%", top: "-4%", width: "w-14 md:w-20", tilt: "-8deg" },
-];
+// the hero shows at most this many cards; the rest live under "Freshly minted"
+const HERO_CARD_COUNT = 10;
 
 function Home() {
   const { data: cards } = useQuery({
     queryKey: ["cards"],
     queryFn: () => listCards(),
   });
-  const { data: priciest } = useQuery({
-    queryKey: ["cards", "priciest"],
-    queryFn: () => listCards({ limit: 3, sort: "priciest" }),
-  });
 
   const latest = cards ?? [];
-  const topCards = priciest ?? [];
+  const heroCards = latest.slice(0, HERO_CARD_COUNT);
+  const restCards = latest.slice(HERO_CARD_COUNT);
   const forSale = latest.filter((c) => c.list_price !== null);
 
   return (
     <main>
       {/* Hero */}
       <section className="relative overflow-hidden bg-poke-blue">
-        {/* floating booster packs with Pokémon on the wrapper */}
-        <div className="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden>
-          {PACKS.map((p, i) => (
-            <div
-              key={p.id}
-              className="absolute"
-              style={{ left: p.left, right: p.right, top: p.top, bottom: p.bottom }}
-            >
-              <BoosterPack
-                label="Series 01"
-                delay={i * 1.1}
-                tilt={p.tilt}
-                art={ART(p.id)}
-                className={`${p.width} opacity-95`}
-              />
-            </div>
-          ))}
-        </div>
-        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
+        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr]">
           <div className="text-white">
             <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
               One name, one card, forever
@@ -109,16 +70,15 @@ function Home() {
               </Link>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[300px]">
-            {topCards.length > 0 ? (
-              <div className="flex flex-col items-center gap-4">
-                {topCards.map((card, i) => (
+          <div className="mx-auto w-full max-w-[560px]">
+            {heroCards.length > 0 ? (
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                {heroCards.map((card) => (
                   <Link
                     key={card.id}
                     to="/card/$cardId"
                     params={{ cardId: card.id }}
-                    className="w-full max-w-[240px] transition-transform hover:scale-[1.03]"
-                    style={{ transform: `rotate(${[-3, 2, -2][i % 3]}deg)` }}
+                    className="transition-transform hover:scale-[1.03]"
                   >
                     <PokeCard card={card} compact />
                   </Link>
@@ -198,14 +158,18 @@ function Home() {
               Mint the first card
             </Link>
           </div>
-        ) : (
+        ) : restCards.length > 0 ? (
           <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {latest.map((card) => (
+            {restCards.map((card) => (
               <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
                 <PokeCard card={card} compact />
               </Link>
             ))}
           </div>
+        ) : (
+          <p className="mt-5 text-sm text-muted-foreground">
+            The newest 10 are up in the hero — <Link to="/cards" className="font-semibold text-poke-blue hover:underline">see every card →</Link>
+          </p>
         )}
 
         {forSale.length > 0 && (
