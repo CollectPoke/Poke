@@ -18,7 +18,21 @@ export function SiteHeader() {
           <span className="mono-num uppercase tracking-[0.2em]">
             one name · one card · forever
           </span>
-          <span className="hidden sm:inline">Burn a card and its name frees up again.</span>
+          <div className="flex items-center gap-4">
+            <span className="hidden sm:inline">Burn a card and its name frees up again.</span>
+            <a
+              href="https://x.com/CollectPokeFun"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Poke on X"
+              className="flex items-center gap-1.5 text-white/80 transition-colors hover:text-poke-yellow"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
+              </svg>
+              <span className="hidden sm:inline">@CollectPokeFun</span>
+            </a>
+          </div>
         </div>
       </div>
       <div className="border-b-4 border-poke-yellow bg-poke-navy shadow-md">
@@ -83,6 +97,20 @@ export function SiteFooter() {
           Prices are shown in SOL and card ownership is recorded on Poke. Pokémon and card artwork
           belong to Nintendo, Creatures and GAME FREAK / The Pokémon Company — no affiliation.
         </p>
+        <div className="flex items-center gap-2 pt-1">
+          <a
+            href="https://x.com/CollectPokeFun"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Poke on X"
+            className="flex items-center gap-1.5 text-white/80 transition-colors hover:text-poke-yellow"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
+            </svg>
+            <span>@CollectPokeFun</span>
+          </a>
+        </div>
       </div>
     </footer>
   );
