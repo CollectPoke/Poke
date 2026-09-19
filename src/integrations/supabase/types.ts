@@ -129,6 +129,8 @@ export type Database = {
           id: string
           image_url: string | null
           last_price: number | null
+          launch_id: string | null
+          launch_tx_signature: string | null
           list_price: number | null
           mint_price: number
           name: string
@@ -145,6 +147,8 @@ export type Database = {
           id?: string
           image_url?: string | null
           last_price?: number | null
+          launch_id?: string | null
+          launch_tx_signature?: string | null
           list_price?: number | null
           mint_price?: number
           name: string
@@ -161,6 +165,8 @@ export type Database = {
           id?: string
           image_url?: string | null
           last_price?: number | null
+          launch_id?: string | null
+          launch_tx_signature?: string | null
           list_price?: number | null
           mint_price?: number
           name?: string
@@ -175,6 +181,13 @@ export type Database = {
             columns: ["creator_id"]
             isOneToOne: false
             referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cards_launch_id_fkey"
+            columns: ["launch_id"]
+            isOneToOne: true
+            referencedRelation: "coin_launches"
             referencedColumns: ["id"]
           },
           {
@@ -309,6 +322,27 @@ export type Database = {
         }
         Relationships: []
       }
+      system_wallets: {
+        Row: {
+          created_at: string
+          public_key: string
+          purpose: string
+          secret_ciphertext: string
+        }
+        Insert: {
+          created_at?: string
+          public_key: string
+          purpose: string
+          secret_ciphertext: string
+        }
+        Update: {
+          created_at?: string
+          public_key?: string
+          purpose?: string
+          secret_ciphertext?: string
+        }
+        Relationships: []
+      }
       wallets: {
         Row: {
           created_at: string
@@ -353,6 +387,8 @@ export type Database = {
           id: string
           image_url: string | null
           last_price: number | null
+          launch_id: string | null
+          launch_tx_signature: string | null
           list_price: number | null
           mint_price: number
           name: string
