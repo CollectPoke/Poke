@@ -452,7 +452,7 @@
 .sale-coin-9 { left: 87%; animation-delay: 520ms; } .sale-coin-10 { left: 95%; animation-delay: 1650ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .gate-aurora, .gate-ring, .ball-float, .ball-shake, .gate-pulse, .sprite-bob {
+  .gate-aurora, .gate-ring, .ball-float, .ball-shake, .gate-pulse, .sprite-bob, .pack-float, .pack-sheen {
     animation: none !important;
   }
   .purchase-card-stage, .purchase-pack, .purchase-pack-flap, .purchase-result, .purchase-opening-label, .purchase-spark {
