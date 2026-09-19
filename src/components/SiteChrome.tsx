@@ -184,8 +184,8 @@ export function SiteHeader() {
                 >
                   Sign in
                 </Link>
-              </nav>
-          </div>
+              )}
+            </nav>
         ) : null}
       </div>
     </header>
