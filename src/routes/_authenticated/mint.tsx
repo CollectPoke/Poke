@@ -7,10 +7,13 @@ import { ArtworkDrop } from "@/components/ArtworkDrop";
 import { FundingModal } from "@/components/FundingModal";
 import { MintReveal } from "@/components/MintReveal";
 import { PokeCard } from "@/components/PokeCard";
+import { rarityStyle, typeStyle } from "@/lib/cards";
 import { useAuth } from "@/lib/auth";
 import type { CardWithPeople } from "@/lib/cards";
 import { launchCoinAndMintCard } from "@/lib/launch.functions";
 import { isNameAvailable } from "@/lib/queries";
+import { pokemonArtwork } from "@/lib/pairings";
+import { suggestPairing, type PairingSuggestion } from "@/lib/pairing.functions";
 import { getMyWallet } from "@/lib/wallet.functions";
 
 export const Route = createFileRoute("/_authenticated/mint")({
@@ -51,8 +54,12 @@ function MintPage() {
   const [mintedCard, setMintedCard] = useState<CardWithPeople | null>(null);
   const [launchSignature, setLaunchSignature] = useState<string | null>(null);
   const [showFunding, setShowFunding] = useState(false);
+  const [pairing, setPairing] = useState<PairingSuggestion | null>(null);
+  const [pairingBusy, setPairingBusy] = useState(false);
+  const [pairingError, setPairingError] = useState<string | null>(null);
   const launchCoin = useServerFn(launchCoinAndMintCard);
   const fetchWallet = useServerFn(getMyWallet);
+  const findPokemon = useServerFn(suggestPairing);
 
   const { data: wallet } = useQuery({
     queryKey: ["my-wallet"],
