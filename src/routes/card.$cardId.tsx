@@ -62,8 +62,8 @@ function CardPage() {
     mutationFn: async (kind: "buy" | "list" | "unlist" | "burn") => {
       if (!user) throw new Error("Sign in first.");
       if (kind === "buy") {
-        const { error: err } = await supabase.rpc("buy_card", { _card_id: cardId });
-        if (err) throw err;
+        const res = await buyOnChain({ data: { cardId } });
+        setTxSig(res.signature);
         return;
       }
       if (kind === "list") {
