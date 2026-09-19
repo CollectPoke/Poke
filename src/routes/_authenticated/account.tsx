@@ -45,6 +45,14 @@ function AccountPage() {
   const owned = cards ?? [];
   const listed = owned.filter((c) => c.list_price !== null && c.status === "minted");
 
+  const { data: sales } = useQuery({
+    queryKey: ["my-sales", userId],
+    queryFn: () => mySaleHistory(userId),
+    enabled: !!userId,
+  });
+  const history = sales ?? [];
+  const [tab, setTab] = useState<"owned" | "listed" | "history">("owned");
+
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
       {/* Trainer card */}
