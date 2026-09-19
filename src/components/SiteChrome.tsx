@@ -186,6 +186,7 @@ export function SiteHeader() {
                 </Link>
               )}
             </nav>
+          </div>
         ) : null}
       </div>
     </header>
