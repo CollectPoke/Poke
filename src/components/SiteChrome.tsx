@@ -74,7 +74,7 @@ export function SiteHeader() {
               <span className="hidden sm:inline">Docs</span>
             </Link>
             <a
-              href="https://github.com/"
+              href="https://github.com/CollectPoke/poke"
               target="_blank"
               rel="noreferrer"
               aria-label="Poke on GitHub"
@@ -316,7 +316,7 @@ export function SiteFooter() {
               </svg>
             </a>
             <a
-              href="https://github.com/"
+              href="https://github.com/CollectPoke/poke"
               target="_blank"
               rel="noreferrer"
               aria-label="Poke on GitHub"
