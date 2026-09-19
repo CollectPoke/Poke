@@ -31,6 +31,7 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [justSignedUp, setJustSignedUp] = useState(false);
 
   if (user) {
     return (
@@ -62,7 +63,7 @@ function AuthPage() {
         if (!data.session) {
           setMessage("Check your email to confirm your account, then sign in.");
         } else {
-          navigate({ to: "/account" });
+          setJustSignedUp(true);
         }
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({ email, password });
