@@ -351,19 +351,21 @@ export function SiteFooter() {
               {item.label}
             </FooterLink>
           ))}
-          <a
-            href="https://solscan.io"
-            target="_blank"
-            rel="noreferrer"
-            className="footer-link"
-          >
-            Solana explorer (Solscan)
-          </a>
+          <li>
+            <a
+              href="https://solscan.io"
+              target="_blank"
+              rel="noreferrer"
+              className="footer-link inline-block py-1"
+            >
+              Solana explorer (Solscan)
+            </a>
+          </li>
         </FooterColumn>
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl space-y-2 px-5 py-6 text-[11px] leading-relaxed text-white/50">
+        <div className="mx-auto max-w-6xl space-y-2 px-5 pb-24 pt-6 text-[11px] leading-relaxed text-white/50 sm:pb-6">
           <p>
             Prices are shown in SOL. Minting launches a real Pump.fun coin and costs up to 0.1 SOL
             (0.075 goes into the coin's first buy, the rest covers network fees).
