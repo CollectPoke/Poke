@@ -157,6 +157,7 @@ export function SiteHeader() {
                 >
                   {username ?? "My binder"}
                 </Link>
+                </>
               ) : (
                 <Link
                   to="/auth"
