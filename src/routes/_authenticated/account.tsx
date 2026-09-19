@@ -278,3 +278,35 @@ function Stat({
     </div>
   );
 }
+
+function Tab({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={`rounded-full border-2 px-4 py-1.5 text-xs font-bold transition-colors ${
+        active
+          ? "border-poke-navy bg-poke-navy text-poke-yellow"
+          : "border-border bg-card text-poke-navy hover:bg-secondary"
+      }`}
+    >
+      {children}
+    </button>
+  );
+}
+
+function EmptyBox({ title, text }: { title: string; text: string }) {
+  return (
+    <div className="mt-4 rounded-3xl border-2 border-dashed border-poke-navy/20 bg-card p-12 text-center">
+      <p className="font-display text-xl font-bold text-poke-navy">{title}</p>
+      <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">{text}</p>
+    </div>
+  );
+}
