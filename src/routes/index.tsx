@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { BoosterPack } from "@/components/BoosterPack";
 import { PokeCard } from "@/components/PokeCard";
 import { listCards } from "@/lib/queries";
 
@@ -64,6 +65,18 @@ function Home() {
               }}
             />
           ))}
+        </div>
+        {/* floating booster packs */}
+        <div className="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden>
+          <div className="absolute" style={{ left: "24%", top: "3%" }}>
+            <BoosterPack label="Series 01" delay={0} tilt="-10deg" className="w-20 opacity-95 md:w-24" />
+          </div>
+          <div className="absolute" style={{ right: "33%", top: "9%" }}>
+            <BoosterPack label="Series 01" delay={1.4} tilt="8deg" className="w-16 opacity-90 md:w-20" />
+          </div>
+          <div className="absolute" style={{ right: "3%", bottom: "6%" }}>
+            <BoosterPack label="Series 01" delay={2.6} tilt="-4deg" className="w-20 opacity-95 md:w-28" />
+          </div>
         </div>
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
           <div className="text-white">
