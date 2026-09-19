@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
+import { ThemeToggle, useTheme } from "@/lib/theme";
 
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
