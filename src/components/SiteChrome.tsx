@@ -395,7 +395,7 @@ function FooterLink({
   children,
 }: {
   to: string;
-  exact?: boolean;
+  exact?: boolean | undefined;
   children: React.ReactNode;
 }) {
   return (
