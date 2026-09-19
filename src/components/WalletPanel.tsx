@@ -71,17 +71,30 @@ export function WalletPanel() {
           </p>
         </div>
         <div className="rounded-2xl border-2 border-poke-yellow/50 bg-poke-yellow/15 px-5 py-3 text-right">
-          <p className="flex items-center justify-end gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-            <span
-              className={`inline-block size-1.5 rounded-full ${
-                wallet.isFetching ? "animate-pulse bg-poke-green" : "bg-poke-green/60"
-              }`}
-            />
-            Live balance
-          </p>
+          <div className="flex items-center justify-end gap-2">
+            <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+              <span
+                className={`inline-block size-1.5 rounded-full ${
+                  wallet.isFetching ? "animate-pulse bg-poke-green" : "bg-poke-green/60"
+                }`}
+              />
+              Live balance
+            </p>
+            <button
+              type="button"
+              onClick={() => void wallet.refetch()}
+              disabled={wallet.isFetching}
+              className="rounded-md border border-border bg-card px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-50"
+            >
+              {wallet.isFetching ? "…" : "Refresh"}
+            </button>
+          </div>
           <p className="mono-num text-2xl font-extrabold text-foreground">
             {wallet.isLoading ? "…" : `${(wallet.data?.balance ?? 0).toFixed(4)} SOL`}
           </p>
+          {wallet.isError ? (
+            <p className="mt-0.5 text-[10px] font-bold text-poke-red">Couldn't reach the chain — hit Refresh.</p>
+          ) : null}
           {pendingCount > 0 ? (
             <p className="mt-0.5 text-[10px] font-bold text-poke-blue">
               {pendingCount} transfer{pendingCount > 1 ? "s" : ""} confirming…
