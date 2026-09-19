@@ -243,37 +243,171 @@ export function SiteHeader() {
   );
 }
 
+const footerExplore: { to: string; label: string; exact?: boolean }[] = [
+  { to: "/", label: "Home", exact: true },
+  { to: "/mint", label: "Mint a card" },
+  { to: "/cards", label: "All cards" },
+  { to: "/pair", label: "Pair a coin" },
+  { to: "/pairings", label: "Directory" },
+  { to: "/buyback", label: "Buybacks" },
+];
+
+const footerAccount: { to: string; label: string }[] = [
+  { to: "/auth", label: "Sign in / Create account" },
+  { to: "/account", label: "My binder" },
+  { to: "/gallery", label: "My gallery" },
+  { to: "/mint", label: "Launch a card (0.1 SOL max)" },
+];
+
+const footerHowTo: { to: string; label: string }[] = [
+  { to: "/docs#what", label: "What is Poke?" },
+  { to: "/docs#start", label: "Getting started" },
+  { to: "/docs#fund", label: "Funding your wallet" },
+  { to: "/docs#mint", label: "Minting a card" },
+  { to: "/docs#trade", label: "Buying, selling & burning" },
+  { to: "/docs#buyback", label: "Fees & the $POKE buyback" },
+  { to: "/docs#faq", label: "FAQ" },
+];
+
 export function SiteFooter() {
+  const [caCopied, setCaCopied] = useState(false);
+
   return (
-    <footer className="mt-16 bg-poke-navy text-white/70">
-      <div className="mx-auto max-w-6xl space-y-3 px-5 py-10 text-xs leading-relaxed">
-        <div className="flex items-center gap-2.5 pb-2">
-          <img src="/favicon.png" alt="" className="h-7 w-7" />
-          <span className="font-display text-lg font-bold text-poke-yellow">Poke</span>
+    <footer className="mt-16 border-t-4 border-poke-yellow bg-poke-navy text-white/70">
+      <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2.5">
+            <img src="/favicon.png" alt="" className="h-8 w-8" />
+            <span className="font-display text-xl font-bold text-poke-yellow">Poke</span>
+          </div>
+          <p className="text-xs leading-relaxed">
+            One name · one card · forever. Every coin launched on Poke becomes a one-of-one trading
+            card with a real Pump.fun launch — burn a card and its name frees up again.
+          </p>
+          <button
+            type="button"
+            onClick={() => {
+              navigator.clipboard?.writeText(POKE_CA).catch(() => {});
+              setCaCopied(true);
+              window.setTimeout(() => setCaCopied(false), 1600);
+            }}
+            aria-label="Copy the $POKE contract address"
+            className="mono-num inline-flex max-w-full items-center gap-1.5 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[11px] text-white/85 transition-colors hover:border-poke-yellow/60 hover:text-poke-yellow"
+            title="Click to copy the $POKE contract address"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" className="h-3 w-3 shrink-0" aria-hidden="true">
+              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.2" />
+              <circle cx="12" cy="12" r="3.2" />
+            </svg>
+            <span className="truncate">{caCopied ? "CA copied!" : POKE_CA}</span>
+          </button>
+          <div className="flex items-center gap-4 pt-1">
+            <a
+              href="https://x.com/CollectPokeFun"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Poke on X"
+              className="text-white/80 transition-colors hover:text-poke-yellow"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4.5 w-4.5" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
+              </svg>
+            </a>
+            <a
+              href="https://github.com/"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Poke on GitHub"
+              className="text-white/80 transition-colors hover:text-poke-yellow"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4.5 w-4.5" aria-hidden="true">
+                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12Z" />
+              </svg>
+            </a>
+          </div>
         </div>
-        <p>
-          Poke is a launchpad where every coin becomes a one-of-one trading card. A name can only
-          be minted once; burning a card releases its name back to everyone.
-        </p>
-        <p>
-          Prices are shown in SOL and card ownership is recorded on Poke. Pokémon and card artwork
-          belong to Nintendo, Creatures and GAME FREAK / The Pokémon Company — no affiliation.
-        </p>
-        <div className="flex items-center gap-2 pt-1">
+
+        <FooterColumn title="Explore">
+          {footerExplore.map((item) => (
+            <FooterLink key={item.to} to={item.to} exact={item.exact}>
+              {item.label}
+            </FooterLink>
+          ))}
+        </FooterColumn>
+
+        <FooterColumn title="How to">
+          {footerHowTo.map((item) => (
+            <FooterLink key={item.to} to={item.to}>
+              {item.label}
+            </FooterLink>
+          ))}
+        </FooterColumn>
+
+        <FooterColumn title="Your account">
+          {footerAccount.map((item) => (
+            <FooterLink key={item.label} to={item.to}>
+              {item.label}
+            </FooterLink>
+          ))}
           <a
-            href="https://x.com/CollectPokeFun"
+            href="https://solscan.io"
             target="_blank"
             rel="noreferrer"
-            aria-label="Poke on X"
-            className="flex items-center gap-1.5 text-white/80 transition-colors hover:text-poke-yellow"
+            className="footer-link"
           >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
-              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
-            </svg>
-            <span>@CollectPokeFun</span>
+            Solana explorer (Solscan)
           </a>
+        </FooterColumn>
+      </div>
+
+      <div className="border-t border-white/10">
+        <div className="mx-auto max-w-6xl space-y-2 px-5 py-6 text-[11px] leading-relaxed text-white/50">
+          <p>
+            Prices are shown in SOL. Minting launches a real Pump.fun coin and costs up to 0.1 SOL
+            (0.075 goes into the coin's first buy, the rest covers network fees).
+          </p>
+          <p>
+            Pokémon and card artwork belong to Nintendo, Creatures and GAME FREAK / The Pokémon
+            Company — no affiliation. Crypto is risky: never deposit more than you can afford to
+            lose.
+          </p>
+          <p>© {new Date().getFullYear()} Poke · collectpoke.fun</p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <h3 className="mb-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-poke-yellow">
+        {title}
+      </h3>
+      <ul className="space-y-2 text-[13px]">{children}</ul>
+    </div>
+  );
+}
+
+function FooterLink({
+  to,
+  exact,
+  children,
+}: {
+  to: string;
+  exact?: boolean | undefined;
+  children: React.ReactNode;
+}) {
+  return (
+    <li>
+      <Link
+        to={to}
+        activeOptions={{ exact: exact ?? false, includeSearch: false }}
+        className="footer-link"
+        activeProps={{ className: "footer-link footer-link-active" }}
+      >
+        {children}
+      </Link>
+    </li>
   );
 }

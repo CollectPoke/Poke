@@ -201,6 +201,19 @@
   border-bottom-color: var(--color-poke-navy-deep);
 }
 
+@utility footer-link {
+  color: oklch(0.97 0.01 250 / 0.7);
+  transition: color 150ms ease;
+
+  &:hover {
+    color: var(--color-poke-yellow);
+  }
+}
+
+@utility footer-link-active {
+  color: var(--color-poke-yellow);
+}
+
 /* ---------- Entrance gate ---------- */
 @keyframes gate-fade-out {
   to { opacity: 0; visibility: hidden; }
