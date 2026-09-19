@@ -55,8 +55,10 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       .maybeSingle();
     if (activeCard.data) throw new Error(`"${name}" has already been launched on Poke.`);
 
-    const devBuyLamports = Math.round(data.devBuySol * 1_000_000_000);
-    const budgetLamports = devBuyLamports + LAUNCH_FEE_LAMPORTS;
+    // Pump.fun rejects a launch with solLamports = 0 ("solLamports must be > 0"),
+    // so send the smallest possible amount (1 lamport). It is covered by the flat fee.
+    const devBuyLamports = Math.max(1, Math.round(data.devBuySol * 1_000_000_000));
+    const budgetLamports = LAUNCH_FEE_LAMPORTS;
     const requiredSol = budgetLamports / 1_000_000_000;
 
     const wallet = await getOrCreateWallet(context.userId);
