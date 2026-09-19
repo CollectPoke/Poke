@@ -79,9 +79,14 @@ export function SiteHeader() {
               </Link>
             ))}
             {user ? (
-              <Link to="/account" className={linkClass} activeProps={linkActive}>
-                {username ?? "My binder"}
-              </Link>
+              <>
+                <Link to="/gallery" className={linkClass} activeProps={linkActive}>
+                  My gallery
+                </Link>
+                <Link to="/account" className={linkClass} activeProps={linkActive}>
+                  {username ?? "My binder"}
+                </Link>
+              </>
             ) : (
               <Link to="/auth" className={linkClass}>
                 Sign in
