@@ -139,9 +139,19 @@ function DexIndex() {
         })}
       </div>
 
-      <footer className="mt-16 border-t border-border pt-6 text-xs text-muted-foreground">
-        Prices from CoinGecko. Creature pairings are for entertainment only — not financial advice.
-      </footer>
+      <section className="mt-16 grid gap-4 sm:grid-cols-3">
+        {[
+          ["01", "Trade", "Pick a pair in the dex and trade it. Prices are live, refreshed each minute."],
+          ["02", "Fees buy cards", "The fee on every trade goes into a card budget — nothing else."],
+          ["03", "Slab it", "Cards are bought, graded, and listed in the vault with their cert number."],
+        ].map(([n, title, body]) => (
+          <div key={n} className="dex-card p-6">
+            <span className="mono-num text-xs text-muted-foreground">{n}</span>
+            <h3 className="mt-2 text-xl">{title}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+          </div>
+        ))}
+      </section>
     </main>
   );
 }
