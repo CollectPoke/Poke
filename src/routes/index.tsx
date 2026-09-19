@@ -46,20 +46,32 @@ function DexIndex() {
   ).sort((a, b) => (byId.get(b.id)?.marketCap ?? 0) - (byId.get(a.id)?.marketCap ?? 0));
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-16 sm:py-24">
+    <main className="mx-auto max-w-5xl px-5 py-14 sm:py-20">
       <header className="max-w-2xl">
         <span className="mono-num text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          Memedex · {CATALOG.length} entries
+          {CATALOG.length} pairs live · {totals.count} slabs bought
         </span>
         <h1 className="mt-4 text-5xl leading-[1.05] sm:text-6xl">
-          Every memecoin has a
-          <em className="italic"> creature</em> inside it.
+          Every trade buys a
+          <em className="italic"> real graded card</em>.
         </h1>
         <p className="mt-5 text-lg text-muted-foreground">
-          A field guide that pairs each coin with its spirit animal, then tracks its live price and
-          battle stats. Prices refresh every minute.
+          Each memecoin is paired to a creature and tracked live. Trading fees go straight into
+          buying graded Pokémon cards, and every slab shows up in the vault with its cert number.
         </p>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <Link
+            to="/vault"
+            className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            See the vault
+          </Link>
+          <span className="mono-num text-xs text-muted-foreground">
+            {usd(totals.spent)} spent on cards so far
+          </span>
+        </div>
       </header>
+
 
       <div className="mt-10 flex items-center gap-3">
         <input
