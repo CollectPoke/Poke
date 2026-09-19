@@ -8,7 +8,7 @@ import { PurchaseReveal } from "@/components/PurchaseReveal";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { getCard, getCardEvents } from "@/lib/queries";
-import { buyCardWithSol } from "@/lib/wallet.functions";
+import { burnCard, buyCardWithSol } from "@/lib/wallet.functions";
 
 export const Route = createFileRoute("/card/$cardId")({
   head: () => ({
@@ -43,9 +43,11 @@ function CardPage() {
   const queryClient = useQueryClient();
   const [price, setPrice] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [burnNote, setBurnNote] = useState<string | null>(null);
   const [txSig, setTxSig] = useState<string | null>(null);
   const [showReveal, setShowReveal] = useState(false);
   const buyOnChain = useServerFn(buyCardWithSol);
+  const burnOnChain = useServerFn(burnCard);
 
   const { data: card, isLoading } = useQuery({
     queryKey: ["card", cardId],
@@ -90,11 +92,12 @@ function CardPage() {
         if (err) throw err;
         return;
       }
-      const { error: err } = await supabase
-        .from("cards")
-        .update({ status: "burned", list_price: null })
-        .eq("id", cardId);
-      if (err) throw err;
+      const res = await burnOnChain({ data: { cardId } });
+      setBurnNote(
+        res.refunded
+          ? `Card burned — ${res.amount} SOL burn reward sent to your wallet.`
+          : "Card burned. The burn reward could not be sent right now.",
+      );
     },
     onSuccess: () => {
       setError(null);
