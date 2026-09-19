@@ -12,7 +12,7 @@ export function PokeCard({ card, compact = false }: Props) {
   return (
     <div
       className={[
-        "relative flex flex-col rounded-2xl border-4 bg-gradient-to-b from-poke-yellow to-[oklch(0.8_0.16_75)] p-1.5 shadow-card transition-shadow",
+        "holo-sheen relative flex flex-col rounded-2xl border-4 bg-gradient-to-b from-poke-yellow to-[oklch(0.8_0.16_75)] p-1.5 shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover",
         burned ? "border-poke-navy/30 opacity-70" : "border-poke-yellow",
       ].join(" ")}
     >
