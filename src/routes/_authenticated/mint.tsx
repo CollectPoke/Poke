@@ -280,7 +280,7 @@ function MintPage() {
 }
 
 const inputClass =
-  "w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-poke-blue";
+  "w-full rounded-xl border-2 border-border bg-card px-3.5 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-poke-blue";
 
 function Field({
   label,
