@@ -26,6 +26,8 @@ export type CardRow = {
   list_price: number | null;
   last_price: number | null;
   mint_price: number;
+  launch_id?: string | null;
+  launch_tx_signature?: string | null;
   created_at: string;
 };
 
@@ -33,15 +35,6 @@ export type CardWithPeople = CardRow & {
   owner?: { username: string } | null;
   creator?: { username: string } | null;
 };
-
-const BASE58 = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
-
-/** A Solana-style address generated for each newly minted card. */
-export function generateContractAddress(): string {
-  const bytes = new Uint8Array(44);
-  crypto.getRandomValues(bytes);
-  return Array.from(bytes, (b) => BASE58[b % BASE58.length]).join("");
-}
 
 export function shortAddress(address: string, size = 5): string {
   if (address.length <= size * 2 + 3) return address;

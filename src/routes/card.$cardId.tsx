@@ -179,10 +179,14 @@ function CardPage() {
           </div>
 
           <div className="mt-6 rounded-2xl bg-poke-navy p-4">
-            <p className="text-[10px] uppercase tracking-widest text-white/50">Contract address</p>
+            <p className="text-[10px] uppercase tracking-widest text-white/50">Pump.fun contract address</p>
             <p className="mono-num mt-1 break-all text-xs text-poke-yellow">
               {card.contract_address}
             </p>
+            <div className="mt-3 flex flex-wrap gap-4 text-xs font-semibold">
+              <a href={`https://pump.fun/coin/${card.contract_address}`} target="_blank" rel="noreferrer" className="text-poke-yellow underline underline-offset-4">View on Pump.fun ↗</a>
+              {card.launch_tx_signature ? <a href={`https://solscan.io/tx/${card.launch_tx_signature}`} target="_blank" rel="noreferrer" className="text-poke-yellow underline underline-offset-4">Launch receipt ↗</a> : null}
+            </div>
           </div>
 
           {/* Actions */}

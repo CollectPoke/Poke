@@ -21,6 +21,7 @@ import { Route as AuthenticatedGalleryRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as ApiPublicArtworkIdRouteImport } from './routes/api/public/artwork.$id'
+import { Route as ApiPublicCoinMetadataIdRouteImport } from './routes/api/public/coin-metadata.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -81,6 +82,11 @@ const ApiPublicArtworkIdRoute = ApiPublicArtworkIdRouteImport.update({
   path: '/api/public/artwork/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicCoinMetadataIdRoute = ApiPublicCoinMetadataIdRouteImport.update({
+  id: '/api/public/coin-metadata/$id',
+  path: '/api/public/coin-metadata/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,6 +100,7 @@ export interface FileRoutesByFullPath {
   '/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
+  '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,6 +114,7 @@ export interface FileRoutesByTo {
   '/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
+  '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +130,7 @@ export interface FileRoutesById {
   '/_authenticated/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
+  '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +146,7 @@ export interface FileRouteTypes {
     | '/mint'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
+    | '/api/public/coin-metadata/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,6 +160,7 @@ export interface FileRouteTypes {
     | '/mint'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
+    | '/api/public/coin-metadata/$id'
   id:
     | '__root__'
     | '/'
@@ -164,6 +175,7 @@ export interface FileRouteTypes {
     | '/_authenticated/mint'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
+    | '/api/public/coin-metadata/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -176,6 +188,7 @@ export interface RootRouteChildren {
   PairingsRoute: typeof PairingsRoute
   CardCardIdRoute: typeof CardCardIdRoute
   ApiPublicArtworkIdRoute: typeof ApiPublicArtworkIdRoute
+  ApiPublicCoinMetadataIdRoute: typeof ApiPublicCoinMetadataIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -264,6 +277,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicArtworkIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/coin-metadata/$id': {
+      id: '/api/public/coin-metadata/$id'
+      path: '/api/public/coin-metadata/$id'
+      fullPath: '/api/public/coin-metadata/$id'
+      preLoaderRoute: typeof ApiPublicCoinMetadataIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -292,6 +312,7 @@ const rootRouteChildren: RootRouteChildren = {
   PairingsRoute: PairingsRoute,
   CardCardIdRoute: CardCardIdRoute,
   ApiPublicArtworkIdRoute: ApiPublicArtworkIdRoute,
+  ApiPublicCoinMetadataIdRoute: ApiPublicCoinMetadataIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

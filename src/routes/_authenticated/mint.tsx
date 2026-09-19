@@ -1,12 +1,13 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 
 import { ArtworkDrop } from "@/components/ArtworkDrop";
 import { MintReveal } from "@/components/MintReveal";
 import { PokeCard } from "@/components/PokeCard";
-import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { generateContractAddress, type CardWithPeople } from "@/lib/cards";
+import type { CardWithPeople } from "@/lib/cards";
+import { launchCoinAndMintCard } from "@/lib/launch.functions";
 import { isNameAvailable } from "@/lib/queries";
 
 export const Route = createFileRoute("/_authenticated/mint")({
@@ -22,6 +23,8 @@ export const Route = createFileRoute("/_authenticated/mint")({
         property: "og:description",
         content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: MintPage,
@@ -41,6 +44,8 @@ function MintPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [mintedCard, setMintedCard] = useState<CardWithPeople | null>(null);
+  const [launchSignature, setLaunchSignature] = useState<string | null>(null);
+  const launchCoin = useServerFn(launchCoinAndMintCard);
 
   useEffect(() => {
     const trimmed = name.trim();
@@ -85,39 +90,18 @@ function MintPage() {
     setBusy(true);
     setError(null);
     try {
-      const contractAddress = generateContractAddress();
-      const { data, error: err } = await supabase
-        .from("cards")
-        .insert({
-          name: name.trim(),
-          name_key: name.trim().toLowerCase(),
-          ticker: ticker.trim().toUpperCase(),
-          description: description.trim() || null,
-          image_url: imageUrl.trim() || null,
-          contract_address: contractAddress,
-          creator_id: user.id,
-          owner_id: user.id,
-          list_price: listPrice ? Number(listPrice) : null,
-        })
-        .select("id")
-        .single();
-      if (err) {
-        if (err.code === "23505") {
-          setAvailable(false);
-          throw new Error(`"${name.trim()}" has already been minted. Only one can ever exist.`);
-        }
-        throw err;
-      }
-      // The mint (and initial listing) event is recorded by the database itself.
+      const result = await launchCoin({ data: {
+        name,
+        ticker,
+        description,
+        imageUrl,
+        listPrice: listPrice ? Number(listPrice) : null,
+      } });
       setMintedCard({
-        ...preview,
-        id: data.id,
-        name_key: name.trim().toLowerCase(),
-        contract_address: contractAddress,
-        creator_id: user.id,
-        owner_id: user.id,
+        ...result.card,
         owner: { username: username ?? "you" },
       });
+      setLaunchSignature(result.signature);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not mint the card.");
     } finally {
@@ -133,9 +117,17 @@ function MintPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Mint a card</h1>
       <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-        Every coin launched on Poke becomes a card, and a name can only exist once. Once
+        Every mint launches a real Pump.fun coin on Solana and becomes a card. Once
         "Dog" is minted, nobody else can ever mint Dog — unless the holder burns it.
       </p>
+
+      <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-poke-yellow bg-card p-4 shadow-sm">
+        <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
+        <div>
+          <p className="text-sm font-bold">Real mainnet launch · 0.1 SOL maximum</p>
+          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The card appears only after Solana confirms it. Mainnet spending is irreversible.</p>
+        </div>
+      </div>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]">
         <form onSubmit={handleMint} className="space-y-5">
@@ -233,8 +225,9 @@ function MintPage() {
           {error && <p className="text-sm font-medium text-poke-red">{error}</p>}
 
           <button type="submit" disabled={!canMint} className="poke-btn disabled:opacity-40">
-            {busy ? "Minting…" : "Mint this card"}
+            {busy ? "Launching on Pump.fun…" : "Launch coin + mint card · 0.1 SOL max"}
           </button>
+          {busy ? <p className="text-xs text-muted-foreground">Preparing, checking, signing and confirming your Solana launch. Keep this page open.</p> : null}
         </form>
 
         <div className="lg:sticky lg:top-28 lg:self-start">
@@ -243,8 +236,8 @@ function MintPage() {
         </div>
       </div>
     </main>
-    {mintedCard ? (
-      <MintReveal card={mintedCard} onContinue={() => navigate({ to: "/card/$cardId", params: { cardId: mintedCard.id } })} />
+    {mintedCard && launchSignature ? (
+      <MintReveal card={mintedCard} signature={launchSignature} onContinue={() => navigate({ to: "/card/$cardId", params: { cardId: mintedCard.id } })} />
     ) : null}
     </>
   );

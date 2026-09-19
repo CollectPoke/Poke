@@ -40,6 +40,8 @@ export function decryptSecret(stored: string): string {
 
 export type WalletRow = { user_id: string; public_key: string; secret_ciphertext: string };
 
+export type SystemWalletRow = { purpose: string; public_key: string; secret_ciphertext: string };
+
 export async function getOrCreateWallet(userId: string): Promise<WalletRow> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const existing = await supabaseAdmin
@@ -67,6 +69,36 @@ export async function getOrCreateWallet(userId: string): Promise<WalletRow> {
     throw ins.error;
   }
   await supabaseAdmin.from("profiles").update({ wallet_address: row.public_key }).eq("id", userId);
+  return row;
+}
+
+/** A server-only wallet used to receive Pump.fun creator earnings for buybacks. */
+export async function getOrCreateSystemWallet(purpose: string): Promise<SystemWalletRow> {
+  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+  const existing = await supabaseAdmin
+    .from("system_wallets")
+    .select("purpose, public_key, secret_ciphertext")
+    .eq("purpose", purpose)
+    .maybeSingle();
+  if (existing.error) throw existing.error;
+  if (existing.data) return existing.data as SystemWalletRow;
+
+  const kp = nacl.sign.keyPair();
+  const row = {
+    purpose,
+    public_key: bs58.encode(kp.publicKey),
+    secret_ciphertext: encryptSecret(bs58.encode(kp.secretKey)),
+  };
+  const inserted = await supabaseAdmin.from("system_wallets").insert(row);
+  if (inserted.error) {
+    const again = await supabaseAdmin
+      .from("system_wallets")
+      .select("purpose, public_key, secret_ciphertext")
+      .eq("purpose", purpose)
+      .maybeSingle();
+    if (again.data) return again.data as SystemWalletRow;
+    throw inserted.error;
+  }
   return row;
 }
 
@@ -130,6 +162,124 @@ function compactLen(n: number): number[] {
     out.push(b);
   }
   return out;
+}
+
+function readCompactLen(bytes: Uint8Array, offset: number): [number, number] {
+  let value = 0;
+  let shift = 0;
+  let cursor = offset;
+  while (cursor < bytes.length) {
+    const byte = bytes[cursor];
+    if (byte === undefined) break;
+    cursor += 1;
+    value |= (byte & 0x7f) << shift;
+    if ((byte & 0x80) === 0) return [value, cursor];
+    shift += 7;
+    if (shift > 21) break;
+  }
+  throw new Error("Invalid Solana transaction encoding");
+}
+
+/** Co-signs a Pump.fun transaction while preserving its mint signature. */
+export async function signSimulateAndSendTransaction(
+  from: WalletRow,
+  base64Transaction: string,
+  maxDebitLamports: number,
+  onPrepared?: (signature: string) => Promise<void>,
+): Promise<string> {
+  const raw = new Uint8Array(Buffer.from(base64Transaction, "base64"));
+  const [signatureCount, signaturesStart] = readCompactLen(raw, 0);
+  const messageStart = signaturesStart + signatureCount * 64;
+  if (signatureCount < 1 || messageStart >= raw.length) {
+    throw new Error("Pump.fun returned an invalid transaction");
+  }
+
+  const message = raw.subarray(messageStart);
+  let cursor = 0;
+  if (((message[0] ?? 0) & 0x80) !== 0) cursor += 1;
+  const requiredSignatures = message[cursor] ?? 0;
+  cursor += 3;
+  const [keyCount, keysStart] = readCompactLen(message, cursor);
+  const publicKey = bs58.decode(from.public_key);
+  let signerIndex = -1;
+  for (let index = 0; index < keyCount; index += 1) {
+    const keyBytes = message.subarray(keysStart + index * 32, keysStart + (index + 1) * 32);
+    if (keyBytes.length === 32 && keyBytes.every((byte, i) => byte === publicKey[i])) {
+      signerIndex = index;
+      break;
+    }
+  }
+  if (signerIndex < 0 || signerIndex >= requiredSignatures) {
+    throw new Error("Your Poke wallet is not an authorized signer for this launch");
+  }
+  const feePayer = message.subarray(keysStart, keysStart + 32);
+  if (!feePayer.every((byte, i) => byte === publicKey[i])) {
+    throw new Error("Pump.fun returned an unexpected fee payer");
+  }
+
+  const signed = raw.slice();
+  const signature = nacl.sign.detached(message, secretKeyFrom(from));
+  signed.set(signature, signaturesStart + signerIndex * 64);
+
+  for (let index = 0; index < requiredSignatures; index += 1) {
+    const slot = signed.subarray(signaturesStart + index * 64, signaturesStart + (index + 1) * 64);
+    if (slot.every((byte) => byte === 0)) {
+      throw new Error("Pump.fun did not supply every required launch signature");
+    }
+  }
+
+  const signedBase64 = Buffer.from(signed).toString("base64");
+  const transactionSignature = bs58.encode(
+    signed.subarray(signaturesStart, signaturesStart + 64),
+  );
+  if (onPrepared) await onPrepared(transactionSignature);
+  const beforeLamports = Math.round((await getBalanceSol(from.public_key)) * LAMPORTS_PER_SOL);
+  const simulation = await rpc<{
+    value: { err: unknown; logs?: string[]; accounts?: Array<{ lamports: number } | null> | null };
+  }>("simulateTransaction", [
+    signedBase64,
+    {
+      encoding: "base64",
+      sigVerify: true,
+      commitment: "confirmed",
+      accounts: { encoding: "base64", addresses: [from.public_key] },
+    },
+  ]);
+  if (simulation.value.err) {
+    throw new Error("The Pump.fun launch simulation failed. No SOL was spent.");
+  }
+  const afterLamports = simulation.value.accounts?.[0]?.lamports;
+  if (typeof afterLamports !== "number") {
+    throw new Error("Could not verify the launch cost. No SOL was spent.");
+  }
+  const simulatedDebit = beforeLamports - afterLamports;
+  if (simulatedDebit < 0 || simulatedDebit > maxDebitLamports) {
+    throw new Error("The launch would exceed the 0.1 SOL limit. No SOL was spent.");
+  }
+
+  const submittedSignature = await rpc<string>("sendTransaction", [
+    signedBase64,
+    { encoding: "base64", maxRetries: 3, preflightCommitment: "confirmed" },
+  ]);
+  if (submittedSignature !== transactionSignature) {
+    throw new Error("Solana returned an unexpected launch receipt");
+  }
+  return submittedSignature;
+}
+
+export async function confirmSignature(signature: string): Promise<void> {
+  for (let i = 0; i < 45; i += 1) {
+    const result = await rpc<{
+      value: Array<{ confirmationStatus?: string; err?: unknown } | null>;
+    }>("getSignatureStatuses", [[signature], { searchTransactionHistory: true }]);
+    const status = result.value?.[0];
+    if (status?.err) throw new Error("The coin launch failed on Solana");
+    if (status?.confirmationStatus === "confirmed" || status?.confirmationStatus === "finalized") {
+      return;
+    }
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+  throw new Error("The launch is still confirming on Solana. Try minting again shortly to resume it.");
 }
 
 function u64le(value: number): number[] {
