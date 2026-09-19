@@ -13,30 +13,46 @@ export function MusicPlayer() {
     audio.volume = 0.35;
     audioRef.current = audio;
 
-    const tryPlay = () => {
-      let muted = false;
+    const isMuted = () => {
       try {
-        muted = localStorage.getItem(MUTE_KEY) === "1";
+        return localStorage.getItem(MUTE_KEY) === "1";
       } catch {
-        /* ignore */
+        return false;
       }
-      if (muted) return;
-      audio
-        .play()
-        .then(() => setPlaying(true))
-        .catch(() => setPlaying(false));
     };
 
-    // Always on: try immediately, then retry on the first interaction anywhere
-    // (browsers require a user gesture before audio can start).
-    tryPlay();
-    window.addEventListener("poke:enter", tryPlay);
-    window.addEventListener("pointerdown", tryPlay, { once: true });
-    window.addEventListener("keydown", tryPlay, { once: true });
-    return () => {
+    const stop = () => {
       window.removeEventListener("poke:enter", tryPlay);
       window.removeEventListener("pointerdown", tryPlay);
       window.removeEventListener("keydown", tryPlay);
+      window.removeEventListener("touchstart", tryPlay);
+    };
+
+    // Music is on by default. Try straight away, and keep retrying on every
+    // interaction until it actually starts (browsers need a real tap first).
+    // Once the user turns it off, we stop trying.
+    function tryPlay() {
+      if (isMuted()) {
+        stop();
+        return;
+      }
+      if (!audio.paused) return;
+      audio
+        .play()
+        .then(() => {
+          setPlaying(true);
+          stop();
+        })
+        .catch(() => setPlaying(false));
+    }
+
+    tryPlay();
+    window.addEventListener("poke:enter", tryPlay);
+    window.addEventListener("pointerdown", tryPlay);
+    window.addEventListener("keydown", tryPlay);
+    window.addEventListener("touchstart", tryPlay);
+    return () => {
+      stop();
       audio.pause();
       audioRef.current = null;
     };

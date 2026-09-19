@@ -49,7 +49,7 @@ export function EntranceGate() {
 
   return (
     <div
-      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden bg-[#060b18] ${
+      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden px-6 bg-[#060b18] ${
         opening ? "gate-leaving" : ""
       }`}
     >
@@ -66,11 +66,11 @@ export function EntranceGate() {
         className="group relative z-10 flex flex-col items-center focus:outline-none"
       >
         {/* Poké Ball */}
-        <span className="relative mb-12 block">
+        <span className="relative mb-8 block sm:mb-12">
           {/* hover glow ring */}
           <span className="absolute -inset-6 rounded-full bg-white/5 blur-2xl transition-colors duration-1000 group-hover:bg-poke-yellow/10" />
           <span
-            className={`relative block h-44 w-44 overflow-hidden rounded-full border-[10px] border-[#0a0f1e] shadow-[0_0_50px_rgba(0,0,0,0.5)] ${
+            className={`relative block h-32 w-32 sm:h-44 sm:w-44 overflow-hidden rounded-full border-[10px] border-[#0a0f1e] shadow-[0_0_50px_rgba(0,0,0,0.5)] ${
               opening ? "ball-shake" : "animate-bounce [animation-duration:3s]"
             }`}
           >
@@ -90,11 +90,11 @@ export function EntranceGate() {
               }`}
             />
             <span
-              className={`absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[#0a0f1e] shadow-lg transition-all duration-500 ${
+              className={`absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 sm:h-16 sm:w-16 -translate-y-1/2 items-center justify-center rounded-full bg-[#0a0f1e] shadow-lg transition-all duration-500 ${
                 opening ? "scale-0 opacity-0" : ""
               }`}
             >
-              <span className="flex h-10 w-10 items-center justify-center rounded-full border-[6px] border-[#0a0f1e] bg-white">
+              <span className="flex h-7 w-7 items-center justify-center rounded-full border-4 sm:h-10 sm:w-10 sm:border-[6px] border-[#0a0f1e] bg-white">
                 <span className="h-2 w-2 rounded-full bg-slate-200" />
               </span>
             </span>
@@ -105,12 +105,12 @@ export function EntranceGate() {
 
         {/* Wordmark with glow */}
         <span className="relative mb-10 block">
-          <span className="block font-display text-8xl tracking-tighter text-poke-yellow">
+          <span className="block font-display text-6xl sm:text-8xl tracking-tighter text-poke-yellow">
             POKE
           </span>
           <span
             aria-hidden
-            className="absolute inset-0 select-none font-display text-8xl tracking-tighter text-poke-yellow opacity-30 blur-xl"
+            className="absolute inset-0 select-none font-display text-6xl sm:text-8xl tracking-tighter text-poke-yellow opacity-30 blur-xl"
           >
             POKE
           </span>
@@ -119,7 +119,7 @@ export function EntranceGate() {
         {/* CTA */}
         <span className="relative block">
           <span className="absolute -inset-1 animate-pulse rounded-full bg-poke-yellow/30 blur-md transition duration-300 group-hover:bg-poke-yellow/50" />
-          <span className="relative block rounded-full bg-poke-yellow px-14 py-4 text-xl font-black uppercase tracking-[0.2em] text-[#060b18] shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95">
+          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base sm:px-14 sm:py-4 sm:text-xl font-black uppercase tracking-[0.2em] text-[#060b18] shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95">
             Tap to Enter
           </span>
         </span>
