@@ -36,7 +36,7 @@ function PairingsPage() {
   const cardsQuery = useQuery({ queryKey: ["cards"], queryFn: () => listCards() });
 
   const cardByName = useMemo(() => {
-    const map = new Map<string, (typeof cardsQuery.data extends undefined ? never : any)>();
+    const map = new Map<string, CardWithPeople>();
     for (const c of cardsQuery.data ?? []) map.set(c.name_key, c);
     return map;
   }, [cardsQuery.data]);
