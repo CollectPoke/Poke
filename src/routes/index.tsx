@@ -31,8 +31,14 @@ export const Route = createFileRoute("/")({
 const HERO_CARD_COUNT = 10;
 
 function Home() {
+  const { data: cards } = useQuery({
+    queryKey: ["cards"],
+    queryFn: () => listCards(),
+  });
+
   const latest = cards ?? [];
   const heroCards = latest.slice(0, HERO_CARD_COUNT);
+  const restCards = latest.slice(HERO_CARD_COUNT);
   const forSale = latest.filter((c) => c.list_price !== null);
 
   return (
@@ -152,14 +158,18 @@ function Home() {
               Mint the first card
             </Link>
           </div>
-        ) : (
+        ) : restCards.length > 0 ? (
           <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {latest.map((card) => (
+            {restCards.map((card) => (
               <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
                 <PokeCard card={card} compact />
               </Link>
             ))}
           </div>
+        ) : (
+          <p className="mt-5 text-sm text-muted-foreground">
+            The newest 10 are up in the hero — <Link to="/cards" className="font-semibold text-poke-blue hover:underline">see every card →</Link>
+          </p>
         )}
 
         {forSale.length > 0 && (
