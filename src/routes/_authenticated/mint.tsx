@@ -48,7 +48,21 @@ function MintPage() {
   const [error, setError] = useState<string | null>(null);
   const [mintedCard, setMintedCard] = useState<CardWithPeople | null>(null);
   const [launchSignature, setLaunchSignature] = useState<string | null>(null);
+  const [showFunding, setShowFunding] = useState(false);
   const launchCoin = useServerFn(launchCoinAndMintCard);
+  const fetchWallet = useServerFn(getMyWallet);
+
+  const { data: wallet } = useQuery({
+    queryKey: ["my-wallet"],
+    queryFn: fetchWallet,
+    refetchInterval: 8000,
+  });
+  const underfunded = wallet !== undefined && wallet.balance < LAUNCH_COST_SOL;
+
+  // Pop the funding window as soon as we know the balance is too low.
+  useEffect(() => {
+    if (underfunded) setShowFunding(true);
+  }, [underfunded]);
 
   useEffect(() => {
     const trimmed = name.trim();
