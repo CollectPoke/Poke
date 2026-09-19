@@ -128,7 +128,8 @@ function MintPage() {
     }
   }
 
-  const canMint = !!name.trim() && !!ticker.trim() && available === true && !busy;
+  const canMint =
+    !!name.trim() && !!ticker.trim() && !!imageUrl.trim() && available === true && !busy;
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
@@ -193,7 +194,7 @@ function MintPage() {
             />
           </Field>
 
-          <Field label="Artwork" hint="Optional — drop any image in">
+          <Field label="Image" hint="Required — drop any image in">
             {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
           </Field>
 

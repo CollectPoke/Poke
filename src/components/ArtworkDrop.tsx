@@ -152,7 +152,7 @@ export function ArtworkDrop({
             <p className="font-display text-6xl leading-none text-muted-foreground/60 transition-colors group-hover:text-poke-blue/70">
               +
             </p>
-            <p className="mt-4 font-display text-2xl font-bold">Drop artwork here</p>
+            <p className="mt-4 font-display text-2xl font-bold">Drop your image here</p>
             <p className="mt-2 text-sm text-muted-foreground">
               or click to choose a picture
             </p>
