@@ -146,9 +146,9 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
               .eq("id", launchId);
             if (saved.error) throw saved.error;
             signature = preparedSignature;
+            transactionSent = true;
           },
         );
-        transactionSent = true;
       }
 
       if (!signature || !mintAddress) {
