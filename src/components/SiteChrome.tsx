@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
 
-const POKE_CA = "EoqZPcCZnvntyR8zybqr38aXF1fMhP1ckyu7zFWFPoke";
+const POKE_CA = "HNPFcpRpPsDdVfx9Las1af3YYpFBq3T8wcEhgRfdpoke";
 
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
@@ -61,7 +61,7 @@ export function SiteHeader() {
                 <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.2" />
                 <circle cx="12" cy="12" r="3.2" />
               </svg>
-              <span className="mono-num hidden sm:inline">{caCopied ? "CA copied!" : "CA EoqZ…FPoke"}</span>
+              <span className="mono-num hidden sm:inline">{caCopied ? "CA copied!" : "CA HNPF…dpoke"}</span>
               <span className="mono-num sm:hidden">CA</span>
             </button>
             <Link
