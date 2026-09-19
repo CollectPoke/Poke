@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
+import { BoosterPack } from "@/components/BoosterPack";
 import { PokeCard } from "@/components/PokeCard";
 import { listCards } from "@/lib/queries";
 
