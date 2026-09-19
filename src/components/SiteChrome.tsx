@@ -2,6 +2,7 @@ import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
+import { ThemeToggle, useTheme } from "@/lib/theme";
 
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
@@ -17,6 +18,7 @@ const linkActive = { className: "bg-poke-yellow text-poke-navy hover:text-poke-n
 
 export function SiteHeader() {
   const { user, username } = useAuth();
+  const { theme } = useTheme();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
@@ -85,6 +87,7 @@ export function SiteHeader() {
                 Sign in
               </Link>
             )}
+            <ThemeToggle className="ml-2" />
             <Link to="/mint" className="poke-btn ml-2 !py-2 !px-4 text-sm">
               Mint a card
             </Link>
@@ -149,6 +152,13 @@ export function SiteHeader() {
                   Sign in
                 </Link>
               )}
+              <div className="mt-2 flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3">
+                <span className="flex items-center gap-2 text-sm text-white/80">
+                  <span aria-hidden="true">{theme === "dark" ? "🌙" : "☀️"}</span>
+                  {theme === "dark" ? "Night mode" : "Day mode"}
+                </span>
+                <ThemeToggle />
+              </div>
             </nav>
           </div>
         ) : null}

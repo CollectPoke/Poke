@@ -15,6 +15,7 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { EntranceGate } from "@/components/EntranceGate";
 import { MusicPlayer } from "@/components/MusicPlayer";
 import { AuthProvider } from "@/lib/auth";
+import { ThemeProvider } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
@@ -129,15 +130,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AuthSync />
-        <EntranceGate />
-        <MusicPlayer />
-        <SiteHeader />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <SiteFooter />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AuthSync />
+          <EntranceGate />
+          <MusicPlayer />
+          <SiteHeader />
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <SiteFooter />
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
