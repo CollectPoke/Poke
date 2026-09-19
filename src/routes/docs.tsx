@@ -163,12 +163,13 @@ function DocsPage() {
               </li>
             </ol>
             <p>
-              Not sure which Pokémon fits your coin? Use{" "}
-              <Link to="/pair" className="font-semibold text-poke-blue underline">
-                Pair a coin
+              Not sure which Pokémon fits your coin? Tap{" "}
+              <strong className="font-semibold">Find my Pokémon</strong> on the{" "}
+              <Link to="/mint" className="font-semibold text-poke-blue underline">
+                Mint page
               </Link>{" "}
               — it suggests a Pokémon with a short reason, a typing and a rarity,
-              then you can mint it straight into a card.
+              right next to your card preview.
             </p>
           </DocCard>
 
