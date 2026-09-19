@@ -68,7 +68,6 @@ export async function getOrCreateWallet(userId: string): Promise<WalletRow> {
     if (again.data) return again.data as WalletRow;
     throw ins.error;
   }
-  await supabaseAdmin.from("profiles").update({ wallet_address: row.public_key }).eq("id", userId);
   return row;
 }
 
