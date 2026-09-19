@@ -16,7 +16,7 @@ const launchSchema = z.object({
   description: z.string().trim().max(600),
   imageUrl: z.string().trim().regex(/^\/api\/public\/artwork\/[0-9a-f-]{36}$/i),
   listPrice: z.number().positive().max(1_000_000).nullable(),
-  devBuySol: z.number().min(0).max(MAX_DEV_BUY_SOL).default(DEFAULT_DEV_BUY_SOL),
+  devBuySol: z.number().min(0).max(0).default(0),
 });
 
 export const launchCoinAndMintCard = createServerFn({ method: "POST" })
