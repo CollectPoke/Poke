@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 
 function NotFoundComponent() {
   return (
@@ -77,10 +78,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Memedex" },
-      { name: "description", content: "Every memecoin, catalogued as a creature." },
-      { property: "og:title", content: "Memedex" },
-      { property: "og:description", content: "Every memecoin, catalogued as a creature." },
+      { title: "PokéPad" },
+      { name: "description", content: "Every trade buys a real graded card." },
+      { property: "og:title", content: "PokéPad" },
+      { property: "og:description", content: "Every trade buys a real graded card." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -123,8 +124,10 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <SiteHeader />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
+      <SiteFooter />
     </QueryClientProvider>
   );
 }

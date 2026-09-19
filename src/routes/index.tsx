@@ -4,20 +4,23 @@ import { useState } from "react";
 import { CATALOG, spriteUrl, TYPE_CLASS } from "@/lib/catalog";
 import { marketsQueryOptions } from "@/lib/markets-query";
 import { formatChange, formatCompact, formatPrice } from "@/lib/format";
+import { vaultTotals } from "@/lib/vault";
+
+const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Memedex — every memecoin as a creature" },
+      { title: "PokéPad — every trade buys a real graded card" },
       {
         name: "description",
         content:
-          "A living dex that pairs memecoins with their creature counterparts, with live prices and market stats.",
+          "Every memecoin is paired to a creature and traded live. Trading fees buy real graded Pokémon cards into the vault.",
       },
-      { property: "og:title", content: "Memedex — every memecoin as a creature" },
+      { property: "og:title", content: "PokéPad — every trade buys a real graded card" },
       {
         property: "og:description",
-        content: "Pair memecoins with creatures. Live prices, live stats, one clean dex.",
+        content: "Coins paired to creatures, live prices, and fees that buy real graded slabs.",
       },
     ],
   }),
@@ -34,6 +37,7 @@ export const Route = createFileRoute("/")({
 function DexIndex() {
   const { data } = useSuspenseQuery(marketsQueryOptions);
   const [q, setQ] = useState("");
+  const totals = vaultTotals();
 
   const byId = new Map(data.markets.map((m) => [m.id, m]));
   const query = q.trim().toLowerCase();
@@ -46,20 +50,32 @@ function DexIndex() {
   ).sort((a, b) => (byId.get(b.id)?.marketCap ?? 0) - (byId.get(a.id)?.marketCap ?? 0));
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-16 sm:py-24">
+    <main className="mx-auto max-w-5xl px-5 py-14 sm:py-20">
       <header className="max-w-2xl">
         <span className="mono-num text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          Memedex · {CATALOG.length} entries
+          {CATALOG.length} pairs live · {totals.count} slabs bought
         </span>
         <h1 className="mt-4 text-5xl leading-[1.05] sm:text-6xl">
-          Every memecoin has a
-          <em className="italic"> creature</em> inside it.
+          Every trade buys a
+          <em className="italic"> real graded card</em>.
         </h1>
         <p className="mt-5 text-lg text-muted-foreground">
-          A field guide that pairs each coin with its spirit animal, then tracks its live price and
-          battle stats. Prices refresh every minute.
+          Each memecoin is paired to a creature and tracked live. Trading fees go straight into
+          buying graded Pokémon cards, and every slab shows up in the vault with its cert number.
         </p>
+        <div className="mt-6 flex flex-wrap items-center gap-3">
+          <Link
+            to="/vault"
+            className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+          >
+            See the vault
+          </Link>
+          <span className="mono-num text-xs text-muted-foreground">
+            {usd(totals.spent)} spent on cards so far
+          </span>
+        </div>
       </header>
+
 
       <div className="mt-10 flex items-center gap-3">
         <input
@@ -123,9 +139,19 @@ function DexIndex() {
         })}
       </div>
 
-      <footer className="mt-16 border-t border-border pt-6 text-xs text-muted-foreground">
-        Prices from CoinGecko. Creature pairings are for entertainment only — not financial advice.
-      </footer>
+      <section className="mt-16 grid gap-4 sm:grid-cols-3">
+        {[
+          ["01", "Trade", "Pick a pair in the dex and trade it. Prices are live, refreshed each minute."],
+          ["02", "Fees buy cards", "The fee on every trade goes into a card budget — nothing else."],
+          ["03", "Slab it", "Cards are bought, graded, and listed in the vault with their cert number."],
+        ].map(([n, title, body]) => (
+          <div key={n} className="dex-card p-6">
+            <span className="mono-num text-xs text-muted-foreground">{n}</span>
+            <h3 className="mt-2 text-xl">{title}</h3>
+            <p className="mt-2 text-sm text-muted-foreground">{body}</p>
+          </div>
+        ))}
+      </section>
     </main>
   );
 }
