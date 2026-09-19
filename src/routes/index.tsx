@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { BoosterPack } from "@/components/BoosterPack";
+import { BuybackTicker } from "@/components/BuybackTicker";
 import { PokeCard } from "@/components/PokeCard";
 import { listCards } from "@/lib/queries";
 
@@ -174,12 +175,7 @@ function Home() {
                 See the buyback log
               </Link>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <MiniStat label="Of fees used" value="100%" />
-              <MiniStat label="Buyback runs" value="Every 10 min" />
-              <MiniStat label="Proof" value="Solscan" />
-              <MiniStat label="Kept by us" value="0%" />
-            </div>
+            <BuybackTicker />
           </div>
         </div>
       </section>
@@ -239,15 +235,6 @@ function Tile({
       <span className="mono-num text-xs font-bold opacity-70">{step}</span>
       <h3 className="mt-1 font-display text-xl font-bold">{title}</h3>
       <p className="mt-1.5 text-sm leading-relaxed opacity-90">{children}</p>
-    </div>
-  );
-}
-
-function MiniStat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-xl bg-white/10 p-3.5">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">{label}</p>
-      <p className="mono-num mt-0.5 text-lg font-bold">{value}</p>
     </div>
   );
 }

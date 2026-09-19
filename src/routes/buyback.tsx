@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+
+import { BuybackTicker } from "@/components/BuybackTicker";
 import { useEffect, useState } from "react";
 
 import {
@@ -88,6 +90,10 @@ function BuybackPage() {
         </div>
       </section>
 
+      <section className="mx-auto max-w-6xl px-5 pt-10">
+        <BuybackTicker />
+      </section>
+
       <section className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid gap-4 sm:grid-cols-3">
           <Card color="bg-poke-yellow text-poke-navy" title="100% of fees">
@@ -97,8 +103,9 @@ function BuybackPage() {
             The buyback runs on a {BUYBACK_INTERVAL_MS / 60000}-minute clock, not whenever someone
             feels like it.
           </Card>
-          <Card color="bg-poke-green text-white" title="Solscan proof">
-            Each run links straight to its transaction on Solscan. No screenshots, no trust needed.
+          <Card color="bg-poke-green text-white" title="Verify it yourself">
+            Nothing is decided behind the scenes: the clock is fixed, the amount is whatever the
+            fees were, and each run links straight to its transaction on Solscan.
           </Card>
         </div>
       </section>
