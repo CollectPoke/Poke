@@ -53,12 +53,46 @@ function GalleryPage() {
       byKey.get(name.trim().toLowerCase()) ?? byKey.get(ticker.trim().toLowerCase()) ?? null;
   }, [pairings]);
 
-  const shown = (cards ?? []).filter((c) => {
-    if (rarity !== "all" && c.rarity !== rarity) return false;
-    const needle = q.trim().toLowerCase();
-    if (!needle) return true;
-    return c.name.toLowerCase().includes(needle) || c.ticker.toLowerCase().includes(needle);
-  });
+  const priceOf = (c: { list_price: number | null; last_price: number | null }) =>
+    c.list_price ?? c.last_price ?? null;
+
+  const shown = (cards ?? [])
+    .filter((c) => {
+      if (rarity !== "all" && c.rarity !== rarity) return false;
+      if (cardType !== "all" && c.card_type !== cardType) return false;
+
+      const min = minPrice.trim() === "" ? null : Number(minPrice);
+      const max = maxPrice.trim() === "" ? null : Number(maxPrice);
+      if (min !== null || max !== null) {
+        const p = priceOf(c);
+        if (p === null) return false;
+        if (min !== null && !Number.isNaN(min) && p < min) return false;
+        if (max !== null && !Number.isNaN(max) && p > max) return false;
+      }
+
+      const needle = q.trim().toLowerCase();
+      if (!needle) return true;
+      return c.name.toLowerCase().includes(needle) || c.ticker.toLowerCase().includes(needle);
+    })
+    .sort((a, b) => {
+      if (sort === "newest") return b.created_at.localeCompare(a.created_at);
+      if (sort === "oldest") return a.created_at.localeCompare(b.created_at);
+      const pa = priceOf(a);
+      const pb = priceOf(b);
+      if (pa === null && pb === null) return 0;
+      if (pa === null) return 1;
+      if (pb === null) return -1;
+      return sort === "price-desc" ? pb - pa : pa - pb;
+    });
+
+  const resetFilters = () => {
+    setRarity("all");
+    setCardType("all");
+    setMinPrice("");
+    setMaxPrice("");
+    setQ("");
+    setSort("newest");
+  };
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
@@ -69,13 +103,52 @@ function GalleryPage() {
         </p>
       </header>
 
-      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search your cards…"
-          className="w-full rounded-xl border-2 border-border bg-card px-4 py-2.5 text-sm font-medium outline-none focus:border-poke-blue sm:max-w-xs"
-        />
+      <div className="mt-6 space-y-3 rounded-3xl border border-border bg-card p-4 sm:p-5">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Search your cards…"
+            className="w-full rounded-xl border-2 border-border bg-card px-4 py-2.5 text-sm font-medium outline-none focus:border-poke-blue sm:max-w-xs"
+          />
+          <div className="flex flex-1 flex-wrap items-center gap-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Sort</span>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value as typeof sort)}
+              className="rounded-xl border-2 border-border bg-card px-3 py-2 text-sm font-bold text-poke-navy outline-none focus:border-poke-blue"
+            >
+              <option value="newest">Newest first</option>
+              <option value="oldest">Oldest first</option>
+              <option value="price-desc">Price: high to low</option>
+              <option value="price-asc">Price: low to high</option>
+            </select>
+            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground sm:ml-2">
+              Price (SOL)
+            </span>
+            <input
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              inputMode="decimal"
+              placeholder="Min"
+              className="mono-num w-24 rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-poke-blue"
+            />
+            <input
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              inputMode="decimal"
+              placeholder="Max"
+              className="mono-num w-24 rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-poke-blue"
+            />
+            <button
+              onClick={resetFilters}
+              className="ml-auto rounded-xl border-2 border-border bg-card px-3 py-2 text-xs font-bold text-muted-foreground hover:bg-secondary"
+            >
+              Reset
+            </button>
+          </div>
+        </div>
+
         <div className="flex flex-wrap gap-2">
           <Chip active={rarity === "all"} onClick={() => setRarity("all")}>
             All rarities
@@ -86,7 +159,23 @@ function GalleryPage() {
             </Chip>
           ))}
         </div>
+
+        <div className="flex flex-wrap gap-2">
+          <Chip active={cardType === "all"} onClick={() => setCardType("all")}>
+            All types
+          </Chip>
+          {CARD_TYPES.map((t) => (
+            <Chip key={t} active={cardType === t} onClick={() => setCardType(t)}>
+              {t}
+            </Chip>
+          ))}
+        </div>
+
+        <p className="text-xs font-semibold text-muted-foreground">
+          Showing {shown.length} of {cards?.length ?? 0} cards
+        </p>
       </div>
+
 
       {isLoading ? (
         <p className="mt-8 text-sm text-muted-foreground">Loading your gallery…</p>
