@@ -168,7 +168,7 @@ function MintPage() {
       <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-poke-yellow bg-card p-4 shadow-sm">
         <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
         <div>
-          <p className="text-sm font-bold">Real mainnet launch · 0.1 SOL maximum</p>
+          <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
           <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The card appears only after Solana confirms it. Mainnet spending is irreversible.</p>
         </div>
       </div>
