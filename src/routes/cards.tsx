@@ -53,7 +53,7 @@ function CardsPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search name or ticker"
-          className="w-56 rounded-full border border-border bg-card px-4 py-2 text-sm outline-none focus:border-poke-blue"
+          className="w-full rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-poke-blue sm:w-56"
         />
         <button
           onClick={() => setForSaleOnly(!forSaleOnly)}

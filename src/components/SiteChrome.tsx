@@ -53,10 +53,10 @@ export function SiteHeader() {
                 window.setTimeout(() => setCaCopied(false), 1600);
               }}
               aria-label="Copy the $POKE contract address"
-              className="flex items-center gap-1.5 text-white transition-colors hover:text-poke-yellow"
+              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-white transition-colors hover:text-poke-yellow"
               title="Click to copy the $POKE contract address"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.2" />
                 <circle cx="12" cy="12" r="3.2" />
               </svg>
@@ -66,9 +66,9 @@ export function SiteHeader() {
             <Link
               to="/docs"
               aria-label="Poke docs and how-to"
-              className="flex items-center gap-1.5 text-white transition-colors hover:text-poke-yellow"
+              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-white transition-colors hover:text-poke-yellow"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <path d="M6.5 2A2.5 2.5 0 0 0 4 4.5v13A2.5 2.5 0 0 0 6.5 20H20a1 1 0 0 0 0-2H6.5a.5.5 0 0 1 0-1H20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.5Zm2 3h8a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.78.41L15 11l-1.22.91A.5.5 0 0 1 13 11.5v-6a.5.5 0 0 1 .5-.5Z" />
               </svg>
               <span className="hidden sm:inline">Docs</span>
@@ -78,9 +78,9 @@ export function SiteHeader() {
               target="_blank"
               rel="noreferrer"
               aria-label="Poke on GitHub"
-              className="flex items-center gap-1.5 text-white transition-colors hover:text-poke-yellow"
+              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-white transition-colors hover:text-poke-yellow"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12Z" />
               </svg>
               <span className="hidden md:inline">GitHub</span>
@@ -90,9 +90,9 @@ export function SiteHeader() {
               target="_blank"
               rel="noreferrer"
               aria-label="Poke on X"
-              className="flex items-center gap-1.5 text-white transition-colors hover:text-poke-yellow"
+              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-white transition-colors hover:text-poke-yellow"
             >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
               </svg>
               <span className="hidden sm:inline">@CollectPokeFun</span>
@@ -159,7 +159,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            <Link to="/mint" className="poke-btn !py-1.5 !px-3.5 text-xs">
+            <Link to="/mint" className="poke-btn !py-2.5 !px-4 text-xs">
               Mint
             </Link>
             <button
@@ -167,7 +167,7 @@ export function SiteHeader() {
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              className="grid h-10 w-10 place-items-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
+              className="grid h-11 w-11 place-items-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-5 w-5" aria-hidden="true">
                 {open ? (
@@ -351,19 +351,21 @@ export function SiteFooter() {
               {item.label}
             </FooterLink>
           ))}
-          <a
-            href="https://solscan.io"
-            target="_blank"
-            rel="noreferrer"
-            className="footer-link"
-          >
-            Solana explorer (Solscan)
-          </a>
+          <li>
+            <a
+              href="https://solscan.io"
+              target="_blank"
+              rel="noreferrer"
+              className="footer-link inline-block py-1"
+            >
+              Solana explorer (Solscan)
+            </a>
+          </li>
         </FooterColumn>
       </div>
 
       <div className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl space-y-2 px-5 py-6 text-[11px] leading-relaxed text-white/50">
+        <div className="mx-auto max-w-6xl space-y-2 px-5 pb-24 pt-6 text-[11px] leading-relaxed text-white/50 sm:pb-6">
           <p>
             Prices are shown in SOL. Minting launches a real Pump.fun coin and costs up to 0.1 SOL
             (0.075 goes into the coin's first buy, the rest covers network fees).
@@ -405,8 +407,8 @@ function FooterLink({
       <Link
         to={to}
         activeOptions={{ exact: exact ?? false, includeSearch: false }}
-        className="footer-link"
-        activeProps={{ className: "footer-link footer-link-active" }}
+        className="footer-link inline-block py-1"
+        activeProps={{ className: "footer-link footer-link-active inline-block py-1" }}
       >
         {children}
       </Link>
