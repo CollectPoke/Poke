@@ -32,6 +32,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       getOrCreateSystemWallet,
       getOrCreateWallet,
       signSimulateAndSendTransaction,
+      signatureOutcome,
     } = await import("@/lib/wallet.server");
 
     const name = data.name.trim();
@@ -205,10 +206,43 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       if (completed.error) throw completed.error;
       return { card: card.data, signature, mintAddress };
     } catch (error) {
-      const message = error instanceof Error ? error.message : "The launch failed.";
+      let message = error instanceof Error ? error.message : "The launch failed.";
+
+      // Nothing was ever broadcast -> no SOL left the wallet. Release the name.
+      if (!transactionSent || !signature) {
+        await supabaseAdmin
+          .from("coin_launches")
+          .update({ status: "failed", error_message: `${message} No SOL was taken from your wallet.` })
+          .eq("id", launchId);
+        throw new Error(`${message} No SOL was taken from your wallet.`);
+      }
+
+      // Something was broadcast: find out whether it actually cost the user anything.
+      const outcome = await signatureOutcome(signature);
+      if (outcome === "dropped" || outcome === "reverted") {
+        // The chain never took the money (a reverted tx only burns the ~0.000005 SOL
+        // network fee). Clear the receipt so the name and the retry are both clean.
+        await supabaseAdmin
+          .from("coin_launches")
+          .update({
+            status: "failed",
+            mint_address: null,
+            tx_signature: null,
+            error_message: `${message} The launch never went through, so your SOL is still in your wallet.`,
+          })
+          .eq("id", launchId);
+        throw new Error(
+          "The launch didn't go through, so your SOL is still in your wallet. You can try again.",
+        );
+      }
+
+      if (outcome === "landed") {
+        message =
+          "Your coin launched on Solana but the card wasn't finished. Hit mint again with the same name to finish it — you won't be charged twice.";
+      }
       await supabaseAdmin
         .from("coin_launches")
-        .update(transactionSent ? { error_message: message } : { status: "failed", error_message: message })
+        .update({ error_message: message })
         .eq("id", launchId);
       throw new Error(message);
     }
