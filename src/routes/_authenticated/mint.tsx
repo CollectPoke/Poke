@@ -59,7 +59,9 @@ function MintPage() {
     queryFn: fetchWallet,
     refetchInterval: 8000,
   });
-  const underfunded = wallet !== undefined && wallet.balance < LAUNCH_COST_SOL;
+  const devBuySol = devBuy ? Math.min(5, Math.max(0, Number(devBuyAmount) || 0)) : 0;
+  const totalCost = devBuySol + 0.025;
+  const underfunded = wallet !== undefined && wallet.balance < totalCost;
 
   // Pop the funding window as soon as we know the balance is too low.
   useEffect(() => {
@@ -119,6 +121,7 @@ function MintPage() {
         description,
         imageUrl,
         listPrice: listPrice ? Number(listPrice) : null,
+        devBuySol,
       } });
       setMintedCard({
         ...result.card,
