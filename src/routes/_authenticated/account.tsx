@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { PokeCard } from "@/components/PokeCard";
 import { WalletPanel } from "@/components/WalletPanel";
+import { SaleCelebration } from "@/components/SaleCelebration";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { myCards, mySaleHistory } from "@/lib/queries";
@@ -52,6 +53,16 @@ function AccountPage() {
   });
   const history = sales ?? [];
   const [tab, setTab] = useState<"owned" | "listed" | "history">("owned");
+  const [saleToCelebrate, setSaleToCelebrate] = useState<(typeof history)[number] | null>(null);
+
+  useEffect(() => {
+    const latestSale = history.find((event) => event.counterparty_id === userId && event.tx_signature && event.card);
+    if (!latestSale || !latestSale.tx_signature) return;
+    const seenKey = `poke-sale-seen:${latestSale.id}`;
+    if (window.localStorage.getItem(seenKey)) return;
+    window.localStorage.setItem(seenKey, "1");
+    setSaleToCelebrate(latestSale);
+  }, [history, userId]);
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
@@ -252,6 +263,17 @@ function AccountPage() {
           ))}
         </div>
       )}
+      {saleToCelebrate?.card && saleToCelebrate.tx_signature ? (
+        <SaleCelebration
+          cardName={saleToCelebrate.card.name}
+          ticker={saleToCelebrate.card.ticker}
+          imageUrl={saleToCelebrate.card.image_url}
+          price={saleToCelebrate.price}
+          buyer={saleToCelebrate.actor?.username ?? "a new trainer"}
+          signature={saleToCelebrate.tx_signature}
+          onClose={() => setSaleToCelebrate(null)}
+        />
+      ) : null}
     </main>
   );
 }
