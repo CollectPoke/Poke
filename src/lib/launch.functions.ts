@@ -95,8 +95,8 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           description: data.description || null,
           image_url: data.imageUrl,
           metadata_url: metadataUrl,
-          launch_budget_sol: 0.1,
-          initial_buy_sol: INITIAL_BUY_LAMPORTS / 1_000_000_000,
+          launch_budget_sol: requiredSol,
+          initial_buy_sol: devBuyLamports / 1_000_000_000,
           status: "pending",
         })
         .select("id, creator_id, mint_address, tx_signature, status")
@@ -128,7 +128,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
             name,
             symbol: ticker,
             uri: `${origin}/api/public/coin-metadata/${launchId}`,
-            solLamports: String(INITIAL_BUY_LAMPORTS),
+            solLamports: String(devBuyLamports),
             mayhemMode: false,
             cashback: false,
             tokenizedAgent: false,
@@ -143,14 +143,14 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           mintPublicKey: z.string().min(32).max(50),
           solLamports: z.union([z.string(), z.number()]),
         }).parse(await response.json());
-        if (Number(built.solLamports) !== INITIAL_BUY_LAMPORTS) {
+        if (Number(built.solLamports) !== devBuyLamports) {
           throw new Error("Pump.fun returned an unexpected launch amount. No SOL was spent.");
         }
         mintAddress = built.mintPublicKey;
         signature = await signSimulateAndSendTransaction(
           wallet,
           built.transaction,
-          LAUNCH_BUDGET_LAMPORTS,
+          budgetLamports,
           async (preparedSignature) => {
             const saved = await supabaseAdmin
               .from("coin_launches")
@@ -194,7 +194,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           list_price: data.listPrice,
           launch_id: launchId,
           launch_tx_signature: signature,
-          mint_price: 0.1,
+          mint_price: requiredSol,
         })
         .select("*")
         .single();
