@@ -4,6 +4,9 @@ import { useState } from "react";
 import { CATALOG, spriteUrl, TYPE_CLASS } from "@/lib/catalog";
 import { marketsQueryOptions } from "@/lib/markets-query";
 import { formatChange, formatCompact, formatPrice } from "@/lib/format";
+import { vaultTotals } from "@/lib/vault";
+
+const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
 
 export const Route = createFileRoute("/")({
   head: () => ({
