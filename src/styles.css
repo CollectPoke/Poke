@@ -452,7 +452,7 @@
 .sale-coin-9 { left: 87%; animation-delay: 520ms; } .sale-coin-10 { left: 95%; animation-delay: 1650ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .gate-aurora, .gate-ring, .ball-float, .ball-shake, .gate-pulse, .sprite-bob, .pack-float, .pack-sheen {
+  .gate-aurora, .gate-ring, .ball-float, .ball-shake, .gate-pulse, .sprite-bob, .pack-float, .pack-sheen, .welcome-ball-drop, .welcome-flash, .welcome-ball-open g, .welcome-card-pop, .welcome-spark {
     animation: none !important;
   }
   .purchase-card-stage, .purchase-pack, .purchase-pack-flap, .purchase-result, .purchase-opening-label, .purchase-spark {
@@ -463,4 +463,50 @@
     animation-duration: 1ms !important;
     animation-delay: 0ms !important;
   }
+}
+
+/* ===== Welcome trainer (account created) ===== */
+@keyframes welcome-ball-drop {
+  0% { transform: translateY(-60vh) rotate(-20deg); }
+  60% { transform: translateY(12px) rotate(8deg); }
+  80% { transform: translateY(-10px) rotate(-4deg); }
+  100% { transform: translateY(0) rotate(0deg); }
+}
+.welcome-ball-drop { animation: welcome-ball-drop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+
+@keyframes welcome-flash {
+  0% { transform: scale(0); opacity: 1; }
+  100% { transform: scale(1); opacity: 0; }
+}
+.welcome-flash {
+  position: absolute; inset: -140px; border-radius: 9999px;
+  background: radial-gradient(circle, rgba(255,222,0,0.95), rgba(255,222,0,0) 65%);
+  animation: welcome-flash 0.7s ease-out forwards;
+}
+
+@keyframes welcome-ball-half-top {
+  to { transform: translateY(-26px) rotate(-8deg); }
+}
+@keyframes welcome-ball-half-bottom {
+  to { transform: translateY(26px) rotate(8deg); }
+}
+.welcome-ball-open .welcome-ball-top { animation: welcome-ball-half-top 0.6s ease-out forwards; transform-origin: 48px 48px; }
+.welcome-ball-open .welcome-ball-bottom { animation: welcome-ball-half-bottom 0.6s ease-out forwards; transform-origin: 48px 48px; }
+
+@keyframes welcome-card-pop {
+  0% { transform: scale(0.6) translateY(30px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+.welcome-card-pop { animation: welcome-card-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+
+@keyframes welcome-sparkle {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: scale(1.4) rotate(90deg); opacity: 0; }
+}
+.welcome-spark {
+  position: absolute; width: 10px; height: 10px;
+  background: #ffde00;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  animation: welcome-sparkle 1.4s ease-out infinite;
 }
