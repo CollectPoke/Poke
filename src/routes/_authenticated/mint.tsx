@@ -1,14 +1,17 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 
 import { ArtworkDrop } from "@/components/ArtworkDrop";
+import { FundingModal, LAUNCH_COST_SOL } from "@/components/FundingModal";
 import { MintReveal } from "@/components/MintReveal";
 import { PokeCard } from "@/components/PokeCard";
 import { useAuth } from "@/lib/auth";
 import type { CardWithPeople } from "@/lib/cards";
 import { launchCoinAndMintCard } from "@/lib/launch.functions";
 import { isNameAvailable } from "@/lib/queries";
+import { getMyWallet } from "@/lib/wallet.functions";
 
 export const Route = createFileRoute("/_authenticated/mint")({
   head: () => ({
