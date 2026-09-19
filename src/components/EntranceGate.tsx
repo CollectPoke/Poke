@@ -66,12 +66,12 @@ export function EntranceGate() {
             }`}
           >
             <span
-              className={`absolute top-0 h-1/2 w-full bg-gradient-to-b from-[#ff1c1c] to-[#c40000] transition-transform duration-700 ${
+              className={`absolute left-0 top-0 h-1/2 w-full bg-gradient-to-b from-[#ff1c1c] to-[#c40000] transition-transform duration-700 ${
                 opening ? "-translate-y-[130%] -rotate-12" : ""
               }`}
             />
             <span
-              className={`absolute bottom-0 h-1/2 w-full bg-gradient-to-t from-[#f0f0f0] to-white transition-transform duration-700 ${
+              className={`absolute bottom-0 left-0 h-1/2 w-full bg-gradient-to-t from-[#f0f0f0] to-white transition-transform duration-700 ${
                 opening ? "translate-y-[130%] rotate-12" : ""
               }`}
             />
