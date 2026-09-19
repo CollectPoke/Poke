@@ -281,6 +281,32 @@ export async function confirmSignature(signature: string): Promise<void> {
   throw new Error("The launch is still confirming on Solana. Try minting again shortly to resume it.");
 }
 
+/**
+ * What actually happened on-chain for a signature.
+ * "landed"  — the transaction succeeded (SOL was spent)
+ * "reverted"— it hit the chain but errored (only the tiny network fee applies)
+ * "dropped" — the chain has never seen it, so nothing was charged
+ * "unknown" — we could not reach the chain to check
+ */
+export async function signatureOutcome(
+  signature: string,
+): Promise<"landed" | "reverted" | "dropped" | "unknown"> {
+  try {
+    const result = await rpc<{
+      value: Array<{ confirmationStatus?: string; err?: unknown } | null>;
+    }>("getSignatureStatuses", [[signature], { searchTransactionHistory: true }]);
+    const status = result.value?.[0];
+    if (!status) return "dropped";
+    if (status.err) return "reverted";
+    if (status.confirmationStatus === "confirmed" || status.confirmationStatus === "finalized") {
+      return "landed";
+    }
+    return "unknown";
+  } catch {
+    return "unknown";
+  }
+}
+
 function u64le(value: number): number[] {
   const buf = new Uint8Array(8);
   new DataView(buf.buffer).setBigUint64(0, BigInt(value), true);
