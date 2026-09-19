@@ -27,12 +27,24 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const SPRITES = [
-  { id: 25, left: "-2%", top: "4%", size: "120px" },
-  { id: 6, left: "86%", top: "2%", size: "160px" },
-  { id: 150, left: "62%", top: "66%", size: "130px" },
-  { id: 143, left: "88%", top: "48%", size: "140px" },
-  { id: 94, left: "50%", top: "-8%", size: "120px" },
+const ART = (id: number) =>
+  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
+
+// floating booster packs around the hero, each with a Pokémon on the wrapper
+const PACKS: {
+  id: number;
+  left?: string;
+  right?: string;
+  top?: string;
+  bottom?: string;
+  width: string;
+  tilt: string;
+}[] = [
+  { id: 25, left: "1%", top: "3%", width: "w-20 md:w-24", tilt: "-10deg" },
+  { id: 6, right: "30%", top: "8%", width: "w-16 md:w-20", tilt: "8deg" },
+  { id: 150, right: "3%", bottom: "6%", width: "w-20 md:w-28", tilt: "-4deg" },
+  { id: 94, left: "1%", bottom: "3%", width: "w-14 md:w-20", tilt: "6deg" },
+  { id: 143, left: "56%", top: "-4%", width: "w-14 md:w-20", tilt: "-8deg" },
 ];
 
 function Home() {
@@ -48,35 +60,23 @@ function Home() {
     <main>
       {/* Hero */}
       <section className="relative overflow-hidden bg-poke-blue">
-        {/* floating sprites */}
-        <div className="pointer-events-none absolute inset-0 opacity-90">
-          {SPRITES.map((s, i) => (
-            <img
-              key={s.id}
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${s.id}.png`}
-              alt=""
-              className="sprite-bob absolute drop-shadow-xl"
-              style={{
-                left: s.left,
-                top: s.top,
-                width: s.size,
-                animationDelay: `${i * 0.7}s`,
-                opacity: 0.28,
-              }}
-            />
-          ))}
-        </div>
-        {/* floating booster packs */}
+        {/* floating booster packs with Pokémon on the wrapper */}
         <div className="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden>
-          <div className="absolute" style={{ left: "24%", top: "3%" }}>
-            <BoosterPack label="Series 01" delay={0} tilt="-10deg" className="w-20 opacity-95 md:w-24" />
-          </div>
-          <div className="absolute" style={{ right: "33%", top: "9%" }}>
-            <BoosterPack label="Series 01" delay={1.4} tilt="8deg" className="w-16 opacity-90 md:w-20" />
-          </div>
-          <div className="absolute" style={{ right: "3%", bottom: "6%" }}>
-            <BoosterPack label="Series 01" delay={2.6} tilt="-4deg" className="w-20 opacity-95 md:w-28" />
-          </div>
+          {PACKS.map((p, i) => (
+            <div
+              key={p.id}
+              className="absolute"
+              style={{ left: p.left, right: p.right, top: p.top, bottom: p.bottom }}
+            >
+              <BoosterPack
+                label="Series 01"
+                delay={i * 1.1}
+                tilt={p.tilt}
+                art={ART(p.id)}
+                className={`${p.width} opacity-95`}
+              />
+            </div>
+          ))}
         </div>
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
           <div className="text-white">
