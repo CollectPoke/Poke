@@ -66,7 +66,7 @@ function CoinPage() {
           href="https://pump.fun"
           target="_blank"
           rel="noreferrer"
-          className="ml-auto rounded-full bg-foreground px-5 py-2.5 text-sm text-background transition-opacity hover:opacity-90"
+          className="poke-btn ml-auto"
         >
           Trade on pump.fun
         </a>

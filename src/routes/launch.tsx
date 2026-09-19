@@ -188,7 +188,7 @@ function LaunchPage() {
 
           <button
             type="submit"
-            className="w-full rounded-full bg-foreground px-5 py-3 text-sm text-background transition-opacity hover:opacity-90"
+            className="poke-btn w-full"
           >
             Approve and launch
           </button>

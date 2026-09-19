@@ -4,20 +4,6 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/*
- * Design system definition.
- *
- * The @theme inline block maps CSS custom properties to Tailwind utility
- * classes (e.g. --color-primary -> bg-primary, text-primary).
- *
- * The :root and .dark blocks define the actual color values using oklch.
- * All colors MUST use oklch format.
- *
- * To add a new semantic color:
- * 1. Add the variable to :root (light value) and .dark (dark value)
- * 2. Register it in @theme inline as --color-<name>: var(--<name>)
- */
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -69,32 +55,41 @@
   --color-type-psychic: var(--type-psychic);
   --color-type-poison: var(--type-poison);
   --color-type-normal: var(--type-normal);
-  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  /* Pokémon.com-style brand palette */
+  --color-poke-yellow: oklch(0.86 0.17 95);
+  --color-poke-yellow-foreground: oklch(0.24 0.04 260);
+  --color-poke-blue: oklch(0.55 0.13 250);
+  --color-poke-navy: oklch(0.24 0.045 260);
+  --color-poke-navy-deep: oklch(0.19 0.04 260);
+  --color-poke-red: oklch(0.55 0.2 27);
+  --color-poke-purple: oklch(0.5 0.17 305);
+  --color-poke-green: oklch(0.65 0.15 150);
+  --font-display: "Baloo 2", ui-rounded, system-ui, sans-serif;
   --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, monospace;
-  --shadow-card: 0 1px 2px oklch(0.2 0.03 265 / 0.05), 0 8px 24px oklch(0.2 0.03 265 / 0.06);
-  --shadow-card-hover: 0 2px 4px oklch(0.2 0.03 265 / 0.06), 0 16px 40px oklch(0.2 0.03 265 / 0.1);
+  --shadow-card: 0 2px 0 oklch(0.2 0.03 265 / 0.06), 0 8px 24px oklch(0.2 0.03 265 / 0.07);
+  --shadow-card-hover: 0 3px 0 oklch(0.2 0.03 265 / 0.08), 0 16px 40px oklch(0.2 0.03 265 / 0.12);
 }
 
 :root {
-  --radius: 0.875rem;
-  --background: oklch(0.985 0.005 95);
-  --foreground: oklch(0.21 0.02 265);
-  --surface: oklch(0.965 0.008 95);
+  --radius: 1rem;
+  --background: oklch(0.99 0.004 250);
+  --foreground: oklch(0.24 0.045 260);
+  --surface: oklch(0.965 0.008 250);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.21 0.02 265);
+  --card-foreground: oklch(0.24 0.045 260);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.21 0.02 265);
-  --primary: oklch(0.25 0.03 265);
-  --primary-foreground: oklch(0.985 0.005 95);
-  --secondary: oklch(0.955 0.008 95);
-  --secondary-foreground: oklch(0.25 0.03 265);
-  --muted: oklch(0.955 0.008 95);
-  --muted-foreground: oklch(0.52 0.02 265);
-  --accent: oklch(0.93 0.05 95);
-  --accent-foreground: oklch(0.25 0.03 265);
-  --success: oklch(0.58 0.14 152);
-  --danger: oklch(0.58 0.2 25);
+  --popover-foreground: oklch(0.24 0.045 260);
+  --primary: oklch(0.24 0.045 260);
+  --primary-foreground: oklch(0.99 0.004 250);
+  --secondary: oklch(0.945 0.012 250);
+  --secondary-foreground: oklch(0.24 0.045 260);
+  --muted: oklch(0.945 0.012 250);
+  --muted-foreground: oklch(0.5 0.02 260);
+  --accent: oklch(0.86 0.17 95);
+  --accent-foreground: oklch(0.24 0.045 260);
+  --success: oklch(0.6 0.15 150);
+  --danger: oklch(0.55 0.2 27);
   --type-fire: oklch(0.62 0.18 40);
   --type-water: oklch(0.58 0.14 240);
   --type-grass: oklch(0.58 0.13 145);
@@ -104,9 +99,9 @@
   --type-normal: oklch(0.55 0.03 265);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.929 0.013 255.508);
-  --input: oklch(0.929 0.013 255.508);
-  --ring: oklch(0.704 0.04 256.788);
+  --border: oklch(0.915 0.012 250);
+  --input: oklch(0.915 0.012 250);
+  --ring: oklch(0.55 0.13 250);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -164,6 +159,14 @@
 
   body {
     background-color: var(--color-background);
+    /* diagonal pinstripe, like the official site */
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent 0,
+      transparent 14px,
+      oklch(0.9 0.012 250 / 0.45) 14px,
+      oklch(0.9 0.012 250 / 0.45) 16px
+    );
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -173,7 +176,7 @@
   h2,
   h3 {
     font-family: var(--font-display);
-    font-weight: 400;
+    font-weight: 700;
     letter-spacing: -0.01em;
   }
 }
@@ -199,4 +202,35 @@
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
+}
+
+@utility poke-btn {
+  display: inline-block;
+  border-radius: 999px;
+  background-color: var(--color-poke-yellow);
+  color: var(--color-poke-yellow-foreground);
+  font-family: var(--font-display);
+  font-weight: 700;
+  padding: 0.75rem 1.5rem;
+  font-size: 0.875rem;
+  border-bottom: 3px solid oklch(0.72 0.14 88);
+  transition:
+    transform 150ms ease,
+    filter 150ms ease;
+
+  &:hover {
+    filter: brightness(1.05);
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: translateY(1px);
+    border-bottom-width: 1px;
+  }
+}
+
+@utility poke-btn-navy {
+  background-color: var(--color-poke-navy);
+  color: oklch(0.97 0.01 250);
+  border-bottom-color: var(--color-poke-navy-deep);
 }
