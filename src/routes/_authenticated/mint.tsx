@@ -45,8 +45,6 @@ function MintPage() {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [listPrice, setListPrice] = useState("");
-  const [devBuy, setDevBuy] = useState(true);
-  const [devBuyAmount, setDevBuyAmount] = useState("0.075");
   const [available, setAvailable] = useState<boolean | null>(null);
   const [checking, setChecking] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -66,8 +64,7 @@ function MintPage() {
     queryFn: fetchWallet,
     refetchInterval: 8000,
   });
-  const devBuySol = devBuy ? Math.min(5, Math.max(0, Number(devBuyAmount) || 0)) : 0;
-  const totalCost = devBuySol + 0.025;
+  const totalCost = 0.1;
   const underfunded = wallet !== undefined && wallet.balance < totalCost;
 
   // Pop the funding window as soon as we know the balance is too low.
@@ -128,7 +125,7 @@ function MintPage() {
         description,
         imageUrl,
         listPrice: listPrice ? Number(listPrice) : null,
-        devBuySol,
+        devBuySol: 0,
       } });
       setMintedCard({
         ...result.card,
