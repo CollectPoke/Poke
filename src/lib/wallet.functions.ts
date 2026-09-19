@@ -56,7 +56,10 @@ export const buyCardWithSol = createServerFn({ method: "POST" })
     const price = Number(card.list_price);
     const signature = await sendSol(buyerWallet, sellerWallet.public_key, price);
 
-    const { error: rpcError } = await context.supabase.rpc("buy_card", { _card_id: data.cardId });
+    const { error: rpcError } = await supabaseAdmin.rpc("buy_card", {
+      _card_id: data.cardId,
+      _buyer_id: context.userId,
+    });
     if (rpcError) {
       throw new Error(
         `Payment sent (${signature}) but the transfer of ownership failed: ${rpcError.message}. Contact support with this signature.`,

@@ -296,7 +296,7 @@ export type Database = {
     }
     Functions: {
       buy_card: {
-        Args: { _card_id: string }
+        Args: { _buyer_id: string; _card_id: string }
         Returns: {
           card_type: string
           contract_address: string

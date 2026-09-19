@@ -78,9 +78,6 @@ function CardPage() {
           .update({ list_price: value })
           .eq("id", cardId);
         if (err) throw err;
-        await supabase
-          .from("card_events")
-          .insert({ card_id: cardId, kind: "list", actor_id: user.id, price: value });
         return;
       }
       if (kind === "unlist") {
@@ -89,9 +86,6 @@ function CardPage() {
           .update({ list_price: null })
           .eq("id", cardId);
         if (err) throw err;
-        await supabase
-          .from("card_events")
-          .insert({ card_id: cardId, kind: "unlist", actor_id: user.id });
         return;
       }
       const { error: err } = await supabase
@@ -99,9 +93,6 @@ function CardPage() {
         .update({ status: "burned", list_price: null })
         .eq("id", cardId);
       if (err) throw err;
-      await supabase
-        .from("card_events")
-        .insert({ card_id: cardId, kind: "burn", actor_id: user.id });
     },
     onSuccess: () => {
       setError(null);
