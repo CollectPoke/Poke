@@ -3,6 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
+import { OfferPanel } from "@/components/OfferPanel";
 import { PokeCard } from "@/components/PokeCard";
 import { PurchaseReveal } from "@/components/PurchaseReveal";
 import { supabase } from "@/integrations/supabase/client";
@@ -289,6 +290,10 @@ function CardPage() {
               </a>
             )}
           </div>
+
+          {user && !burned ? (
+            <OfferPanel cardId={card.id} userId={user.id} isOwner={isOwner} />
+          ) : null}
 
           {/* Ownership chain */}
           <h2 className="mt-8 font-display text-xl font-bold">Previous owners</h2>
