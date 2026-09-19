@@ -245,7 +245,14 @@ export async function signSimulateAndSendTransaction(
     },
   ]);
   if (simulation.value.err) {
-    throw new Error("The Pump.fun launch simulation failed. No SOL was spent.");
+    console.error("launch simulation failed", {
+      err: simulation.value.err,
+      logs: simulation.value.logs?.slice(-10),
+    });
+    const detail = simulation.value.logs?.filter((line) => /error|failed/i.test(line)).slice(-2).join(" | ");
+    throw new Error(
+      `The Pump.fun launch simulation failed. No SOL was spent.${detail ? ` (${detail})` : ""}`,
+    );
   }
   const afterLamports = simulation.value.accounts?.[0]?.lamports;
   if (typeof afterLamports !== "number") {
