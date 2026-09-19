@@ -258,7 +258,7 @@ const footerAccount: { to: string; label: string }[] = [
   { to: "/auth", label: "Sign in / Create account" },
   { to: "/account", label: "My binder" },
   { to: "/gallery", label: "My Cards" },
-  { to: "/mint", label: "Launch a card (0.1 SOL max)" },
+  { to: "/mint", label: "Launch a card (0.1 SOL flat fee)" },
 ];
 
 const footerHowTo: { to: string; label: string }[] = [
@@ -367,8 +367,8 @@ export function SiteFooter() {
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-6xl space-y-2 px-5 pb-24 pt-6 text-[11px] leading-relaxed text-white/50 sm:pb-6">
           <p>
-            Prices are shown in SOL. Minting launches a real Pump.fun coin and costs up to 0.1 SOL
-            (0.075 goes into the coin's first buy, the rest covers network fees).
+            Prices are shown in SOL. Minting launches a real Pump.fun coin for a flat 0.1 SOL fee
+            (it covers the launch and network fees).
           </p>
           <p>
             Pokémon and card artwork belong to Nintendo, Creatures and GAME FREAK / The Pokémon
