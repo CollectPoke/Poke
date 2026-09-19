@@ -22,6 +22,7 @@ export function SiteHeader() {
   const { user, username } = useAuth();
   const { theme } = useTheme();
   const [open, setOpen] = useState(false);
+  const [caCopied, setCaCopied] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
