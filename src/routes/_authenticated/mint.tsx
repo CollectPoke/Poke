@@ -221,17 +221,51 @@ function MintPage() {
             </div>
           </Field>
 
-          <Field label="List for sale immediately" hint="Optional, in SOL">
-            <input
-              type="number"
-              min={0}
-              step="0.01"
-              value={listPrice}
-              onChange={(e) => setListPrice(e.target.value)}
-              placeholder="e.g. 2.5"
-              className={inputClass}
-            />
-          </Field>
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold">List for sale immediately</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Put the card straight on the market after minting.
+                </p>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={listPrice !== ""}
+                onClick={() => setListPrice(listPrice === "" ? "1" : "")}
+                className={[
+                  "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+                  listPrice !== "" ? "bg-poke-green" : "bg-border",
+                ].join(" ")}
+              >
+                <span
+                  className={[
+                    "absolute top-0.5 size-6 rounded-full bg-white shadow transition-all",
+                    listPrice !== "" ? "left-[22px]" : "left-0.5",
+                  ].join(" ")}
+                />
+              </button>
+            </div>
+            {listPrice !== "" && (
+              <div className="mt-3 flex items-center gap-2">
+                <div className="relative flex-1">
+                  <input
+                    type="number"
+                    min={0}
+                    step="0.01"
+                    value={listPrice}
+                    onChange={(e) => setListPrice(e.target.value)}
+                    placeholder="2.5"
+                    className={`${inputClass} pr-14 font-mono`}
+                  />
+                  <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                    SOL
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
 
           {error && <p className="text-sm font-medium text-poke-red">{error}</p>}
 
