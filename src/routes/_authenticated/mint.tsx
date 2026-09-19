@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 
 import { ArtworkDrop } from "@/components/ArtworkDrop";
-import { FundingModal, LAUNCH_COST_SOL } from "@/components/FundingModal";
+import { FundingModal } from "@/components/FundingModal";
 import { MintReveal } from "@/components/MintReveal";
 import { PokeCard } from "@/components/PokeCard";
 import { useAuth } from "@/lib/auth";
@@ -159,7 +159,7 @@ function MintPage() {
               Your wallet needs SOL — balance {wallet.balance.toFixed(4)} SOL
             </p>
             <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-              Launching costs up to {LAUNCH_COST_SOL} SOL. Tap here to see your deposit address and QR code.
+              This launch costs {totalCost.toFixed(3)} SOL. Tap here to see your deposit address and QR code.
             </p>
           </div>
         </button>
@@ -333,7 +333,7 @@ function MintPage() {
     </main>
     {showFunding ? (
       <FundingModal
-        requiredSol={LAUNCH_COST_SOL}
+        requiredSol={totalCost}
         onClose={() => setShowFunding(false)}
         onFunded={() => setTimeout(() => setShowFunding(false), 1800)}
       />
