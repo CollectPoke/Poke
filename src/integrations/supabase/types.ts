@@ -306,19 +306,16 @@ export type Database = {
           created_at: string
           id: string
           username: string
-          wallet_address: string | null
         }
         Insert: {
           created_at?: string
           id: string
           username: string
-          wallet_address?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           username?: string
-          wallet_address?: string | null
         }
         Relationships: []
       }
