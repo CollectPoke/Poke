@@ -6,7 +6,7 @@ import { PokeCard } from "@/components/PokeCard";
 import { useAuth } from "@/lib/auth";
 import { myMintedCards } from "@/lib/queries";
 import { listPairings, pokemonArtwork, type PairingRow } from "@/lib/pairings";
-import { RARITIES, formatPokeCoin, rarityStyle } from "@/lib/cards";
+import { CARD_TYPES, RARITIES, formatPokeCoin, rarityStyle } from "@/lib/cards";
 
 export const Route = createFileRoute("/_authenticated/gallery")({
   head: () => ({
@@ -29,7 +29,11 @@ function GalleryPage() {
   const { user } = useAuth();
   const userId = user?.id ?? "";
   const [rarity, setRarity] = useState<string>("all");
+  const [cardType, setCardType] = useState<string>("all");
   const [q, setQ] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [sort, setSort] = useState<"newest" | "oldest" | "price-desc" | "price-asc">("newest");
 
   const { data: cards, isLoading } = useQuery({
     queryKey: ["my-minted", userId],
