@@ -142,6 +142,14 @@ export function SiteHeader() {
                 </Link>
               ))}
               {user ? (
+                <>
+                <Link
+                  to="/gallery"
+                  className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
+                >
+                  My gallery
+                </Link>
                 <Link
                   to="/account"
                   className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
