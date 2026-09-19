@@ -83,6 +83,38 @@ export async function getBalanceSol(address: string): Promise<number> {
   }
 }
 
+export type WalletActivity = {
+  signature: string;
+  slot: number;
+  blockTime: number | null;
+  status: "pending" | "confirmed" | "failed";
+  changeSol: number | null;
+};
+
+/** Recent on-chain activity for an address, newest first. */
+export async function getRecentActivity(address: string, limit = 12): Promise<WalletActivity[]> {
+  try {
+    const sigs = await rpc<
+      {
+        signature: string;
+        slot: number;
+        blockTime: number | null;
+        err: unknown;
+        confirmationStatus?: string | null;
+      }[]
+    >("getSignaturesForAddress", [address, { limit }]);
+    return (sigs ?? []).map((s) => ({
+      signature: s.signature,
+      slot: s.slot,
+      blockTime: s.blockTime ?? null,
+      status: s.err ? "failed" : s.confirmationStatus === "finalized" ? "confirmed" : "pending",
+      changeSol: null,
+    }));
+  } catch {
+    return [];
+  }
+}
+
 /** compact-u16 length prefix used by Solana's tx format */
 function compactLen(n: number): number[] {
   const out: number[] = [];

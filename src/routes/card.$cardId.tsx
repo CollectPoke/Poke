@@ -119,6 +119,19 @@ function CardPage() {
   const isOwner = !!user && user.id === card.owner_id;
   const burned = card.status === "burned";
 
+  // Oldest → newest chain of owners, built from the sale events.
+  const sales = (events ?? [])
+    .filter((ev) => ev.kind === "sale")
+    .slice()
+    .sort((a, b) => a.created_at.localeCompare(b.created_at));
+  const owners: string[] =
+    sales.length === 0
+      ? []
+      : [
+          sales[0]!.counterparty?.username ?? card.creator?.username ?? "—",
+          ...sales.map((s) => s.actor?.username ?? "—"),
+        ];
+
   return (
     <main className="mx-auto max-w-5xl px-5 py-10">
       <Link to="/cards" className="text-xs font-semibold text-muted-foreground hover:underline">
@@ -263,22 +276,82 @@ function CardPage() {
             )}
           </div>
 
+          {/* Ownership chain */}
+          <h2 className="mt-8 font-display text-xl font-bold">Previous owners</h2>
+          <div className="mt-2 rounded-2xl border border-border bg-card p-4">
+            {owners.length === 0 ? (
+              <p className="text-sm text-muted-foreground">
+                {user ? "Still with its original minter — never sold." : "Sign in to see the owner history."}
+              </p>
+            ) : (
+              <ol className="flex flex-wrap items-center gap-2 text-sm">
+                {owners.map((name, i) => (
+                  <li key={`${name}-${i}`} className="flex items-center gap-2">
+                    <span
+                      className={`rounded-full px-3 py-1 font-semibold ${
+                        i === owners.length - 1
+                          ? "bg-poke-yellow/25 text-foreground"
+                          : "bg-secondary text-muted-foreground"
+                      }`}
+                    >
+                      {name}
+                      {i === 0 ? " · minted" : ""}
+                      {i === owners.length - 1 ? " · now" : ""}
+                    </span>
+                    {i < owners.length - 1 ? <span className="text-muted-foreground">→</span> : null}
+                  </li>
+                ))}
+              </ol>
+            )}
+          </div>
+
           {/* History */}
-          <h2 className="mt-8 font-display text-xl font-bold">History</h2>
+          <h2 className="mt-8 font-display text-xl font-bold">Full history</h2>
           <div className="mt-2 divide-y divide-border rounded-2xl border border-border bg-card">
-            {(events ?? []).length === 0 ? (
+            {!user ? (
+              <p className="p-4 text-sm text-muted-foreground">
+                <Link to="/auth" className="font-bold text-poke-blue underline">
+                  Sign in
+                </Link>{" "}
+                to see this card's full history.
+              </p>
+            ) : (events ?? []).length === 0 ? (
               <p className="p-4 text-sm text-muted-foreground">Nothing yet.</p>
             ) : (
               (events ?? []).map((ev) => (
-                <div key={ev.id} className="flex items-center justify-between gap-3 px-4 py-3 text-sm">
-                  <span className="font-semibold capitalize">{ev.kind}</span>
-                  <span className="text-muted-foreground">{ev.actor?.username ?? "—"}</span>
+                <div key={ev.id} className="flex flex-wrap items-center gap-x-3 gap-y-1 px-4 py-3 text-sm">
+                  <span
+                    className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase ${
+                      ev.kind === "sale"
+                        ? "bg-poke-green/15 text-poke-green"
+                        : ev.kind === "burn"
+                          ? "bg-poke-red/15 text-poke-red"
+                          : "bg-secondary text-muted-foreground"
+                    }`}
+                  >
+                    {ev.kind}
+                  </span>
+                  <span className="font-semibold">
+                    {ev.kind === "sale"
+                      ? `${ev.counterparty?.username ?? "—"} → ${ev.actor?.username ?? "—"}`
+                      : (ev.actor?.username ?? "—")}
+                  </span>
                   <span className="mono-num text-xs text-muted-foreground">
                     {ev.price !== null ? `${ev.price} SOL` : ""}
                   </span>
-                  <span className="mono-num text-xs text-muted-foreground">
-                    {new Date(ev.created_at).toLocaleDateString()}
+                  <span className="mono-num ml-auto text-xs text-muted-foreground">
+                    {new Date(ev.created_at).toLocaleString()}
                   </span>
+                  {ev.tx_signature ? (
+                    <a
+                      href={`https://solscan.io/tx/${ev.tx_signature}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs font-bold text-poke-blue underline"
+                    >
+                      Solscan
+                    </a>
+                  ) : null}
                 </div>
               ))
             )}

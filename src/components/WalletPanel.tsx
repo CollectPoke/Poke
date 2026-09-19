@@ -33,7 +33,15 @@ export function WalletPanel() {
   const [sent, setSent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const wallet = useQuery({ queryKey: ["my-wallet"], queryFn: () => fetchWallet({ data: undefined }) });
+  const wallet = useQuery({
+    queryKey: ["my-wallet"],
+    queryFn: () => fetchWallet({ data: undefined }),
+    refetchInterval: 10_000,
+    refetchOnWindowFocus: true,
+  });
+
+  const activity = wallet.data?.activity ?? [];
+  const pendingCount = activity.filter((a) => a.status === "pending").length;
 
   const reveal = useMutation({
     mutationFn: () => exportKey({ data: undefined }),
@@ -63,10 +71,22 @@ export function WalletPanel() {
           </p>
         </div>
         <div className="rounded-2xl border-2 border-poke-yellow/50 bg-poke-yellow/15 px-5 py-3 text-right">
-          <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">Balance</p>
+          <p className="flex items-center justify-end gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+            <span
+              className={`inline-block size-1.5 rounded-full ${
+                wallet.isFetching ? "animate-pulse bg-poke-green" : "bg-poke-green/60"
+              }`}
+            />
+            Live balance
+          </p>
           <p className="mono-num text-2xl font-extrabold text-foreground">
             {wallet.isLoading ? "…" : `${(wallet.data?.balance ?? 0).toFixed(4)} SOL`}
           </p>
+          {pendingCount > 0 ? (
+            <p className="mt-0.5 text-[10px] font-bold text-poke-blue">
+              {pendingCount} transfer{pendingCount > 1 ? "s" : ""} confirming…
+            </p>
+          ) : null}
         </div>
       </div>
 
@@ -81,6 +101,56 @@ export function WalletPanel() {
           {wallet.data ? <Copy value={wallet.data.address} label="Copy address" /> : null}
         </div>
       </div>
+
+      <div className="mt-6 rounded-2xl border border-border p-4">
+        <div className="flex items-center justify-between gap-3">
+          <p className="font-display text-lg font-bold text-foreground">Transfers</p>
+          <button
+            onClick={() => void qc.invalidateQueries({ queryKey: ["my-wallet"] })}
+            className="rounded-lg border-2 border-border bg-card px-3 py-1.5 text-xs font-bold text-muted-foreground hover:bg-secondary"
+          >
+            Refresh
+          </button>
+        </div>
+        {activity.length === 0 ? (
+          <p className="mt-2 text-sm text-muted-foreground">
+            {wallet.isLoading ? "Checking the chain…" : "No transfers yet. They appear here as they happen."}
+          </p>
+        ) : (
+          <ul className="mt-3 divide-y divide-border">
+            {activity.map((a) => (
+              <li key={a.signature} className="flex items-center justify-between gap-3 py-2 text-sm">
+                <span
+                  className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${
+                    a.status === "pending"
+                      ? "bg-poke-blue/15 text-poke-blue"
+                      : a.status === "failed"
+                        ? "bg-poke-red/15 text-poke-red"
+                        : "bg-poke-green/15 text-poke-green"
+                  }`}
+                >
+                  {a.status === "pending" ? "Confirming" : a.status === "failed" ? "Failed" : "Confirmed"}
+                </span>
+                <span className="mono-num flex-1 truncate text-xs text-muted-foreground">
+                  {a.signature.slice(0, 8)}…{a.signature.slice(-8)}
+                </span>
+                <span className="mono-num hidden text-xs text-muted-foreground sm:block">
+                  {a.blockTime ? new Date(a.blockTime * 1000).toLocaleString() : "just now"}
+                </span>
+                <a
+                  href={`https://solscan.io/tx/${a.signature}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-xs font-bold text-poke-blue underline"
+                >
+                  Solscan
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         {/* Withdraw */}

@@ -5,10 +5,13 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 export const getMyWallet = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
-    const { getOrCreateWallet, getBalanceSol } = await import("./wallet.server");
+    const { getOrCreateWallet, getBalanceSol, getRecentActivity } = await import("./wallet.server");
     const wallet = await getOrCreateWallet(context.userId);
-    const balance = await getBalanceSol(wallet.public_key);
-    return { address: wallet.public_key, balance };
+    const [balance, activity] = await Promise.all([
+      getBalanceSol(wallet.public_key),
+      getRecentActivity(wallet.public_key),
+    ]);
+    return { address: wallet.public_key, balance, activity, checkedAt: Date.now() };
   });
 
 export const exportMyPrivateKey = createServerFn({ method: "POST" })
