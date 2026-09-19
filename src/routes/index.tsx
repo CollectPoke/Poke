@@ -26,6 +26,14 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+const SPRITES = [
+  { id: 25, left: "-2%", top: "4%", size: "120px" },
+  { id: 6, left: "86%", top: "2%", size: "160px" },
+  { id: 150, left: "62%", top: "66%", size: "130px" },
+  { id: 143, left: "88%", top: "48%", size: "140px" },
+  { id: 94, left: "50%", top: "-8%", size: "120px" },
+];
+
 function Home() {
   const { data: cards } = useQuery({
     queryKey: ["cards"],
@@ -38,8 +46,26 @@ function Home() {
   return (
     <main>
       {/* Hero */}
-      <section className="bg-poke-blue">
-        <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
+      <section className="relative overflow-hidden bg-poke-blue">
+        {/* floating sprites */}
+        <div className="pointer-events-none absolute inset-0 opacity-90">
+          {SPRITES.map((s, i) => (
+            <img
+              key={s.id}
+              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${s.id}.png`}
+              alt=""
+              className="sprite-bob absolute drop-shadow-xl"
+              style={{
+                left: s.left,
+                top: s.top,
+                width: s.size,
+                animationDelay: `${i * 0.7}s`,
+                opacity: 0.28,
+              }}
+            />
+          ))}
+        </div>
+        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
           <div className="text-white">
             <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
               One name, one card, forever
