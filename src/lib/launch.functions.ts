@@ -57,14 +57,19 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       .maybeSingle();
     if (activeCard.data) throw new Error(`"${name}" has already been launched on Poke.`);
 
+    const devBuyLamports = Math.round(data.devBuySol * 1_000_000_000);
+    const budgetLamports = devBuyLamports + LAUNCH_FEE_LAMPORTS;
+    const requiredSol = budgetLamports / 1_000_000_000;
+
     const wallet = await getOrCreateWallet(context.userId);
     const balance = await getBalanceSol(wallet.public_key);
-    if (balance < 0.1) {
-      throw new Error(`You need at least 0.1 SOL in your Poke wallet. Current balance: ${balance.toFixed(4)} SOL.`);
+    if (balance < requiredSol) {
+      throw new Error(
+        `You need at least ${requiredSol.toFixed(3)} SOL in your Poke wallet. Current balance: ${balance.toFixed(4)} SOL.`,
+      );
     }
 
-    const request = getRequest();
-    const origin = new URL(request.url).origin;
+    const origin = PUBLIC_ORIGIN;
     let launch = await supabaseAdmin
       .from("coin_launches")
       .select("id, creator_id, mint_address, tx_signature, status")
