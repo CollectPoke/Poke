@@ -245,6 +245,60 @@ function MintPage() {
           </Field>
 
           <div className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex flex-wrap items-start justify-between gap-3">
+              <div>
+                <p className="text-sm font-semibold">Pair with a Pokémon</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Not sure which Pokémon fits your coin? The Pokédex matches it for
+                  you — typing, rarity and the reason behind the call.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleFindPokemon}
+                disabled={!name.trim() || pairingBusy}
+                className="poke-btn-navy shrink-0 !py-2 !px-4 text-xs disabled:opacity-40"
+              >
+                {pairingBusy ? "Consulting the Pokédex…" : "Find my Pokémon"}
+              </button>
+            </div>
+            {!name.trim() && !pairing && (
+              <p className="mt-3 text-xs text-muted-foreground">
+                Type your card name above first, then tap the button.
+              </p>
+            )}
+            {pairingError && <p className="mt-3 text-xs font-medium text-poke-red">{pairingError}</p>}
+            {pairing && (
+              <div className="mt-4 flex gap-4 rounded-xl bg-muted/50 p-4">
+                {pokemonArtwork(pairing.pokedex_id) ? (
+                  <img
+                    src={pokemonArtwork(pairing.pokedex_id)!}
+                    alt={pairing.pokemon_name}
+                    className="h-20 w-20 shrink-0 object-contain"
+                  />
+                ) : null}
+                <div className="min-w-0">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="font-display text-xl font-bold">{pairing.pokemon_name}</span>
+                    {pairing.pokedex_id ? (
+                      <span className="mono-num text-xs text-muted-foreground">
+                        #{String(pairing.pokedex_id).padStart(3, "0")}
+                      </span>
+                    ) : null}
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${rarityStyle(pairing.rarity)}`}>
+                      {pairing.rarity}
+                    </span>
+                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${typeStyle(pairing.card_type).chip}`}>
+                      {pairing.card_type}
+                    </span>
+                  </div>
+                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{pairing.explanation}</p>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card p-4">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold">List for sale immediately</p>
