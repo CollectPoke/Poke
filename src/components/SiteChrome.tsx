@@ -5,6 +5,8 @@ import { useAuth } from "@/lib/auth";
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/cards", label: "All cards" },
+  { to: "/pair", label: "Pair a coin" },
+  { to: "/pairings", label: "Directory" },
   { to: "/buyback", label: "Buybacks" },
 ];
 
