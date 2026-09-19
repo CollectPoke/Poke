@@ -50,10 +50,15 @@ const PACKS: {
 function Home() {
   const { data: cards } = useQuery({
     queryKey: ["cards"],
-    queryFn: () => listCards({ limit: 8 }),
+    queryFn: () => listCards(),
+  });
+  const { data: priciest } = useQuery({
+    queryKey: ["cards", "priciest"],
+    queryFn: () => listCards({ limit: 3, sort: "priciest" }),
   });
 
   const latest = cards ?? [];
+  const topCards = priciest ?? [];
   const forSale = latest.filter((c) => c.list_price !== null);
 
   return (
@@ -103,13 +108,23 @@ function Home() {
               </Link>
             </div>
           </div>
-          <div className="mx-auto w-full max-w-[300px] rotate-[-3deg]">
-            {latest[0] ? (
-              <Link to="/card/$cardId" params={{ cardId: latest[0].id }}>
-                <PokeCard card={latest[0]} />
-              </Link>
+          <div className="mx-auto w-full max-w-[300px]">
+            {topCards.length > 0 ? (
+              <div className="flex flex-col items-center gap-4">
+                {topCards.map((card, i) => (
+                  <Link
+                    key={card.id}
+                    to="/card/$cardId"
+                    params={{ cardId: card.id }}
+                    className="w-full max-w-[240px] transition-transform hover:scale-[1.03]"
+                    style={{ transform: `rotate(${[-3, 2, -2][i % 3]}deg)` }}
+                  >
+                    <PokeCard card={card} compact />
+                  </Link>
+                ))}
+              </div>
             ) : (
-              <div className="rounded-2xl border-4 border-poke-yellow bg-card/95 p-8 text-center">
+              <div className="rotate-[-3deg] rounded-2xl border-4 border-poke-yellow bg-card/95 p-8 text-center">
                 <p className="font-display text-xl font-bold">No cards minted yet</p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   The first name is still up for grabs.
