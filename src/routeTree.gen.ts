@@ -22,6 +22,7 @@ import { Route as AuthenticatedGalleryRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
 import { Route as AuthenticatedSellRouteImport } from './routes/_authenticated/sell'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
+import { Route as ApiPublicBuybackRunRouteImport } from './routes/api/public/buyback-run'
 import { Route as ApiPublicArtworkIdRouteImport } from './routes/api/public/artwork.$id'
 import { Route as ApiPublicCoinMetadataIdRouteImport } from './routes/api/public/coin-metadata.$id'
 
@@ -89,6 +90,11 @@ const CardCardIdRoute = CardCardIdRouteImport.update({
   path: '/card/$cardId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicBuybackRunRoute = ApiPublicBuybackRunRouteImport.update({
+  id: '/api/public/buyback-run',
+  path: '/api/public/buyback-run',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicArtworkIdRoute = ApiPublicArtworkIdRouteImport.update({
   id: '/api/public/artwork/$id',
   path: '/api/public/artwork/$id',
@@ -113,6 +119,7 @@ export interface FileRoutesByFullPath {
   '/mint': typeof AuthenticatedMintRoute
   '/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/api/public/buyback-run': typeof ApiPublicBuybackRunRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/mint': typeof AuthenticatedMintRoute
   '/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/api/public/buyback-run': typeof ApiPublicBuybackRunRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
@@ -147,6 +155,7 @@ export interface FileRoutesById {
   '/_authenticated/mint': typeof AuthenticatedMintRoute
   '/_authenticated/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/api/public/buyback-run': typeof ApiPublicBuybackRunRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
@@ -165,6 +174,7 @@ export interface FileRouteTypes {
     | '/mint'
     | '/sell'
     | '/card/$cardId'
+    | '/api/public/buyback-run'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -181,6 +191,7 @@ export interface FileRouteTypes {
     | '/mint'
     | '/sell'
     | '/card/$cardId'
+    | '/api/public/buyback-run'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
   id:
@@ -198,6 +209,7 @@ export interface FileRouteTypes {
     | '/_authenticated/mint'
     | '/_authenticated/sell'
     | '/card/$cardId'
+    | '/api/public/buyback-run'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
   fileRoutesById: FileRoutesById
@@ -212,6 +224,7 @@ export interface RootRouteChildren {
   DocsRoute: typeof DocsRoute
   PairRoute: typeof PairRoute
   CardCardIdRoute: typeof CardCardIdRoute
+  ApiPublicBuybackRunRoute: typeof ApiPublicBuybackRunRoute
   ApiPublicArtworkIdRoute: typeof ApiPublicArtworkIdRoute
   ApiPublicCoinMetadataIdRoute: typeof ApiPublicCoinMetadataIdRoute
 }
@@ -309,6 +322,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CardCardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/buyback-run': {
+      id: '/api/public/buyback-run'
+      path: '/api/public/buyback-run'
+      fullPath: '/api/public/buyback-run'
+      preLoaderRoute: typeof ApiPublicBuybackRunRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/artwork/$id': {
       id: '/api/public/artwork/$id'
       path: '/api/public/artwork/$id'
@@ -353,6 +373,7 @@ const rootRouteChildren: RootRouteChildren = {
   DocsRoute: DocsRoute,
   PairRoute: PairRoute,
   CardCardIdRoute: CardCardIdRoute,
+  ApiPublicBuybackRunRoute: ApiPublicBuybackRunRoute,
   ApiPublicArtworkIdRoute: ApiPublicArtworkIdRoute,
   ApiPublicCoinMetadataIdRoute: ApiPublicCoinMetadataIdRoute,
 }
