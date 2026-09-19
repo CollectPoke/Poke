@@ -66,6 +66,30 @@ function Home() {
             />
           ))}
         </div>
+        {/* floating booster packs */}
+        <div className="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden>
+          <BoosterPack
+            label="Series 01"
+            delay={0}
+            className="absolute left-[4%] top-[52%] w-24 opacity-90 md:left-[8%] md:w-28"
+            // @ts-expect-error CSS var
+            style={{ "--pack-tilt": "-10deg" }}
+          />
+          <BoosterPack
+            label="Series 01"
+            delay={1.4}
+            className="absolute right-[30%] top-[6%] w-16 opacity-75 md:right-[34%] md:w-20"
+            // @ts-expect-error CSS var
+            style={{ "--pack-tilt": "8deg" }}
+          />
+          <BoosterPack
+            label="Series 01"
+            delay={2.6}
+            className="absolute bottom-[6%] right-[6%] w-20 opacity-80 md:right-[10%] md:w-24"
+            // @ts-expect-error CSS var
+            style={{ "--pack-tilt": "-4deg" }}
+          />
+        </div>
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
           <div className="text-white">
             <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
