@@ -5,12 +5,7 @@ import { ArtworkDrop } from "@/components/ArtworkDrop";
 import { PokeCard } from "@/components/PokeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import {
-  CARD_TYPES,
-  RARITIES,
-  generateContractAddress,
-  type CardWithPeople,
-} from "@/lib/cards";
+import { generateContractAddress, type CardWithPeople } from "@/lib/cards";
 import { isNameAvailable } from "@/lib/queries";
 
 export const Route = createFileRoute("/_authenticated/mint")({
@@ -38,8 +33,6 @@ function MintPage() {
   const [name, setName] = useState("");
   const [ticker, setTicker] = useState("");
   const [description, setDescription] = useState("");
-  const [cardType, setCardType] = useState<string>("Fire");
-  const [rarity, setRarity] = useState<string>("Common");
   const [imageUrl, setImageUrl] = useState("");
   const [listPrice, setListPrice] = useState("");
   const [available, setAvailable] = useState<boolean | null>(null);
@@ -72,8 +65,6 @@ function MintPage() {
     name_key: "",
     ticker: ticker.trim().toUpperCase() || "TICKER",
     description: description || null,
-    card_type: cardType,
-    rarity,
     image_url: imageUrl || null,
     contract_address: "PokeXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     creator_id: "",
@@ -99,8 +90,6 @@ function MintPage() {
           name_key: name.trim().toLowerCase(),
           ticker: ticker.trim().toUpperCase(),
           description: description.trim() || null,
-          card_type: cardType,
-          rarity,
           image_url: imageUrl.trim() || null,
           contract_address: generateContractAddress(),
           creator_id: user.id,
@@ -179,28 +168,8 @@ function MintPage() {
             />
           </Field>
 
-          <Field label="Image" hint="Required — drop any image in">
+          <Field label="Image">
             {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
-          </Field>
-
-          <Field label="Type">
-            <div className="flex flex-wrap gap-2">
-              {CARD_TYPES.map((t) => (
-                <Chip key={t} active={cardType === t} onClick={() => setCardType(t)}>
-                  {t}
-                </Chip>
-              ))}
-            </div>
-          </Field>
-
-          <Field label="Rarity">
-            <div className="flex flex-wrap gap-2">
-              {RARITIES.map((r) => (
-                <Chip key={r} active={rarity === r} onClick={() => setRarity(r)}>
-                  {r}
-                </Chip>
-              ))}
-            </div>
           </Field>
 
           <div className="rounded-2xl border border-border bg-card p-4">
@@ -288,27 +257,3 @@ function Field({
   );
 }
 
-function Chip({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={[
-        "rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors",
-        active
-          ? "border-poke-navy bg-poke-navy text-white"
-          : "border-border bg-card hover:bg-secondary",
-      ].join(" ")}
-    >
-      {children}
-    </button>
-  );
-}

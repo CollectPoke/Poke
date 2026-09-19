@@ -6,17 +6,17 @@ import { PokeCard } from "@/components/PokeCard";
 import { useAuth } from "@/lib/auth";
 import { myMintedCards } from "@/lib/queries";
 import { listPairings, pokemonArtwork, type PairingRow } from "@/lib/pairings";
-import { CARD_TYPES, RARITIES, formatPokeCoin, rarityStyle } from "@/lib/cards";
+import { formatPokeCoin } from "@/lib/cards";
 
 export const Route = createFileRoute("/_authenticated/gallery")({
   head: () => ({
     meta: [
       { title: "My gallery · Poke" },
-      { name: "description", content: "Every card you minted on Poke, with artwork, rarity and its Pokémon pairing." },
+      { name: "description", content: "Every card you minted on Poke, with its image and Pokémon pairing." },
       { property: "og:title", content: "My gallery · Poke" },
       {
         property: "og:description",
-        content: "Every card you minted on Poke, with artwork, rarity and its Pokémon pairing.",
+        content: "Every card you minted on Poke, with its image and Pokémon pairing.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -28,8 +28,6 @@ export const Route = createFileRoute("/_authenticated/gallery")({
 function GalleryPage() {
   const { user } = useAuth();
   const userId = user?.id ?? "";
-  const [rarity, setRarity] = useState<string>("all");
-  const [cardType, setCardType] = useState<string>("all");
   const [q, setQ] = useState("");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
@@ -58,9 +56,6 @@ function GalleryPage() {
 
   const shown = (cards ?? [])
     .filter((c) => {
-      if (rarity !== "all" && c.rarity !== rarity) return false;
-      if (cardType !== "all" && c.card_type !== cardType) return false;
-
       const min = minPrice.trim() === "" ? null : Number(minPrice);
       const max = maxPrice.trim() === "" ? null : Number(maxPrice);
       if (min !== null || max !== null) {
@@ -86,8 +81,6 @@ function GalleryPage() {
     });
 
   const resetFilters = () => {
-    setRarity("all");
-    setCardType("all");
     setMinPrice("");
     setMaxPrice("");
     setQ("");
@@ -99,7 +92,7 @@ function GalleryPage() {
       <header className="flex flex-col gap-2">
         <h1 className="font-display text-3xl font-extrabold text-poke-navy sm:text-4xl">My gallery</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
-          Every card you have minted, with its artwork, rarity and the Pokémon it was paired with.
+          Every card you have minted, with its image and the Pokémon it was paired with.
         </p>
       </header>
 
@@ -149,28 +142,6 @@ function GalleryPage() {
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          <Chip active={rarity === "all"} onClick={() => setRarity("all")}>
-            All rarities
-          </Chip>
-          {RARITIES.map((r) => (
-            <Chip key={r} active={rarity === r} onClick={() => setRarity(r)}>
-              {r}
-            </Chip>
-          ))}
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <Chip active={cardType === "all"} onClick={() => setCardType("all")}>
-            All types
-          </Chip>
-          {CARD_TYPES.map((t) => (
-            <Chip key={t} active={cardType === t} onClick={() => setCardType(t)}>
-              {t}
-            </Chip>
-          ))}
-        </div>
-
         <p className="text-xs font-semibold text-muted-foreground">
           Showing {shown.length} of {cards?.length ?? 0} cards
         </p>
@@ -209,12 +180,6 @@ function GalleryPage() {
 
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${rarityStyle(card.rarity)}`}>
-                      {card.rarity}
-                    </span>
-                    <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-bold text-poke-navy">
-                      {card.card_type}
-                    </span>
                     {card.status !== "minted" && (
                       <span className="rounded-full bg-poke-red/15 px-2.5 py-1 text-[11px] font-bold text-poke-red">
                         Burned
@@ -281,25 +246,3 @@ function GalleryPage() {
   );
 }
 
-function Chip({
-  active,
-  onClick,
-  children,
-}: {
-  active: boolean;
-  onClick: () => void;
-  children: React.ReactNode;
-}) {
-  return (
-    <button
-      onClick={onClick}
-      className={`rounded-full border-2 px-3.5 py-1.5 text-xs font-bold transition-colors ${
-        active
-          ? "border-poke-navy bg-poke-navy text-poke-yellow"
-          : "border-border bg-card text-poke-navy hover:bg-secondary"
-      }`}
-    >
-      {children}
-    </button>
-  );
-}

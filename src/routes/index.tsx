@@ -115,7 +115,7 @@ function Home() {
             Pick a name and ticker. If it's taken, it's gone — the site refuses a second one.
           </Tile>
           <Tile color="bg-poke-blue text-white" step="02" title="Mint the card">
-            Your coin prints as a card with type, rarity, art and its contract address.
+            Your coin prints as a card with its image, ticker and contract address.
           </Tile>
           <Tile color="bg-poke-green text-white" step="03" title="Trade it">
             List it for sale, and anyone with an account can buy it. Ownership moves instantly.

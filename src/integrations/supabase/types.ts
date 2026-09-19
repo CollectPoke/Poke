@@ -122,7 +122,6 @@ export type Database = {
       }
       cards: {
         Row: {
-          card_type: string
           contract_address: string
           created_at: string
           creator_id: string
@@ -135,12 +134,10 @@ export type Database = {
           name: string
           name_key: string
           owner_id: string
-          rarity: string
           status: string
           ticker: string
         }
         Insert: {
-          card_type?: string
           contract_address: string
           created_at?: string
           creator_id: string
@@ -153,12 +150,10 @@ export type Database = {
           name: string
           name_key: string
           owner_id: string
-          rarity?: string
           status?: string
           ticker: string
         }
         Update: {
-          card_type?: string
           contract_address?: string
           created_at?: string
           creator_id?: string
@@ -171,7 +166,6 @@ export type Database = {
           name?: string
           name_key?: string
           owner_id?: string
-          rarity?: string
           status?: string
           ticker?: string
         }
@@ -295,7 +289,6 @@ export type Database = {
       buy_card: {
         Args: { _buyer_id: string; _card_id: string }
         Returns: {
-          card_type: string
           contract_address: string
           created_at: string
           creator_id: string
@@ -308,7 +301,6 @@ export type Database = {
           name: string
           name_key: string
           owner_id: string
-          rarity: string
           status: string
           ticker: string
         }
