@@ -138,24 +138,6 @@
       color 250ms ease;
   }
 
-  .dark body {
-    background-image:
-      radial-gradient(60% 45% at 50% -5%, oklch(0.55 0.13 250 / 0.28), transparent 70%),
-      repeating-linear-gradient(
-        -45deg,
-        transparent 0,
-        transparent 14px,
-        oklch(0.98 0.01 250 / 0.045) 14px,
-        oklch(0.98 0.01 250 / 0.045) 16px
-      );
-    background-attachment: fixed, scroll;
-  }
-
-  .dark {
-    --shadow-card: 0 2px 0 oklch(0 0 0 / 0.3), 0 10px 26px oklch(0 0 0 / 0.45);
-    --shadow-card-hover: 0 3px 0 oklch(0 0 0 / 0.35), 0 18px 44px oklch(0 0 0 / 0.55);
-  }
-
   h1,
   h2,
   h3 {
