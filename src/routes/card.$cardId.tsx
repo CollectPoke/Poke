@@ -250,6 +250,9 @@ function CardPage() {
                 >
                   {action.isPending ? "Buying…" : "Buy this card"}
                 </button>
+                <span className="w-full text-xs text-muted-foreground">
+                  Paid straight from your Poke wallet to the owner, on Solana.
+                </span>
               </div>
             ) : (
               <p className="text-sm text-muted-foreground">
@@ -257,6 +260,16 @@ function CardPage() {
               </p>
             )}
             {error && <p className="mt-3 text-sm font-medium text-poke-red">{error}</p>}
+            {txSig && (
+              <a
+                href={`https://solscan.io/tx/${txSig}`}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-3 block text-sm font-bold text-poke-blue underline"
+              >
+                Payment confirmed — view on Solscan
+              </a>
+            )}
           </div>
 
           {/* History */}
