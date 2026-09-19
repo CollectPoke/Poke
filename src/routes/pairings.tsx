@@ -2,7 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 
-import { RARITIES, formatPokeCoin, rarityStyle, typeStyle } from "@/lib/cards";
+import {
+  RARITIES,
+  formatPokeCoin,
+  rarityStyle,
+  typeStyle,
+  type CardWithPeople,
+} from "@/lib/cards";
 import { listPairings, pokemonArtwork, type PairingRow } from "@/lib/pairings";
 import { listCards } from "@/lib/queries";
 
