@@ -1,156 +1,276 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { useState } from "react";
-import { CATALOG, spriteUrl, TYPE_CLASS } from "@/lib/catalog";
-import { marketsQueryOptions } from "@/lib/markets-query";
-import { formatChange, formatCompact, formatPrice } from "@/lib/format";
-import { vaultTotals } from "@/lib/vault";
-
-const usd = (n: number) => `$${n.toLocaleString("en-US")}`;
+import {
+  CARDS_SENT,
+  COINS,
+  FEE_SPLIT,
+  MARKET,
+  MIN_HOLD,
+  SITE_STATS,
+} from "@/lib/pokepad";
+import { spriteUrl } from "@/lib/catalog";
+import { formatCompact } from "@/lib/format";
 
 export const Route = createFileRoute("/")({
+  component: Home,
   head: () => ({
     meta: [
-      { title: "PokéPad — every trade buys a real graded card" },
+      { title: "PokéPad · Launch a coin, every trade buys real Pokémon cards" },
       {
         name: "description",
         content:
-          "Every memecoin is paired to a creature and traded live. Trading fees buy real graded Pokémon cards into the vault.",
+          "PokéPad is a Solana launchpad where every coin is a real pump.fun coin paired with CARDS. A locked 1% fee buys real graded Pokémon cards and sends them to holders.",
       },
-      { property: "og:title", content: "PokéPad — every trade buys a real graded card" },
+      {
+        property: "og:title",
+        content: "PokéPad · Launch a coin, every trade buys real Pokémon cards",
+      },
       {
         property: "og:description",
-        content: "Coins paired to creatures, live prices, and fees that buy real graded slabs.",
+        content:
+          "Pick what your coin collects. The fee is locked at launch, the creator gets none of it, and the cards go to holders.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
-  loader: ({ context }) => context.queryClient.ensureQueryData(marketsQueryOptions),
-  component: DexIndex,
-  errorComponent: ({ error }) => (
-    <div role="alert" className="p-10 text-center text-muted-foreground">
-      {error.message}
-    </div>
-  ),
-  notFoundComponent: () => <div className="p-10 text-center">Nothing here.</div>,
 });
 
-function DexIndex() {
-  const { data } = useSuspenseQuery(marketsQueryOptions);
-  const [q, setQ] = useState("");
-  const totals = vaultTotals();
+function Stat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="dex-card p-4">
+      <p className="text-xs uppercase tracking-[0.16em] text-muted-foreground">{label}</p>
+      <p className="mono-num mt-1 text-2xl">{value}</p>
+    </div>
+  );
+}
 
-  const byId = new Map(data.markets.map((m) => [m.id, m]));
-  const query = q.trim().toLowerCase();
-  const entries = CATALOG.filter(
-    (e) =>
-      !query ||
-      [e.coinName, e.ticker, e.pokemonName, e.type].some((s) =>
-        s.toLowerCase().includes(query),
-      ),
-  ).sort((a, b) => (byId.get(b.id)?.marketCap ?? 0) - (byId.get(a.id)?.marketCap ?? 0));
+function Home() {
+  const topCoins = [...COINS].sort((a, b) => b.marketCap - a.marketCap).slice(0, 4);
+  const feed = CARDS_SENT.slice(0, 5);
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-14 sm:py-20">
-      <header className="max-w-2xl">
-        <span className="mono-num text-xs uppercase tracking-[0.2em] text-muted-foreground">
-          {CATALOG.length} pairs live · {totals.count} slabs bought
-        </span>
-        <h1 className="mt-4 text-5xl leading-[1.05] sm:text-6xl">
-          Every trade buys a
-          <em className="italic"> real graded card</em>.
-        </h1>
-        <p className="mt-5 text-lg text-muted-foreground">
-          Each memecoin is paired to a creature and tracked live. Trading fees go straight into
-          buying graded Pokémon cards, and every slab shows up in the vault with its cert number.
+    <main className="mx-auto max-w-5xl px-5 pb-20">
+      {/* Hero */}
+      <section className="pt-16 pb-12">
+        <p className="mono-num text-xs uppercase tracking-[0.22em] text-muted-foreground">
+          a launchpad on solana · every coin is a real pump.fun coin
         </p>
-        <div className="mt-6 flex flex-wrap items-center gap-3">
+        <h1 className="mt-4 max-w-3xl font-display text-5xl leading-[1.05] sm:text-6xl">
+          Launch a coin, and every trade buys real Pokémon cards for its holders.
+        </h1>
+        <p className="mt-5 max-w-2xl text-base text-muted-foreground">
+          Each coin pays a 1% fee. The creator gets none of it — it is locked on chain at launch,
+          forever. That fee buys real graded slabs and sends them to the wallets holding the coin.
+        </p>
+        <div className="mt-7 flex flex-wrap gap-3">
           <Link
-            to="/vault"
-            className="rounded-full bg-primary px-5 py-2.5 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-90"
+            to="/launch"
+            className="rounded-full bg-foreground px-6 py-3 text-sm text-background transition-opacity hover:opacity-90"
           >
-            See the vault
+            Launch a coin
           </Link>
-          <span className="mono-num text-xs text-muted-foreground">
-            {usd(totals.spent)} spent on cards so far
-          </span>
+          <Link
+            to="/coins"
+            className="rounded-full border border-border px-6 py-3 text-sm transition-colors hover:bg-secondary"
+          >
+            Browse coins
+          </Link>
         </div>
-      </header>
+      </section>
 
+      {/* Stats */}
+      <section className="grid gap-4 sm:grid-cols-4">
+        <Stat label="Coins launched" value={SITE_STATS.coinsLaunched.toLocaleString()} />
+        <Stat label="Cards sent" value={SITE_STATS.cardsSent.toLocaleString()} />
+        <Stat label="Card value" value={`$${SITE_STATS.cardsValue.toLocaleString()}`} />
+        <Stat label="$POKEPAD burned" value={`${SITE_STATS.burned}%`} />
+      </section>
 
-      <div className="mt-10 flex items-center gap-3">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Search coin, ticker, or creature"
-          className="w-full max-w-sm rounded-full border border-border bg-card px-5 py-3 text-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-foreground/30"
-        />
-        {data.error && <span className="text-xs text-muted-foreground">{data.error}</span>}
-      </div>
+      {/* How it works */}
+      <section className="mt-16">
+        <h2 className="font-display text-3xl">How it works</h2>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          {[
+            [
+              "1 · Launch on pump.fun",
+              "Same bonding curve, same graduation to PumpSwap. The only difference is the pair: your coin trades against CARDS, Collector Crypt's token, instead of SOL.",
+            ],
+            [
+              "2 · Pick what it collects",
+              "Pikachu only, Charizard only, 10s only, or the whole binder. Plus a grade floor. Permanent — you cannot raise on Charizards and switch to commons.",
+            ],
+            [
+              "3 · The fee locks itself",
+              "The 1% creator fee is locked with pump.fun's own fee-sharing config and the admin key is thrown away in the same transaction. Nobody can repoint it. Not you, not us.",
+            ],
+            [
+              "4 · The engine runs",
+              "Round the clock: claim fees → swap to USDC → buy the cheapest matching card → send it to the holder who is owed the most.",
+            ],
+          ].map(([title, body]) => (
+            <div key={title} className="dex-card p-5">
+              <p className="mono-num text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                {title}
+              </p>
+              <p className="mt-2 text-sm leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {entries.map((e) => {
-          const m = byId.get(e.id);
-          const up = (m?.change24h ?? 0) >= 0;
-          return (
-            <Link
-              key={e.id}
-              to="/dex/$coinId"
-              params={{ coinId: e.id }}
-              className="dex-card dex-card-interactive group flex flex-col p-5"
-            >
-              <div className="flex items-start justify-between">
-                <span
-                  className={`rounded-full px-2.5 py-1 text-[11px] font-medium ${TYPE_CLASS[e.type]}`}
-                >
-                  {e.type}
-                </span>
-                <span className="mono-num text-[11px] text-muted-foreground">
-                  #{String(e.pokemonId).padStart(3, "0")}
-                </span>
+      {/* Split */}
+      <section className="mt-16 grid gap-6 lg:grid-cols-2">
+        <div className="dex-card p-6">
+          <h2 className="font-display text-3xl">Where the fee goes</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Written into the lock when the coin is created. It can never be changed.
+          </p>
+          <div className="mt-5 space-y-3">
+            {FEE_SPLIT.map((s) => (
+              <div key={s.label}>
+                <div className="flex items-baseline justify-between text-sm">
+                  <span className={s.pct === 0 ? "text-muted-foreground" : ""}>{s.label}</span>
+                  <span className="mono-num">{s.pct}%</span>
+                </div>
+                <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-secondary">
+                  <div
+                    className="h-full rounded-full bg-foreground transition-all"
+                    style={{ width: `${s.pct}%` }}
+                  />
+                </div>
               </div>
+            ))}
+          </div>
+        </div>
 
+        <div className="space-y-6">
+          <div className="dex-card p-6">
+            <h3 className="font-display text-2xl">Holders do nothing</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              No claiming, no forms, no staking. Hold at least {(MIN_HOLD / 1e6).toFixed(0)}M coins
+              (0.1% of supply) and cards land in the same wallet. Credit is the smaller of your
+              balance at the last look and at this one, so buying a minute before a round earns
+              nothing from it. No raffle, no random draw — every coin's page shows the queue.
+            </p>
+          </div>
+          <div className="dex-card p-6">
+            <h3 className="font-display text-2xl">The burn</h3>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              20% of every coin's fee buys $POKEPAD on the open market and burns it, the same round,
+              from one wallet that belongs to the site itself. {SITE_STATS.burns} burns so far ·
+              latest {SITE_STATS.lastBurnSig}.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Coins */}
+      <section className="mt-16">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="font-display text-3xl">Coins collecting right now</h2>
+          <Link to="/coins" className="text-sm text-muted-foreground hover:text-foreground">
+            All coins →
+          </Link>
+        </div>
+        <div className="mt-5 grid gap-4 sm:grid-cols-2">
+          {topCoins.map((c) => (
+            <Link
+              key={c.id}
+              to="/coin/$coinId"
+              params={{ coinId: c.id }}
+              className="dex-card dex-card-interactive flex gap-4 p-4"
+            >
               <img
-                src={spriteUrl(e.pokemonId)}
-                alt={e.pokemonName}
+                src={spriteUrl(c.pokemonId || 25)}
+                alt=""
                 loading="lazy"
-                className="mx-auto h-28 w-28 object-contain transition-transform duration-300 group-hover:scale-105"
+                className="h-20 w-20 shrink-0 object-contain"
               />
-
-              <div className="mt-2">
-                <h2 className="text-2xl leading-tight">{e.coinName}</h2>
-                <p className="mono-num text-xs text-muted-foreground">
-                  {e.ticker} · {e.pokemonName}
+              <div className="min-w-0 flex-1">
+                <div className="flex items-baseline justify-between gap-2">
+                  <span className="truncate font-display text-xl">{c.name}</span>
+                  <span className="mono-num text-xs text-muted-foreground">${c.ticker}</span>
+                </div>
+                <p className="mt-0.5 text-sm text-muted-foreground">
+                  Collects {c.collects} · {c.gradeFloor}
+                </p>
+                <p className="mono-num mt-3 text-xs text-muted-foreground">
+                  mcap {formatCompact(c.marketCap)} · {c.cardsSent} cards sent
                 </p>
               </div>
-
-              <div className="mt-4 flex items-baseline justify-between border-t border-border pt-4">
-                <span className="mono-num text-base">{formatPrice(m?.price ?? null)}</span>
-                <span
-                  className={`mono-num text-sm ${up ? "text-success" : "text-danger"}`}
-                >
-                  {formatChange(m?.change24h ?? null)}
-                </span>
-              </div>
-              <span className="mono-num mt-1 text-[11px] text-muted-foreground">
-                MC {formatCompact(m?.marketCap ?? null)}
-              </span>
             </Link>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      </section>
 
-      <section className="mt-16 grid gap-4 sm:grid-cols-3">
-        {[
-          ["01", "Trade", "Pick a pair in the dex and trade it. Prices are live, refreshed each minute."],
-          ["02", "Fees buy cards", "The fee on every trade goes into a card budget — nothing else."],
-          ["03", "Slab it", "Cards are bought, graded, and listed in the vault with their cert number."],
-        ].map(([n, title, body]) => (
-          <div key={n} className="dex-card p-6">
-            <span className="mono-num text-xs text-muted-foreground">{n}</span>
-            <h3 className="mt-2 text-xl">{title}</h3>
-            <p className="mt-2 text-sm text-muted-foreground">{body}</p>
-          </div>
-        ))}
+      {/* Feed */}
+      <section className="mt-16">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="font-display text-3xl">Cards sent</h2>
+          <Link to="/cards-sent" className="text-sm text-muted-foreground hover:text-foreground">
+            Full feed →
+          </Link>
+        </div>
+        <div className="mt-5 grid gap-3">
+          {feed.map((p) => (
+            <div key={p.sig} className="dex-card flex flex-wrap items-center gap-4 p-4">
+              <img src={spriteUrl(p.pokemonId || 25)} alt="" className="h-12 w-12 object-contain" />
+              <div className="min-w-0 flex-1">
+                <p className="text-sm">
+                  <strong>{p.card}</strong> <span className="text-muted-foreground">· {p.set}</span>
+                </p>
+                <p className="mono-num mt-0.5 text-xs text-muted-foreground">
+                  {p.grader} {p.grade} · ${p.coinTicker} · {p.ago}
+                </p>
+              </div>
+              <span className="mono-num text-xs text-muted-foreground">
+                ${p.price} → {p.destination === "vault" ? "vault" : p.to}
+              </span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Why */}
+      <section className="mt-16 dex-card p-6">
+        <h2 className="font-display text-3xl">Why this is real buy pressure on cards</h2>
+        <ul className="mt-4 grid gap-3 text-sm leading-relaxed text-muted-foreground sm:grid-cols-2">
+          <li>
+            <strong className="text-foreground">One-way.</strong> Vault cards can never be sold —
+            the vault has no private key. Holder cards go to collectors' own wallets.
+          </li>
+          <li>
+            <strong className="text-foreground">Persistent.</strong> Every trade tops up the pot,
+            before and after graduation.
+          </li>
+          <li>
+            <strong className="text-foreground">It sweeps the floor.</strong> The engine always buys
+            the cheapest listed match, pointing a whole fee stream at the bottom of one thin slice.
+          </li>
+          <li>
+            <strong className="text-foreground">It never chases.</strong> It pays the asking price:
+            never more than $100 a card, never more than 3× insured value.
+          </li>
+        </ul>
+        <p className="mono-num mt-5 text-xs text-muted-foreground">
+          for scale, {MARKET.asOf}: ~{MARKET.listed.toLocaleString()} Pokémon cards listed on
+          Collector Crypt, ~{MARKET.under100.toLocaleString()} of them at $100 or less, cheapest $
+          {MARKET.cheapest.toFixed(2)}
+        </p>
+      </section>
+
+      {/* CTA */}
+      <section className="mt-16 rounded-3xl bg-foreground px-8 py-14 text-center text-background">
+        <h2 className="font-display text-4xl">Launch a coin. Pick your Pokémon.</h2>
+        <p className="mx-auto mt-3 max-w-lg text-sm opacity-80">
+          Every trade after that buys the real thing.
+        </p>
+        <Link
+          to="/launch"
+          className="mt-7 inline-block rounded-full bg-background px-6 py-3 text-sm text-foreground transition-opacity hover:opacity-90"
+        >
+          Start
+        </Link>
       </section>
     </main>
   );
