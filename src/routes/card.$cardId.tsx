@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 import { PokeCard } from "@/components/PokeCard";
@@ -7,6 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { rarityStyle } from "@/lib/cards";
 import { getCard, getCardEvents } from "@/lib/queries";
+import { buyCardWithSol } from "@/lib/wallet.functions";
 
 export const Route = createFileRoute("/card/$cardId")({
   head: () => ({
@@ -41,6 +43,8 @@ function CardPage() {
   const queryClient = useQueryClient();
   const [price, setPrice] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [txSig, setTxSig] = useState<string | null>(null);
+  const buyOnChain = useServerFn(buyCardWithSol);
 
   const { data: card, isLoading } = useQuery({
     queryKey: ["card", cardId],
