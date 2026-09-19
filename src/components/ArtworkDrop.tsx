@@ -1,8 +1,38 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { supabase } from "@/integrations/supabase/client";
 
-const MAX_BYTES = 5 * 1024 * 1024;
+const RAW_LIMIT = 20 * 1024 * 1024; // accept any image up to 20 MB…
+const DOWNSCALE_OVER = 4 * 1024 * 1024; // …but shrink anything over 4 MB before upload
+const MAX_EDGE = 1600;
+
+const IMAGE_EXT = /\.(png|jpe?g|gif|webp|bmp|avif|svg|heic|heif|tiff?)$/i;
+
+function looksLikeImage(file: File) {
+  return file.type.startsWith("image/") || IMAGE_EXT.test(file.name);
+}
+
+/** Shrink huge images in the browser so any image uploads cleanly. */
+async function shrink(file: File): Promise<{ blob: Blob; type: string; ext: string }> {
+  if (file.size <= DOWNSCALE_OVER) {
+    const ext = (file.name.split(".").pop() || "png").toLowerCase().replace("jpeg", "jpg");
+    return { blob: file, type: file.type || "image/png", ext };
+  }
+  const bitmap = await createImageBitmap(file);
+  const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
+  const canvas = document.createElement("canvas");
+  canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+  canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+  const ctx = canvas.getContext("2d");
+  if (!ctx) throw new Error("no-canvas");
+  ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+  bitmap.close();
+  const blob = await new Promise<Blob | null>((resolve) =>
+    canvas.toBlob(resolve, "image/webp", 0.9),
+  );
+  if (!blob) throw new Error("no-encode");
+  return { blob, type: "image/webp", ext: "webp" };
+}
 
 export function ArtworkDrop({
   userId,
@@ -17,35 +47,49 @@ export function ArtworkDrop({
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  useEffect(
+    () => () => {
+      setPreview((old) => {
+        if (old) URL.revokeObjectURL(old);
+        return null;
+      });
+    },
+    [],
+  );
+
   const handleFile = useCallback(
     async (file: File | undefined | null) => {
       if (!file || uploading) return;
       setError(null);
-      if (!file.type.startsWith("image/")) {
-        setError("That file isn't an image. Try a PNG, JPG, GIF or WebP.");
+      if (!looksLikeImage(file)) {
+        setError("That file isn't an image. Drop a picture instead.");
         return;
       }
-      if (file.size > MAX_BYTES) {
-        setError("That image is over 5 MB. Pick a smaller one.");
+      if (file.size > RAW_LIMIT) {
+        setError("That image is over 20 MB — too big even for us.");
         return;
       }
+      const objUrl = URL.createObjectURL(file);
       setPreview((old) => {
         if (old) URL.revokeObjectURL(old);
-        return URL.createObjectURL(file);
+        return objUrl;
       });
       setUploading(true);
       try {
-        const ext = (file.name.split(".").pop() || "png").toLowerCase();
+        const { blob, type, ext } = await shrink(file);
         const path = `${userId}/${crypto.randomUUID()}.${ext}`;
         const { error: upErr } = await supabase.storage
           .from("card-art")
-          .upload(path, file, { contentType: file.type, upsert: false });
+          .upload(path, blob, { contentType: type, upsert: false });
         if (upErr) throw upErr;
         const { data } = supabase.storage.from("card-art").getPublicUrl(path);
         onUploaded(data.publicUrl);
       } catch {
         setError("Upload failed. Try again.");
-        setPreview(null);
+        setPreview((old) => {
+          if (old) URL.revokeObjectURL(old);
+          return null;
+        });
       } finally {
         setUploading(false);
       }
@@ -69,35 +113,39 @@ export function ArtworkDrop({
           void handleFile(e.dataTransfer.files?.[0]);
         }}
         className={[
-          "flex w-full items-center justify-center rounded-xl border-2 border-dashed transition-colors",
+          "group relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed transition-colors",
           dragging
             ? "border-poke-blue bg-poke-blue/10"
             : "border-border bg-card hover:border-poke-blue/60",
-          preview ? "p-3" : "px-4 py-8",
         ].join(" ")}
       >
         {preview ? (
-          <div className="flex items-center gap-4">
+          <>
             <img
               src={preview}
               alt="Artwork preview"
-              className="h-24 w-24 rounded-lg object-contain"
+              className="absolute inset-0 h-full w-full object-contain p-3"
             />
-            <div className="text-left">
-              <p className="text-sm font-semibold">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-poke-navy/90 to-transparent px-4 pb-3 pt-10 text-center">
+              <p className="text-sm font-bold text-white">
                 {uploading ? "Uploading…" : "Artwork ready"}
               </p>
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-white/70">
                 {uploading ? "One moment." : "Drop another image to replace it."}
               </p>
             </div>
-          </div>
+          </>
         ) : (
-          <div className="text-center">
-            <p className="font-display text-3xl leading-none">+</p>
-            <p className="mt-2 text-sm font-semibold">Drag artwork here</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              or click to choose — PNG, JPG, GIF or WebP, up to 5 MB
+          <div className="px-6 text-center">
+            <p className="font-display text-6xl leading-none text-muted-foreground/60 transition-colors group-hover:text-poke-blue/70">
+              +
+            </p>
+            <p className="mt-4 font-display text-2xl font-bold">Drop artwork here</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              or click to choose a picture
+            </p>
+            <p className="mt-1 text-xs text-muted-foreground/70">
+              Any image works — PNG, JPG, GIF, WebP and more, up to 20 MB
             </p>
           </div>
         )}
