@@ -8,16 +8,16 @@ import { formatChange, formatCompact, formatPrice } from "@/lib/format";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Memedex — every memecoin as a creature" },
+      { title: "PokéPad — every trade buys a real graded card" },
       {
         name: "description",
         content:
-          "A living dex that pairs memecoins with their creature counterparts, with live prices and market stats.",
+          "Every memecoin is paired to a creature and traded live. Trading fees buy real graded Pokémon cards into the vault.",
       },
-      { property: "og:title", content: "Memedex — every memecoin as a creature" },
+      { property: "og:title", content: "PokéPad — every trade buys a real graded card" },
       {
         property: "og:description",
-        content: "Pair memecoins with creatures. Live prices, live stats, one clean dex.",
+        content: "Coins paired to creatures, live prices, and fees that buy real graded slabs.",
       },
     ],
   }),
