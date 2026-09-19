@@ -82,7 +82,7 @@ export function BuybackTicker({ withCta = false }: { withCta?: boolean }) {
   );
 }
 
-function Cell({ label, value, accent }: { label: string; value: string; accent?: string }) {
+function Cell({ label, value, accent }: { label: string; value: string; accent?: string | undefined }) {
   return (
     <div className="bg-poke-navy px-5 py-4">
       <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">{label}</p>
