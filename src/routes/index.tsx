@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { BoosterPack } from "@/components/BoosterPack";
 import { BuybackTicker } from "@/components/BuybackTicker";
 import { PokeCard } from "@/components/PokeCard";
 import { listCards } from "@/lib/queries";
@@ -28,25 +27,8 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-const ART = (id: number) =>
-  `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
-
-// floating booster packs around the hero, each with a Pokémon on the wrapper
-const PACKS: {
-  id: number;
-  left?: string;
-  right?: string;
-  top?: string;
-  bottom?: string;
-  width: string;
-  tilt: string;
-}[] = [
-  { id: 25, left: "2.5%", top: "3%", width: "w-20 md:w-24", tilt: "-10deg" },
-  { id: 6, right: "30%", top: "8%", width: "w-16 md:w-20", tilt: "8deg" },
-  { id: 150, right: "3.5%", bottom: "6%", width: "w-20 md:w-28", tilt: "-4deg" },
-  { id: 94, left: "2.5%", bottom: "3%", width: "w-14 md:w-20", tilt: "6deg" },
-  { id: 143, left: "56%", top: "-4%", width: "w-14 md:w-20", tilt: "-8deg" },
-];
+// the hero shows at most this many cards; the rest live under "Freshly minted"
+const HERO_CARD_COUNT = 10;
 
 function Home() {
   const { data: cards } = useQuery({
