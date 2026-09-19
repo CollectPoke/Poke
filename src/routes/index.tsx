@@ -1,313 +1,160 @@
+import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  CARDS_SENT,
-  COINS,
-  FEE_SPLIT,
-  MARKET,
-  MIN_HOLD,
-  SITE_STATS,
-} from "@/lib/pokepad";
-import { spriteUrl } from "@/lib/catalog";
-import { formatCompact } from "@/lib/format";
+
+import { PokeCard } from "@/components/PokeCard";
+import { listCards } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
-  component: Home,
   head: () => ({
     meta: [
-      { title: "Poke · Launch a coin, every trade buys real Pokémon cards" },
+      { title: "Poke · One name, one card, forever" },
       {
         name: "description",
         content:
-          "Poke is a Solana launchpad where every coin is a real pump.fun coin paired with CARDS. A locked 1% fee buys real graded Pokémon cards and sends them to holders.",
+          "Launch a coin on Poke and it becomes a one-of-one trading card. Only one Dog can ever exist. Buy, sell, mint and burn.",
       },
-      {
-        property: "og:title",
-        content: "Poke · Launch a coin, every trade buys real Pokémon cards",
-      },
+      { property: "og:title", content: "Poke · One name, one card, forever" },
       {
         property: "og:description",
         content:
-          "Pick what your coin collects. The fee is locked at launch, the creator gets none of it, and the cards go to holders.",
+          "Launch a coin on Poke and it becomes a one-of-one trading card. Only one Dog can ever exist.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
+  component: Home,
 });
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Home() {
+  const { data: cards } = useQuery({
+    queryKey: ["cards"],
+    queryFn: () => listCards({ limit: 8 }),
+  });
+
+  const latest = cards ?? [];
+  const forSale = latest.filter((c) => c.list_price !== null);
+
   return (
-    <div className="dex-card p-4 text-center">
-      <p className="mono-num text-2xl font-medium">{value}</p>
-      <p className="mt-1 text-xs font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-        {label}
-      </p>
-    </div>
+    <main>
+      {/* Hero */}
+      <section className="bg-poke-blue">
+        <div className="mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1.1fr_1fr]">
+          <div className="text-white">
+            <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
+              One name, one card, forever
+            </span>
+            <h1 className="mt-4 font-display text-5xl font-bold leading-[1.05] drop-shadow sm:text-6xl">
+              Launch your coin as a card nobody can copy.
+            </h1>
+            <p className="mt-4 max-w-lg text-base text-white/85">
+              Every coin launched on Poke comes out as a trading card, with its contract address
+              printed at the bottom. Only one "Dog" can ever exist. Mint it, hold it, sell it — or
+              burn it and set the name free.
+            </p>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link to="/mint" className="poke-btn">
+                Mint a card
+              </Link>
+              <Link
+                to="/cards"
+                className="rounded-full border-2 border-white/60 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/10"
+              >
+                Browse all cards
+              </Link>
+            </div>
+          </div>
+          <div className="mx-auto w-full max-w-[300px] rotate-[-3deg]">
+            {latest[0] ? (
+              <Link to="/card/$cardId" params={{ cardId: latest[0].id }}>
+                <PokeCard card={latest[0]} />
+              </Link>
+            ) : (
+              <div className="rounded-2xl border-4 border-poke-yellow bg-card/95 p-8 text-center">
+                <p className="font-display text-xl font-bold">No cards minted yet</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  The first name is still up for grabs.
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* How it works */}
+      <section className="mx-auto max-w-6xl px-5 py-14">
+        <h2 className="font-display text-3xl font-bold">How it works</h2>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <Tile color="bg-poke-yellow text-poke-navy" step="01" title="Claim the name">
+            Pick a name and ticker. If it's taken, it's gone — the site refuses a second one.
+          </Tile>
+          <Tile color="bg-poke-blue text-white" step="02" title="Mint the card">
+            Your coin prints as a card with type, rarity, HP, art and its contract address.
+          </Tile>
+          <Tile color="bg-poke-green text-white" step="03" title="Trade it">
+            List it for sale, and anyone with an account can buy it. Ownership moves instantly.
+          </Tile>
+          <Tile color="bg-poke-purple text-white" step="04" title="Or burn it">
+            Burning retires the card and releases the name for someone else to claim.
+          </Tile>
+        </div>
+      </section>
+
+      {/* Latest cards */}
+      <section className="mx-auto max-w-6xl px-5 pb-16">
+        <div className="flex items-end justify-between gap-4">
+          <h2 className="font-display text-3xl font-bold">Freshly minted</h2>
+          <Link to="/cards" className="text-sm font-semibold text-poke-blue hover:underline">
+            See all →
+          </Link>
+        </div>
+        {latest.length === 0 ? (
+          <div className="mt-5 rounded-2xl border border-dashed border-border p-12 text-center">
+            <p className="font-display text-xl font-bold">Nothing minted yet</p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Every name is still available. Claim one.
+            </p>
+            <Link to="/mint" className="poke-btn mt-5 inline-flex">
+              Mint the first card
+            </Link>
+          </div>
+        ) : (
+          <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {latest.map((card) => (
+              <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
+                <PokeCard card={card} compact />
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {forSale.length > 0 && (
+          <p className="mt-6 text-sm text-muted-foreground">
+            <span className="font-semibold text-foreground">{forSale.length}</span> of these are
+            listed for sale right now.
+          </p>
+        )}
+      </section>
+    </main>
   );
 }
 
-const HOW_IT_WORKS = [
-  {
-    title: "1 · Launch on pump.fun",
-    body: "Same bonding curve, same graduation to PumpSwap. The only difference is the pair: your coin trades against CARDS, Collector Crypt's token, instead of SOL.",
-    tile: "bg-poke-blue text-white",
-  },
-  {
-    title: "2 · Pick what it collects",
-    body: "Pikachu only, Charizard only, 10s only, or the whole binder. Plus a grade floor. Permanent — you cannot raise on Charizards and switch to commons.",
-    tile: "bg-poke-yellow text-poke-navy",
-  },
-  {
-    title: "3 · The fee locks itself",
-    body: "The 1% creator fee is locked with pump.fun's own fee-sharing config and the admin key is thrown away in the same transaction. Nobody can repoint it. Not you, not us.",
-    tile: "bg-poke-green text-white",
-  },
-  {
-    title: "4 · The engine runs",
-    body: "Round the clock: claim fees → swap to USDC → buy the cheapest matching card → send it to the holder who is owed the most.",
-    tile: "bg-poke-purple text-white",
-  },
-];
-
-function Home() {
-  const topCoins = [...COINS].sort((a, b) => b.marketCap - a.marketCap).slice(0, 4);
-  const feed = CARDS_SENT.slice(0, 5);
-
+function Tile({
+  color,
+  step,
+  title,
+  children,
+}: {
+  color: string;
+  step: string;
+  title: string;
+  children: React.ReactNode;
+}) {
   return (
-    <main className="mx-auto max-w-6xl px-5 pb-20">
-      {/* Hero — big colorful tile, official-site style */}
-      <section className="pt-10">
-        <div className="overflow-hidden rounded-3xl bg-poke-blue shadow-lg">
-          <div className="relative px-8 py-14 sm:px-14">
-            <img
-              src={spriteUrl(25)}
-              alt=""
-              className="pointer-events-none absolute -right-6 top-1/2 hidden w-64 -translate-y-1/2 opacity-95 drop-shadow-xl sm:block"
-            />
-            <p className="mono-num text-xs uppercase tracking-[0.22em] text-white/70">
-              a launchpad on solana · every coin is a real pump.fun coin
-            </p>
-            <h1 className="mt-4 max-w-xl font-display text-5xl font-bold leading-[1.02] text-white drop-shadow sm:text-6xl">
-              Every trade buys a real Pokémon card.
-            </h1>
-            <p className="mt-4 max-w-md text-base text-white/85">
-              Each coin pays a 1% fee. The creator gets none of it — it is locked on chain at
-              launch, forever. That fee buys real graded slabs and sends them to the wallets
-              holding the coin.
-            </p>
-            <div className="mt-7 flex flex-wrap gap-3">
-              <Link to="/launch" className="poke-btn">
-                Launch a coin
-              </Link>
-              <Link
-                to="/coins"
-                className="poke-btn bg-white/95 !text-poke-navy"
-              >
-                Browse coins
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats strip */}
-      <section className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-4">
-        <Stat label="Coins launched" value={SITE_STATS.coinsLaunched.toLocaleString()} />
-        <Stat label="Cards sent" value={SITE_STATS.cardsSent.toLocaleString()} />
-        <Stat label="Card value" value={`$${SITE_STATS.cardsValue.toLocaleString()}`} />
-        <Stat label="$POKE burned" value={`${SITE_STATS.burned}%`} />
-      </section>
-
-      {/* How it works — colorful feature tiles */}
-      <section className="mt-16">
-        <h2 className="text-center font-display text-4xl font-bold">How it works</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2">
-          {HOW_IT_WORKS.map((step) => (
-            <div
-              key={step.title}
-              className={`${step.tile} rounded-3xl p-6 shadow-md transition-transform duration-200 hover:-translate-y-1`}
-            >
-              <p className="font-display text-lg font-bold">{step.title}</p>
-              <p className="mt-2 text-sm leading-relaxed opacity-90">{step.body}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Split */}
-      <section className="mt-16 grid gap-6 lg:grid-cols-2">
-        <div className="dex-card p-6">
-          <h2 className="font-display text-3xl font-bold">Where the fee goes</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
-            Written into the lock when the coin is created. It can never be changed.
-          </p>
-          <div className="mt-5 space-y-3">
-            {FEE_SPLIT.map((s) => (
-              <div key={s.label}>
-                <div className="flex items-baseline justify-between text-sm">
-                  <span className={s.pct === 0 ? "text-muted-foreground" : ""}>{s.label}</span>
-                  <span className="mono-num">{s.pct}%</span>
-                </div>
-                <div className="mt-1 h-2.5 overflow-hidden rounded-full bg-secondary">
-                  <div
-                    className={`h-full rounded-full transition-all ${
-                      s.pct === 70
-                        ? "bg-poke-green"
-                        : s.pct === 20
-                          ? "bg-poke-blue"
-                          : s.pct === 10
-                            ? "bg-poke-yellow"
-                            : "bg-secondary"
-                    }`}
-                    style={{ width: `${Math.max(s.pct, 2)}%` }}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="space-y-6">
-          <div className="rounded-3xl bg-poke-purple p-6 text-white shadow-md">
-            <h3 className="font-display text-2xl font-bold">Holders do nothing</h3>
-            <p className="mt-2 text-sm leading-relaxed opacity-90">
-              No claiming, no forms, no staking. Hold at least {(MIN_HOLD / 1e6).toFixed(0)}M coins
-              (0.1% of supply) and cards land in the same wallet. Credit is the smaller of your
-              balance at the last look and at this one, so buying a minute before a round earns
-              nothing from it. No raffle, no random draw — every coin's page shows the queue.
-            </p>
-          </div>
-          <div className="rounded-3xl bg-poke-red p-6 text-white shadow-md">
-            <h3 className="font-display text-2xl font-bold">The burn</h3>
-            <p className="mt-2 text-sm leading-relaxed opacity-90">
-              20% of every coin's fee buys $POKE on the open market and burns it, the same
-              round, from one wallet that belongs to the site itself. {SITE_STATS.burns} burns so
-              far · latest {SITE_STATS.lastBurnSig}.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Coins */}
-      <section className="mt-16">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-4xl font-bold">Coins collecting right now</h2>
-          <Link
-            to="/coins"
-            className="text-sm font-semibold text-poke-blue hover:underline"
-          >
-            All coins →
-          </Link>
-        </div>
-        <div className="mt-5 grid gap-4 sm:grid-cols-2">
-          {topCoins.map((c) => (
-            <Link
-              key={c.id}
-              to="/coin/$coinId"
-              params={{ coinId: c.id }}
-              className="dex-card dex-card-interactive flex gap-4 p-4"
-            >
-              <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-2xl bg-surface">
-                <img
-                  src={spriteUrl(c.pokemonId || 25)}
-                  alt=""
-                  loading="lazy"
-                  className="h-16 w-16 object-contain"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-baseline justify-between gap-2">
-                  <span className="truncate font-display text-xl font-bold">{c.name}</span>
-                  <span className="mono-num text-xs text-muted-foreground">${c.ticker}</span>
-                </div>
-                <p className="mt-0.5 text-sm text-muted-foreground">
-                  Collects {c.collects} · {c.gradeFloor}
-                </p>
-                <p className="mono-num mt-3 text-xs text-muted-foreground">
-                  mcap {formatCompact(c.marketCap)} · {c.cardsSent} cards sent
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      {/* Feed */}
-      <section className="mt-16">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-4xl font-bold">Cards sent</h2>
-          <Link
-            to="/cards-sent"
-            className="text-sm font-semibold text-poke-blue hover:underline"
-          >
-            Full feed →
-          </Link>
-        </div>
-        <div className="mt-5 grid gap-3">
-          {feed.map((p) => (
-            <div key={p.sig} className="dex-card flex flex-wrap items-center gap-4 p-4">
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-surface">
-                <img
-                  src={spriteUrl(p.pokemonId || 25)}
-                  alt=""
-                  className="h-11 w-11 object-contain"
-                />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="text-sm">
-                  <strong>{p.card}</strong> <span className="text-muted-foreground">· {p.set}</span>
-                </p>
-                <p className="mono-num mt-0.5 text-xs text-muted-foreground">
-                  {p.grader} {p.grade} · ${p.coinTicker} · {p.ago}
-                </p>
-              </div>
-              <span className="mono-num text-xs text-muted-foreground">
-                ${p.price} → {p.destination === "vault" ? "vault" : p.to}
-              </span>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Why */}
-      <section className="mt-16 dex-card p-6">
-        <h2 className="font-display text-3xl font-bold">Why this is real buy pressure on cards</h2>
-        <ul className="mt-4 grid gap-3 text-sm leading-relaxed text-muted-foreground sm:grid-cols-2">
-          <li>
-            <strong className="text-foreground">One-way.</strong> Vault cards can never be sold —
-            the vault has no private key. Holder cards go to collectors' own wallets.
-          </li>
-          <li>
-            <strong className="text-foreground">Persistent.</strong> Every trade tops up the pot,
-            before and after graduation.
-          </li>
-          <li>
-            <strong className="text-foreground">It sweeps the floor.</strong> The engine always
-            buys the cheapest listed match, pointing a whole fee stream at the bottom of one thin
-            slice.
-          </li>
-          <li>
-            <strong className="text-foreground">It never chases.</strong> It pays the asking
-            price: never more than $100 a card, never more than 3× insured value.
-          </li>
-        </ul>
-        <p className="mono-num mt-5 text-xs text-muted-foreground">
-          for scale, {MARKET.asOf}: ~{MARKET.listed.toLocaleString()} Pokémon cards listed on
-          Collector Crypt, ~{MARKET.under100.toLocaleString()} of them at $100 or less, cheapest $
-          {MARKET.cheapest.toFixed(2)}
-        </p>
-      </section>
-
-      {/* CTA */}
-      <section className="mt-16 rounded-3xl bg-poke-yellow px-8 py-14 text-center text-poke-navy shadow-md">
-        <h2 className="font-display text-4xl font-bold">Launch a coin. Pick your Pokémon.</h2>
-        <p className="mx-auto mt-3 max-w-lg text-sm opacity-80">
-          Every trade after that buys the real thing.
-        </p>
-        <Link to="/launch" className="poke-btn poke-btn-navy mt-7 inline-block">
-          Start
-        </Link>
-      </section>
-    </main>
+    <div className={`rounded-2xl p-5 shadow-card ${color}`}>
+      <span className="mono-num text-xs font-bold opacity-70">{step}</span>
+      <h3 className="mt-1 font-display text-xl font-bold">{title}</h3>
+      <p className="mt-1.5 text-sm leading-relaxed opacity-90">{children}</p>
+    </div>
   );
 }

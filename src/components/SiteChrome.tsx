@@ -1,24 +1,25 @@
 import { Link } from "@tanstack/react-router";
 
+import { useAuth } from "@/lib/auth";
+
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
-  { to: "/coins", label: "Coins" },
-  { to: "/cards-sent", label: "Cards sent" },
+  { to: "/cards", label: "All cards" },
 ];
 
 export function SiteHeader() {
+  const { user, username } = useAuth();
+
   return (
     <header className="sticky top-0 z-30">
-      {/* Utility strip */}
       <div className="bg-poke-navy-deep">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-1.5 text-[11px] text-white/70">
           <span className="mono-num uppercase tracking-[0.2em]">
-            launchpad on solana · paired with CARDS
+            one name · one card · forever
           </span>
-          <span className="hidden sm:inline">A coin is not a card. Sample data.</span>
+          <span className="hidden sm:inline">Burn a card and its name frees up again.</span>
         </div>
       </div>
-      {/* Main nav bar */}
       <div className="border-b-4 border-poke-yellow bg-poke-navy shadow-md">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
           <Link to="/" className="flex items-center gap-2.5">
@@ -39,11 +40,24 @@ export function SiteHeader() {
                 {item.label}
               </Link>
             ))}
-            <Link
-              to="/launch"
-              className="poke-btn ml-2 !py-2 !px-4 text-xs sm:text-sm"
-            >
-              Launch a coin
+            {user ? (
+              <Link
+                to="/account"
+                className="rounded-full px-3.5 py-1.5 text-white/75 transition-colors hover:bg-white/10 hover:text-white"
+                activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
+              >
+                {username ?? "My binder"}
+              </Link>
+            ) : (
+              <Link
+                to="/auth"
+                className="rounded-full px-3.5 py-1.5 text-white/75 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                Sign in
+              </Link>
+            )}
+            <Link to="/mint" className="poke-btn ml-2 !py-2 !px-4 text-xs sm:text-sm">
+              Mint a card
             </Link>
           </nav>
         </div>
@@ -61,14 +75,12 @@ export function SiteFooter() {
           <span className="font-display text-lg font-bold text-poke-yellow">Poke</span>
         </div>
         <p>
-          A coin is not backed by cards and cannot be redeemed for them. It is a memecoin whose
-          trading fees buy real graded cards for whoever holds it. Small coins earn small fees;
-          below roughly $2,000 of volume per card, the pot waits.
+          Poke is a launchpad where every coin becomes a one-of-one trading card. A name can only
+          be minted once; burning a card releases its name back to everyone.
         </p>
         <p>
-          Coins, wallets, queues and purchases shown on this site are sample data until the engine
-          is wired to mainnet. Pokémon and card artwork belong to Nintendo, Creatures and GAME
-          FREAK / The Pokémon Company — no affiliation.
+          Prices are shown in SOL and card ownership is recorded on Poke. Pokémon and card artwork
+          belong to Nintendo, Creatures and GAME FREAK / The Pokémon Company — no affiliation.
         </p>
       </div>
     </footer>
