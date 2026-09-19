@@ -262,6 +262,9 @@ export async function signSimulateAndSendTransaction(
     throw new Error("The launch would exceed the 0.1 SOL limit. No SOL was spent.");
   }
 
+  if (onPrepared) await onPrepared(transactionSignature);
+
+
   const submittedSignature = await rpc<string>("sendTransaction", [
     signedBase64,
     { encoding: "base64", maxRetries: 3, preflightCommitment: "confirmed" },
