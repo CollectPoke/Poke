@@ -240,7 +240,11 @@ function CardPage() {
                 )}
                 <button
                   onClick={() => {
-                    if (confirm(`Burn ${card.name}? The name becomes mintable by anyone again.`))
+                     if (
+                      confirm(
+                        `Burn ${card.name}? The name becomes mintable by anyone again. You get 0.01 SOL back.`,
+                      )
+                    )
                       action.mutate("burn");
                   }}
                   disabled={action.isPending}
