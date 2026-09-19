@@ -10,7 +10,7 @@ export function MusicPlayer() {
   useEffect(() => {
     const audio = new Audio("/poke-theme.mp3");
     audio.loop = true;
-    audio.volume = 0.35;
+    audio.volume = 0.18;
     audioRef.current = audio;
 
     const isMuted = () => {
