@@ -3,6 +3,7 @@ import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 
 import { PokeCard } from "@/components/PokeCard";
+import { WalletPanel } from "@/components/WalletPanel";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { myCards } from "@/lib/queries";
@@ -108,6 +109,9 @@ function AccountPage() {
           />
         </div>
       </section>
+
+      <WalletPanel />
+
 
       {/* Binder */}
       <div className="mt-10 flex items-center gap-4">
