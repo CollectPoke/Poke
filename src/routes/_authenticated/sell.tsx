@@ -82,8 +82,8 @@ function SellPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Sell</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        List your cards for sale in SOL. When another trainer buys one, the SOL lands straight in
-        your Poke wallet.
+        List your cards for sale in SOL, or wait for trainers to send you an offer. Either way the
+        SOL lands straight in your Poke wallet.
       </p>
 
       {isLoading ? (
