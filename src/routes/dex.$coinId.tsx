@@ -107,7 +107,7 @@ function DexDetail() {
             ["24h high", formatPrice(m.high24h)],
             ["24h low", formatPrice(m.low24h)],
           ].map(([label, value]) => (
-            <div key={label} className="border-border p-5 not-last:border-r">
+            <div key={label} className="border-l border-border p-5 first:border-l-0">
               <div className="text-[11px] uppercase tracking-widest text-muted-foreground">
                 {label}
               </div>
