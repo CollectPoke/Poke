@@ -7,13 +7,13 @@ export const Route = createFileRoute("/launch")({
   component: LaunchPage,
   head: () => ({
     meta: [
-      { title: "Launch a coin · PokéPad" },
+      { title: "Launch a coin · Poke" },
       {
         name: "description",
         content:
           "Launch a pump.fun coin paired with CARDS, pick the Pokémon and grade floor it collects, and lock the fee so every trade buys real graded cards for holders.",
       },
-      { property: "og:title", content: "Launch a coin · PokéPad" },
+      { property: "og:title", content: "Launch a coin · Poke" },
       {
         property: "og:description",
         content: "Pick your Pokémon, set a grade floor, lock the fee. The creator takes none of it.",

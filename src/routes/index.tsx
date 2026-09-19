@@ -14,15 +14,15 @@ export const Route = createFileRoute("/")({
   component: Home,
   head: () => ({
     meta: [
-      { title: "PokéPad · Launch a coin, every trade buys real Pokémon cards" },
+      { title: "Poke · Launch a coin, every trade buys real Pokémon cards" },
       {
         name: "description",
         content:
-          "PokéPad is a Solana launchpad where every coin is a real pump.fun coin paired with CARDS. A locked 1% fee buys real graded Pokémon cards and sends them to holders.",
+          "Poke is a Solana launchpad where every coin is a real pump.fun coin paired with CARDS. A locked 1% fee buys real graded Pokémon cards and sends them to holders.",
       },
       {
         property: "og:title",
-        content: "PokéPad · Launch a coin, every trade buys real Pokémon cards",
+        content: "Poke · Launch a coin, every trade buys real Pokémon cards",
       },
       {
         property: "og:description",
@@ -115,7 +115,7 @@ function Home() {
         <Stat label="Coins launched" value={SITE_STATS.coinsLaunched.toLocaleString()} />
         <Stat label="Cards sent" value={SITE_STATS.cardsSent.toLocaleString()} />
         <Stat label="Card value" value={`$${SITE_STATS.cardsValue.toLocaleString()}`} />
-        <Stat label="$POKEPAD burned" value={`${SITE_STATS.burned}%`} />
+        <Stat label="$POKE burned" value={`${SITE_STATS.burned}%`} />
       </section>
 
       {/* How it works — colorful feature tiles */}
@@ -180,7 +180,7 @@ function Home() {
           <div className="rounded-3xl bg-poke-red p-6 text-white shadow-md">
             <h3 className="font-display text-2xl font-bold">The burn</h3>
             <p className="mt-2 text-sm leading-relaxed opacity-90">
-              20% of every coin's fee buys $POKEPAD on the open market and burns it, the same
+              20% of every coin's fee buys $POKE on the open market and burns it, the same
               round, from one wallet that belongs to the site itself. {SITE_STATS.burns} burns so
               far · latest {SITE_STATS.lastBurnSig}.
             </p>

@@ -6,13 +6,13 @@ export const Route = createFileRoute("/cards-sent")({
   component: CardsSentPage,
   head: () => ({
     meta: [
-      { title: "Cards sent · PokéPad" },
+      { title: "Cards sent · Poke" },
       {
         name: "description",
         content:
-          "The live feed of every real graded Pokémon card bought by PokéPad coins and sent to their holders.",
+          "The live feed of every real graded Pokémon card bought by Poke coins and sent to their holders.",
       },
-      { property: "og:title", content: "Cards sent · PokéPad" },
+      { property: "og:title", content: "Cards sent · Poke" },
       {
         property: "og:description",
         content: "Which card, which cert, what was paid, who received it.",

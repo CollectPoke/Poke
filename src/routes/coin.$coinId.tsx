@@ -14,12 +14,12 @@ export const Route = createFileRoute("/coin/$coinId")({
     const name = loaderData ? `${loaderData.name} ($${loaderData.ticker})` : "Coin";
     const desc = loaderData
       ? `${loaderData.name} collects ${loaderData.collects} (${loaderData.gradeFloor}). ${loaderData.cardsSent} real graded cards sent to holders so far.`
-      : "A PokéPad coin that buys real graded cards for its holders.";
+      : "A Poke coin that buys real graded cards for its holders.";
     return {
       meta: [
-        { title: `${name} · PokéPad` },
+        { title: `${name} · Poke` },
         { name: "description", content: desc },
-        { property: "og:title", content: `${name} · PokéPad` },
+        { property: "og:title", content: `${name} · Poke` },
         { property: "og:description", content: desc },
         { property: "og:type", content: "website" },
         { name: "twitter:card", content: "summary_large_image" },
