@@ -186,6 +186,63 @@ export type Database = {
           },
         ]
       }
+      coin_launches: {
+        Row: {
+          created_at: string
+          creator_id: string
+          description: string | null
+          error_message: string | null
+          id: string
+          image_url: string
+          initial_buy_sol: number
+          launch_budget_sol: number
+          metadata_url: string | null
+          mint_address: string | null
+          name: string
+          name_key: string
+          status: string
+          ticker: string
+          tx_signature: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          error_message?: string | null
+          id?: string
+          image_url: string
+          initial_buy_sol?: number
+          launch_budget_sol?: number
+          metadata_url?: string | null
+          mint_address?: string | null
+          name: string
+          name_key: string
+          status?: string
+          ticker: string
+          tx_signature?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          error_message?: string | null
+          id?: string
+          image_url?: string
+          initial_buy_sol?: number
+          launch_budget_sol?: number
+          metadata_url?: string | null
+          mint_address?: string | null
+          name?: string
+          name_key?: string
+          status?: string
+          ticker?: string
+          tx_signature?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       pairings: {
         Row: {
           card_type: string | null
