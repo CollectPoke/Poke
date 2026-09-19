@@ -68,8 +68,8 @@ function Home() {
         </div>
         {/* floating booster packs */}
         <div className="pointer-events-none absolute inset-0 hidden sm:block" aria-hidden>
-          <div className="absolute" style={{ left: "3%", top: "6%" }}>
-            <BoosterPack label="Series 01" delay={0} tilt="-10deg" className="w-20 md:w-24" />
+          <div className="absolute" style={{ left: "24%", top: "3%" }}>
+            <BoosterPack label="Series 01" delay={0} tilt="-10deg" className="w-20 opacity-95 md:w-24" />
           </div>
           <div className="absolute" style={{ right: "33%", top: "9%" }}>
             <BoosterPack label="Series 01" delay={1.4} tilt="8deg" className="w-16 opacity-90 md:w-20" />
