@@ -196,13 +196,8 @@ function MintPage() {
             />
           </Field>
 
-          <Field label="Artwork URL" hint="Optional">
-            <input
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="https://…"
-              className={inputClass}
-            />
+          <Field label="Artwork" hint="Optional — drag an image in">
+            {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
           </Field>
 
           <Field label="Type">
