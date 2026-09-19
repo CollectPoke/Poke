@@ -13,10 +13,9 @@ function looksLikeImage(file: File) {
 }
 
 /** Shrink huge images in the browser so any image uploads cleanly. */
-async function shrink(file: File): Promise<{ blob: Blob; type: string; ext: string }> {
+async function shrink(file: File): Promise<{ blob: Blob; type: string }> {
   if (file.size <= DOWNSCALE_OVER) {
-    const ext = (file.name.split(".").pop() || "png").toLowerCase().replace("jpeg", "jpg");
-    return { blob: file, type: file.type || "image/png", ext };
+    return { blob: file, type: file.type || "image/png" };
   }
   const bitmap = await createImageBitmap(file);
   const scale = Math.min(1, MAX_EDGE / Math.max(bitmap.width, bitmap.height));
@@ -31,7 +30,19 @@ async function shrink(file: File): Promise<{ blob: Blob; type: string; ext: stri
     canvas.toBlob(resolve, "image/webp", 0.9),
   );
   if (!blob) throw new Error("no-encode");
-  return { blob, type: "image/webp", ext: "webp" };
+  return { blob, type: "image/webp" };
+}
+
+/** PostgREST stores bytea from a "\x…" hex text value. */
+function toHex(bytes: Uint8Array): string {
+  let out = "";
+  const chunk = 0x8000;
+  for (let i = 0; i < bytes.length; i += chunk) {
+    out += Array.from(bytes.subarray(i, i + chunk), (b) =>
+      b.toString(16).padStart(2, "0"),
+    ).join("");
+  }
+  return "\\x" + out;
 }
 
 export function ArtworkDrop({
@@ -39,7 +50,7 @@ export function ArtworkDrop({
   onUploaded,
 }: {
   userId: string;
-  onUploaded: (publicUrl: string) => void;
+  onUploaded: (url: string) => void;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -76,14 +87,15 @@ export function ArtworkDrop({
       });
       setUploading(true);
       try {
-        const { blob, type, ext } = await shrink(file);
-        const path = `${userId}/${crypto.randomUUID()}.${ext}`;
-        const { error: upErr } = await supabase.storage
-          .from("card-art")
-          .upload(path, blob, { contentType: type, upsert: false });
+        const { blob, type } = await shrink(file);
+        const bytes = new Uint8Array(await blob.arrayBuffer());
+        const { data, error: upErr } = await supabase
+          .from("artwork")
+          .insert({ owner_id: userId, mime: type, data: toHex(bytes) })
+          .select("id")
+          .single();
         if (upErr) throw upErr;
-        const { data } = supabase.storage.from("card-art").getPublicUrl(path);
-        onUploaded(data.publicUrl);
+        onUploaded(`/api/public/artwork/${data.id}`);
       } catch {
         setError("Upload failed. Try again.");
         setPreview((old) => {

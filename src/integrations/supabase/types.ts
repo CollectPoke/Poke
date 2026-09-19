@@ -14,6 +14,30 @@ export type Database = {
   }
   public: {
     Tables: {
+      artwork: {
+        Row: {
+          created_at: string
+          data: string
+          id: string
+          mime: string
+          owner_id: string
+        }
+        Insert: {
+          created_at?: string
+          data: string
+          id?: string
+          mime: string
+          owner_id: string
+        }
+        Update: {
+          created_at?: string
+          data?: string
+          id?: string
+          mime?: string
+          owner_id?: string
+        }
+        Relationships: []
+      }
       buybacks: {
         Row: {
           created_at: string
