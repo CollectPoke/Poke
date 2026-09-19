@@ -14,6 +14,33 @@ export type Database = {
   }
   public: {
     Tables: {
+      buybacks: {
+        Row: {
+          created_at: string
+          executed_at: string
+          id: string
+          poke_bought: number
+          sol_spent: number
+          tx_signature: string
+        }
+        Insert: {
+          created_at?: string
+          executed_at?: string
+          id?: string
+          poke_bought?: number
+          sol_spent?: number
+          tx_signature: string
+        }
+        Update: {
+          created_at?: string
+          executed_at?: string
+          id?: string
+          poke_bought?: number
+          sol_spent?: number
+          tx_signature?: string
+        }
+        Relationships: []
+      }
       card_events: {
         Row: {
           actor_id: string | null
