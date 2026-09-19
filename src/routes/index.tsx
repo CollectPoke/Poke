@@ -50,10 +50,15 @@ const PACKS: {
 function Home() {
   const { data: cards } = useQuery({
     queryKey: ["cards"],
-    queryFn: () => listCards({ limit: 8 }),
+    queryFn: () => listCards(),
+  });
+  const { data: priciest } = useQuery({
+    queryKey: ["cards", "priciest"],
+    queryFn: () => listCards({ limit: 3, sort: "priciest" }),
   });
 
   const latest = cards ?? [];
+  const topCards = priciest ?? [];
   const forSale = latest.filter((c) => c.list_price !== null);
 
   return (
