@@ -119,6 +119,19 @@ function CardPage() {
   const isOwner = !!user && user.id === card.owner_id;
   const burned = card.status === "burned";
 
+  // Oldest → newest chain of owners, built from the sale events.
+  const sales = (events ?? [])
+    .filter((ev) => ev.kind === "sale")
+    .slice()
+    .sort((a, b) => a.created_at.localeCompare(b.created_at));
+  const owners: string[] =
+    sales.length === 0
+      ? []
+      : [
+          sales[0]!.counterparty?.username ?? card.creator?.username ?? "—",
+          ...sales.map((s) => s.actor?.username ?? "—"),
+        ];
+
   return (
     <main className="mx-auto max-w-5xl px-5 py-10">
       <Link to="/cards" className="text-xs font-semibold text-muted-foreground hover:underline">
