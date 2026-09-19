@@ -74,6 +74,7 @@ export type Database = {
           id: string
           kind: string
           price: number | null
+          tx_signature: string | null
         }
         Insert: {
           actor_id?: string | null
@@ -83,6 +84,7 @@ export type Database = {
           id?: string
           kind: string
           price?: number | null
+          tx_signature?: string | null
         }
         Update: {
           actor_id?: string | null
@@ -92,6 +94,7 @@ export type Database = {
           id?: string
           kind?: string
           price?: number | null
+          tx_signature?: string | null
         }
         Relationships: [
           {
@@ -242,18 +245,50 @@ export type Database = {
           created_at: string
           id: string
           username: string
+          wallet_address: string | null
         }
         Insert: {
           created_at?: string
           id: string
           username: string
+          wallet_address?: string | null
         }
         Update: {
           created_at?: string
           id?: string
           username?: string
+          wallet_address?: string | null
         }
         Relationships: []
+      }
+      wallets: {
+        Row: {
+          created_at: string
+          public_key: string
+          secret_ciphertext: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          public_key: string
+          secret_ciphertext: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          public_key?: string
+          secret_ciphertext?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "wallets_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
