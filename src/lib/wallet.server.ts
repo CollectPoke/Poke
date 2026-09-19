@@ -231,7 +231,6 @@ export async function signSimulateAndSendTransaction(
   const transactionSignature = bs58.encode(
     signed.subarray(signaturesStart, signaturesStart + 64),
   );
-  if (onPrepared) await onPrepared(transactionSignature);
   const beforeLamports = Math.round((await getBalanceSol(from.public_key)) * LAMPORTS_PER_SOL);
   const simulation = await rpc<{
     value: { err: unknown; logs?: string[]; accounts?: Array<{ lamports: number } | null> | null };
