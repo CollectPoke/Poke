@@ -104,18 +104,20 @@ function SellPage() {
       ) : (
         <div className="mt-8 space-y-4">
           {owned.map((card) => (
-            <SellRow
-              key={card.id}
-              card={card}
-              price={prices[card.id] ?? ""}
-              onPriceChange={(v) => setPrices((p) => ({ ...p, [card.id]: v }))}
-              onList={() =>
-                action.mutate({ cardId: card.id, kind: "list", price: prices[card.id] ?? "" })
-              }
-              onUnlist={() => action.mutate({ cardId: card.id, kind: "unlist" })}
-              busy={action.isPending}
-              notice={notice?.cardId === card.id ? notice : null}
-            />
+            <div key={card.id}>
+              <SellRow
+                card={card}
+                price={prices[card.id] ?? ""}
+                onPriceChange={(v) => setPrices((p) => ({ ...p, [card.id]: v }))}
+                onList={() =>
+                  action.mutate({ cardId: card.id, kind: "list", price: prices[card.id] ?? "" })
+                }
+                onUnlist={() => action.mutate({ cardId: card.id, kind: "unlist" })}
+                busy={action.isPending}
+                notice={notice?.cardId === card.id ? notice : null}
+              />
+              <OfferPanel cardId={card.id} userId={userId} isOwner />
+            </div>
           ))}
         </div>
       )}
