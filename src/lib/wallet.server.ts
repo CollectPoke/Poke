@@ -231,7 +231,6 @@ export async function signSimulateAndSendTransaction(
   const transactionSignature = bs58.encode(
     signed.subarray(signaturesStart, signaturesStart + 64),
   );
-  if (onPrepared) await onPrepared(transactionSignature);
   const beforeLamports = Math.round((await getBalanceSol(from.public_key)) * LAMPORTS_PER_SOL);
   const simulation = await rpc<{
     value: { err: unknown; logs?: string[]; accounts?: Array<{ lamports: number } | null> | null };
@@ -245,7 +244,14 @@ export async function signSimulateAndSendTransaction(
     },
   ]);
   if (simulation.value.err) {
-    throw new Error("The Pump.fun launch simulation failed. No SOL was spent.");
+    console.error("launch simulation failed", {
+      err: simulation.value.err,
+      logs: simulation.value.logs?.slice(-10),
+    });
+    const detail = simulation.value.logs?.filter((line) => /error|failed/i.test(line)).slice(-2).join(" | ");
+    throw new Error(
+      `The Pump.fun launch simulation failed. No SOL was spent.${detail ? ` (${detail})` : ""}`,
+    );
   }
   const afterLamports = simulation.value.accounts?.[0]?.lamports;
   if (typeof afterLamports !== "number") {
@@ -255,6 +261,9 @@ export async function signSimulateAndSendTransaction(
   if (simulatedDebit < 0 || simulatedDebit > maxDebitLamports) {
     throw new Error("The launch would exceed the 0.1 SOL limit. No SOL was spent.");
   }
+
+  if (onPrepared) await onPrepared(transactionSignature);
+
 
   const submittedSignature = await rpc<string>("sendTransaction", [
     signedBase64,
