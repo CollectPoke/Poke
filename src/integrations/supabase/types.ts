@@ -14,13 +14,184 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      card_events: {
+        Row: {
+          actor_id: string | null
+          card_id: string
+          counterparty_id: string | null
+          created_at: string
+          id: string
+          kind: string
+          price: number | null
+        }
+        Insert: {
+          actor_id?: string | null
+          card_id: string
+          counterparty_id?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          price?: number | null
+        }
+        Update: {
+          actor_id?: string | null
+          card_id?: string
+          counterparty_id?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          price?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "card_events_actor_id_fkey"
+            columns: ["actor_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "card_events_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "card_events_counterparty_id_fkey"
+            columns: ["counterparty_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      cards: {
+        Row: {
+          card_type: string
+          contract_address: string
+          created_at: string
+          creator_id: string
+          description: string | null
+          hp: number
+          id: string
+          image_url: string | null
+          last_price: number | null
+          list_price: number | null
+          mint_price: number
+          name: string
+          name_key: string
+          owner_id: string
+          rarity: string
+          status: string
+          ticker: string
+        }
+        Insert: {
+          card_type?: string
+          contract_address: string
+          created_at?: string
+          creator_id: string
+          description?: string | null
+          hp?: number
+          id?: string
+          image_url?: string | null
+          last_price?: number | null
+          list_price?: number | null
+          mint_price?: number
+          name: string
+          name_key: string
+          owner_id: string
+          rarity?: string
+          status?: string
+          ticker: string
+        }
+        Update: {
+          card_type?: string
+          contract_address?: string
+          created_at?: string
+          creator_id?: string
+          description?: string | null
+          hp?: number
+          id?: string
+          image_url?: string | null
+          last_price?: number | null
+          list_price?: number | null
+          mint_price?: number
+          name?: string
+          name_key?: string
+          owner_id?: string
+          rarity?: string
+          status?: string
+          ticker?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "cards_creator_id_fkey"
+            columns: ["creator_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "cards_owner_id_fkey"
+            columns: ["owner_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          id: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          id: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          username?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      buy_card: {
+        Args: { _card_id: string }
+        Returns: {
+          card_type: string
+          contract_address: string
+          created_at: string
+          creator_id: string
+          description: string | null
+          hp: number
+          id: string
+          image_url: string | null
+          last_price: number | null
+          list_price: number | null
+          mint_price: number
+          name: string
+          name_key: string
+          owner_id: string
+          rarity: string
+          status: string
+          ticker: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "cards"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
     }
     Enums: {
       [_ in never]: never
