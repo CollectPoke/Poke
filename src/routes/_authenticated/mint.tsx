@@ -119,11 +119,7 @@ function MintPage() {
         }
         throw err;
       }
-      await supabase.from("card_events").insert({
-        card_id: data.id,
-        kind: "mint",
-        actor_id: user.id,
-      });
+      // The mint (and initial listing) event is recorded by the database itself.
       navigate({ to: "/card/$cardId", params: { cardId: data.id } });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not mint the card.");
