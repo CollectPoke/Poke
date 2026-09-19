@@ -1,4 +1,5 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
 
