@@ -26,6 +26,14 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+const SPRITES = [
+  { id: 25, left: "4%", top: "8%", size: "120px" },
+  { id: 6, left: "82%", top: "4%", size: "150px" },
+  { id: 150, left: "66%", top: "62%", size: "130px" },
+  { id: 143, left: "16%", top: "66%", size: "140px" },
+  { id: 94, left: "44%", top: "-4%", size: "110px" },
+];
+
 function Home() {
   const { data: cards } = useQuery({
     queryKey: ["cards"],
