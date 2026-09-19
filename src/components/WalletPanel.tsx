@@ -33,7 +33,15 @@ export function WalletPanel() {
   const [sent, setSent] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const wallet = useQuery({ queryKey: ["my-wallet"], queryFn: () => fetchWallet({ data: undefined }) });
+  const wallet = useQuery({
+    queryKey: ["my-wallet"],
+    queryFn: () => fetchWallet({ data: undefined }),
+    refetchInterval: 10_000,
+    refetchOnWindowFocus: true,
+  });
+
+  const activity = wallet.data?.activity ?? [];
+  const pendingCount = activity.filter((a) => a.status === "pending").length;
 
   const reveal = useMutation({
     mutationFn: () => exportKey({ data: undefined }),
