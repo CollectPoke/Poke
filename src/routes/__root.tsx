@@ -15,6 +15,7 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { EntranceGate } from "@/components/EntranceGate";
 import { MusicPlayer } from "@/components/MusicPlayer";
 import { AuthProvider } from "@/lib/auth";
+import { ThemeProvider } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
