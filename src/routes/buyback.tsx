@@ -103,8 +103,9 @@ function BuybackPage() {
             The buyback runs on a {BUYBACK_INTERVAL_MS / 60000}-minute clock, not whenever someone
             feels like it.
           </Card>
-          <Card color="bg-poke-green text-white" title="Solscan proof">
-            Each run links straight to its transaction on Solscan. No screenshots, no trust needed.
+          <Card color="bg-poke-green text-white" title="Verify it yourself">
+            Nothing is decided behind the scenes: the clock is fixed, the amount is whatever the
+            fees were, and each run links straight to its transaction on Solscan.
           </Card>
         </div>
       </section>
