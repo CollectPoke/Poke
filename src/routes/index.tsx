@@ -174,12 +174,7 @@ function Home() {
                 See the buyback log
               </Link>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <MiniStat label="Of fees used" value="100%" />
-              <MiniStat label="Buyback runs" value="Every 10 min" />
-              <MiniStat label="Proof" value="Solscan" />
-              <MiniStat label="Kept by us" value="0%" />
-            </div>
+            <BuybackTicker />
           </div>
         </div>
       </section>
