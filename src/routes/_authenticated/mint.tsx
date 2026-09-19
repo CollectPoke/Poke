@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { ArtworkDrop } from "@/components/ArtworkDrop";
+import { MintReveal } from "@/components/MintReveal";
 import { PokeCard } from "@/components/PokeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -39,6 +40,7 @@ function MintPage() {
   const [checking, setChecking] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mintedCard, setMintedCard] = useState<CardWithPeople | null>(null);
 
   useEffect(() => {
     const trimmed = name.trim();
@@ -83,6 +85,7 @@ function MintPage() {
     setBusy(true);
     setError(null);
     try {
+      const contractAddress = generateContractAddress();
       const { data, error: err } = await supabase
         .from("cards")
         .insert({
@@ -91,7 +94,7 @@ function MintPage() {
           ticker: ticker.trim().toUpperCase(),
           description: description.trim() || null,
           image_url: imageUrl.trim() || null,
-          contract_address: generateContractAddress(),
+          contract_address: contractAddress,
           creator_id: user.id,
           owner_id: user.id,
           list_price: listPrice ? Number(listPrice) : null,
@@ -106,7 +109,15 @@ function MintPage() {
         throw err;
       }
       // The mint (and initial listing) event is recorded by the database itself.
-      navigate({ to: "/card/$cardId", params: { cardId: data.id } });
+      setMintedCard({
+        ...preview,
+        id: data.id,
+        name_key: name.trim().toLowerCase(),
+        contract_address: contractAddress,
+        creator_id: user.id,
+        owner_id: user.id,
+        owner: { username: username ?? "you" },
+      });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not mint the card.");
     } finally {
@@ -118,6 +129,7 @@ function MintPage() {
     !!name.trim() && !!ticker.trim() && !!imageUrl.trim() && available === true && !busy;
 
   return (
+    <>
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Mint a card</h1>
       <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
@@ -231,6 +243,10 @@ function MintPage() {
         </div>
       </div>
     </main>
+    {mintedCard ? (
+      <MintReveal card={mintedCard} onContinue={() => navigate({ to: "/card/$cardId", params: { cardId: mintedCard.id } })} />
+    ) : null}
+    </>
   );
 }
 
