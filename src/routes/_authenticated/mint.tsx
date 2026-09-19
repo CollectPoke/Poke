@@ -256,17 +256,19 @@ function MintPage() {
               <button
                 type="button"
                 onClick={handleFindPokemon}
-                disabled={!name.trim() || pairingBusy}
+                disabled={!name.trim() || !ticker.trim() || pairingBusy}
                 className="poke-btn-navy shrink-0 !py-2 !px-4 text-xs disabled:opacity-40"
               >
                 {pairingBusy ? "Consulting the Pokédex…" : "Find my Pokémon"}
               </button>
             </div>
-            {!name.trim() && !pairing && (
-              <p className="mt-3 text-xs text-muted-foreground">
-                Type your card name above first, then tap the button.
-              </p>
-            )}
+            {!name.trim() || !ticker.trim() ? (
+              !pairing && (
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Type your card name and ticker above first, then tap the button.
+                </p>
+              )
+            ) : null}
             {pairingError && <p className="mt-3 text-xs font-medium text-poke-red">{pairingError}</p>}
             {pairing && (
               <div className="mt-4 flex gap-4 rounded-xl bg-muted/50 p-4">
