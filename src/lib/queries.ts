@@ -4,12 +4,22 @@ import type { CardWithPeople } from "@/lib/cards";
 const CARD_SELECT =
   "*, owner:profiles!cards_owner_id_fkey(username), creator:profiles!cards_creator_id_fkey(username)";
 
-export async function listCards(opts?: { forSaleOnly?: boolean; limit?: number }) {
+export async function listCards(opts?: {
+  forSaleOnly?: boolean;
+  limit?: number;
+  sort?: "newest" | "priciest";
+}) {
   let q = supabase
     .from("cards")
     .select(CARD_SELECT)
-    .eq("status", "minted")
-    .order("created_at", { ascending: false });
+    .eq("status", "minted");
+  q =
+    opts?.sort === "priciest"
+      ? q
+          .order("list_price", { ascending: false, nullsFirst: false })
+          .order("last_price", { ascending: false, nullsFirst: false })
+          .order("created_at", { ascending: false })
+      : q.order("created_at", { ascending: false });
   if (opts?.forSaleOnly) q = q.not("list_price", "is", null);
   if (opts?.limit) q = q.limit(opts.limit);
   const { data, error } = await q;
