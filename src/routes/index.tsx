@@ -37,6 +37,7 @@ export const Route = createFileRoute("/")({
 function DexIndex() {
   const { data } = useSuspenseQuery(marketsQueryOptions);
   const [q, setQ] = useState("");
+  const totals = vaultTotals();
 
   const byId = new Map(data.markets.map((m) => [m.id, m]));
   const query = q.trim().toLowerCase();
