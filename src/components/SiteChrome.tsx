@@ -1,4 +1,5 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
 
@@ -10,18 +11,35 @@ const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/buyback", label: "Buybacks" },
 ];
 
+const linkClass =
+  "rounded-full px-3.5 py-1.5 text-white/75 transition-colors hover:bg-white/10 hover:text-white";
+const linkActive = { className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" };
+
 export function SiteHeader() {
   const { user, username } = useAuth();
+  const [open, setOpen] = useState(false);
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-30">
       <div className="bg-poke-navy-deep">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-1.5 text-[11px] text-white/70">
-          <span className="mono-num uppercase tracking-[0.2em]">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-[10px] text-white/70 sm:px-5 sm:text-[11px]">
+          <span className="mono-num truncate uppercase tracking-[0.18em]">
             one name · one card · forever
           </span>
-          <div className="flex items-center gap-4">
-            <span className="hidden sm:inline">Burn a card and its name frees up again.</span>
+          <div className="flex shrink-0 items-center gap-4">
+            <span className="hidden lg:inline">Burn a card and its name frees up again.</span>
             <a
               href="https://x.com/CollectPokeFun"
               target="_blank"
@@ -38,46 +56,102 @@ export function SiteHeader() {
         </div>
       </div>
       <div className="border-b-4 border-poke-yellow bg-poke-navy shadow-md">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-5 py-3">
-          <Link to="/" className="flex items-center gap-2.5">
-            <img src="/favicon.png" alt="" className="h-9 w-9 drop-shadow" />
-            <span className="font-display text-2xl font-bold leading-none text-poke-yellow drop-shadow-[0_2px_0_oklch(0.19_0.04_260)]">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5 sm:px-5 sm:py-3">
+          <Link to="/" className="flex min-w-0 items-center gap-2.5">
+            <img src="/favicon.png" alt="" className="h-8 w-8 shrink-0 drop-shadow sm:h-9 sm:w-9" />
+            <span className="font-display text-xl font-bold leading-none text-poke-yellow drop-shadow-[0_2px_0_oklch(0.19_0.04_260)] sm:text-2xl">
               Poke
             </span>
           </Link>
-          <nav className="flex items-center gap-1 text-sm font-medium">
+
+          <nav className="hidden items-center gap-1 text-sm font-medium lg:flex">
             {navItems.map((item) => (
               <Link
                 key={item.to}
                 to={item.to}
                 activeOptions={{ exact: item.exact ?? false }}
-                className="rounded-full px-3.5 py-1.5 text-white/75 transition-colors hover:bg-white/10 hover:text-white"
-                activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
+                className={linkClass}
+                activeProps={linkActive}
               >
                 {item.label}
               </Link>
             ))}
             {user ? (
-              <Link
-                to="/account"
-                className="rounded-full px-3.5 py-1.5 text-white/75 transition-colors hover:bg-white/10 hover:text-white"
-                activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
-              >
+              <Link to="/account" className={linkClass} activeProps={linkActive}>
                 {username ?? "My binder"}
               </Link>
             ) : (
-              <Link
-                to="/auth"
-                className="rounded-full px-3.5 py-1.5 text-white/75 transition-colors hover:bg-white/10 hover:text-white"
-              >
+              <Link to="/auth" className={linkClass}>
                 Sign in
               </Link>
             )}
-            <Link to="/mint" className="poke-btn ml-2 !py-2 !px-4 text-xs sm:text-sm">
+            <Link to="/mint" className="poke-btn ml-2 !py-2 !px-4 text-sm">
               Mint a card
             </Link>
           </nav>
+
+          <div className="flex shrink-0 items-center gap-2 lg:hidden">
+            <Link to="/mint" className="poke-btn !py-1.5 !px-3.5 text-xs">
+              Mint
+            </Link>
+            <button
+              type="button"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? "Close menu" : "Open menu"}
+              aria-expanded={open}
+              className="grid h-10 w-10 place-items-center rounded-full border border-white/20 text-white transition-colors hover:bg-white/10"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-5 w-5" aria-hidden="true">
+                {open ? (
+                  <>
+                    <path d="M6 6l12 12" />
+                    <path d="M18 6L6 18" />
+                  </>
+                ) : (
+                  <>
+                    <path d="M4 7h16" />
+                    <path d="M4 12h16" />
+                    <path d="M4 17h16" />
+                  </>
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
+
+        {open ? (
+          <div className="border-t border-white/10 bg-poke-navy lg:hidden">
+            <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 text-base font-medium">
+              {navItems.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  activeOptions={{ exact: item.exact ?? false }}
+                  className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
+                >
+                  {item.label}
+                </Link>
+              ))}
+              {user ? (
+                <Link
+                  to="/account"
+                  className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                  activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
+                >
+                  {username ?? "My binder"}
+                </Link>
+              ) : (
+                <Link
+                  to="/auth"
+                  className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                >
+                  Sign in
+                </Link>
+              )}
+            </nav>
+          </div>
+        ) : null}
       </div>
     </header>
   );
