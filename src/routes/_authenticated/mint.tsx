@@ -42,6 +42,8 @@ function MintPage() {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [listPrice, setListPrice] = useState("");
+  const [devBuy, setDevBuy] = useState(true);
+  const [devBuyAmount, setDevBuyAmount] = useState("0.075");
   const [available, setAvailable] = useState<boolean | null>(null);
   const [checking, setChecking] = useState(false);
   const [busy, setBusy] = useState(false);
