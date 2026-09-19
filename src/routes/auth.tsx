@@ -4,6 +4,7 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/lib/auth";
+import { WelcomeTrainer } from "@/components/WelcomeTrainer";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
@@ -30,6 +31,16 @@ function AuthPage() {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [justSignedUp, setJustSignedUp] = useState(false);
+
+  if (justSignedUp) {
+    return (
+      <WelcomeTrainer
+        username={username.trim()}
+        onDone={() => navigate({ to: "/account" })}
+      />
+    );
+  }
 
   if (user) {
     return (
@@ -61,7 +72,7 @@ function AuthPage() {
         if (!data.session) {
           setMessage("Check your email to confirm your account, then sign in.");
         } else {
-          navigate({ to: "/account" });
+          setJustSignedUp(true);
         }
       } else {
         const { error: err } = await supabase.auth.signInWithPassword({ email, password });
