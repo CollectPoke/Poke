@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/lib/auth";
 import { ThemeToggle, useTheme } from "@/lib/theme";
 
+const POKE_CA = "EoqZPcCZnvntyR8zybqr38aXF1fMhP1ckyu7zFWFPoke";
+
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/cards", label: "All cards" },
@@ -20,6 +22,7 @@ export function SiteHeader() {
   const { user, username } = useAuth();
   const { theme } = useTheme();
   const [open, setOpen] = useState(false);
+  const [caCopied, setCaCopied] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -40,14 +43,32 @@ export function SiteHeader() {
           <span className="mono-num truncate uppercase tracking-[0.18em]">
             one name · one card · forever
           </span>
-          <div className="flex shrink-0 items-center gap-4">
+          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
             <span className="hidden lg:inline">Burn a card and its name frees up again.</span>
+            <button
+              type="button"
+              onClick={() => {
+                navigator.clipboard?.writeText(POKE_CA).catch(() => {});
+                setCaCopied(true);
+                window.setTimeout(() => setCaCopied(false), 1600);
+              }}
+              aria-label="Copy the $POKE contract address"
+              className="flex items-center gap-1.5 text-white transition-colors hover:text-poke-yellow"
+              title="Click to copy the $POKE contract address"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.2" />
+                <circle cx="12" cy="12" r="3.2" />
+              </svg>
+              <span className="mono-num hidden sm:inline">{caCopied ? "CA copied!" : "CA EoqZ…FPoke"}</span>
+              <span className="mono-num sm:hidden">CA</span>
+            </button>
             <a
               href="https://x.com/CollectPokeFun"
               target="_blank"
               rel="noreferrer"
               aria-label="Poke on X"
-              className="flex items-center gap-1.5 text-white/80 transition-colors hover:text-poke-yellow"
+              className="flex items-center gap-1.5 text-white transition-colors hover:text-poke-yellow"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
                 <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
