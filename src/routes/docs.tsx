@@ -167,12 +167,8 @@ function DocsPage() {
               <Link to="/pair" className="font-semibold text-poke-blue underline">
                 Pair a coin
               </Link>{" "}
-              — it suggests a Pokémon with a short reason, and saved pairs show
-              up in the{" "}
-              <Link to="/pairings" className="font-semibold text-poke-blue underline">
-                Directory
-              </Link>
-              .
+              — it suggests a Pokémon with a short reason, a typing and a rarity,
+              then you can mint it straight into a card.
             </p>
           </DocCard>
 

@@ -17,7 +17,6 @@ import { Route as BuybackRouteImport } from './routes/buyback'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as PairRouteImport } from './routes/pair'
-import { Route as PairingsRouteImport } from './routes/pairings'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedGalleryRouteImport } from './routes/_authenticated/gallery'
 import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
@@ -65,11 +64,6 @@ const PairRoute = PairRouteImport.update({
   path: '/pair',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PairingsRoute = PairingsRouteImport.update({
-  id: '/pairings',
-  path: '/pairings',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   id: '/account',
   path: '/account',
@@ -114,7 +108,6 @@ export interface FileRoutesByFullPath {
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
   '/pair': typeof PairRoute
-  '/pairings': typeof PairingsRoute
   '/account': typeof AuthenticatedAccountRoute
   '/gallery': typeof AuthenticatedGalleryRoute
   '/mint': typeof AuthenticatedMintRoute
@@ -131,7 +124,6 @@ export interface FileRoutesByTo {
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
   '/pair': typeof PairRoute
-  '/pairings': typeof PairingsRoute
   '/account': typeof AuthenticatedAccountRoute
   '/gallery': typeof AuthenticatedGalleryRoute
   '/mint': typeof AuthenticatedMintRoute
@@ -150,7 +142,6 @@ export interface FileRoutesById {
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
   '/pair': typeof PairRoute
-  '/pairings': typeof PairingsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/gallery': typeof AuthenticatedGalleryRoute
   '/_authenticated/mint': typeof AuthenticatedMintRoute
@@ -169,7 +160,6 @@ export interface FileRouteTypes {
     | '/cards'
     | '/docs'
     | '/pair'
-    | '/pairings'
     | '/account'
     | '/gallery'
     | '/mint'
@@ -186,7 +176,6 @@ export interface FileRouteTypes {
     | '/cards'
     | '/docs'
     | '/pair'
-    | '/pairings'
     | '/account'
     | '/gallery'
     | '/mint'
@@ -204,7 +193,6 @@ export interface FileRouteTypes {
     | '/cards'
     | '/docs'
     | '/pair'
-    | '/pairings'
     | '/_authenticated/account'
     | '/_authenticated/gallery'
     | '/_authenticated/mint'
@@ -223,7 +211,6 @@ export interface RootRouteChildren {
   CardsRoute: typeof CardsRoute
   DocsRoute: typeof DocsRoute
   PairRoute: typeof PairRoute
-  PairingsRoute: typeof PairingsRoute
   CardCardIdRoute: typeof CardCardIdRoute
   ApiPublicArtworkIdRoute: typeof ApiPublicArtworkIdRoute
   ApiPublicCoinMetadataIdRoute: typeof ApiPublicCoinMetadataIdRoute
@@ -285,13 +272,6 @@ declare module '@tanstack/react-router' {
       path: '/pair'
       fullPath: '/pair'
       preLoaderRoute: typeof PairRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pairings': {
-      id: '/pairings'
-      path: '/pairings'
-      fullPath: '/pairings'
-      preLoaderRoute: typeof PairingsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/account': {
@@ -372,7 +352,6 @@ const rootRouteChildren: RootRouteChildren = {
   CardsRoute: CardsRoute,
   DocsRoute: DocsRoute,
   PairRoute: PairRoute,
-  PairingsRoute: PairingsRoute,
   CardCardIdRoute: CardCardIdRoute,
   ApiPublicArtworkIdRoute: ApiPublicArtworkIdRoute,
   ApiPublicCoinMetadataIdRoute: ApiPublicCoinMetadataIdRoute,
