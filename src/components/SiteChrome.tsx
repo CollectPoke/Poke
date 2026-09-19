@@ -406,7 +406,7 @@ function FooterLink({
         to={to}
         activeOptions={{ exact: exact ?? false, includeSearch: false }}
         className="footer-link inline-block py-1"
-        activeProps={{ className: "footer-link footer-link-active" }}
+        activeProps={{ className: "footer-link footer-link-active inline-block py-1" }}
       >
         {children}
       </Link>
