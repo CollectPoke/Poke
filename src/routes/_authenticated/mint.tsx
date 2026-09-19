@@ -344,53 +344,13 @@ function MintPage() {
           </div>
 
           <div className="rounded-2xl border border-border bg-card p-4">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-sm font-semibold">Dev buy</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  Buy your own coin at launch. The tokens land in your Poke wallet.
-                </p>
-              </div>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={devBuy}
-                onClick={() => setDevBuy(!devBuy)}
-                className={[
-                  "relative h-7 w-12 shrink-0 rounded-full transition-colors",
-                  devBuy ? "bg-poke-green" : "bg-border",
-                ].join(" ")}
-              >
-                <span
-                  className={[
-                    "absolute top-0.5 size-6 rounded-full bg-white shadow transition-all",
-                    devBuy ? "left-[22px]" : "left-0.5",
-                  ].join(" ")}
-                />
-              </button>
-            </div>
-            {devBuy && (
-              <div className="mt-3 flex items-center gap-2">
-                <div className="relative flex-1">
-                  <input
-                    type="number"
-                    min={0}
-                    max={5}
-                    step="0.005"
-                    value={devBuyAmount}
-                    onChange={(e) => setDevBuyAmount(e.target.value)}
-                    placeholder="0.075"
-                    className={`${inputClass} pr-14 font-mono`}
-                  />
-                  <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                    SOL
-                  </span>
-                </div>
-              </div>
-            )}
+            <p className="text-sm font-semibold">Launch fee</p>
+            <p className="mt-0.5 text-xs text-muted-foreground">
+              One flat fee per launch — it covers the coin launch, network and Pump.fun fees.
+            </p>
             <p className="mt-2 text-xs text-muted-foreground">
               Total from your wallet: <span className="font-mono font-semibold">{totalCost.toFixed(3)} SOL</span>{" "}
-              ({devBuySol.toFixed(3)} dev buy + 0.025 fees)
+              (flat launch fee)
             </p>
           </div>
 
