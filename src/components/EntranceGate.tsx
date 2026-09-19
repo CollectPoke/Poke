@@ -33,6 +33,7 @@ export function EntranceGate() {
     } catch {
       /* ignore */
     }
+    window.dispatchEvent(new Event("poke:enter"));
     window.setTimeout(() => setShow(false), 1250);
   }
 
