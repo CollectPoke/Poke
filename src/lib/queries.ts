@@ -27,20 +27,26 @@ export async function getCard(id: string) {
   return (data as unknown as CardWithPeople | null) ?? null;
 }
 
+export type CardEvent = {
+  id: string;
+  kind: string;
+  price: number | null;
+  created_at: string;
+  tx_signature: string | null;
+  actor: { username: string } | null;
+  counterparty: { username: string } | null;
+};
+
 export async function getCardEvents(cardId: string) {
   const { data, error } = await supabase
     .from("card_events")
-    .select("*, actor:profiles!card_events_actor_id_fkey(username)")
+    .select(
+      "id, kind, price, created_at, tx_signature, actor:profiles!card_events_actor_id_fkey(username), counterparty:profiles!card_events_counterparty_id_fkey(username)",
+    )
     .eq("card_id", cardId)
     .order("created_at", { ascending: false });
   if (error) throw error;
-  return (data ?? []) as unknown as {
-    id: string;
-    kind: string;
-    price: number | null;
-    created_at: string;
-    actor: { username: string } | null;
-  }[];
+  return (data ?? []) as unknown as CardEvent[];
 }
 
 export async function myCards(userId: string) {
