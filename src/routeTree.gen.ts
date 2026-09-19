@@ -17,6 +17,7 @@ import { Route as CardsRouteImport } from './routes/cards'
 import { Route as PairRouteImport } from './routes/pair'
 import { Route as PairingsRouteImport } from './routes/pairings'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
+import { Route as AuthenticatedGalleryRouteImport } from './routes/_authenticated/gallery'
 import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as ApiPublicArtworkIdRouteImport } from './routes/api/public/artwork.$id'
@@ -60,6 +61,11 @@ const AuthenticatedAccountRoute = AuthenticatedAccountRouteImport.update({
   path: '/account',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedGalleryRoute = AuthenticatedGalleryRouteImport.update({
+  id: '/gallery',
+  path: '/gallery',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedMintRoute = AuthenticatedMintRouteImport.update({
   id: '/mint',
   path: '/mint',
@@ -84,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/pair': typeof PairRoute
   '/pairings': typeof PairingsRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/gallery': typeof AuthenticatedGalleryRoute
   '/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
@@ -96,6 +103,7 @@ export interface FileRoutesByTo {
   '/pair': typeof PairRoute
   '/pairings': typeof PairingsRoute
   '/account': typeof AuthenticatedAccountRoute
+  '/gallery': typeof AuthenticatedGalleryRoute
   '/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
@@ -110,6 +118,7 @@ export interface FileRoutesById {
   '/pair': typeof PairRoute
   '/pairings': typeof PairingsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
+  '/_authenticated/gallery': typeof AuthenticatedGalleryRoute
   '/_authenticated/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
@@ -124,6 +133,7 @@ export interface FileRouteTypes {
     | '/pair'
     | '/pairings'
     | '/account'
+    | '/gallery'
     | '/mint'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
@@ -136,6 +146,7 @@ export interface FileRouteTypes {
     | '/pair'
     | '/pairings'
     | '/account'
+    | '/gallery'
     | '/mint'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
@@ -149,6 +160,7 @@ export interface FileRouteTypes {
     | '/pair'
     | '/pairings'
     | '/_authenticated/account'
+    | '/_authenticated/gallery'
     | '/_authenticated/mint'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
@@ -224,6 +236,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAccountRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/gallery': {
+      id: '/_authenticated/gallery'
+      path: '/gallery'
+      fullPath: '/gallery'
+      preLoaderRoute: typeof AuthenticatedGalleryRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/mint': {
       id: '/_authenticated/mint'
       path: '/mint'
@@ -250,11 +269,13 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
+  AuthenticatedGalleryRoute: typeof AuthenticatedGalleryRoute
   AuthenticatedMintRoute: typeof AuthenticatedMintRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
+  AuthenticatedGalleryRoute: AuthenticatedGalleryRoute,
   AuthenticatedMintRoute: AuthenticatedMintRoute,
 }
 
