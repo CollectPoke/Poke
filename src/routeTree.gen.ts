@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CoinsRouteImport } from './routes/coins'
 import { Route as VaultRouteImport } from './routes/vault'
 import { Route as DexCoinIdRouteImport } from './routes/dex.$coinId'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoinsRoute = CoinsRouteImport.update({
+  id: '/coins',
+  path: '/coins',
   getParentRoute: () => rootRouteImport,
 } as any)
 const VaultRoute = VaultRouteImport.update({
@@ -31,30 +37,34 @@ const DexCoinIdRoute = DexCoinIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
   '/vault': typeof VaultRoute
   '/dex/$coinId': typeof DexCoinIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
   '/vault': typeof VaultRoute
   '/dex/$coinId': typeof DexCoinIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/coins': typeof CoinsRoute
   '/vault': typeof VaultRoute
   '/dex/$coinId': typeof DexCoinIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/vault' | '/dex/$coinId'
+  fullPaths: '/' | '/coins' | '/vault' | '/dex/$coinId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/vault' | '/dex/$coinId'
-  id: '__root__' | '/' | '/vault' | '/dex/$coinId'
+  to: '/' | '/coins' | '/vault' | '/dex/$coinId'
+  id: '__root__' | '/' | '/coins' | '/vault' | '/dex/$coinId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CoinsRoute: typeof CoinsRoute
   VaultRoute: typeof VaultRoute
   DexCoinIdRoute: typeof DexCoinIdRoute
 }
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coins': {
+      id: '/coins'
+      path: '/coins'
+      fullPath: '/coins'
+      preLoaderRoute: typeof CoinsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/vault': {
@@ -87,6 +104,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CoinsRoute: CoinsRoute,
   VaultRoute: VaultRoute,
   DexCoinIdRoute: DexCoinIdRoute,
 }
