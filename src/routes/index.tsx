@@ -40,10 +40,10 @@ const PACKS: {
   width: string;
   tilt: string;
 }[] = [
-  { id: 25, left: "20%", top: "4%", width: "w-20 md:w-24", tilt: "-10deg" },
+  { id: 25, left: "1%", top: "3%", width: "w-20 md:w-24", tilt: "-10deg" },
   { id: 6, right: "30%", top: "8%", width: "w-16 md:w-20", tilt: "8deg" },
   { id: 150, right: "3%", bottom: "6%", width: "w-20 md:w-28", tilt: "-4deg" },
-  { id: 94, left: "4%", bottom: "10%", width: "w-14 md:w-20", tilt: "6deg" },
+  { id: 94, left: "1%", bottom: "3%", width: "w-14 md:w-20", tilt: "6deg" },
   { id: 143, left: "56%", top: "-4%", width: "w-14 md:w-20", tilt: "-8deg" },
 ];
 
