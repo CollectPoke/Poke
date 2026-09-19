@@ -100,6 +100,36 @@ function Home() {
         </div>
       </section>
 
+      {/* Buybacks */}
+      <section className="mx-auto max-w-6xl px-5 pb-14">
+        <div className="overflow-hidden rounded-2xl bg-poke-navy text-white shadow-card">
+          <div className="grid gap-6 p-7 md:grid-cols-[1.3fr_1fr] md:items-center">
+            <div>
+              <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
+                100% of fees
+              </span>
+              <h2 className="mt-3 font-display text-3xl font-bold">
+                Every fee buys back $POKE — every 10 minutes.
+              </h2>
+              <p className="mt-2 max-w-xl text-sm text-white/80">
+                Coins launched on Poke pay fees, and all of it goes into buying $POKE on the open
+                market. Every run is posted with its Solscan transaction, so you can check it
+                yourself.
+              </p>
+              <Link to="/buyback" className="poke-btn mt-5 inline-flex">
+                See the buyback log
+              </Link>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <MiniStat label="Of fees used" value="100%" />
+              <MiniStat label="Buyback runs" value="Every 10 min" />
+              <MiniStat label="Proof" value="Solscan" />
+              <MiniStat label="Kept by us" value="0%" />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Latest cards */}
       <section className="mx-auto max-w-6xl px-5 pb-16">
         <div className="flex items-end justify-between gap-4">

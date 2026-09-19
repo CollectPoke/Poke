@@ -5,6 +5,7 @@ import { useAuth } from "@/lib/auth";
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/cards", label: "All cards" },
+  { to: "/buyback", label: "Buybacks" },
 ];
 
 export function SiteHeader() {
