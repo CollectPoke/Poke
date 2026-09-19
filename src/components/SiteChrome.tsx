@@ -62,6 +62,16 @@ export function SiteHeader() {
               <span className="mono-num hidden sm:inline">{caCopied ? "CA copied!" : "CA EoqZ…FPoke"}</span>
               <span className="mono-num sm:hidden">CA</span>
             </button>
+            <Link
+              to="/docs"
+              aria-label="Poke docs and how-to"
+              className="flex items-center gap-1.5 text-white transition-colors hover:text-poke-yellow"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-3.5 w-3.5" aria-hidden="true">
+                <path d="M6.5 2A2.5 2.5 0 0 0 4 4.5v13A2.5 2.5 0 0 0 6.5 20H20a1 1 0 0 0 0-2H6.5a.5.5 0 0 1 0-1H20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.5Zm2 3h8a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.78.41L15 11l-1.22.91A.5.5 0 0 1 13 11.5v-6a.5.5 0 0 1 .5-.5Z" />
+              </svg>
+              <span className="hidden sm:inline">Docs</span>
+            </Link>
             <a
               href="https://x.com/CollectPokeFun"
               target="_blank"
