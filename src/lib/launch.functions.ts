@@ -4,8 +4,14 @@ import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-const LAUNCH_BUDGET_LAMPORTS = 100_000_000;
-const INITIAL_BUY_LAMPORTS = 75_000_000;
+// Network + Pump.fun fees held back on top of the dev buy.
+export const LAUNCH_FEE_LAMPORTS = 25_000_000;
+export const DEFAULT_DEV_BUY_SOL = 0.075;
+export const MAX_DEV_BUY_SOL = 5;
+
+// Pump.fun's indexer fetches the metadata URI from the public internet, so it
+// can never point at a dev/preview origin or the coin launches with no image.
+export const PUBLIC_ORIGIN = "https://collectpoke.fun";
 
 const launchSchema = z.object({
   name: z.string().trim().min(1).max(32),
@@ -13,6 +19,7 @@ const launchSchema = z.object({
   description: z.string().trim().max(600),
   imageUrl: z.string().trim().regex(/^\/api\/public\/artwork\/[0-9a-f-]{36}$/i),
   listPrice: z.number().positive().max(1_000_000).nullable(),
+  devBuySol: z.number().min(0).max(MAX_DEV_BUY_SOL).default(DEFAULT_DEV_BUY_SOL),
 });
 
 export const launchCoinAndMintCard = createServerFn({ method: "POST" })
