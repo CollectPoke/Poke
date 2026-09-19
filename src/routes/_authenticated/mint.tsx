@@ -275,6 +275,13 @@ function MintPage() {
         </div>
       </div>
     </main>
+    {showFunding ? (
+      <FundingModal
+        requiredSol={LAUNCH_COST_SOL}
+        onClose={() => setShowFunding(false)}
+        onFunded={() => setTimeout(() => setShowFunding(false), 1800)}
+      />
+    ) : null}
     {mintedCard && launchSignature ? (
       <MintReveal card={mintedCard} signature={launchSignature} onContinue={() => navigate({ to: "/card/$cardId", params: { cardId: mintedCard.id } })} />
     ) : null}
