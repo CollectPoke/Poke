@@ -114,6 +114,14 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script
+          // Decide BEFORE first paint whether the entrance gate should cover
+          // the page, so the homepage never flashes behind it.
+          dangerouslySetInnerHTML={{
+            __html:
+              'try{if(sessionStorage.getItem("poke-entered")!=="1")document.documentElement.classList.add("gate-active")}catch(e){document.documentElement.classList.add("gate-active")}',
+          }}
+        />
         <HeadContent />
       </head>
       <body>
