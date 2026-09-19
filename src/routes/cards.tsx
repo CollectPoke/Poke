@@ -3,7 +3,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
 import { PokeCard } from "@/components/PokeCard";
-import { CARD_TYPES } from "@/lib/cards";
 import { listCards } from "@/lib/queries";
 
 export const Route = createFileRoute("/cards")({
@@ -28,7 +27,6 @@ export const Route = createFileRoute("/cards")({
 
 function CardsPage() {
   const [search, setSearch] = useState("");
-  const [type, setType] = useState<string | null>(null);
   const [forSaleOnly, setForSaleOnly] = useState(false);
 
   const { data, isLoading, error } = useQuery({
@@ -38,7 +36,6 @@ function CardsPage() {
 
   const cards = (data ?? []).filter((c) => {
     if (forSaleOnly && c.list_price === null) return false;
-    if (type && c.card_type !== type) return false;
     const q = search.trim().toLowerCase();
     if (!q) return true;
     return c.name.toLowerCase().includes(q) || c.ticker.toLowerCase().includes(q);
@@ -64,14 +61,6 @@ function CardsPage() {
         >
           For sale
         </button>
-        <button onClick={() => setType(null)} className={filterClass(type === null)}>
-          All types
-        </button>
-        {CARD_TYPES.map((t) => (
-          <button key={t} onClick={() => setType(t)} className={filterClass(type === t)}>
-            {t}
-          </button>
-        ))}
       </div>
 
       {isLoading ? (

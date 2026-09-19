@@ -18,8 +18,6 @@ export type CardRow = {
   name_key: string;
   ticker: string;
   description: string | null;
-  card_type: string;
-  rarity: string;
   image_url: string | null;
   contract_address: string;
   creator_id: string;

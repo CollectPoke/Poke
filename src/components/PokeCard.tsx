@@ -1,4 +1,4 @@
-import { rarityStyle, shortAddress, typeStyle, type CardWithPeople } from "@/lib/cards";
+import { shortAddress, type CardWithPeople } from "@/lib/cards";
 
 type Props = {
   card: CardWithPeople;
@@ -6,7 +6,6 @@ type Props = {
 };
 
 export function PokeCard({ card, compact = false }: Props) {
-  const t = typeStyle(card.card_type);
   const burned = card.status === "burned";
 
   return (
@@ -25,16 +24,11 @@ export function PokeCard({ card, compact = false }: Props) {
               ${card.ticker}
             </span>
           </div>
-          <div className="flex shrink-0 items-center">
-            <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${t.chip}`}>
-              {card.card_type}
-            </span>
-          </div>
         </div>
 
         {/* Art */}
         <div
-          className={`relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-lg border border-poke-navy/10 bg-gradient-to-br ${t.art}`}
+          className="relative mt-2 aspect-[4/3] w-full overflow-hidden rounded-lg border border-poke-navy/10 bg-secondary"
         >
           {card.image_url ? (
             <img
@@ -50,11 +44,6 @@ export function PokeCard({ card, compact = false }: Props) {
               </span>
             </div>
           )}
-          <span
-            className={`absolute left-2 top-2 rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${rarityStyle(card.rarity)}`}
-          >
-            {card.rarity}
-          </span>
           {burned && (
             <span className="absolute right-2 top-2 rounded-full bg-poke-navy px-2 py-0.5 text-[10px] font-bold uppercase text-white">
               Burned

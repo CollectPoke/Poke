@@ -6,7 +6,6 @@ import { useState } from "react";
 import { PokeCard } from "@/components/PokeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { rarityStyle } from "@/lib/cards";
 import { getCard, getCardEvents } from "@/lib/queries";
 import { buyCardWithSol } from "@/lib/wallet.functions";
 
@@ -145,9 +144,6 @@ function CardPage() {
 
         <div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className={`rounded-full px-2.5 py-1 text-[11px] font-bold uppercase ${rarityStyle(card.rarity)}`}>
-              {card.rarity}
-            </span>
             <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-bold uppercase">
               1 of 1
             </span>
