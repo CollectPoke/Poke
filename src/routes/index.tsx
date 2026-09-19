@@ -188,3 +188,12 @@ function Tile({
     </div>
   );
 }
+
+function MiniStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="rounded-xl bg-white/10 p-3.5">
+      <p className="text-[10px] font-bold uppercase tracking-widest text-white/60">{label}</p>
+      <p className="mono-num mt-0.5 text-lg font-bold">{value}</p>
+    </div>
+  );
+}
