@@ -256,16 +256,17 @@ function CardPage() {
               </div>
             ) : card.list_price !== null ? (
               <div className="flex flex-wrap items-center gap-3">
-                <span className="mono-num font-display text-2xl font-bold">
+                <span className="mono-num font-display text-3xl font-bold">
                   {card.list_price} SOL
                 </span>
                 <button
                   onClick={() => action.mutate("buy")}
                   disabled={action.isPending}
-                  className="poke-btn"
+                  className="poke-btn w-full px-8 py-4 text-lg font-extrabold uppercase tracking-wide sm:w-auto"
                 >
-                  {action.isPending ? "Buying…" : "Buy this card"}
+                  {action.isPending ? "Buying…" : `Buy for ${card.list_price} SOL`}
                 </button>
+
                 <span className="w-full text-xs text-muted-foreground">
                   Paid straight from your Poke wallet to the owner, on Solana.
                 </span>
