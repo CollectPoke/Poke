@@ -8,16 +8,16 @@ export const Route = createFileRoute("/coins")({
   component: CoinsPage,
   head: () => ({
     meta: [
-      { title: "Coins collecting cards · PokéPad" },
+      { title: "Coins collecting cards · Poke" },
       {
         name: "description",
         content:
-          "Every coin launched on PokéPad, what it collects, its card pot and how many real graded cards it has sent to holders.",
+          "Every coin launched on Poke, what it collects, its card pot and how many real graded cards it has sent to holders.",
       },
-      { property: "og:title", content: "Coins collecting cards · PokéPad" },
+      { property: "og:title", content: "Coins collecting cards · Poke" },
       {
         property: "og:description",
-        content: "Browse PokéPad coins, their card picks, pots and purchase history.",
+        content: "Browse Poke coins, their card picks, pots and purchase history.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

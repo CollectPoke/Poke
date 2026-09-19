@@ -24,7 +24,7 @@ export function SiteHeader() {
           <Link to="/" className="flex items-center gap-2.5">
             <img src="/favicon.png" alt="" className="h-9 w-9 drop-shadow" />
             <span className="font-display text-2xl font-bold leading-none text-poke-yellow drop-shadow-[0_2px_0_oklch(0.19_0.04_260)]">
-              PokéPad
+              Poke
             </span>
           </Link>
           <nav className="flex items-center gap-1 text-sm font-medium">
@@ -58,7 +58,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-6xl space-y-3 px-5 py-10 text-xs leading-relaxed">
         <div className="flex items-center gap-2.5 pb-2">
           <img src="/favicon.png" alt="" className="h-7 w-7" />
-          <span className="font-display text-lg font-bold text-poke-yellow">PokéPad</span>
+          <span className="font-display text-lg font-bold text-poke-yellow">Poke</span>
         </div>
         <p>
           A coin is not backed by cards and cannot be redeemed for them. It is a memecoin whose

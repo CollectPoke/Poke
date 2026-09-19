@@ -38,7 +38,7 @@ export type Coin = {
 export const FEE_SPLIT = [
   { label: "Holders, as cards", pct: 70 },
   { label: "The coin's card vault", pct: 10 },
-  { label: "Buy & burn $POKEPAD", pct: 20 },
+  { label: "Buy & burn $POKE", pct: 20 },
   { label: "The creator", pct: 0 },
 ];
 
