@@ -59,24 +59,49 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+  --color-surface: var(--surface);
+  --color-type-fire: var(--type-fire);
+  --color-type-water: var(--type-water);
+  --color-type-grass: var(--type-grass);
+  --color-type-electric: var(--type-electric);
+  --color-type-psychic: var(--type-psychic);
+  --color-type-poison: var(--type-poison);
+  --color-type-normal: var(--type-normal);
+  --font-display: "Instrument Serif", ui-serif, Georgia, serif;
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --shadow-card: 0 1px 2px oklch(0.2 0.03 265 / 0.05), 0 8px 24px oklch(0.2 0.03 265 / 0.06);
+  --shadow-card-hover: 0 2px 4px oklch(0.2 0.03 265 / 0.06), 0 16px 40px oklch(0.2 0.03 265 / 0.1);
 }
 
 :root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.129 0.042 264.695);
+  --radius: 0.875rem;
+  --background: oklch(0.985 0.005 95);
+  --foreground: oklch(0.21 0.02 265);
+  --surface: oklch(0.965 0.008 95);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.129 0.042 264.695);
+  --card-foreground: oklch(0.21 0.02 265);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.129 0.042 264.695);
-  --primary: oklch(0.208 0.042 265.755);
-  --primary-foreground: oklch(0.984 0.003 247.858);
-  --secondary: oklch(0.968 0.007 247.896);
-  --secondary-foreground: oklch(0.208 0.042 265.755);
-  --muted: oklch(0.968 0.007 247.896);
-  --muted-foreground: oklch(0.554 0.046 257.417);
-  --accent: oklch(0.968 0.007 247.896);
-  --accent-foreground: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.21 0.02 265);
+  --primary: oklch(0.25 0.03 265);
+  --primary-foreground: oklch(0.985 0.005 95);
+  --secondary: oklch(0.955 0.008 95);
+  --secondary-foreground: oklch(0.25 0.03 265);
+  --muted: oklch(0.955 0.008 95);
+  --muted-foreground: oklch(0.52 0.02 265);
+  --accent: oklch(0.93 0.05 95);
+  --accent-foreground: oklch(0.25 0.03 265);
+  --success: oklch(0.58 0.14 152);
+  --danger: oklch(0.58 0.2 25);
+  --type-fire: oklch(0.62 0.18 40);
+  --type-water: oklch(0.58 0.14 240);
+  --type-grass: oklch(0.58 0.13 145);
+  --type-electric: oklch(0.65 0.14 90);
+  --type-psychic: oklch(0.6 0.16 330);
+  --type-poison: oklch(0.55 0.15 300);
+  --type-normal: oklch(0.55 0.03 265);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
   --border: oklch(0.929 0.013 255.508);
@@ -140,5 +165,38 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
   }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+}
+
+@utility dex-card {
+  background-color: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-card);
+  transition:
+    box-shadow 200ms ease,
+    transform 200ms ease;
+}
+
+@utility dex-card-interactive {
+  &:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-3px);
+  }
+}
+
+@utility mono-num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
