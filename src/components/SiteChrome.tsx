@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
 
-const POKE_CA = "EoqZPcCZnvntyR8zybqr38aXF1fMhP1ckyu7zFWFPoke";
+const POKE_CA = "HNPFcpRpPsDdVfx9Las1af3YYpFBq3T8wcEhgRfdpoke";
 
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
