@@ -19,6 +19,7 @@ import { Route as PairingsRouteImport } from './routes/pairings'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
+import { Route as ApiPublicArtworkIdRouteImport } from './routes/api/public/artwork.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -69,6 +70,11 @@ const CardCardIdRoute = CardCardIdRouteImport.update({
   path: '/card/$cardId',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicArtworkIdRoute = ApiPublicArtworkIdRouteImport.update({
+  id: '/api/public/artwork/$id',
+  path: '/api/public/artwork/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -80,6 +86,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AuthenticatedAccountRoute
   '/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/account': typeof AuthenticatedAccountRoute
   '/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/mint': typeof AuthenticatedMintRoute
   '/card/$cardId': typeof CardCardIdRoute
+  '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -117,6 +126,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/mint'
     | '/card/$cardId'
+    | '/api/public/artwork/$id'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/mint'
     | '/card/$cardId'
+    | '/api/public/artwork/$id'
   id:
     | '__root__'
     | '/'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account'
     | '/_authenticated/mint'
     | '/card/$cardId'
+    | '/api/public/artwork/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -151,6 +163,7 @@ export interface RootRouteChildren {
   PairRoute: typeof PairRoute
   PairingsRoute: typeof PairingsRoute
   CardCardIdRoute: typeof CardCardIdRoute
+  ApiPublicArtworkIdRoute: typeof ApiPublicArtworkIdRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -225,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CardCardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/artwork/$id': {
+      id: '/api/public/artwork/$id'
+      path: '/api/public/artwork/$id'
+      fullPath: '/api/public/artwork/$id'
+      preLoaderRoute: typeof ApiPublicArtworkIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -250,6 +270,7 @@ const rootRouteChildren: RootRouteChildren = {
   PairRoute: PairRoute,
   PairingsRoute: PairingsRoute,
   CardCardIdRoute: CardCardIdRoute,
+  ApiPublicArtworkIdRoute: ApiPublicArtworkIdRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
