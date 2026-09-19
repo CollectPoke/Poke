@@ -113,8 +113,26 @@ export function SiteHeader() {
                 <Link to="/gallery" className={linkClass} activeProps={linkActive}>
                   My gallery
                 </Link>
-                <Link to="/account" className={linkClass} activeProps={linkActive}>
-                  {username ?? "My binder"}
+                <Link
+                  to="/account"
+                  activeProps={{ className: "border-poke-yellow/60 bg-white/10" }}
+                  className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden rounded-full border border-white/10 bg-white/5 py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-poke-yellow/60 hover:bg-white/10"
+                >
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-amber-500 shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)] transition-shadow group-hover:shadow-[0_0_16px_oklch(0.85_0.16_95/0.55)]">
+                    <img src="/favicon.png" alt="" className="h-5 w-5 drop-shadow" />
+                  </span>
+                  <span className="flex min-w-0 flex-col leading-none">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
+                      Trainer
+                    </span>
+                    <span className="truncate text-sm font-bold text-white transition-colors group-hover:text-poke-yellow">
+                      {username ?? "Trainer"}
+                    </span>
+                  </span>
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-tr from-transparent via-white/25 to-transparent transition-transform duration-700 ease-in-out group-hover:translate-x-full"
+                  />
                 </Link>
               </>
             ) : (
@@ -172,20 +190,30 @@ export function SiteHeader() {
               ))}
               {user ? (
                 <>
-                <Link
-                  to="/gallery"
-                  className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                  activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
-                >
-                  My gallery
-                </Link>
-                <Link
-                  to="/account"
-                  className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                  activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
-                >
-                  {username ?? "My binder"}
-                </Link>
+                  <Link
+                    to="/gallery"
+                    className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
+                    activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
+                  >
+                    My gallery
+                  </Link>
+                  <Link
+                    to="/account"
+                    className="group mx-1 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5 transition-colors hover:border-poke-yellow/50 hover:bg-white/10"
+                    activeProps={{ className: "border-poke-yellow/60 bg-white/10" }}
+                  >
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-amber-500 shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)]">
+                      <img src="/favicon.png" alt="" className="h-6 w-6 drop-shadow" />
+                    </span>
+                    <span className="flex min-w-0 flex-col leading-none">
+                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
+                        Trainer
+                      </span>
+                      <span className="truncate text-base font-bold text-white">
+                        {username ?? "Trainer"}
+                      </span>
+                    </span>
+                  </Link>
                 </>
               ) : (
                 <Link
