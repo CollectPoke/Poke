@@ -197,7 +197,7 @@ function MintPage() {
             />
           </Field>
 
-          <Field label="Artwork" hint="Optional — drag an image in">
+          <Field label="Artwork" hint="Optional — drop any image in">
             {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
           </Field>
 
