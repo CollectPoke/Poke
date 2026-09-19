@@ -86,6 +86,7 @@ export function SiteHeader() {
                 Sign in
               </Link>
             )}
+            <ThemeToggle className="ml-2" />
             <Link to="/mint" className="poke-btn ml-2 !py-2 !px-4 text-sm">
               Mint a card
             </Link>
