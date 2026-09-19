@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as BuyRouteImport } from './routes/buy'
 import { Route as BuybackRouteImport } from './routes/buyback'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as DocsRouteImport } from './routes/docs'
@@ -20,6 +21,7 @@ import { Route as PairingsRouteImport } from './routes/pairings'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedGalleryRouteImport } from './routes/_authenticated/gallery'
 import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
+import { Route as AuthenticatedSellRouteImport } from './routes/_authenticated/sell'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
 import { Route as ApiPublicArtworkIdRouteImport } from './routes/api/public/artwork.$id'
 import { Route as ApiPublicCoinMetadataIdRouteImport } from './routes/api/public/coin-metadata.$id'
@@ -36,6 +38,11 @@ const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuyRoute = BuyRouteImport.update({
+  id: '/buy',
+  path: '/buy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BuybackRoute = BuybackRouteImport.update({
@@ -78,6 +85,11 @@ const AuthenticatedMintRoute = AuthenticatedMintRouteImport.update({
   path: '/mint',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedSellRoute = AuthenticatedSellRouteImport.update({
+  id: '/sell',
+  path: '/sell',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const CardCardIdRoute = CardCardIdRouteImport.update({
   id: '/card/$cardId',
   path: '/card/$cardId',
@@ -97,6 +109,7 @@ const ApiPublicCoinMetadataIdRoute = ApiPublicCoinMetadataIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/buy': typeof BuyRoute
   '/buyback': typeof BuybackRoute
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
@@ -105,6 +118,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AuthenticatedAccountRoute
   '/gallery': typeof AuthenticatedGalleryRoute
   '/mint': typeof AuthenticatedMintRoute
+  '/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
@@ -112,6 +126,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
+  '/buy': typeof BuyRoute
   '/buyback': typeof BuybackRoute
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
@@ -120,6 +135,7 @@ export interface FileRoutesByTo {
   '/account': typeof AuthenticatedAccountRoute
   '/gallery': typeof AuthenticatedGalleryRoute
   '/mint': typeof AuthenticatedMintRoute
+  '/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
@@ -129,6 +145,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
+  '/buy': typeof BuyRoute
   '/buyback': typeof BuybackRoute
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
@@ -137,6 +154,7 @@ export interface FileRoutesById {
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/gallery': typeof AuthenticatedGalleryRoute
   '/_authenticated/mint': typeof AuthenticatedMintRoute
+  '/_authenticated/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
@@ -146,6 +164,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/auth'
+    | '/buy'
     | '/buyback'
     | '/cards'
     | '/docs'
@@ -154,6 +173,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/gallery'
     | '/mint'
+    | '/sell'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
@@ -161,6 +181,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/auth'
+    | '/buy'
     | '/buyback'
     | '/cards'
     | '/docs'
@@ -169,6 +190,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/gallery'
     | '/mint'
+    | '/sell'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
@@ -177,6 +199,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_authenticated'
     | '/auth'
+    | '/buy'
     | '/buyback'
     | '/cards'
     | '/docs'
@@ -185,6 +208,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account'
     | '/_authenticated/gallery'
     | '/_authenticated/mint'
+    | '/_authenticated/sell'
     | '/card/$cardId'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
@@ -194,6 +218,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
+  BuyRoute: typeof BuyRoute
   BuybackRoute: typeof BuybackRoute
   CardsRoute: typeof CardsRoute
   DocsRoute: typeof DocsRoute
@@ -225,6 +250,13 @@ declare module '@tanstack/react-router' {
       path: '/auth'
       fullPath: '/auth'
       preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buy': {
+      id: '/buy'
+      path: '/buy'
+      fullPath: '/buy'
+      preLoaderRoute: typeof BuyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/buyback': {
@@ -283,6 +315,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMintRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/sell': {
+      id: '/_authenticated/sell'
+      path: '/sell'
+      fullPath: '/sell'
+      preLoaderRoute: typeof AuthenticatedSellRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/card/$cardId': {
       id: '/card/$cardId'
       path: '/card/$cardId'
@@ -311,12 +350,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedGalleryRoute: typeof AuthenticatedGalleryRoute
   AuthenticatedMintRoute: typeof AuthenticatedMintRoute
+  AuthenticatedSellRoute: typeof AuthenticatedSellRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedGalleryRoute: AuthenticatedGalleryRoute,
   AuthenticatedMintRoute: AuthenticatedMintRoute,
+  AuthenticatedSellRoute: AuthenticatedSellRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
@@ -326,6 +367,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
+  BuyRoute: BuyRoute,
   BuybackRoute: BuybackRoute,
   CardsRoute: CardsRoute,
   DocsRoute: DocsRoute,
