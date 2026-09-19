@@ -33,6 +33,15 @@ function AuthPage() {
   const [error, setError] = useState<string | null>(null);
   const [justSignedUp, setJustSignedUp] = useState(false);
 
+  if (justSignedUp) {
+    return (
+      <WelcomeTrainer
+        username={username.trim()}
+        onDone={() => navigate({ to: "/account" })}
+      />
+    );
+  }
+
   if (user) {
     return (
       <main className="mx-auto max-w-md px-5 py-20 text-center">
