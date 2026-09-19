@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 export const Route = createFileRoute("/api/public/coin-metadata/$id")({
   server: {
     handlers: {
-      GET: async ({ params, request }) => {
+      GET: async ({ params }) => {
         if (!/^[0-9a-f-]{36}$/i.test(params.id)) return new Response("Not found", { status: 404 });
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const launch = await supabaseAdmin
@@ -12,8 +12,9 @@ export const Route = createFileRoute("/api/public/coin-metadata/$id")({
           .eq("id", params.id)
           .maybeSingle();
         if (launch.error || !launch.data) return new Response("Not found", { status: 404 });
-        const origin = new URL(request.url).origin;
-        const image = new URL(launch.data.image_url, origin).toString();
+        // Always publish the live public URL — Pump.fun fetches this from
+        // the open internet, so a preview/localhost origin breaks the image.
+        const image = new URL(launch.data.image_url, "https://collectpoke.fun").toString();
         return Response.json(
           {
             name: launch.data.name,
