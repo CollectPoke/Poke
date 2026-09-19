@@ -1,10 +1,10 @@
 import { Link } from "@tanstack/react-router";
 
-const navItems = [
+const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/coins", label: "Coins" },
   { to: "/cards-sent", label: "Cards sent" },
-] as const;
+];
 
 export function SiteHeader() {
   return (
