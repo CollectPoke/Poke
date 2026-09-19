@@ -1,11 +1,16 @@
-import { getRequest } from "@tanstack/react-start/server";
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 
 import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
-const LAUNCH_BUDGET_LAMPORTS = 100_000_000;
-const INITIAL_BUY_LAMPORTS = 75_000_000;
+// Network + Pump.fun fees held back on top of the dev buy.
+export const LAUNCH_FEE_LAMPORTS = 25_000_000;
+export const DEFAULT_DEV_BUY_SOL = 0.075;
+export const MAX_DEV_BUY_SOL = 5;
+
+// Pump.fun's indexer fetches the metadata URI from the public internet, so it
+// can never point at a dev/preview origin or the coin launches with no image.
+export const PUBLIC_ORIGIN = "https://collectpoke.fun";
 
 const launchSchema = z.object({
   name: z.string().trim().min(1).max(32),
@@ -13,6 +18,7 @@ const launchSchema = z.object({
   description: z.string().trim().max(600),
   imageUrl: z.string().trim().regex(/^\/api\/public\/artwork\/[0-9a-f-]{36}$/i),
   listPrice: z.number().positive().max(1_000_000).nullable(),
+  devBuySol: z.number().min(0).max(MAX_DEV_BUY_SOL).default(DEFAULT_DEV_BUY_SOL),
 });
 
 export const launchCoinAndMintCard = createServerFn({ method: "POST" })
@@ -50,14 +56,19 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       .maybeSingle();
     if (activeCard.data) throw new Error(`"${name}" has already been launched on Poke.`);
 
+    const devBuyLamports = Math.round(data.devBuySol * 1_000_000_000);
+    const budgetLamports = devBuyLamports + LAUNCH_FEE_LAMPORTS;
+    const requiredSol = budgetLamports / 1_000_000_000;
+
     const wallet = await getOrCreateWallet(context.userId);
     const balance = await getBalanceSol(wallet.public_key);
-    if (balance < 0.1) {
-      throw new Error(`You need at least 0.1 SOL in your Poke wallet. Current balance: ${balance.toFixed(4)} SOL.`);
+    if (balance < requiredSol) {
+      throw new Error(
+        `You need at least ${requiredSol.toFixed(3)} SOL in your Poke wallet. Current balance: ${balance.toFixed(4)} SOL.`,
+      );
     }
 
-    const request = getRequest();
-    const origin = new URL(request.url).origin;
+    const origin = PUBLIC_ORIGIN;
     let launch = await supabaseAdmin
       .from("coin_launches")
       .select("id, creator_id, mint_address, tx_signature, status")
@@ -83,8 +94,8 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           description: data.description || null,
           image_url: data.imageUrl,
           metadata_url: metadataUrl,
-          launch_budget_sol: 0.1,
-          initial_buy_sol: INITIAL_BUY_LAMPORTS / 1_000_000_000,
+          launch_budget_sol: requiredSol,
+          initial_buy_sol: devBuyLamports / 1_000_000_000,
           status: "pending",
         })
         .select("id, creator_id, mint_address, tx_signature, status")
@@ -116,7 +127,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
             name,
             symbol: ticker,
             uri: `${origin}/api/public/coin-metadata/${launchId}`,
-            solLamports: String(INITIAL_BUY_LAMPORTS),
+            solLamports: String(devBuyLamports),
             mayhemMode: false,
             cashback: false,
             tokenizedAgent: false,
@@ -131,14 +142,14 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           mintPublicKey: z.string().min(32).max(50),
           solLamports: z.union([z.string(), z.number()]),
         }).parse(await response.json());
-        if (Number(built.solLamports) !== INITIAL_BUY_LAMPORTS) {
+        if (Number(built.solLamports) !== devBuyLamports) {
           throw new Error("Pump.fun returned an unexpected launch amount. No SOL was spent.");
         }
         mintAddress = built.mintPublicKey;
         signature = await signSimulateAndSendTransaction(
           wallet,
           built.transaction,
-          LAUNCH_BUDGET_LAMPORTS,
+          budgetLamports,
           async (preparedSignature) => {
             const saved = await supabaseAdmin
               .from("coin_launches")
@@ -182,7 +193,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           list_price: data.listPrice,
           launch_id: launchId,
           launch_tx_signature: signature,
-          mint_price: 0.1,
+          mint_price: requiredSol,
         })
         .select("*")
         .single();

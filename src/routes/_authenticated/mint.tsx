@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useState } from "react";
 
 import { ArtworkDrop } from "@/components/ArtworkDrop";
-import { FundingModal, LAUNCH_COST_SOL } from "@/components/FundingModal";
+import { FundingModal } from "@/components/FundingModal";
 import { MintReveal } from "@/components/MintReveal";
 import { PokeCard } from "@/components/PokeCard";
 import { useAuth } from "@/lib/auth";
@@ -42,6 +42,8 @@ function MintPage() {
   const [description, setDescription] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [listPrice, setListPrice] = useState("");
+  const [devBuy, setDevBuy] = useState(true);
+  const [devBuyAmount, setDevBuyAmount] = useState("0.075");
   const [available, setAvailable] = useState<boolean | null>(null);
   const [checking, setChecking] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -57,7 +59,9 @@ function MintPage() {
     queryFn: fetchWallet,
     refetchInterval: 8000,
   });
-  const underfunded = wallet !== undefined && wallet.balance < LAUNCH_COST_SOL;
+  const devBuySol = devBuy ? Math.min(5, Math.max(0, Number(devBuyAmount) || 0)) : 0;
+  const totalCost = devBuySol + 0.025;
+  const underfunded = wallet !== undefined && wallet.balance < totalCost;
 
   // Pop the funding window as soon as we know the balance is too low.
   useEffect(() => {
@@ -117,6 +121,7 @@ function MintPage() {
         description,
         imageUrl,
         listPrice: listPrice ? Number(listPrice) : null,
+        devBuySol,
       } });
       setMintedCard({
         ...result.card,
@@ -154,7 +159,7 @@ function MintPage() {
               Your wallet needs SOL — balance {wallet.balance.toFixed(4)} SOL
             </p>
             <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-              Launching costs up to {LAUNCH_COST_SOL} SOL. Tap here to see your deposit address and QR code.
+              This launch costs {totalCost.toFixed(3)} SOL. Tap here to see your deposit address and QR code.
             </p>
           </div>
         </button>
@@ -163,7 +168,7 @@ function MintPage() {
       <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-poke-yellow bg-card p-4 shadow-sm">
         <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
         <div>
-          <p className="text-sm font-bold">Real mainnet launch · 0.1 SOL maximum</p>
+          <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
           <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The card appears only after Solana confirms it. Mainnet spending is irreversible.</p>
         </div>
       </div>
@@ -261,10 +266,61 @@ function MintPage() {
             )}
           </div>
 
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-sm font-semibold">Dev buy</p>
+                <p className="mt-0.5 text-xs text-muted-foreground">
+                  Buy your own coin at launch. The tokens land in your Poke wallet.
+                </p>
+              </div>
+              <button
+                type="button"
+                role="switch"
+                aria-checked={devBuy}
+                onClick={() => setDevBuy(!devBuy)}
+                className={[
+                  "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+                  devBuy ? "bg-poke-green" : "bg-border",
+                ].join(" ")}
+              >
+                <span
+                  className={[
+                    "absolute top-0.5 size-6 rounded-full bg-white shadow transition-all",
+                    devBuy ? "left-[22px]" : "left-0.5",
+                  ].join(" ")}
+                />
+              </button>
+            </div>
+            {devBuy && (
+              <div className="mt-3 flex items-center gap-2">
+                <div className="relative flex-1">
+                  <input
+                    type="number"
+                    min={0}
+                    max={5}
+                    step="0.005"
+                    value={devBuyAmount}
+                    onChange={(e) => setDevBuyAmount(e.target.value)}
+                    placeholder="0.075"
+                    className={`${inputClass} pr-14 font-mono`}
+                  />
+                  <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                    SOL
+                  </span>
+                </div>
+              </div>
+            )}
+            <p className="mt-2 text-xs text-muted-foreground">
+              Total from your wallet: <span className="font-mono font-semibold">{totalCost.toFixed(3)} SOL</span>{" "}
+              ({devBuySol.toFixed(3)} dev buy + 0.025 fees)
+            </p>
+          </div>
+
           {error && <p className="text-sm font-medium text-poke-red">{error}</p>}
 
           <button type="submit" disabled={!canMint} className="poke-btn disabled:opacity-40">
-            {busy ? "Launching on Pump.fun…" : "Launch coin + mint card · 0.1 SOL max"}
+            {busy ? "Launching on Pump.fun…" : `Launch coin + mint card · ${totalCost.toFixed(3)} SOL`}
           </button>
           {busy ? <p className="text-xs text-muted-foreground">Preparing, checking, signing and confirming your Solana launch. Keep this page open.</p> : null}
         </form>
@@ -277,7 +333,7 @@ function MintPage() {
     </main>
     {showFunding ? (
       <FundingModal
-        requiredSol={LAUNCH_COST_SOL}
+        requiredSol={totalCost}
         onClose={() => setShowFunding(false)}
         onFunded={() => setTimeout(() => setShowFunding(false), 1800)}
       />
