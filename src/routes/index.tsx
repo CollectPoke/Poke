@@ -31,7 +31,15 @@ const ART = (id: number) =>
   `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`;
 
 // floating booster packs around the hero, each with a Pokémon on the wrapper
-const PACKS = [
+const PACKS: {
+  id: number;
+  left?: string;
+  right?: string;
+  top?: string;
+  bottom?: string;
+  width: string;
+  tilt: string;
+}[] = [
   { id: 25, left: "20%", top: "4%", width: "w-20 md:w-24", tilt: "-10deg" },
   { id: 6, right: "30%", top: "8%", width: "w-16 md:w-20", tilt: "8deg" },
   { id: 150, right: "3%", bottom: "6%", width: "w-20 md:w-28", tilt: "-4deg" },
