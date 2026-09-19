@@ -2,19 +2,29 @@ import { useEffect, useState } from "react";
 
 const KEY = "poke-entered";
 
+// Always rendered (including in the server HTML). Visibility is controlled by
+// the `gate-active` class on <html>, which an inline script in <head> sets
+// before first paint — so the page underneath is never visible until entering.
 export function EntranceGate() {
-  const [mounted, setMounted] = useState(false);
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
   const [opening, setOpening] = useState(false);
 
   useEffect(() => {
-    setMounted(true);
+    let already = false;
     try {
-      if (sessionStorage.getItem(KEY) !== "1") setShow(true);
+      already = sessionStorage.getItem(KEY) === "1";
     } catch {
-      setShow(true);
+      already = false;
+    }
+    if (already) {
+      setShow(false);
+      document.documentElement.classList.remove("gate-active");
     }
   }, []);
+
+  useEffect(() => {
+    if (!show) document.documentElement.classList.remove("gate-active");
+  }, [show]);
 
   useEffect(() => {
     if (!show) return;
@@ -37,11 +47,9 @@ export function EntranceGate() {
     window.setTimeout(() => setShow(false), 1250);
   }
 
-  if (!mounted || !show) return null;
-
   return (
     <div
-      className={`fixed inset-0 z-[100] flex flex-col items-center justify-center overflow-hidden bg-[#060b18] ${
+      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden bg-[#060b18] ${
         opening ? "gate-leaving" : ""
       }`}
     >
