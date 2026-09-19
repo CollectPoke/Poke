@@ -27,10 +27,16 @@ export function MusicPlayer() {
         .catch(() => setPlaying(false));
     };
 
-    // The entrance gate tap is a user gesture, so playback is allowed from there.
+    // Always on: try immediately, then retry on the first interaction anywhere
+    // (browsers require a user gesture before audio can start).
+    tryPlay();
     window.addEventListener("poke:enter", tryPlay);
+    window.addEventListener("pointerdown", tryPlay, { once: true });
+    window.addEventListener("keydown", tryPlay, { once: true });
     return () => {
       window.removeEventListener("poke:enter", tryPlay);
+      window.removeEventListener("pointerdown", tryPlay);
+      window.removeEventListener("keydown", tryPlay);
       audio.pause();
       audioRef.current = null;
     };
