@@ -15,7 +15,6 @@ import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { EntranceGate } from "@/components/EntranceGate";
 import { MusicPlayer } from "@/components/MusicPlayer";
 import { AuthProvider } from "@/lib/auth";
-import { ThemeProvider } from "@/lib/theme";
 import { supabase } from "@/integrations/supabase/client";
 
 function NotFoundComponent() {
@@ -128,9 +127,8 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
-  return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider>
+    return (
+      <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <AuthSync />
           <EntranceGate />
@@ -140,9 +138,8 @@ function RootComponent() {
           <Outlet />
           <SiteFooter />
         </AuthProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
-  );
+      </QueryClientProvider>
+    );
 }
 
 function AuthSync() {
