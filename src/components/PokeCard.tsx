@@ -71,6 +71,11 @@ export function PokeCard({ card, compact = false }: Props) {
               <span className="shrink-0 text-muted-foreground">not listed</span>
             )}
           </div>
+          {card.list_price !== null && !burned && (
+            <div className="mt-2 flex w-full items-center justify-center gap-1.5 rounded-full bg-poke-green px-3 py-2 text-xs font-bold text-white shadow-sm transition-colors hover:bg-poke-green/90">
+              <span>Buy for {card.list_price} SOL</span>
+            </div>
+          )}
           {/* Contract address, always at the bottom of the card */}
           <div className="mt-1.5 rounded-md bg-poke-navy px-2 py-1">
             <span className="mono-num block truncate text-[10px] tracking-tight text-poke-yellow">
