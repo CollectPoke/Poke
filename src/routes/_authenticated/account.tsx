@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
@@ -6,7 +7,9 @@ import { PokeCard } from "@/components/PokeCard";
 import { WalletPanel } from "@/components/WalletPanel";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
-import { myCards } from "@/lib/queries";
+import { myCards, mySaleHistory } from "@/lib/queries";
+import { formatPokeCoin } from "@/lib/cards";
+import { SOLSCAN_TX } from "@/lib/buybacks";
 
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
