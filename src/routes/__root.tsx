@@ -129,15 +129,17 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AuthSync />
-        <EntranceGate />
-        <MusicPlayer />
-        <SiteHeader />
-        {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-        <Outlet />
-        <SiteFooter />
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <AuthSync />
+          <EntranceGate />
+          <MusicPlayer />
+          <SiteHeader />
+          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+          <Outlet />
+          <SiteFooter />
+        </AuthProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }
