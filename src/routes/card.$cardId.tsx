@@ -275,6 +275,9 @@ function CardPage() {
               </p>
             )}
             {error && <p className="mt-3 text-sm font-medium text-poke-red">{error}</p>}
+            {burnNote && (
+              <p className="mt-3 text-sm font-medium text-poke-green">{burnNote}</p>
+            )}
             {txSig && (
               <a
                 href={`https://solscan.io/tx/${txSig}`}
