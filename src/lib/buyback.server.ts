@@ -126,13 +126,16 @@ async function tokenDecimals(mint: string): Promise<number> {
  * Claims the Pump.fun creator fees and sends the whole buyback-wallet balance
  * to an address (used when a buyback is not possible).
  */
-export async function claimAndSweep(destination: string): Promise<{
+export async function claimAndSweep(
+  destination: string,
+  fromWallet?: SystemWalletRow,
+): Promise<{
   claimSignature: string | null;
   sweepSignature: string | null;
   solSent: number;
 }> {
   const { sendSol } = await import("./wallet.server");
-  const wallet = await getOrCreateSystemWallet("creator_buyback");
+  const wallet = fromWallet ?? (await getOrCreateSystemWallet("creator_buyback"));
   const claimSignature = await claimCreatorFees(wallet);
   if (claimSignature) await new Promise((r) => setTimeout(r, 2000));
 
