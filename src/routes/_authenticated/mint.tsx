@@ -104,6 +104,10 @@ function MintPage() {
   async function handleMint(e: React.FormEvent) {
     e.preventDefault();
     if (!user) return;
+    if (underfunded) {
+      setShowFunding(true);
+      return;
+    }
     setBusy(true);
     setError(null);
     try {
@@ -137,6 +141,24 @@ function MintPage() {
         Every mint launches a real Pump.fun coin on Solana and becomes a card. Once
         "Dog" is minted, nobody else can ever mint Dog — unless the holder burns it.
       </p>
+
+      {underfunded && (
+        <button
+          type="button"
+          onClick={() => setShowFunding(true)}
+          className="mt-5 flex w-full items-start gap-3 rounded-2xl border-2 border-poke-red bg-poke-red/10 p-4 text-left shadow-sm transition-colors hover:border-poke-red/70"
+        >
+          <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-red font-bold text-white">!</span>
+          <div>
+            <p className="text-sm font-bold">
+              Your wallet needs SOL — balance {wallet.balance.toFixed(4)} SOL
+            </p>
+            <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+              Launching costs up to {LAUNCH_COST_SOL} SOL. Tap here to see your deposit address and QR code.
+            </p>
+          </div>
+        </button>
+      )}
 
       <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-poke-yellow bg-card p-4 shadow-sm">
         <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
