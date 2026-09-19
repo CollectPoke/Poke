@@ -34,7 +34,6 @@ export function stats(m: {
       : 20;
 
   return {
-    hp: logScale(m.marketCap, 1e11),
     attack: clamp(50 + (m.change24h ?? 0) * 3),
     speed: logScale(m.volume24h, 1e10),
     volatility,
