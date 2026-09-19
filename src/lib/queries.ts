@@ -111,6 +111,55 @@ export async function mySaleHistory(userId: string) {
   return (data ?? []) as unknown as SaleEvent[];
 }
 
+export type CardOffer = {
+  id: string;
+  card_id: string;
+  buyer_id: string;
+  price: number;
+  message: string | null;
+  status: string;
+  created_at: string;
+  buyer: { username: string } | null;
+  card: { id: string; name: string; ticker: string; image_url: string | null } | null;
+};
+
+const OFFER_SELECT =
+  "id, card_id, buyer_id, price, message, status, created_at, buyer:profiles!card_offers_buyer_id_fkey(username), card:cards(id, name, ticker, image_url)";
+
+/** Open offers on one card (visible to the card's owner and to each buyer). */
+export async function offersForCard(cardId: string) {
+  const { data, error } = await supabase
+    .from("card_offers")
+    .select(OFFER_SELECT)
+    .eq("card_id", cardId)
+    .eq("status", "pending")
+    .order("price", { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as unknown as CardOffer[];
+}
+
+/** Every open offer sitting on cards this user owns. */
+export async function offersOnMyCards() {
+  const { data, error } = await supabase
+    .from("card_offers")
+    .select(OFFER_SELECT)
+    .eq("status", "pending")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as unknown as CardOffer[];
+}
+
+/** Offers this user has sent. */
+export async function myOffers(userId: string) {
+  const { data, error } = await supabase
+    .from("card_offers")
+    .select(OFFER_SELECT)
+    .eq("buyer_id", userId)
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return (data ?? []) as unknown as CardOffer[];
+}
+
 /** True when the name is still free (no active card holds it). */
 export async function isNameAvailable(name: string) {
   const key = name.trim().toLowerCase();

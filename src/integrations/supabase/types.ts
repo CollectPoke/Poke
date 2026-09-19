@@ -120,6 +120,54 @@ export type Database = {
           },
         ]
       }
+      card_offers: {
+        Row: {
+          buyer_id: string
+          card_id: string
+          created_at: string
+          id: string
+          message: string | null
+          price: number
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          buyer_id: string
+          card_id: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          price: number
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          buyer_id?: string
+          card_id?: string
+          created_at?: string
+          id?: string
+          message?: string | null
+          price?: number
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "card_offers_buyer_id_fkey"
+            columns: ["buyer_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "card_offers_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: false
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cards: {
         Row: {
           contract_address: string

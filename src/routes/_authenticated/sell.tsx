@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
+import { OfferPanel } from "@/components/OfferPanel";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { myCards } from "@/lib/queries";
@@ -81,8 +82,8 @@ function SellPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Sell</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        List your cards for sale in SOL. When another trainer buys one, the SOL lands straight in
-        your Poke wallet.
+        List your cards for sale in SOL, or wait for trainers to send you an offer. Either way the
+        SOL lands straight in your Poke wallet.
       </p>
 
       {isLoading ? (
@@ -103,18 +104,20 @@ function SellPage() {
       ) : (
         <div className="mt-8 space-y-4">
           {owned.map((card) => (
-            <SellRow
-              key={card.id}
-              card={card}
-              price={prices[card.id] ?? ""}
-              onPriceChange={(v) => setPrices((p) => ({ ...p, [card.id]: v }))}
-              onList={() =>
-                action.mutate({ cardId: card.id, kind: "list", price: prices[card.id] ?? "" })
-              }
-              onUnlist={() => action.mutate({ cardId: card.id, kind: "unlist" })}
-              busy={action.isPending}
-              notice={notice?.cardId === card.id ? notice : null}
-            />
+            <div key={card.id}>
+              <SellRow
+                card={card}
+                price={prices[card.id] ?? ""}
+                onPriceChange={(v) => setPrices((p) => ({ ...p, [card.id]: v }))}
+                onList={() =>
+                  action.mutate({ cardId: card.id, kind: "list", price: prices[card.id] ?? "" })
+                }
+                onUnlist={() => action.mutate({ cardId: card.id, kind: "unlist" })}
+                busy={action.isPending}
+                notice={notice?.cardId === card.id ? notice : null}
+              />
+              <OfferPanel cardId={card.id} userId={userId} isOwner />
+            </div>
           ))}
         </div>
       )}
