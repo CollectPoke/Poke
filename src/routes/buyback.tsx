@@ -1,5 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
+
+import { BuybackTicker } from "@/components/BuybackTicker";
 import { useEffect, useState } from "react";
 
 import {
@@ -86,6 +88,10 @@ function BuybackPage() {
             />
           </div>
         </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-5 pt-10">
+        <BuybackTicker />
       </section>
 
       <section className="mx-auto max-w-6xl px-5 py-12">
