@@ -96,9 +96,11 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       launch = inserted;
     }
 
-    const launchId = launch.data.id;
-    let mintAddress = launch.data.mint_address;
-    let signature = launch.data.tx_signature;
+    const launchRow = launch.data;
+    if (!launchRow) throw new Error("Could not reserve this coin name.");
+    const launchId = launchRow.id;
+    let mintAddress = launchRow.mint_address;
+    let signature = launchRow.tx_signature;
     let transactionSent = Boolean(signature);
 
     try {
