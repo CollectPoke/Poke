@@ -261,6 +261,38 @@
 }
 .sprite-bob { animation: sprite-bob 5s ease-in-out infinite; }
 
+/* ---------- Floating booster packs ---------- */
+@keyframes pack-float {
+  0%, 100% { transform: translateY(0) rotate(var(--pack-tilt, -6deg)); }
+  50% { transform: translateY(-18px) rotate(calc(var(--pack-tilt, -6deg) + 5deg)); }
+}
+.pack-float { animation: pack-float 6s ease-in-out infinite; }
+.pack-crimp {
+  background: repeating-linear-gradient(
+    -45deg,
+    oklch(0.97 0.01 250 / 0.9) 0 6px,
+    oklch(0.75 0.02 250 / 0.9) 6px 12px
+  );
+}
+.pack-body {
+  background: linear-gradient(160deg, var(--color-poke-blue), var(--color-poke-navy) 75%);
+}
+.pack-sheen {
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    oklch(0.97 0.01 250 / 0.25) 45%,
+    transparent 60%
+  );
+  background-size: 250% 100%;
+  animation: pack-sheen-sweep 4.5s ease-in-out infinite;
+}
+@keyframes pack-sheen-sweep {
+  0% { background-position: 120% 0; }
+  55% { background-position: -40% 0; }
+  100% { background-position: -40% 0; }
+}
+
 @utility holo-sheen {
   position: relative;
   overflow: hidden;
