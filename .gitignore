@@ -1,3 +1,8 @@
+# Lovable internals (kept out of GitHub)
+.lovable/
+AGENTS.md
+.env
+
 # Logs
 logs
 *.log
