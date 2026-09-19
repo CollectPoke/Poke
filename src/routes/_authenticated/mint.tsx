@@ -23,6 +23,8 @@ export const Route = createFileRoute("/_authenticated/mint")({
         property: "og:description",
         content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: MintPage,

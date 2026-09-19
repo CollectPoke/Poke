@@ -151,6 +151,9 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
         transactionSent = true;
       }
 
+      if (!signature || !mintAddress) {
+        throw new Error("The launch receipt is incomplete. No card was created.");
+      }
       await confirmSignature(signature);
       const existingCard = await supabaseAdmin
         .from("cards")
