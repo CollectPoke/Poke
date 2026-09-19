@@ -11,9 +11,9 @@ import { formatPokeCoin } from "@/lib/cards";
 export const Route = createFileRoute("/_authenticated/gallery")({
   head: () => ({
     meta: [
-      { title: "My gallery · Poke" },
+      { title: "My Cards · Poke" },
       { name: "description", content: "Every card you minted on Poke, with its image and Pokémon pairing." },
-      { property: "og:title", content: "My gallery · Poke" },
+      { property: "og:title", content: "My Cards · Poke" },
       {
         property: "og:description",
         content: "Every card you minted on Poke, with its image and Pokémon pairing.",
@@ -90,7 +90,7 @@ function GalleryPage() {
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-extrabold text-poke-navy sm:text-4xl">My gallery</h1>
+        <h1 className="font-display text-3xl font-extrabold text-poke-navy sm:text-4xl">My Cards</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
           Every card you have minted, with its image and the Pokémon it was paired with.
         </p>

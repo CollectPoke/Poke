@@ -123,7 +123,7 @@ export function SiteHeader() {
             {user ? (
               <>
                 <Link to="/gallery" className={linkClass} activeProps={linkActive}>
-                  My gallery
+                  My Cards
                 </Link>
                 <Link
                   to="/account"
@@ -207,7 +207,7 @@ export function SiteHeader() {
                     className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                     activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
                   >
-                    My gallery
+                    My Cards
                   </Link>
                   <Link
                     to="/account"
@@ -255,7 +255,7 @@ const footerExplore: { to: string; label: string; exact?: boolean }[] = [
 const footerAccount: { to: string; label: string }[] = [
   { to: "/auth", label: "Sign in / Create account" },
   { to: "/account", label: "My binder" },
-  { to: "/gallery", label: "My gallery" },
+  { to: "/gallery", label: "My Cards" },
   { to: "/mint", label: "Launch a card (0.1 SOL max)" },
 ];
 
