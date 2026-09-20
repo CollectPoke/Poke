@@ -184,6 +184,30 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
         throw new Error("The launch receipt is incomplete. No card was created.");
       }
       await confirmSignature(signature);
+
+      // The coin is live — collect the flat launch fee from the creator's own
+      // JPEG wallet into the deployer wallet. Recorded so a retry of the same
+      // launch can never charge twice.
+      if (!launchRow.fee_tx_signature) {
+        const feeSol = PROTOCOL_FEE_LAMPORTS / 1_000_000_000;
+        try {
+          const feeSignature = await sendSol(wallet, deployer.public_key, feeSol);
+          await supabaseAdmin
+            .from("coin_launches")
+            .update({ fee_tx_signature: feeSignature })
+            .eq("id", launchId);
+        } catch (feeError) {
+          await supabaseAdmin
+            .from("coin_launches")
+            .update({
+              error_message: `Launch fee not collected: ${
+                feeError instanceof Error ? feeError.message : "unknown error"
+              }`,
+            })
+            .eq("id", launchId);
+        }
+      }
+
       const existingCard = await supabaseAdmin
         .from("cards")
         .select("*")
