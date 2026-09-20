@@ -42,7 +42,7 @@ export function BuybackTicker({ withCta = false }: { withCta?: boolean }) {
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-px bg-border sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-px bg-border xl:grid-cols-4">
         <Cell
           label="Next buyback"
           value={seconds === null ? "--:--" : countdownLabel(seconds * 1000)}

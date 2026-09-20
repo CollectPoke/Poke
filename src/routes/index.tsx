@@ -1,3 +1,4 @@
+import pigAsset from "@/assets/pig.webp.asset.json";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
@@ -59,8 +60,8 @@ function Home() {
         {/* composer */}
         <div className="border-b border-border px-4 py-3">
           <div className="flex gap-3">
-            <div className="grid size-10 shrink-0 place-items-center rounded-full bg-poke-yellow/15 text-lg">
-              🐷
+            <div className="grid size-10 shrink-0 place-items-center rounded-full bg-poke-yellow/15">
+              <img src={pigAsset.url} alt="" className="size-7" />
             </div>
             <div className="min-w-0 flex-1">
               <p className="py-2 text-lg text-muted-foreground">
@@ -177,7 +178,9 @@ function FeedPost({ card }: { card: CardWithPeople }) {
           {card.image_url ? (
             <img src={card.image_url} alt="" className="size-full object-cover" />
           ) : (
-            <div className="grid size-full place-items-center text-xl">🐷</div>
+            <div className="grid size-full place-items-center">
+              <img src={pigAsset.url} alt="" className="size-8" />
+            </div>
           )}
         </div>
 
