@@ -80,7 +80,7 @@ function GalleryPage() {
       <header className="flex flex-col gap-2">
         <h1 className="font-display text-3xl font-extrabold text-poke-navy sm:text-4xl">My NFTs</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
-          Every NFT you have minted, with its image and the Pokémon it was paired with.
+          Every NFT you have minted, with its artwork and the coin attached to it.
         </p>
       </header>
 

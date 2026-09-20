@@ -492,7 +492,7 @@
   }
 }
 
-/* ===== Welcome trainer (account created) ===== */
+/* ===== Welcome (account created) ===== */
 @keyframes welcome-ball-drop {
   0% { transform: translateY(-60vh) rotate(-20deg); }
   60% { transform: translateY(12px) rotate(8deg); }
