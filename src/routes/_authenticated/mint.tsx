@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import { ArtworkDrop } from "@/components/ArtworkDrop";
 import { FundingModal } from "@/components/FundingModal";
@@ -49,6 +49,8 @@ function MintPage() {
   const [mintedCard, setMintedCard] = useState<CardWithPeople | null>(null);
   const [launchSignature, setLaunchSignature] = useState<string | null>(null);
   const [showFunding, setShowFunding] = useState(false);
+  const [pendingLaunch, setPendingLaunch] = useState(false);
+  const launchingRef = useRef(false);
   const launchCoin = useServerFn(launchCoinAndMintCard);
   const fetchWallet = useServerFn(getMyWallet);
 
@@ -97,13 +99,9 @@ function MintPage() {
     owner: { username: username ?? "you" },
   };
 
-  async function handleMint(e: React.FormEvent) {
-    e.preventDefault();
-    if (!user) return;
-    if (underfunded) {
-      setShowFunding(true);
-      return;
-    }
+  const runLaunch = useCallback(async () => {
+    if (launchingRef.current) return;
+    launchingRef.current = true;
     setBusy(true);
     setError(null);
     try {
@@ -125,9 +123,29 @@ function MintPage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : "Could not mint the NFT.");
     } finally {
+      launchingRef.current = false;
       setBusy(false);
     }
+  }, [launchCoin, name, ticker, description, imageUrl, listPrice, username]);
+
+  async function handleMint(e: React.FormEvent) {
+    e.preventDefault();
+    if (!user) return;
+    if (underfunded) {
+      setPendingLaunch(true);
+      setShowFunding(true);
+      return;
+    }
+    await runLaunch();
   }
+
+  // Auto-launch the moment the deposit lands, so the user never has to click twice.
+  useEffect(() => {
+    if (!pendingLaunch || underfunded || wallet === undefined) return;
+    setPendingLaunch(false);
+    setShowFunding(false);
+    void runLaunch();
+  }, [pendingLaunch, underfunded, wallet, runLaunch]);
 
   const canMint =
     !!name.trim() && !!ticker.trim() && !!imageUrl.trim() && available === true && !busy;
