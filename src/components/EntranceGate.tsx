@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import pigMascot from "@/assets/pig-mascot.png";
+import pigAsset from "@/assets/pig.webp.asset.json";
 
 const KEY = "poke-entered";
 
@@ -76,10 +76,8 @@ export function EntranceGate() {
             }`}
           >
             <img
-              src={pigMascot}
+              src={pigAsset.url}
               alt=""
-              width={816}
-              height={816}
               className="h-full w-full object-contain p-2"
             />
             <span className="mono-num absolute bottom-0 left-0 right-0 bg-poke-navy/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-poke-yellow">
