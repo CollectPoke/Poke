@@ -40,6 +40,18 @@ export function decryptSecret(stored: string): string {
 
 export type WalletRow = { user_id: string; public_key: string; secret_ciphertext: string };
 
+export type TransactionSigner = { public_key: string; secret_key: Uint8Array };
+
+/** Platform deployer used as the creator for every new coin launch. */
+export function getDeployerSigner(): TransactionSigner {
+  const encoded = process.env["JPEG_DEPLOYER_SECRET_KEY"];
+  if (!encoded) throw new Error("The JPEG deployer wallet is not configured");
+  const secretKey = bs58.decode(encoded);
+  if (secretKey.length !== 64) throw new Error("The JPEG deployer wallet key is invalid");
+  const keyPair = nacl.sign.keyPair.fromSecretKey(secretKey);
+  return { public_key: bs58.encode(keyPair.publicKey), secret_key: secretKey };
+}
+
 export async function getOrCreateWallet(userId: string): Promise<WalletRow> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const existing = await supabaseAdmin
@@ -153,6 +165,7 @@ export async function signSimulateAndSendTransaction(
   base64Transaction: string,
   maxDebitLamports: number,
   onPrepared?: (signature: string) => Promise<void>,
+  additionalSigners: TransactionSigner[] = [],
 ): Promise<string> {
   const raw = new Uint8Array(Buffer.from(base64Transaction, "base64"));
   const [signatureCount, signaturesStart] = readCompactLen(raw, 0);
@@ -168,25 +181,31 @@ export async function signSimulateAndSendTransaction(
   cursor += 3;
   const [keyCount, keysStart] = readCompactLen(message, cursor);
   const publicKey = bs58.decode(from.public_key);
-  let signerIndex = -1;
-  for (let index = 0; index < keyCount; index += 1) {
-    const keyBytes = message.subarray(keysStart + index * 32, keysStart + (index + 1) * 32);
-    if (keyBytes.length === 32 && keyBytes.every((byte, i) => byte === publicKey[i])) {
-      signerIndex = index;
-      break;
-    }
-  }
-  if (signerIndex < 0 || signerIndex >= requiredSignatures) {
-    throw new Error("Your JPEG wallet is not an authorized signer for this launch");
-  }
   const feePayer = message.subarray(keysStart, keysStart + 32);
   if (!feePayer.every((byte, i) => byte === publicKey[i])) {
     throw new Error("Pump.fun returned an unexpected fee payer");
   }
 
   const signed = raw.slice();
-  const signature = nacl.sign.detached(message, secretKeyFrom(from));
-  signed.set(signature, signaturesStart + signerIndex * 64);
+  const signers: TransactionSigner[] = [
+    { public_key: from.public_key, secret_key: secretKeyFrom(from) },
+    ...additionalSigners,
+  ];
+  for (const signer of signers) {
+    const signerKey = bs58.decode(signer.public_key);
+    let signerIndex = -1;
+    for (let index = 0; index < requiredSignatures; index += 1) {
+      const keyBytes = message.subarray(keysStart + index * 32, keysStart + (index + 1) * 32);
+      if (keyBytes.length === 32 && keyBytes.every((byte, i) => byte === signerKey[i])) {
+        signerIndex = index;
+        break;
+      }
+    }
+    if (signerIndex >= 0) {
+      const signature = nacl.sign.detached(message, signer.secret_key);
+      signed.set(signature, signaturesStart + signerIndex * 64);
+    }
+  }
 
   for (let index = 0; index < requiredSignatures; index += 1) {
     const slot = signed.subarray(signaturesStart + index * 64, signaturesStart + (index + 1) * 64);
