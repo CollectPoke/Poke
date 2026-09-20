@@ -151,8 +151,6 @@ function GalleryPage() {
       ) : (
         <div className="mt-8 grid gap-6 md:grid-cols-2">
           {shown.map((card) => {
-            const pair = pairingFor(card.name, card.ticker);
-            const art = pokemonArtwork(pair?.pokedex_id ?? null);
             return (
               <div
                 key={card.id}
