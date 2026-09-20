@@ -207,33 +207,11 @@ function GalleryPage() {
 
                   <div className="mt-4 rounded-2xl border border-border bg-secondary/50 p-4">
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                      Pokémon pairing
+                      Attached coin
                     </p>
-                    {pair ? (
-                      <div className="mt-2 flex items-start gap-3">
-                        {art && (
-                          <img src={art} alt={pair.pokemon_name} className="size-16 shrink-0 object-contain" />
-                        )}
-                        <div className="min-w-0">
-                          <p className="font-display text-lg font-bold capitalize text-poke-navy">
-                            {pair.pokemon_name}
-                            {pair.pokedex_id ? (
-                              <span className="mono-num ml-2 text-sm text-muted-foreground">
-                                #{String(pair.pokedex_id).padStart(3, "0")}
-                              </span>
-                            ) : null}
-                          </p>
-                          <p className="mt-1 text-sm text-muted-foreground">{pair.explanation}</p>
-                        </div>
-                      </div>
-                    ) : (
-                      <p className="mt-2 text-sm text-muted-foreground">
-                        No pairing yet.{" "}
-                        <Link to="/mint" className="font-bold text-poke-blue underline">
-                          Pair this coin
-                        </Link>
-                      </p>
-                    )}
+                    <p className="mono-num mt-2 break-all text-xs text-poke-navy">
+                      {card.contract_address}
+                    </p>
                   </div>
                 </div>
               </div>
