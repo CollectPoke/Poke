@@ -12,7 +12,6 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
-import { EntranceGate } from "@/components/EntranceGate";
 import { AuthProvider } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -112,14 +111,6 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          // Decide BEFORE first paint whether the entrance gate should cover
-          // the page, so the homepage never flashes behind it.
-          dangerouslySetInnerHTML={{
-            __html:
-              'try{if(sessionStorage.getItem("jpeg-entered")!=="1")document.documentElement.classList.add("gate-active")}catch(e){document.documentElement.classList.add("gate-active")}',
-          }}
-        />
         <HeadContent />
       </head>
       <body>
@@ -137,7 +128,6 @@ function RootComponent() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <AuthSync />
-        <EntranceGate />
         <SiteHeader />
         {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
         <Outlet />
