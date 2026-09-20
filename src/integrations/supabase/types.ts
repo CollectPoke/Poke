@@ -271,6 +271,7 @@ export type Database = {
           creator_id: string
           description: string | null
           error_message: string | null
+          fee_tx_signature: string | null
           id: string
           image_url: string
           initial_buy_sol: number
@@ -289,6 +290,7 @@ export type Database = {
           creator_id: string
           description?: string | null
           error_message?: string | null
+          fee_tx_signature?: string | null
           id?: string
           image_url: string
           initial_buy_sol?: number
@@ -307,6 +309,7 @@ export type Database = {
           creator_id?: string
           description?: string | null
           error_message?: string | null
+          fee_tx_signature?: string | null
           id?: string
           image_url?: string
           initial_buy_sol?: number

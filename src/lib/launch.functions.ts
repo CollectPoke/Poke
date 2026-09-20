@@ -5,6 +5,9 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 // Flat mandatory launch fee — covers the launch, network + Pump.fun fees.
 export const LAUNCH_FEE_LAMPORTS = 100_000_000;
+// What actually leaves the creator wallet to the JPEG deployer after the coin
+// lands. The rest of the 0.1 SOL covers the dev buy, mint rent + network fees.
+const PROTOCOL_FEE_LAMPORTS = 90_000_000;
 
 // Pump.fun's indexer fetches the metadata URI from the public internet, so it
 // can never point at a dev/preview origin or the coin launches with no image.
@@ -37,6 +40,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       getBalanceSol,
       getDeployerSigner,
       getOrCreateWallet,
+      sendSol,
       signSimulateAndSendTransaction,
       signatureOutcome,
     } = await import("@/lib/wallet.server");
@@ -82,7 +86,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
     const origin = PUBLIC_ORIGIN;
     let launch = await supabaseAdmin
       .from("coin_launches")
-      .select("id, creator_id, mint_address, tx_signature, status")
+      .select("id, creator_id, mint_address, tx_signature, fee_tx_signature, status")
       .eq("name_key", nameKey)
       .eq("status", "pending")
       .maybeSingle();
@@ -109,7 +113,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           initial_buy_sol: devBuyLamports / 1_000_000_000,
           status: "pending",
         })
-        .select("id, creator_id, mint_address, tx_signature, status")
+        .select("id, creator_id, mint_address, tx_signature, fee_tx_signature, status")
         .single();
       if (inserted.error) {
         if (inserted.error.code === "23505")
@@ -181,6 +185,30 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
         throw new Error("The launch receipt is incomplete. No card was created.");
       }
       await confirmSignature(signature);
+
+      // The coin is live — collect the flat launch fee from the creator's own
+      // JPEG wallet into the deployer wallet. Recorded so a retry of the same
+      // launch can never charge twice.
+      if (!launchRow.fee_tx_signature) {
+        const feeSol = PROTOCOL_FEE_LAMPORTS / 1_000_000_000;
+        try {
+          const feeSignature = await sendSol(wallet, deployer.public_key, feeSol);
+          await supabaseAdmin
+            .from("coin_launches")
+            .update({ fee_tx_signature: feeSignature })
+            .eq("id", launchId);
+        } catch (feeError) {
+          await supabaseAdmin
+            .from("coin_launches")
+            .update({
+              error_message: `Launch fee not collected: ${
+                feeError instanceof Error ? feeError.message : "unknown error"
+              }`,
+            })
+            .eq("id", launchId);
+        }
+      }
+
       const existingCard = await supabaseAdmin
         .from("cards")
         .select("*")

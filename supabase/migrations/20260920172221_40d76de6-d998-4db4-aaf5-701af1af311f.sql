@@ -1,0 +1,1 @@
+ALTER TABLE public.coin_launches ADD COLUMN IF NOT EXISTS fee_tx_signature text;
