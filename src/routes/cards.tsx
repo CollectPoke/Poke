@@ -11,12 +11,12 @@ export const Route = createFileRoute("/cards")({
       { title: "All NFTs · Poke" },
       {
         name: "description",
-        content: "Browse every one-of-one NFT launched on Poke. One name, one card, forever.",
+        content: "Browse every one-of-one NFT launched on Poke. One name, one NFT, forever.",
       },
       { property: "og:title", content: "All NFTs · Poke" },
       {
         property: "og:description",
-        content: "Browse every one-of-one NFT launched on Poke. One name, one card, forever.",
+        content: "Browse every one-of-one NFT launched on Poke. One name, one NFT, forever.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -64,7 +64,7 @@ function CardsPage() {
       </div>
 
       {isLoading ? (
-        <p className="mt-10 text-sm text-muted-foreground">Loading cards…</p>
+        <p className="mt-10 text-sm text-muted-foreground">Loading NFTs…</p>
       ) : error ? (
         <p className="mt-10 text-sm text-poke-red">Could not load cards. Try refreshing.</p>
       ) : cards.length === 0 ? (

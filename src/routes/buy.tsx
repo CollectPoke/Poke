@@ -8,15 +8,15 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/buy")({
   head: () => ({
     meta: [
-      { title: "Buy cards · Poke" },
+      { title: "Buy NFTs · Poke" },
       {
         name: "description",
-        content: "Every Poke card listed for sale right now. One name, one card, forever.",
+        content: "Every Poke NFT listed for sale right now. One name, one NFT, forever.",
       },
-      { property: "og:title", content: "Buy cards · Poke" },
+      { property: "og:title", content: "Buy NFTs · Poke" },
       {
         property: "og:description",
-        content: "Every Poke card listed for sale right now. One name, one card, forever.",
+        content: "Every Poke NFT listed for sale right now. One name, one NFT, forever.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -52,7 +52,7 @@ function BuyPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Buy</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Cards other collectors have listed for sale. Tap an NFT to buy it with your Poke wallet.
+        NFTs other collectors have listed for sale. Tap an NFT to buy it with your Poke wallet.
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-2">
@@ -66,7 +66,7 @@ function BuyPage() {
           value={sort}
           onChange={(e) => setSort(e.target.value as SortKey)}
           className="rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-poke-blue"
-          aria-label="Sort cards"
+          aria-label="Sort NFTs"
         >
           <option value="newest">Newest</option>
           <option value="price-low">Price: low to high</option>
@@ -75,7 +75,7 @@ function BuyPage() {
       </div>
 
       {isLoading ? (
-        <p className="mt-10 text-sm text-muted-foreground">Loading cards…</p>
+        <p className="mt-10 text-sm text-muted-foreground">Loading NFTs…</p>
       ) : error ? (
         <p className="mt-10 text-sm text-poke-red">Could not load cards. Try refreshing.</p>
       ) : cards.length === 0 ? (

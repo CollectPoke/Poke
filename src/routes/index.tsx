@@ -8,13 +8,13 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Poke · One name, one card, forever" },
+      { title: "Poke · One name, one NFT, forever" },
       {
         name: "description",
         content:
           "Launch a coin on Poke and it becomes a one-of-one NFT. Only one Dog can ever exist. Buy, sell, mint and burn.",
       },
-      { property: "og:title", content: "Poke · One name, one card, forever" },
+      { property: "og:title", content: "Poke · One name, one NFT, forever" },
       {
         property: "og:description",
         content:
@@ -48,7 +48,7 @@ function Home() {
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr]">
           <div className="text-white">
             <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
-              One name, one card, forever
+              One name, one NFT, forever
             </span>
             <h1 className="mt-4 font-display text-5xl font-bold leading-[1.05] drop-shadow sm:text-6xl">
               Launch your coin as an NFT nobody can copy.
@@ -66,7 +66,7 @@ function Home() {
                 to="/cards"
                 className="rounded-full border-2 border-white/60 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/10"
               >
-                Browse all cards
+                Browse all NFTs
               </Link>
             </div>
           </div>
@@ -86,7 +86,7 @@ function Home() {
               </div>
             ) : (
               <div className="rotate-[-3deg] rounded-2xl border-4 border-poke-yellow bg-card/95 p-8 text-center">
-                <p className="font-display text-xl font-bold">No cards minted yet</p>
+                <p className="font-display text-xl font-bold">No NFTs minted yet</p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   The first name is still up for grabs.
                 </p>

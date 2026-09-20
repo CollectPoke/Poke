@@ -86,7 +86,7 @@ function MintPage() {
 
   const preview: CardWithPeople = {
     id: "preview",
-    name: name.trim() || "Your card",
+    name: name.trim() || "Your NFT",
     name_key: "",
     ticker: ticker.trim().toUpperCase() || "TICKER",
     description: description || null,
@@ -173,7 +173,7 @@ function MintPage() {
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]">
         <form onSubmit={handleMint} className="space-y-5">
-          <Field label="Card name" hint="Permanent and unique">
+          <Field label="NFT name" hint="Permanent and unique">
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -279,7 +279,7 @@ function MintPage() {
           {error && <p className="text-sm font-medium text-poke-red">{error}</p>}
 
           <button type="submit" disabled={!canMint} className="poke-btn disabled:opacity-40">
-            {busy ? "Launching on Pump.fun…" : `Launch coin + mint card · ${totalCost.toFixed(3)} SOL`}
+            {busy ? "Launching on Pump.fun…" : `Launch coin + mint NFT · ${totalCost.toFixed(3)} SOL`}
           </button>
           {busy ? <p className="text-xs text-muted-foreground">Preparing, checking, signing and confirming your Solana launch. Keep this page open.</p> : null}
         </form>
