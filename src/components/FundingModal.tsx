@@ -139,7 +139,7 @@ export function FundingModal({
           </>
         )}
 
-        {funded && (
+        {funded && !autoLaunch && (
           <Button type="button" onClick={onClose} className="mt-5 h-12 w-full rounded-none">
             Back to minting
           </Button>
