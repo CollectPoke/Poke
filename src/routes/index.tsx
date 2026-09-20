@@ -51,60 +51,60 @@ function Home() {
 
   return (
     <main>
-      <section className="arena-stage relative min-h-[calc(100svh-92px)] overflow-hidden border-b border-border">
+      <section className="arena-stage relative overflow-hidden border-b border-border">
         <img
           src={arenaImage}
           alt=""
           width={1920}
           height={900}
-          className="absolute inset-0 h-full w-full object-cover opacity-55"
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/65 to-background/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/60" />
 
-        <div className="relative mx-auto grid min-h-[calc(100svh-92px)] max-w-7xl gap-10 px-5 py-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:px-8 lg:py-16">
-          <div className="arena-enter max-w-4xl self-end">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:py-20 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
+          <div className="arena-enter max-w-3xl">
             <div className="mb-5 flex items-center gap-3">
               <span className="size-2 animate-pulse bg-brand" />
               <span className="hud-label text-brand">Launch arena online</span>
               <span className="h-px w-16 bg-brand/50" />
             </div>
-            <h1 className="max-w-4xl text-5xl font-black uppercase leading-[0.88] tracking-normal sm:text-7xl lg:text-8xl">
+            <h1 className="text-4xl font-black uppercase leading-[0.92] tracking-normal sm:text-5xl lg:text-6xl">
               Mint the artifact.
               <br />
               <span className="text-brand">Launch its coin.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/65 sm:text-lg">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-foreground/70">
               Every JPEG is a one-of-one digital collectible with its own live coin. Claim the name,
               own the original, trade the signal.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/mint" className="primary-btn !px-8 !py-4">
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link to="/mint" className="primary-btn !px-7 !py-3.5">
                 Initialize mint
               </Link>
               <Link
                 to="/cards"
-                className="secondary-btn hud-label inline-flex items-center px-8 py-4"
+                className="secondary-btn hud-label inline-flex items-center px-7 py-3.5"
               >
                 Enter market
               </Link>
             </div>
-            <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-border/80 bg-background/45 backdrop-blur-sm">
+            <div className="mt-9 grid max-w-xl grid-cols-3 border border-border bg-background/60 backdrop-blur-sm">
               <HudStat label="Mint fee" value="0.1 SOL" />
               <HudStat label="Edition" value="1 / 1" />
               <HudStat label="Network" value="SOL" />
             </div>
           </div>
 
-          <aside className="arena-panel arena-enter self-end p-5 [animation-delay:180ms]">
+          <aside className="arena-panel arena-enter p-5 [animation-delay:180ms]">
             <div className="flex items-center justify-between border-b border-border pb-4">
               <div>
                 <p className="hud-label text-brand">Player terminal</p>
-                <h2 className="mt-1 text-xl uppercase tracking-normal">
+                <h2 className="mt-1 text-lg uppercase tracking-normal">
                   {user ? "Access granted" : "Ready to deploy?"}
                 </h2>
               </div>
-              <img src={pigAsset.url} alt="" className="size-12 object-contain" />
+              <img src={pigAsset.url} alt="" className="size-11 object-contain" />
             </div>
             <div className="space-y-4 py-5 text-sm text-muted-foreground">
               <TerminalStep number="01" text="Upload one original JPEG" />
@@ -192,9 +192,8 @@ function FeedPost({ card }: { card: CardWithPeople }) {
 
   return (
     <li className="bg-background transition-colors hover:bg-card">
-      <Link to="/card/$cardId" params={{ cardId: card.id }} className="block p-3">
-        {/* art */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden border border-border bg-muted">
+      <Link to="/card/$cardId" params={{ cardId: card.id }} className="block p-4">
+        <div className="relative aspect-square w-full overflow-hidden border border-border bg-muted">
           {card.image_url ? (
             <img src={card.image_url} alt="" className="size-full object-cover" />
           ) : (
@@ -202,40 +201,31 @@ function FeedPost({ card }: { card: CardWithPeople }) {
               <img src={pigAsset.url} alt="" className="size-20" />
             </div>
           )}
+          {burned && (
+            <span className="hud-label absolute left-0 top-0 bg-danger px-2 py-1 text-[10px] text-background">
+              Burned
+            </span>
+          )}
         </div>
 
-        <div className="min-w-0 flex-1 px-1 pb-1 pt-4">
-          {/* header row */}
-          <div className="flex items-baseline gap-1.5 text-[15px]">
-            <span className="truncate text-lg font-black uppercase">{card.name}</span>
-            <span className="mono-num shrink-0 text-sm text-muted-foreground">${card.ticker}</span>
-            <span className="shrink-0 text-sm text-muted-foreground">
-              · {timeAgo(card.created_at)}
-            </span>
-            {burned && (
-              <span className="ml-auto shrink-0 rounded-full bg-danger/10 px-2 py-0.5 text-[11px] font-bold text-danger">
-                Burned
-              </span>
-            )}
+        <div className="mt-4 min-w-0">
+          <div className="flex items-baseline justify-between gap-3">
+            <span className="truncate text-base font-black uppercase">{card.name}</span>
+            <span className="mono-num shrink-0 text-xs text-muted-foreground">${card.ticker}</span>
           </div>
-          <p className="truncate text-sm text-muted-foreground">@{owner}</p>
+          <p className="mt-1 truncate text-xs text-muted-foreground">
+            @{owner} · {timeAgo(card.created_at)}
+          </p>
 
-          {card.description && (
-            <p className="mt-1 line-clamp-2 text-[15px] leading-snug">{card.description}</p>
-          )}
-
-          {/* action row */}
-          <div className="mt-2 flex items-center gap-2">
-            <span className="mono-num rounded-full bg-muted px-2.5 py-1 text-xs font-semibold">
-              1/1
-            </span>
+          <div className="mt-4 flex items-center justify-between border-t border-border pt-3">
+            <span className="hud-label text-muted-foreground">1 / 1</span>
             {listed && !burned ? (
-              <span className="rounded-full bg-brand px-3.5 py-1 text-xs font-bold text-brand-foreground">
-                Buy · {card.list_price} SOL
+              <span className="mono-num bg-brand px-3 py-1 text-xs font-bold text-brand-foreground">
+                {card.list_price} SOL
               </span>
             ) : (
-              <span className="rounded-full border border-border px-3.5 py-1 text-xs font-semibold text-muted-foreground">
-                {burned ? "Retired" : "Not for sale"}
+              <span className="hud-label text-muted-foreground">
+                {burned ? "Retired" : "Not listed"}
               </span>
             )}
           </div>
