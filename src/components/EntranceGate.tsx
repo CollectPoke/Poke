@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import pigMascot from "@/assets/pig-mascot.png";
+
 const KEY = "poke-entered";
 
 // Always rendered (including in the server HTML). Visibility is controlled by
