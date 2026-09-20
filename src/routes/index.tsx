@@ -1,8 +1,10 @@
+import pigAsset from "@/assets/pig.webp.asset.json";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { BuybackTicker } from "@/components/BuybackTicker";
-import { PokeCard } from "@/components/PokeCard";
+import { useAuth } from "@/lib/auth";
+import type { CardWithPeople } from "@/lib/cards";
 import { listCards } from "@/lib/queries";
 
 export const Route = createFileRoute("/")({
@@ -27,181 +29,200 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-// the hero shows at most this many cards; the rest live under "Freshly minted"
-const HERO_CARD_COUNT = 10;
+function timeAgo(iso: string) {
+  const s = Math.max(1, Math.floor((Date.now() - new Date(iso).getTime()) / 1000));
+  if (s < 60) return `${s}s`;
+  const m = Math.floor(s / 60);
+  if (m < 60) return `${m}m`;
+  const h = Math.floor(m / 60);
+  if (h < 24) return `${h}h`;
+  return `${Math.floor(h / 24)}d`;
+}
 
 function Home() {
+  const { user } = useAuth();
   const { data: cards } = useQuery({
     queryKey: ["cards"],
     queryFn: () => listCards(),
   });
 
-  const latest = cards ?? [];
-  const heroCards = latest.slice(0, HERO_CARD_COUNT);
-  const restCards = latest.slice(HERO_CARD_COUNT);
-  const forSale = latest.filter((c) => c.list_price !== null);
+  const feed = cards ?? [];
 
   return (
-    <main>
-      {/* Hero */}
-      <section className="relative overflow-hidden border-b border-border">
-        <div className="pointer-events-none absolute -left-40 -top-40 size-[520px] rounded-full bg-poke-yellow/10 blur-[140px]" />
-        <div className="pointer-events-none absolute -right-32 bottom-0 size-[420px] rounded-full bg-poke-purple/10 blur-[140px]" />
-        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-20 md:grid-cols-[1fr_1.05fr]">
-          <div>
-            <span className="mono-num inline-block border border-poke-yellow/50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.25em] text-poke-yellow">
-              1 jpeg / 1 coin / forever
-            </span>
-            <h1 className="mt-5 font-display text-5xl leading-[0.92] sm:text-7xl">
-              Mint the
-              <br />
-              <span className="text-poke-yellow">jpeg.</span> Launch
-              <br />
-              the coin.
-            </h1>
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-              Upload an image, pick a name and a ticker. JPEG mints it as a one-of-one and launches
-              a real coin for it on Pump.fun, with the contract address printed on the piece. Only
-              one of each name can ever exist — hold it, sell it, or burn it and set the name free.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/mint" className="poke-btn">
-                Mint an NFT
-              </Link>
-              <Link to="/cards" className="poke-btn poke-btn-navy">
-                Browse all NFTs
-              </Link>
+    <main className="mx-auto grid max-w-6xl gap-0 px-0 sm:px-5 lg:grid-cols-[minmax(0,600px)_320px] lg:justify-center lg:gap-8">
+      {/* ─── Feed column ─── */}
+      <section className="min-h-screen border-x border-border">
+        {/* sticky feed header */}
+        <div className="sticky top-0 z-10 border-b border-border bg-background/80 px-4 py-3 backdrop-blur">
+          <h1 className="text-lg font-extrabold tracking-tight">Home</h1>
+        </div>
+
+        {/* composer */}
+        <div className="border-b border-border px-4 py-3">
+          <div className="flex gap-3">
+            <div className="grid size-10 shrink-0 place-items-center rounded-full bg-poke-yellow/15">
+              <img src={pigAsset.url} alt="" className="size-7" />
             </div>
-          </div>
-          <div className="mx-auto w-full max-w-[560px]">
-            {heroCards.length > 0 ? (
-              <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {heroCards.map((card) => (
-                  <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
-                    <PokeCard card={card} compact />
-                  </Link>
-                ))}
-              </div>
-            ) : (
-              <div className="relative grid aspect-square w-full place-items-center overflow-hidden rounded-md border border-dashed border-border bg-card/60">
-                <div className="px-8 text-center">
-                  <p className="mono-num text-[11px] uppercase tracking-[0.3em] text-poke-yellow">
-                    Empty gallery
-                  </p>
-                  <p className="mt-3 font-display text-2xl">No NFTs minted yet</p>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    The first name is still up for grabs.
-                  </p>
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="mx-auto max-w-6xl px-5 py-14">
-        <h2 className="font-display text-3xl font-bold">How it works</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Tile color="text-poke-yellow" step="01" title="Claim the name">
-            Pick a name and ticker. If it's taken, it's gone — the site refuses a second one.
-          </Tile>
-          <Tile color="text-poke-blue" step="02" title="Mint the NFT">
-            Your jpeg becomes a one-of-one NFT with its ticker and coin address on it.
-          </Tile>
-          <Tile color="text-poke-green" step="03" title="Trade it">
-            List it for sale, and anyone with an account can buy it. Ownership moves instantly.
-          </Tile>
-          <Tile color="text-poke-purple" step="04" title="Or burn it">
-            Burning retires the NFT and releases the name for someone else to claim.
-          </Tile>
-        </div>
-      </section>
-
-      {/* Buybacks */}
-      <section className="mx-auto max-w-6xl px-5 pb-14">
-        <div className="overflow-hidden rounded-md border border-border bg-surface text-foreground shadow-card">
-          <div className="grid gap-6 p-7 md:grid-cols-[1.3fr_1fr] md:items-center">
-            <div>
-              <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-yellow-foreground">
-                100% of fees
-              </span>
-              <h2 className="mt-3 font-display text-3xl font-bold">
-                Every fee buys back $POKE — every 10 minutes.
-              </h2>
-              <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-                Coins launched on JPEG pay fees, and all of it goes into buying $POKE on the open
-                market. Every run is posted with its Solscan transaction, so you can check it
-                yourself.
+            <div className="min-w-0 flex-1">
+              <p className="py-2 text-lg text-muted-foreground">
+                Got a jpeg? Give it a coin.
               </p>
-              <Link to="/buyback" className="poke-btn mt-5 inline-flex">
-                See the buyback log
-              </Link>
+              <div className="mt-1 flex items-center justify-between gap-3">
+                <p className="text-xs text-muted-foreground">
+                  1/1 NFT · real Pump.fun coin · 0.1 SOL flat
+                </p>
+                <Link
+                  to="/mint"
+                  className="poke-btn shrink-0 !px-5 !py-1.5 text-sm"
+                >
+                  Mint
+                </Link>
+              </div>
             </div>
-            <BuybackTicker />
           </div>
         </div>
-      </section>
 
-      {/* Latest cards */}
-      <section className="mx-auto max-w-6xl px-5 pb-16">
-        <div className="flex items-end justify-between gap-4">
-          <h2 className="font-display text-3xl font-bold">Freshly minted</h2>
-          <Link to="/cards" className="text-sm font-semibold text-poke-yellow hover:underline">
-            See all →
-          </Link>
-        </div>
-        {latest.length === 0 ? (
-          <div className="mt-5 rounded-2xl border border-dashed border-border p-12 text-center">
-            <p className="font-display text-xl font-bold">Nothing minted yet</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Every name is still available. Claim one.
+        {/* feed */}
+        {feed.length === 0 ? (
+          <div className="px-6 py-16 text-center">
+            <p className="text-xl font-extrabold">Nothing minted yet</p>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Every name is still up for grabs. The first jpeg writes history.
             </p>
-            <Link to="/mint" className="poke-btn mt-5 inline-flex">
+            <Link to="/mint" className="poke-btn mt-6 inline-flex">
               Mint the first NFT
             </Link>
           </div>
-        ) : restCards.length > 0 ? (
-          <div className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {restCards.map((card) => (
-              <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
-                <PokeCard card={card} compact />
-              </Link>
-            ))}
-          </div>
         ) : (
-          <p className="mt-5 text-sm text-muted-foreground">
-            The newest 10 are up in the hero — <Link to="/cards" className="font-semibold text-poke-yellow hover:underline">see every NFT →</Link>
-          </p>
+          <ul>
+            {feed.map((card) => (
+              <FeedPost key={card.id} card={card} />
+            ))}
+          </ul>
         )}
 
-        {forSale.length > 0 && (
-          <p className="mt-6 text-sm text-muted-foreground">
-            <span className="font-semibold text-foreground">{forSale.length}</span> of these are
-            listed for sale right now.
-          </p>
+        {feed.length > 0 && (
+          <div className="border-t border-border px-4 py-4 text-center">
+            <Link to="/cards" className="text-sm font-semibold text-poke-yellow hover:underline">
+              Show every NFT →
+            </Link>
+          </div>
         )}
       </section>
+
+      {/* ─── Right rail ─── */}
+      <aside className="hidden lg:block">
+        <div className="sticky top-4 space-y-4 py-4">
+          <BuybackTicker />
+
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <h2 className="text-base font-extrabold">How JPEG works</h2>
+            <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
+              <li><span className="font-bold text-foreground">Claim a name.</span> If it's taken, it's gone forever — one of each, ever.</li>
+              <li><span className="font-bold text-foreground">Mint the NFT.</span> Your jpeg + ticker + a real coin on Pump.fun.</li>
+              <li><span className="font-bold text-foreground">Trade it.</span> List it, get offers, sell instantly.</li>
+              <li><span className="font-bold text-foreground">Or burn it.</span> The name frees up for someone else.</li>
+            </ul>
+            <Link
+              to="/docs"
+              className="mt-4 inline-block text-sm font-semibold text-poke-yellow hover:underline"
+            >
+              Read the how-to →
+            </Link>
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card p-4">
+            <h2 className="text-base font-extrabold">100% of fees buy back $POKE</h2>
+            <p className="mt-2 text-sm text-muted-foreground">
+              Every 10 minutes, on-chain, with a Solscan link for every run. 0% team.
+            </p>
+            <Link
+              to="/buyback"
+              className="mt-3 inline-block text-sm font-semibold text-poke-yellow hover:underline"
+            >
+              Verify the log →
+            </Link>
+          </div>
+
+          {!user && (
+            <div className="rounded-2xl border border-border bg-card p-4">
+              <h2 className="text-base font-extrabold">New here?</h2>
+              <p className="mt-1 text-sm text-muted-foreground">
+                One account = one wallet. No seed phrases, no extensions.
+              </p>
+              <Link to="/auth" className="poke-btn mt-4 inline-flex w-full justify-center">
+                Create account
+              </Link>
+            </div>
+          )}
+        </div>
+      </aside>
     </main>
   );
 }
 
-function Tile({
-  color,
-  step,
-  title,
-  children,
-}: {
-  color: string;
-  step: string;
-  title: string;
-  children: React.ReactNode;
-}) {
+function FeedPost({ card }: { card: CardWithPeople }) {
+  const listed = card.list_price !== null;
+  const burned = card.status === "burned";
+  const owner = card.owner?.username ?? "collector";
+
   return (
-    <div className="rounded-md border border-border bg-card p-5 transition-colors hover:border-poke-yellow/50">
-      <span className={`mono-num text-xs font-bold tracking-widest ${color}`}>{step}</span>
-      <h3 className="mt-2 font-display text-lg">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{children}</p>
-    </div>
+    <li className="border-b border-border transition-colors hover:bg-foreground/[0.02]">
+      <Link
+        to="/card/$cardId"
+        params={{ cardId: card.id }}
+        className="flex gap-3 px-4 py-3"
+      >
+        {/* art */}
+        <div className="relative size-14 shrink-0 overflow-hidden rounded-xl border border-border bg-muted">
+          {card.image_url ? (
+            <img src={card.image_url} alt="" className="size-full object-cover" />
+          ) : (
+            <div className="grid size-full place-items-center">
+              <img src={pigAsset.url} alt="" className="size-8" />
+            </div>
+          )}
+        </div>
+
+        <div className="min-w-0 flex-1">
+          {/* header row */}
+          <div className="flex items-baseline gap-1.5 text-[15px]">
+            <span className="truncate font-bold">{card.name}</span>
+            <span className="mono-num shrink-0 text-sm text-muted-foreground">
+              ${card.ticker}
+            </span>
+            <span className="shrink-0 text-sm text-muted-foreground">
+              · {timeAgo(card.created_at)}
+            </span>
+            {burned && (
+              <span className="ml-auto shrink-0 rounded-full bg-poke-red/10 px-2 py-0.5 text-[11px] font-bold text-poke-red">
+                Burned
+              </span>
+            )}
+          </div>
+          <p className="truncate text-sm text-muted-foreground">@{owner}</p>
+
+          {card.description && (
+            <p className="mt-1 line-clamp-2 text-[15px] leading-snug">{card.description}</p>
+          )}
+
+          {/* action row */}
+          <div className="mt-2 flex items-center gap-2">
+            <span className="mono-num rounded-full bg-muted px-2.5 py-1 text-xs font-semibold">
+              1/1
+            </span>
+            {listed && !burned ? (
+              <span className="rounded-full bg-poke-yellow px-3.5 py-1 text-xs font-bold text-poke-yellow-foreground">
+                Buy · {card.list_price} SOL
+              </span>
+            ) : (
+              <span className="rounded-full border border-border px-3.5 py-1 text-xs font-semibold text-muted-foreground">
+                {burned ? "Retired" : "Not for sale"}
+              </span>
+            )}
+          </div>
+        </div>
+      </Link>
+    </li>
   );
 }
