@@ -77,7 +77,7 @@ function AccountPage() {
               <div className="size-20 rounded-full bg-gradient-to-tr from-poke-navy to-poke-blue p-1 shadow-lg sm:size-24">
                 <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-card">
                   <div className="absolute inset-x-0 top-0 h-1/2 bg-poke-red" />
-                  <div className="absolute top-1/2 z-10 h-1 w-full -translate-y-1/2 bg-poke-navy" />
+                  <div className="absolute top-1/2 z-10 h-1 w-full -translate-y-1/2 bg-border" />
                   <div className="z-20 size-5 rounded-full border-4 border-poke-navy bg-card" />
                 </div>
               </div>
@@ -228,7 +228,7 @@ function AccountPage() {
             <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-poke-blue/10">
               <div className="relative size-8 overflow-hidden rounded-full border-2 border-poke-navy bg-card">
                 <div className="absolute inset-x-0 top-0 h-1/2 bg-poke-red" />
-                <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 bg-poke-navy" />
+                <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 bg-border" />
               </div>
             </div>
             <p className="font-display text-xl font-bold text-foreground">Your collection is empty</p>
@@ -315,7 +315,7 @@ function Tab({
       onClick={onClick}
       className={`rounded-full border-2 px-4 py-1.5 text-xs font-bold transition-colors ${
         active
-          ? "border-poke-navy bg-poke-navy text-poke-yellow"
+          ? "border-poke-navy bg-border text-poke-yellow"
           : "border-border bg-card text-foreground hover:bg-secondary"
       }`}
     >

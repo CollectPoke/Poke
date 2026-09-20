@@ -54,38 +54,38 @@
   --color-type-poison: var(--type-poison);
   --color-type-normal: var(--type-normal);
   /* Brand palette — ink gallery + pig pink */
-  --color-poke-yellow: oklch(0.72 0.19 5);
-  --color-poke-yellow-foreground: oklch(0.15 0.02 290);
-  --color-poke-blue: oklch(0.7 0.16 200);
+  --color-poke-yellow: oklch(0.65 0.21 5);
+  --color-poke-yellow-foreground: oklch(0.99 0.005 290);
+  --color-poke-blue: oklch(0.6 0.16 220);
   --color-poke-navy: oklch(0.17 0.015 290);
   --color-poke-navy-deep: oklch(0.12 0.015 290);
-  --color-poke-red: oklch(0.66 0.21 20);
-  --color-poke-purple: oklch(0.62 0.18 310);
-  --color-poke-green: oklch(0.74 0.17 155);
+  --color-poke-red: oklch(0.6 0.21 20);
+  --color-poke-purple: oklch(0.56 0.18 310);
+  --color-poke-green: oklch(0.6 0.15 155);
   --font-display: "Archivo Black", "Space Grotesk", ui-sans-serif, sans-serif;
   --font-sans: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --shadow-card: 0 1px 0 oklch(1 0 0 / 0.05), 0 18px 40px oklch(0 0 0 / 0.5);
-  --shadow-card-hover: 0 0 0 1px oklch(0.72 0.19 5 / 0.45), 0 26px 60px oklch(0 0 0 / 0.6);
+  --shadow-card: 0 1px 0 oklch(0.9 0.008 290 / 0.6), 0 10px 26px oklch(0.17 0.015 290 / 0.08);
+  --shadow-card-hover: 0 0 0 1px oklch(0.65 0.21 5 / 0.4), 0 20px 44px oklch(0.17 0.015 290 / 0.14);
 }
 
 :root {
   --radius: 0.35rem;
-  --background: oklch(0.13 0.015 290);
-  --foreground: oklch(0.97 0.005 290);
-  --surface: oklch(0.17 0.015 290);
-  --card: oklch(0.18 0.016 290);
-  --card-foreground: oklch(0.97 0.005 290);
-  --popover: oklch(0.18 0.016 290);
-  --popover-foreground: oklch(0.97 0.005 290);
-  --primary: oklch(0.72 0.19 5);
-  --primary-foreground: oklch(0.15 0.02 290);
-  --secondary: oklch(0.23 0.018 290);
-  --secondary-foreground: oklch(0.97 0.005 290);
-  --muted: oklch(0.23 0.018 290);
-  --muted-foreground: oklch(0.7 0.015 290);
-  --accent: oklch(0.72 0.19 5);
-  --accent-foreground: oklch(0.15 0.02 290);
+  --background: oklch(0.985 0.004 290);
+  --foreground: oklch(0.17 0.015 290);
+  --surface: oklch(1 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.17 0.015 290);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.17 0.015 290);
+  --primary: oklch(0.65 0.21 5);
+  --primary-foreground: oklch(0.99 0.005 290);
+  --secondary: oklch(0.95 0.008 290);
+  --secondary-foreground: oklch(0.2 0.015 290);
+  --muted: oklch(0.95 0.008 290);
+  --muted-foreground: oklch(0.5 0.015 290);
+  --accent: oklch(0.65 0.21 5);
+  --accent-foreground: oklch(0.99 0.005 290);
   --success: oklch(0.6 0.15 150);
   --danger: oklch(0.55 0.2 27);
   --type-fire: oklch(0.62 0.18 40);
@@ -97,9 +97,9 @@
   --type-normal: oklch(0.55 0.03 265);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
-  --border: oklch(0.28 0.018 290);
-  --input: oklch(0.28 0.018 290);
-  --ring: oklch(0.72 0.19 5);
+  --border: oklch(0.9 0.008 290);
+  --input: oklch(0.9 0.008 290);
+  --ring: oklch(0.65 0.21 5);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -124,8 +124,8 @@
     background-color: var(--color-background);
     /* fine gallery grid */
     background-image:
-      linear-gradient(oklch(1 0 0 / 0.028) 1px, transparent 1px),
-      linear-gradient(90deg, oklch(1 0 0 / 0.028) 1px, transparent 1px);
+      linear-gradient(oklch(0.17 0.015 290 / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, oklch(0.17 0.015 290 / 0.05) 1px, transparent 1px);
     background-size: 56px 56px, 56px 56px;
     color: var(--color-foreground);
     font-family: var(--font-sans);
@@ -179,16 +179,16 @@
   letter-spacing: 0.06em;
   padding: 0.8rem 1.6rem;
   font-size: 0.8125rem;
-  box-shadow: 0 0 0 1px oklch(0.72 0.19 5 / 0.5), 0 10px 30px oklch(0.72 0.19 5 / 0.25);
+  box-shadow: 0 0 0 1px oklch(0.65 0.21 5 / 0.4), 0 10px 26px oklch(0.65 0.21 5 / 0.22);
   transition:
     transform 150ms ease,
     box-shadow 150ms ease,
     filter 150ms ease;
 
   &:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.05);
     transform: translateY(-1px);
-    box-shadow: 0 0 0 1px oklch(0.72 0.19 5 / 0.7), 0 14px 40px oklch(0.72 0.19 5 / 0.35);
+    box-shadow: 0 0 0 1px oklch(0.65 0.21 5 / 0.55), 0 14px 34px oklch(0.65 0.21 5 / 0.3);
   }
 
   &:active {
@@ -207,7 +207,7 @@
 }
 
 @utility footer-link {
-  color: oklch(0.97 0.01 250 / 0.7);
+  color: oklch(0.5 0.015 290 / 0.9);
   transition: color 150ms ease;
 
   &:hover {

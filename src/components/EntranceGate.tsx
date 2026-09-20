@@ -51,7 +51,7 @@ export function EntranceGate() {
 
   return (
     <div
-      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden px-6 bg-[#111014] ${
+      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden px-6 bg-white ${
         opening ? "gate-leaving" : ""
       }`}
     >
@@ -69,7 +69,7 @@ export function EntranceGate() {
       >
         {/* The jpeg frame */}
         <span className="relative mb-8 block sm:mb-12">
-          <span className="absolute -inset-6 rounded-3xl bg-white/5 blur-2xl transition-colors duration-1000 group-hover:bg-poke-yellow/15" />
+          <span className="absolute -inset-6 rounded-3xl bg-poke-yellow/10 blur-2xl transition-colors duration-1000 group-hover:bg-poke-yellow/15" />
           <span
             className={`relative block h-36 w-36 overflow-hidden rounded-2xl border-[6px] border-poke-yellow bg-white shadow-[0_0_60px_rgba(0,0,0,0.55)] sm:h-48 sm:w-48 ${
               opening ? "scale-110 opacity-0 transition-all duration-700" : "animate-bounce [animation-duration:3s]"
@@ -80,7 +80,7 @@ export function EntranceGate() {
               alt=""
               className="h-full w-full object-contain p-2"
             />
-            <span className="mono-num absolute bottom-0 left-0 right-0 bg-poke-navy/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-poke-yellow">
+            <span className="mono-num absolute bottom-0 left-0 right-0 bg-foreground/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-poke-yellow">
               1 of 1
             </span>
           </span>
@@ -102,7 +102,7 @@ export function EntranceGate() {
         {/* CTA */}
         <span className="relative block">
           <span className="absolute -inset-1 animate-pulse rounded-full bg-poke-yellow/30 blur-md transition duration-300 group-hover:bg-poke-yellow/50" />
-          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-[#111014] shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
+          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-white shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
             Tap to Enter
           </span>
         </span>

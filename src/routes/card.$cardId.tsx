@@ -156,7 +156,7 @@ function CardPage() {
               1 of 1
             </span>
             {burned && (
-              <span className="rounded-full bg-poke-navy px-2.5 py-1 text-[11px] font-bold uppercase text-white">
+              <span className="rounded-full bg-secondary px-2.5 py-1 text-[11px] font-bold uppercase text-foreground">
                 Burned — name released
               </span>
             )}
@@ -182,8 +182,8 @@ function CardPage() {
             />
           </div>
 
-          <div className="mt-6 rounded-2xl bg-poke-navy p-4">
-            <p className="text-[10px] uppercase tracking-widest text-white/50">Pump.fun contract address</p>
+          <div className="mt-6 rounded-2xl border border-border bg-secondary p-4">
+            <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Pump.fun contract address</p>
             <p className="mono-num mt-1 break-all text-xs text-poke-yellow">
               {card.contract_address}
             </p>
