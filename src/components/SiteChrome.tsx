@@ -283,8 +283,8 @@ export function SiteFooter() {
             <span className="font-display text-xl font-bold text-poke-yellow">Poke</span>
           </div>
           <p className="text-xs leading-relaxed">
-            One name · one card · forever. Every coin launched on Poke becomes a one-of-one trading
-            card with a real Pump.fun launch — burn an NFT and its name frees up again.
+            One jpeg · one coin · forever. Every NFT minted on Poke launches a real Pump.fun coin
+            attached to it — burn an NFT and its name frees up again.
           </p>
           <button
             type="button"
