@@ -82,14 +82,10 @@ export const buyCardWithSol = createServerFn({ method: "POST" })
     return { signature, price };
   });
 
-/** Burn an NFT you own. Pays a small 0.01 SOL burn reward back to your wallet. */
-export const BURN_REFUND_SOL = 0.01;
-
 export const burnCard = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ cardId: z.string().uuid() }).parse(input))
   .handler(async ({ data, context }) => {
-    const { getOrCreateWallet, getOrCreateSystemWallet, sendSol } = await import("./wallet.server");
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
     const { data: card, error } = await supabaseAdmin
@@ -108,19 +104,5 @@ export const burnCard = createServerFn({ method: "POST" })
       .eq("id", data.cardId);
     if (upErr) throw upErr;
 
-    // Burn reward — best effort, never blocks the burn itself.
-    let refundSignature: string | null = null;
-    try {
-      const treasury = await getOrCreateSystemWallet("creator_buyback");
-      const wallet = await getOrCreateWallet(context.userId);
-      refundSignature = await sendSol(
-        treasury as unknown as { public_key: string; secret_ciphertext: string; user_id: string },
-        wallet.public_key,
-        BURN_REFUND_SOL,
-      );
-    } catch {
-      refundSignature = null;
-    }
-
-    return { refunded: refundSignature !== null, refundSignature, amount: BURN_REFUND_SOL };
+    return { burned: true };
   });

@@ -2,7 +2,6 @@ import pigAsset from "@/assets/pig.webp.asset.json";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { BuybackTicker } from "@/components/BuybackTicker";
 import { useAuth } from "@/lib/auth";
 import type { CardWithPeople } from "@/lib/cards";
 import { listCards } from "@/lib/queries";
@@ -60,7 +59,7 @@ function Home() {
         {/* composer */}
         <div className="border-b border-border px-4 py-3">
           <div className="flex gap-3">
-            <div className="grid size-10 shrink-0 place-items-center rounded-full bg-poke-yellow/15">
+            <div className="grid size-10 shrink-0 place-items-center rounded-full bg-brand/15">
               <img src={pigAsset.url} alt="" className="size-7" />
             </div>
             <div className="min-w-0 flex-1">
@@ -73,7 +72,7 @@ function Home() {
                 </p>
                 <Link
                   to="/mint"
-                  className="poke-btn shrink-0 !px-5 !py-1.5 text-sm"
+                  className="primary-btn shrink-0 !px-5 !py-1.5 text-sm"
                 >
                   Mint
                 </Link>
@@ -89,7 +88,7 @@ function Home() {
             <p className="mt-2 text-sm text-muted-foreground">
               Every name is still up for grabs. The first jpeg writes history.
             </p>
-            <Link to="/mint" className="poke-btn mt-6 inline-flex">
+            <Link to="/mint" className="primary-btn mt-6 inline-flex">
               Mint the first NFT
             </Link>
           </div>
@@ -103,7 +102,7 @@ function Home() {
 
         {feed.length > 0 && (
           <div className="border-t border-border px-4 py-4 text-center">
-            <Link to="/cards" className="text-sm font-semibold text-poke-yellow hover:underline">
+            <Link to="/cards" className="text-sm font-semibold text-brand hover:underline">
               Show every NFT →
             </Link>
           </div>
@@ -113,8 +112,6 @@ function Home() {
       {/* ─── Right rail ─── */}
       <aside className="hidden lg:block">
         <div className="sticky top-4 space-y-4 py-4">
-          <BuybackTicker />
-
           <div className="rounded-2xl border border-border bg-card p-4">
             <h2 className="text-base font-extrabold">How JPEG works</h2>
             <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
@@ -125,22 +122,9 @@ function Home() {
             </ul>
             <Link
               to="/docs"
-              className="mt-4 inline-block text-sm font-semibold text-poke-yellow hover:underline"
+              className="mt-4 inline-block text-sm font-semibold text-brand hover:underline"
             >
               Read the how-to →
-            </Link>
-          </div>
-
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <h2 className="text-base font-extrabold">100% of fees buy back $POKE</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Every 10 minutes, on-chain, with a Solscan link for every run. 0% team.
-            </p>
-            <Link
-              to="/buyback"
-              className="mt-3 inline-block text-sm font-semibold text-poke-yellow hover:underline"
-            >
-              Verify the log →
             </Link>
           </div>
 
@@ -150,7 +134,7 @@ function Home() {
               <p className="mt-1 text-sm text-muted-foreground">
                 One account = one wallet. No seed phrases, no extensions.
               </p>
-              <Link to="/auth" className="poke-btn mt-4 inline-flex w-full justify-center">
+              <Link to="/auth" className="primary-btn mt-4 inline-flex w-full justify-center">
                 Create account
               </Link>
             </div>
@@ -195,7 +179,7 @@ function FeedPost({ card }: { card: CardWithPeople }) {
               · {timeAgo(card.created_at)}
             </span>
             {burned && (
-              <span className="ml-auto shrink-0 rounded-full bg-poke-red/10 px-2 py-0.5 text-[11px] font-bold text-poke-red">
+              <span className="ml-auto shrink-0 rounded-full bg-danger/10 px-2 py-0.5 text-[11px] font-bold text-danger">
                 Burned
               </span>
             )}
@@ -212,7 +196,7 @@ function FeedPost({ card }: { card: CardWithPeople }) {
               1/1
             </span>
             {listed && !burned ? (
-              <span className="rounded-full bg-poke-yellow px-3.5 py-1 text-xs font-bold text-poke-yellow-foreground">
+              <span className="rounded-full bg-brand px-3.5 py-1 text-xs font-bold text-brand-foreground">
                 Buy · {card.list_price} SOL
               </span>
             ) : (

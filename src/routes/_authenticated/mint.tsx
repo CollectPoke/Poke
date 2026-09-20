@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ArtworkDrop } from "@/components/ArtworkDrop";
 import { FundingModal } from "@/components/FundingModal";
 import { MintReveal } from "@/components/MintReveal";
-import { PokeCard } from "@/components/PokeCard";
+import { NftCard } from "@/components/NftCard";
 import { useAuth } from "@/lib/auth";
 import type { CardWithPeople } from "@/lib/cards";
 import { launchCoinAndMintCard } from "@/lib/launch.functions";
@@ -91,7 +91,7 @@ function MintPage() {
     ticker: ticker.trim().toUpperCase() || "TICKER",
     description: description || null,
     image_url: imageUrl || null,
-    contract_address: "PokeXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    contract_address: "JPEGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     creator_id: "",
     owner_id: "",
     status: "minted",
@@ -149,9 +149,9 @@ function MintPage() {
         <button
           type="button"
           onClick={() => setShowFunding(true)}
-          className="mt-5 flex w-full items-start gap-3 rounded-2xl border-2 border-poke-red bg-poke-red/10 p-4 text-left shadow-sm transition-colors hover:border-poke-red/70"
+          className="mt-5 flex w-full items-start gap-3 rounded-2xl border-2 border-danger bg-danger/10 p-4 text-left shadow-sm transition-colors hover:border-danger/70"
         >
-          <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-red font-bold text-white">!</span>
+          <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-danger font-bold text-white">!</span>
           <div>
             <p className="text-sm font-bold">
               Your wallet needs SOL — balance {wallet.balance.toFixed(4)} SOL
@@ -163,8 +163,8 @@ function MintPage() {
         </button>
       )}
 
-      <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-poke-yellow bg-card p-4 shadow-sm">
-        <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
+      <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-brand bg-card p-4 shadow-sm">
+        <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-brand-foreground">◎</span>
         <div>
           <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
           <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your JPEG wallet signs the Pump.fun launch. The NFT appears only after Solana confirms it. Mainnet spending is irreversible.</p>
@@ -186,9 +186,9 @@ function MintPage() {
                 {checking ? (
                   <span className="text-muted-foreground">Checking availability…</span>
                 ) : available === true ? (
-                  <span className="text-poke-green">"{name.trim()}" is available.</span>
+                  <span className="text-success">"{name.trim()}" is available.</span>
                 ) : available === false ? (
-                  <span className="text-poke-red">"{name.trim()}" is already taken.</span>
+                  <span className="text-danger">"{name.trim()}" is already taken.</span>
                 ) : null}
               </p>
             )}
@@ -234,7 +234,7 @@ function MintPage() {
                 onClick={() => setListPrice(listPrice === "" ? "1" : "")}
                 className={[
                   "relative h-7 w-12 shrink-0 rounded-full transition-colors",
-                  listPrice !== "" ? "bg-poke-green" : "bg-border",
+                  listPrice !== "" ? "bg-success" : "bg-border",
                 ].join(" ")}
               >
                 <span
@@ -276,9 +276,9 @@ function MintPage() {
             </p>
           </div>
 
-          {error && <p className="text-sm font-medium text-poke-red">{error}</p>}
+          {error && <p className="text-sm font-medium text-danger">{error}</p>}
 
-          <button type="submit" disabled={!canMint} className="poke-btn disabled:opacity-40">
+          <button type="submit" disabled={!canMint} className="primary-btn disabled:opacity-40">
             {busy ? "Launching on Pump.fun…" : `Launch coin + mint NFT · ${totalCost.toFixed(3)} SOL`}
           </button>
           {busy ? <p className="text-xs text-muted-foreground">Preparing, checking, signing and confirming your Solana launch. Keep this page open.</p> : null}
@@ -286,7 +286,7 @@ function MintPage() {
 
         <div className="lg:sticky lg:top-28 lg:self-start">
           <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">Preview</p>
-          <PokeCard card={preview} />
+          <NftCard card={preview} />
         </div>
       </div>
     </main>
@@ -305,7 +305,7 @@ function MintPage() {
 }
 
 const inputClass =
-  "w-full rounded-xl border-2 border-border bg-card px-3.5 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-poke-blue";
+  "w-full rounded-xl border-2 border-border bg-card px-3.5 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-link";
 
 function Field({
   label,

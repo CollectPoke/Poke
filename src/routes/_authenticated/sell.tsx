@@ -94,7 +94,7 @@ function SellPage() {
           <p className="mt-1 text-sm text-muted-foreground">
             Mint or buy an NFT first, then list it here.
           </p>
-          <Link to="/mint" className="poke-btn mt-5 inline-flex">
+          <Link to="/mint" className="primary-btn mt-5 inline-flex">
             Mint an NFT
           </Link>
           <Link to="/buy" className="ml-3 inline-flex rounded-xl border-2 border-border bg-card px-5 py-2.5 text-sm font-bold text-muted-foreground transition-colors hover:bg-secondary">
@@ -156,7 +156,7 @@ function SellRow({
         <Link
           to="/card/$cardId"
           params={{ cardId: card.id }}
-          className="font-display text-lg font-bold hover:text-poke-blue"
+          className="font-display text-lg font-bold hover:text-link"
         >
           {card.name}
         </Link>
@@ -165,13 +165,13 @@ function SellRow({
         </p>
         <p className="mt-1 text-sm">
           {listed ? (
-            <span className="font-bold text-poke-blue">{card.list_price} SOL · listed</span>
+            <span className="font-bold text-link">{card.list_price} SOL · listed</span>
           ) : (
             <span className="text-muted-foreground">Not listed</span>
           )}
         </p>
         {notice ? (
-          <p className={`mt-1 text-xs font-semibold ${notice.bad ? "text-poke-red" : "text-poke-blue"}`}>
+          <p className={`mt-1 text-xs font-semibold ${notice.bad ? "text-danger" : "text-link"}`}>
             {notice.text}
           </p>
         ) : null}
@@ -198,7 +198,7 @@ function SellRow({
               />
               <span className="text-sm font-bold text-muted-foreground">SOL</span>
             </div>
-            <button onClick={onList} disabled={busy} className="poke-btn !py-2.5 disabled:opacity-50">
+            <button onClick={onList} disabled={busy} className="primary-btn !py-2.5 disabled:opacity-50">
               List for sale
             </button>
           </>

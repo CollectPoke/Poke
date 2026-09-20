@@ -40,8 +40,6 @@ export function decryptSecret(stored: string): string {
 
 export type WalletRow = { user_id: string; public_key: string; secret_ciphertext: string };
 
-export type SystemWalletRow = { purpose: string; public_key: string; secret_ciphertext: string };
-
 export async function getOrCreateWallet(userId: string): Promise<WalletRow> {
   const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
   const existing = await supabaseAdmin
@@ -67,36 +65,6 @@ export async function getOrCreateWallet(userId: string): Promise<WalletRow> {
       .maybeSingle();
     if (again.data) return again.data as WalletRow;
     throw ins.error;
-  }
-  return row;
-}
-
-/** A server-only wallet used to receive Pump.fun creator earnings for buybacks. */
-export async function getOrCreateSystemWallet(purpose: string): Promise<SystemWalletRow> {
-  const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-  const existing = await supabaseAdmin
-    .from("system_wallets")
-    .select("purpose, public_key, secret_ciphertext")
-    .eq("purpose", purpose)
-    .maybeSingle();
-  if (existing.error) throw existing.error;
-  if (existing.data) return existing.data as SystemWalletRow;
-
-  const kp = nacl.sign.keyPair();
-  const row = {
-    purpose,
-    public_key: bs58.encode(kp.publicKey),
-    secret_ciphertext: encryptSecret(bs58.encode(kp.secretKey)),
-  };
-  const inserted = await supabaseAdmin.from("system_wallets").insert(row);
-  if (inserted.error) {
-    const again = await supabaseAdmin
-      .from("system_wallets")
-      .select("purpose, public_key, secret_ciphertext")
-      .eq("purpose", purpose)
-      .maybeSingle();
-    if (again.data) return again.data as SystemWalletRow;
-    throw inserted.error;
   }
   return row;
 }

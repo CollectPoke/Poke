@@ -1,17 +1,3 @@
-export const CARD_TYPES = [
-  "Fire",
-  "Water",
-  "Grass",
-  "Electric",
-  "Psychic",
-  "Poison",
-  "Normal",
-] as const;
-export type CardType = (typeof CARD_TYPES)[number];
-
-export const RARITIES = ["Common", "Uncommon", "Rare", "Holo Rare", "Legendary"] as const;
-export type Rarity = (typeof RARITIES)[number];
-
 export type CardRow = {
   id: string;
   name: string;
@@ -41,57 +27,7 @@ export function shortAddress(address: string, size = 5): string {
   return `${address.slice(0, size)}…${address.slice(-size)}`;
 }
 
-/** Background / text classes for an element type. */
-export function typeStyle(type: string): { chip: string; art: string } {
-  switch (type) {
-    case "Fire":
-      return { chip: "bg-type-fire/15 text-type-fire", art: "from-type-fire/25 to-poke-yellow/30" };
-    case "Water":
-      return {
-        chip: "bg-type-water/15 text-type-water",
-        art: "from-type-water/25 to-poke-blue/25",
-      };
-    case "Grass":
-      return {
-        chip: "bg-type-grass/15 text-type-grass",
-        art: "from-type-grass/25 to-poke-green/25",
-      };
-    case "Electric":
-      return {
-        chip: "bg-type-electric/20 text-type-electric",
-        art: "from-poke-yellow/40 to-type-electric/20",
-      };
-    case "Psychic":
-      return {
-        chip: "bg-type-psychic/15 text-type-psychic",
-        art: "from-type-psychic/25 to-poke-purple/25",
-      };
-    case "Poison":
-      return {
-        chip: "bg-type-poison/15 text-type-poison",
-        art: "from-type-poison/25 to-poke-purple/20",
-      };
-    default:
-      return { chip: "bg-muted text-muted-foreground", art: "from-muted to-secondary" };
-  }
-}
-
-export function rarityStyle(rarity: string): string {
-  switch (rarity) {
-    case "Legendary":
-      return "bg-poke-purple text-white";
-    case "Holo Rare":
-      return "bg-poke-blue text-white";
-    case "Rare":
-      return "bg-poke-red text-white";
-    case "Uncommon":
-      return "bg-poke-green text-white";
-    default:
-      return "bg-poke-navy/10 text-foreground";
-  }
-}
-
-export function formatPokeCoin(v: number | null | undefined): string {
+export function formatSolAmount(v: number | null | undefined): string {
   if (v === null || v === undefined) return "—";
   return `${v.toLocaleString("en-US", { maximumFractionDigits: 2 })} SOL`;
 }

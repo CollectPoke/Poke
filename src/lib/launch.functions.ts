@@ -27,7 +27,6 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
     const {
       confirmSignature,
       getBalanceSol,
-      getOrCreateSystemWallet,
       getOrCreateWallet,
       signSimulateAndSendTransaction,
       signatureOutcome,
@@ -117,14 +116,13 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
 
     try {
       if (!signature || !mintAddress) {
-        const creatorWallet = await getOrCreateSystemWallet("creator_buyback");
         const response = await fetch("https://fun-block.pump.fun/agents/create-coin", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             user: wallet.public_key,
             feePayer: wallet.public_key,
-            creator: creatorWallet.public_key,
+            creator: wallet.public_key,
             name,
             symbol: ticker,
             uri: `${origin}/api/public/coin-metadata/${launchId}`,

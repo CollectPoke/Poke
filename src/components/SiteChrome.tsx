@@ -4,26 +4,22 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
 
-const POKE_CA = "HNPFcpRpPsDdVfx9Las1af3YYpFBq3T8wcEhgRfdpoke";
-
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/cards", label: "All NFTs" },
   { to: "/mint", label: "Mint" },
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
-  { to: "/buyback", label: "Buybacks" },
   { to: "/docs", label: "How to" },
 ];
 
 const linkClass =
   "rounded-full px-3.5 py-1.5 text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground";
-const linkActive = { className: "bg-poke-yellow text-poke-yellow-foreground hover:text-poke-yellow-foreground" };
+const linkActive = { className: "bg-brand text-brand-foreground hover:text-brand-foreground" };
 
 export function SiteHeader() {
   const { user, username } = useAuth();
   const [open, setOpen] = useState(false);
-  const [caCopied, setCaCopied] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
@@ -47,58 +43,16 @@ export function SiteHeader() {
           <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">jpeg</span>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
             <span className="hidden lg:inline">Burn an NFT and its name frees up again.</span>
-            <button
-              type="button"
-              onClick={() => {
-                navigator.clipboard?.writeText(POKE_CA).catch(() => {});
-                setCaCopied(true);
-                window.setTimeout(() => setCaCopied(false), 1600);
-              }}
-              aria-label="Copy the $POKE contract address"
-              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-foreground transition-colors hover:text-poke-yellow"
-              title="Click to copy the $POKE contract address"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-                <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.2" />
-                <circle cx="12" cy="12" r="3.2" />
-              </svg>
-              <span className="mono-num hidden sm:inline">{caCopied ? "CA copied!" : "CA HNPF…dpoke"}</span>
-              <span className="mono-num sm:hidden">CA</span>
-            </button>
             <Link
               to="/docs"
               aria-label="JPEG docs and how-to"
-              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-foreground transition-colors hover:text-poke-yellow"
+              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-foreground transition-colors hover:text-brand"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <path d="M6.5 2A2.5 2.5 0 0 0 4 4.5v13A2.5 2.5 0 0 0 6.5 20H20a1 1 0 0 0 0-2H6.5a.5.5 0 0 1 0-1H20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.5Zm2 3h8a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.78.41L15 11l-1.22.91A.5.5 0 0 1 13 11.5v-6a.5.5 0 0 1 .5-.5Z" />
               </svg>
               <span className="hidden sm:inline">Docs</span>
             </Link>
-            <a
-              href="https://github.com/CollectPoke/poke"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="JPEG on GitHub"
-              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-foreground transition-colors hover:text-poke-yellow"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12Z" />
-              </svg>
-              <span className="hidden md:inline">GitHub</span>
-            </a>
-            <a
-              href="https://x.com/CollectPokeFun"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="JPEG on X"
-              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-foreground transition-colors hover:text-poke-yellow"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
-              </svg>
-              <span className="hidden sm:inline">@CollectPokeFun</span>
-            </a>
           </div>
         </div>
       </div>
@@ -106,7 +60,7 @@ export function SiteHeader() {
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex min-w-0 items-center gap-2.5">
             <img src={pigAsset.url} alt="" className="h-8 w-8 shrink-0 drop-shadow sm:h-9 sm:w-9" />
-            <span className="font-display text-xl font-bold leading-none text-poke-yellow tracking-tight sm:text-2xl">
+            <span className="font-display text-xl font-bold leading-none text-brand tracking-tight sm:text-2xl">
               JPEG
             </span>
           </Link>
@@ -130,17 +84,17 @@ export function SiteHeader() {
                 </Link>
                 <Link
                   to="/account"
-                  activeProps={{ className: "border-poke-yellow/60" }}
-                  className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden rounded-full border border-border bg-secondary py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-poke-yellow/60"
+                  activeProps={{ className: "border-brand/60" }}
+                  className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden rounded-full border border-border bg-secondary py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-brand/60"
                 >
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-poke-purple shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)] transition-shadow group-hover:shadow-[0_0_16px_oklch(0.85_0.16_95/0.55)]">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-violet shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)] transition-shadow group-hover:shadow-[0_0_16px_oklch(0.85_0.16_95/0.55)]">
                     <img src={pigAsset.url} alt="" className="h-5 w-5 drop-shadow" />
                   </span>
                   <span className="flex min-w-0 flex-col leading-none">
-                    <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-brand/80">
                       Collector
                     </span>
-                    <span className="truncate text-sm font-bold text-foreground transition-colors group-hover:text-poke-yellow">
+                    <span className="truncate text-sm font-bold text-foreground transition-colors group-hover:text-brand">
                       {username ?? "Collector"}
                     </span>
                   </span>
@@ -155,13 +109,13 @@ export function SiteHeader() {
                 Sign in
               </Link>
             )}
-            <Link to="/mint" className="poke-btn ml-2 !py-2 !px-4 text-sm">
+            <Link to="/mint" className="primary-btn ml-2 !py-2 !px-4 text-sm">
               Mint an NFT
             </Link>
           </nav>
 
           <div className="flex shrink-0 items-center gap-2 lg:hidden">
-            <Link to="/mint" className="poke-btn !py-2.5 !px-4 text-xs">
+            <Link to="/mint" className="primary-btn !py-2.5 !px-4 text-xs">
               Mint
             </Link>
             <button
@@ -198,7 +152,7 @@ export function SiteHeader() {
                   to={item.to}
                   activeOptions={{ exact: item.exact ?? false }}
                   className="rounded-xl px-4 py-3 text-foreground/80 transition-colors hover:bg-foreground/5 hover:text-foreground"
-                  activeProps={{ className: "bg-poke-yellow text-poke-yellow-foreground hover:text-poke-yellow-foreground" }}
+                  activeProps={{ className: "bg-brand text-brand-foreground hover:text-brand-foreground" }}
                 >
                   {item.label}
                 </Link>
@@ -208,20 +162,20 @@ export function SiteHeader() {
                   <Link
                     to="/gallery"
                     className="rounded-xl px-4 py-3 text-foreground/80 transition-colors hover:bg-foreground/5 hover:text-foreground"
-                    activeProps={{ className: "bg-poke-yellow text-poke-yellow-foreground hover:text-poke-yellow-foreground" }}
+                    activeProps={{ className: "bg-brand text-brand-foreground hover:text-brand-foreground" }}
                   >
                     My NFTs
                   </Link>
                   <Link
                     to="/account"
-                    className="group mx-1 flex items-center gap-3 rounded-2xl border border-border bg-secondary px-3 py-2.5 transition-colors hover:border-poke-yellow/50"
-                    activeProps={{ className: "border-poke-yellow/60" }}
+                    className="group mx-1 flex items-center gap-3 rounded-2xl border border-border bg-secondary px-3 py-2.5 transition-colors hover:border-brand/50"
+                    activeProps={{ className: "border-brand/60" }}
                   >
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-poke-purple shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)]">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-violet shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)]">
                       <img src={pigAsset.url} alt="" className="h-6 w-6 drop-shadow" />
                     </span>
                     <span className="flex min-w-0 flex-col leading-none">
-                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
+                      <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-brand/80">
                         Collector
                       </span>
                       <span className="truncate text-base font-bold text-foreground">
@@ -252,7 +206,6 @@ const footerExplore: { to: string; label: string; exact?: boolean }[] = [
   { to: "/cards", label: "All NFTs" },
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
-  { to: "/buyback", label: "Buybacks" },
 ];
 
 const footerAccount: { to: string; label: string }[] = [
@@ -268,66 +221,22 @@ const footerHowTo: { to: string; label: string }[] = [
   { to: "/docs#fund", label: "Funding your wallet" },
   { to: "/docs#mint", label: "Minting an NFT" },
   { to: "/docs#trade", label: "Buying, selling & burning" },
-  { to: "/docs#buyback", label: "Fees & the $POKE buyback" },
   { to: "/docs#faq", label: "FAQ" },
 ];
 
 export function SiteFooter() {
-  const [caCopied, setCaCopied] = useState(false);
-
   return (
     <footer className="mt-16 border-t border-border bg-white text-muted-foreground">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
           <div className="flex items-center gap-2.5">
             <img src={pigAsset.url} alt="" className="h-8 w-8" />
-            <span className="font-display text-xl font-bold text-poke-yellow">Poke</span>
+            <span className="font-display text-xl font-bold text-brand">JPEG</span>
           </div>
           <p className="text-xs leading-relaxed">
             One jpeg · one coin · forever. Every NFT minted on JPEG launches a real Pump.fun coin
             attached to it — burn an NFT and its name frees up again.
           </p>
-          <button
-            type="button"
-            onClick={() => {
-              navigator.clipboard?.writeText(POKE_CA).catch(() => {});
-              setCaCopied(true);
-              window.setTimeout(() => setCaCopied(false), 1600);
-            }}
-            aria-label="Copy the $POKE contract address"
-            className="mono-num inline-flex max-w-full items-center gap-1.5 rounded-full border border-border bg-secondary px-3 py-1.5 text-[11px] text-foreground/85 transition-colors hover:border-poke-yellow/60 hover:text-poke-yellow"
-            title="Click to copy the $POKE contract address"
-          >
-            <svg viewBox="0 0 24 24" fill="currentColor" className="h-3 w-3 shrink-0" aria-hidden="true">
-              <circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" strokeWidth="2.2" />
-              <circle cx="12" cy="12" r="3.2" />
-            </svg>
-            <span className="truncate">{caCopied ? "CA copied!" : POKE_CA}</span>
-          </button>
-          <div className="flex items-center gap-4 pt-1">
-            <a
-              href="https://x.com/CollectPokeFun"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="JPEG on X"
-              className="text-foreground/70 transition-colors hover:text-poke-yellow"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4.5 w-4.5" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
-              </svg>
-            </a>
-            <a
-              href="https://github.com/CollectPoke/poke"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="JPEG on GitHub"
-              className="text-foreground/70 transition-colors hover:text-poke-yellow"
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4.5 w-4.5" aria-hidden="true">
-                <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12Z" />
-              </svg>
-            </a>
-          </div>
         </div>
 
         <FooterColumn title="Explore">
@@ -385,7 +294,7 @@ export function SiteFooter() {
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="mb-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-poke-yellow">
+      <h3 className="mb-3 font-display text-xs font-bold uppercase tracking-[0.2em] text-brand">
         {title}
       </h3>
       <ul className="space-y-2 text-[13px]">{children}</ul>

@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { PokeCard } from "@/components/PokeCard";
+import { NftCard } from "@/components/NftCard";
 import { useAuth } from "@/lib/auth";
 import { myMintedCards } from "@/lib/queries";
-import { formatPokeCoin } from "@/lib/cards";
+import { formatSolAmount } from "@/lib/cards";
 
 export const Route = createFileRoute("/_authenticated/gallery")({
   head: () => ({
@@ -90,14 +90,14 @@ function GalleryPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Search your NFTs…"
-            className="w-full rounded-xl border-2 border-border bg-card px-4 py-2.5 text-sm font-medium outline-none focus:border-poke-blue sm:max-w-xs"
+            className="w-full rounded-xl border-2 border-border bg-card px-4 py-2.5 text-sm font-medium outline-none focus:border-link sm:max-w-xs"
           />
           <div className="flex flex-1 flex-wrap items-center gap-2">
             <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Sort</span>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as typeof sort)}
-              className="rounded-xl border-2 border-border bg-card px-3 py-2 text-sm font-bold text-foreground outline-none focus:border-poke-blue"
+              className="rounded-xl border-2 border-border bg-card px-3 py-2 text-sm font-bold text-foreground outline-none focus:border-link"
             >
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>
@@ -112,14 +112,14 @@ function GalleryPage() {
               onChange={(e) => setMinPrice(e.target.value)}
               inputMode="decimal"
               placeholder="Min"
-              className="mono-num w-24 rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-poke-blue"
+              className="mono-num w-24 rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-link"
             />
             <input
               value={maxPrice}
               onChange={(e) => setMaxPrice(e.target.value)}
               inputMode="decimal"
               placeholder="Max"
-              className="mono-num w-24 rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-poke-blue"
+              className="mono-num w-24 rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-link"
             />
             <button
               onClick={resetFilters}
@@ -139,12 +139,12 @@ function GalleryPage() {
       {isLoading ? (
         <p className="mt-8 text-sm text-muted-foreground">Loading your gallery…</p>
       ) : shown.length === 0 ? (
-        <div className="mt-8 rounded-3xl border-2 border-dashed border-poke-navy/20 bg-card p-12 text-center">
+        <div className="mt-8 rounded-3xl border-2 border-dashed border-ink/20 bg-card p-12 text-center">
           <p className="font-display text-xl font-bold text-foreground">Nothing here yet</p>
           <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
             Mint an NFT and it shows up here with its artwork and pairing.
           </p>
-          <Link to="/mint" className="poke-btn mt-5 inline-block">
+          <Link to="/mint" className="primary-btn mt-5 inline-block">
             Mint an NFT
           </Link>
         </div>
@@ -161,13 +161,13 @@ function GalleryPage() {
                   params={{ cardId: card.id }}
                   className="w-full shrink-0 transition-transform duration-300 hover:-translate-y-1 sm:w-48"
                 >
-                  <PokeCard card={card} compact />
+                  <NftCard card={card} compact />
                 </Link>
 
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
                     {card.status !== "minted" && (
-                      <span className="rounded-full bg-poke-red/15 px-2.5 py-1 text-[11px] font-bold text-poke-red">
+                      <span className="rounded-full bg-danger/15 px-2.5 py-1 text-[11px] font-bold text-danger">
                         Burned
                       </span>
                     )}
@@ -181,13 +181,13 @@ function GalleryPage() {
                     <div>
                       <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Listed at</dt>
                       <dd className="text-foreground">
-                        {card.list_price !== null ? `${formatPokeCoin(card.list_price)} SOL` : "Not for sale"}
+                        {card.list_price !== null ? `${formatSolAmount(card.list_price)} SOL` : "Not for sale"}
                       </dd>
                     </div>
                     <div>
                       <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Last sale</dt>
                       <dd className="text-foreground">
-                        {card.last_price !== null ? `${formatPokeCoin(card.last_price)} SOL` : "—"}
+                        {card.last_price !== null ? `${formatSolAmount(card.last_price)} SOL` : "—"}
                       </dd>
                     </div>
                   </dl>

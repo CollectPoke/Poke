@@ -53,15 +53,15 @@ export function FundingModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-poke-navy-deep/80 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink-deep/80 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label="Top up your JPEG wallet"
     >
-      <div className="w-full max-w-md rounded-2xl border-2 border-poke-yellow bg-card p-6 shadow-2xl sm:p-7">
+      <div className="w-full max-w-md rounded-2xl border-2 border-brand bg-card p-6 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-poke-blue">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-link">
               Top up
             </p>
             <h2 className="mt-1 font-display text-2xl font-bold">
@@ -79,7 +79,7 @@ export function FundingModal({
         </div>
 
         {funded ? (
-          <div className="mt-5 rounded-xl border-2 border-poke-green/40 bg-poke-green/10 p-4 text-center">
+          <div className="mt-5 rounded-xl border-2 border-success/40 bg-success/10 p-4 text-center">
             <p className="text-3xl">✅</p>
             <p className="mt-2 text-sm font-bold text-foreground">
               {balance?.toFixed(4)} SOL received
@@ -111,12 +111,12 @@ export function FundingModal({
               <button
                 type="button"
                 onClick={copyAddress}
-                className="w-full rounded-xl border-2 border-border bg-secondary/50 px-3 py-2.5 text-center transition-colors hover:border-poke-blue"
+                className="w-full rounded-xl border-2 border-border bg-secondary/50 px-3 py-2.5 text-center transition-colors hover:border-link"
               >
                 <span className="block break-all font-mono text-xs text-foreground">
                   {data?.address ?? "…"}
                 </span>
-                <span className="mt-1 block text-xs font-bold text-poke-blue">
+                <span className="mt-1 block text-xs font-bold text-link">
                   {copied ? "Address copied!" : "Tap to copy"}
                 </span>
               </button>
@@ -130,14 +130,14 @@ export function FundingModal({
                 </div>
                 <div className="mt-1 flex items-center justify-between">
                   <span className="text-muted-foreground">Still needed</span>
-                  <span className="mono-num font-bold text-poke-red">
+                  <span className="mono-num font-bold text-danger">
                     {missing === null ? "…" : `${missing.toFixed(4)} SOL`}
                   </span>
                 </div>
               </div>
 
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span className="pulse inline-block size-2 rounded-full bg-poke-yellow" />
+                <span className="pulse inline-block size-2 rounded-full bg-brand" />
                 Watching for your deposit — updates automatically
               </p>
             </div>
@@ -145,7 +145,7 @@ export function FundingModal({
         )}
 
         {funded && (
-          <button type="button" onClick={onClose} className="poke-btn mt-5 w-full">
+          <button type="button" onClick={onClose} className="primary-btn mt-5 w-full">
             Back to minting
           </button>
         )}

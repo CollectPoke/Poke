@@ -99,7 +99,7 @@ export function OfferPanel({
               >
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-bold">
-                    <span className="mono-num text-poke-blue">{o.price} SOL</span> from{" "}
+                    <span className="mono-num text-link">{o.price} SOL</span> from{" "}
                     {o.buyer?.username ?? "a collector"}
                   </p>
                   {o.message ? (
@@ -110,7 +110,7 @@ export function OfferPanel({
                   <button
                     onClick={() => act.mutate({ kind: "accept", offerId: o.id })}
                     disabled={act.isPending}
-                    className="poke-btn !py-2 disabled:opacity-50"
+                    className="primary-btn !py-2 disabled:opacity-50"
                   >
                     {act.isPending ? "…" : "Accept"}
                   </button>
@@ -129,7 +129,7 @@ export function OfferPanel({
       ) : mine ? (
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <p className="text-sm">
-            Your offer of <span className="mono-num font-bold text-poke-blue">{mine.price} SOL</span>{" "}
+            Your offer of <span className="mono-num font-bold text-link">{mine.price} SOL</span>{" "}
             is waiting on the owner.
           </p>
           <button
@@ -162,12 +162,12 @@ export function OfferPanel({
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Message (optional)"
-              className="min-w-0 flex-1 rounded-xl border-2 border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-poke-blue"
+              className="min-w-0 flex-1 rounded-xl border-2 border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-link"
             />
             <button
               onClick={() => act.mutate({ kind: "make" })}
               disabled={act.isPending}
-              className="poke-btn !py-2.5 disabled:opacity-50"
+              className="primary-btn !py-2.5 disabled:opacity-50"
             >
               {act.isPending ? "Sending…" : "Send offer"}
             </button>
@@ -177,7 +177,7 @@ export function OfferPanel({
 
       {note ? (
         <p
-          className={`mt-3 text-sm font-semibold ${note.bad ? "text-poke-red" : "text-poke-green"}`}
+          className={`mt-3 text-sm font-semibold ${note.bad ? "text-danger" : "text-success"}`}
         >
           {note.text}
         </p>

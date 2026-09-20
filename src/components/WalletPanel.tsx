@@ -70,12 +70,12 @@ export function WalletPanel() {
             Built into your account — no wallet app needed. Send SOL to the address below to top it up.
           </p>
         </div>
-        <div className="rounded-2xl border-2 border-poke-yellow/50 bg-poke-yellow/15 px-5 py-3 text-right">
+        <div className="rounded-2xl border-2 border-brand/50 bg-brand/15 px-5 py-3 text-right">
           <div className="flex items-center justify-end gap-2">
             <p className="flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
               <span
                 className={`inline-block size-1.5 rounded-full ${
-                  wallet.isFetching ? "animate-pulse bg-poke-green" : "bg-poke-green/60"
+                  wallet.isFetching ? "animate-pulse bg-success" : "bg-success/60"
                 }`}
               />
               Live balance
@@ -93,10 +93,10 @@ export function WalletPanel() {
             {wallet.isLoading ? "…" : `${(wallet.data?.balance ?? 0).toFixed(4)} SOL`}
           </p>
           {wallet.isError ? (
-            <p className="mt-0.5 text-[10px] font-bold text-poke-red">Couldn't reach the chain — hit Refresh.</p>
+            <p className="mt-0.5 text-[10px] font-bold text-danger">Couldn't reach the chain — hit Refresh.</p>
           ) : null}
           {pendingCount > 0 ? (
-            <p className="mt-0.5 text-[10px] font-bold text-poke-blue">
+            <p className="mt-0.5 text-[10px] font-bold text-link">
               {pendingCount} transfer{pendingCount > 1 ? "s" : ""} confirming…
             </p>
           ) : null}
@@ -136,10 +136,10 @@ export function WalletPanel() {
                 <span
                   className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${
                     a.status === "pending"
-                      ? "bg-poke-blue/15 text-poke-blue"
+                      ? "bg-link/15 text-link"
                       : a.status === "failed"
-                        ? "bg-poke-red/15 text-poke-red"
-                        : "bg-poke-green/15 text-poke-green"
+                        ? "bg-danger/15 text-danger"
+                        : "bg-success/15 text-success"
                   }`}
                 >
                   {a.status === "pending" ? "Confirming" : a.status === "failed" ? "Failed" : "Confirmed"}
@@ -154,7 +154,7 @@ export function WalletPanel() {
                   href={`https://solscan.io/tx/${a.signature}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-xs font-bold text-poke-blue underline"
+                  className="text-xs font-bold text-link underline"
                 >
                   Solscan
                 </a>
@@ -173,7 +173,7 @@ export function WalletPanel() {
             value={to}
             onChange={(e) => setTo(e.target.value)}
             placeholder="Destination Solana address"
-            className="mt-3 w-full rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-poke-blue"
+            className="mt-3 w-full rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-link"
           />
           <div className="mt-2 flex items-center gap-2">
             <input
@@ -181,14 +181,14 @@ export function WalletPanel() {
               onChange={(e) => setAmount(e.target.value)}
               inputMode="decimal"
               placeholder="0.00"
-              className="mono-num w-full rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-poke-blue"
+              className="mono-num w-full rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-link"
             />
             <span className="rounded-lg bg-foreground px-2.5 py-1.5 text-xs font-bold text-background">SOL</span>
           </div>
           <button
             onClick={() => send.mutate()}
             disabled={send.isPending || !to || !amount}
-            className="poke-btn mt-3 w-full justify-center disabled:opacity-50"
+            className="primary-btn mt-3 w-full justify-center disabled:opacity-50"
           >
             {send.isPending ? "Sending…" : "Send"}
           </button>
@@ -197,7 +197,7 @@ export function WalletPanel() {
               href={`https://solscan.io/tx/${sent}`}
               target="_blank"
               rel="noreferrer"
-              className="mt-2 block break-all text-xs font-bold text-poke-blue underline"
+              className="mt-2 block break-all text-xs font-bold text-link underline"
             >
               Sent — view on Solscan
             </a>
@@ -213,7 +213,7 @@ export function WalletPanel() {
           </p>
           {showKey ? (
             <div className="mt-3">
-              <code className="mono-num block break-all rounded-xl border-2 border-poke-red/40 bg-poke-red/10 p-3 text-xs font-semibold text-foreground">
+              <code className="mono-num block break-all rounded-xl border-2 border-danger/40 bg-danger/10 p-3 text-xs font-semibold text-foreground">
                 {showKey}
               </code>
               <div className="mt-2 flex gap-2">
@@ -230,7 +230,7 @@ export function WalletPanel() {
             <button
               onClick={() => reveal.mutate()}
               disabled={reveal.isPending}
-              className="mt-3 w-full rounded-xl border-2 border-poke-red/40 bg-poke-red/10 px-4 py-2.5 text-sm font-bold text-poke-red transition-colors hover:bg-poke-red/20 disabled:opacity-50"
+              className="mt-3 w-full rounded-xl border-2 border-danger/40 bg-danger/10 px-4 py-2.5 text-sm font-bold text-danger transition-colors hover:bg-danger/20 disabled:opacity-50"
             >
               {reveal.isPending ? "Loading…" : "Show my private key"}
             </button>
@@ -238,7 +238,7 @@ export function WalletPanel() {
         </div>
       </div>
 
-      {error ? <p className="mt-4 text-sm font-bold text-poke-red">{error}</p> : null}
+      {error ? <p className="mt-4 text-sm font-bold text-danger">{error}</p> : null}
     </section>
   );
 }

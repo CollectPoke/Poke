@@ -13,7 +13,6 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { EntranceGate } from "@/components/EntranceGate";
-import { MusicPlayer } from "@/components/MusicPlayer";
 import { AuthProvider } from "@/lib/auth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -94,8 +93,6 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", type: "image/png", href: "/favicon.png" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
     ],
   }),
   shellComponent: RootShell,
@@ -113,7 +110,7 @@ function RootShell({ children }: { children: ReactNode }) {
           // the page, so the homepage never flashes behind it.
           dangerouslySetInnerHTML={{
             __html:
-              'try{if(sessionStorage.getItem("poke-entered")!=="1")document.documentElement.classList.add("gate-active")}catch(e){document.documentElement.classList.add("gate-active")}',
+              'try{if(sessionStorage.getItem("jpeg-entered")!=="1")document.documentElement.classList.add("gate-active")}catch(e){document.documentElement.classList.add("gate-active")}',
           }}
         />
         <HeadContent />
@@ -134,7 +131,6 @@ function RootComponent() {
         <AuthProvider>
           <AuthSync />
           <EntranceGate />
-          <MusicPlayer />
           <SiteHeader />
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />

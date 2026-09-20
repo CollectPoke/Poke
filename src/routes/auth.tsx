@@ -40,7 +40,7 @@ function AuthPage() {
     return (
       <main className="mx-auto max-w-md px-5 py-20 text-center">
         <h1 className="font-display text-3xl font-bold">You're signed in</h1>
-        <Link to="/account" className="poke-btn mt-6 inline-flex">
+        <Link to="/account" className="primary-btn mt-6 inline-flex">
           Go to my collection
         </Link>
       </main>
@@ -123,7 +123,7 @@ function AuthPage() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Collector name"
-              className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-poke-blue"
+              className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-link"
             />
           )}
           <input
@@ -132,7 +132,7 @@ function AuthPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="you@email.com"
-            className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-poke-blue"
+            className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-link"
           />
           <input
             type="password"
@@ -141,11 +141,11 @@ function AuthPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Password"
-            className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-poke-blue"
+            className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-link"
           />
-          {error && <p className="text-xs font-medium text-poke-red">{error}</p>}
-          {message && <p className="text-xs font-medium text-poke-green">{message}</p>}
-          <button type="submit" disabled={busy} className="poke-btn w-full justify-center">
+          {error && <p className="text-xs font-medium text-danger">{error}</p>}
+          {message && <p className="text-xs font-medium text-success">{message}</p>}
+          <button type="submit" disabled={busy} className="primary-btn w-full justify-center">
             {busy ? "Please wait…" : mode === "signin" ? "Sign in" : "Create account"}
           </button>
         </form>

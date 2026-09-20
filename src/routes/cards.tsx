@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
-import { PokeCard } from "@/components/PokeCard";
+import { NftCard } from "@/components/NftCard";
 import { listCards } from "@/lib/queries";
 
 export const Route = createFileRoute("/cards")({
@@ -53,7 +53,7 @@ function CardsPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search name or ticker"
-          className="w-full rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-poke-blue sm:w-56"
+          className="w-full rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-link sm:w-56"
         />
         <button
           onClick={() => setForSaleOnly(!forSaleOnly)}
@@ -66,14 +66,14 @@ function CardsPage() {
       {isLoading ? (
         <p className="mt-10 text-sm text-muted-foreground">Loading NFTs…</p>
       ) : error ? (
-        <p className="mt-10 text-sm text-poke-red">Could not load cards. Try refreshing.</p>
+        <p className="mt-10 text-sm text-danger">Could not load cards. Try refreshing.</p>
       ) : cards.length === 0 ? (
         <div className="mt-10 rounded-2xl border border-dashed border-border p-12 text-center">
           <p className="font-display text-xl font-bold">No cards here yet</p>
           <p className="mt-1 text-sm text-muted-foreground">
             Be the first to claim a name before someone else does.
           </p>
-          <Link to="/mint" className="poke-btn mt-5 inline-flex">
+          <Link to="/mint" className="primary-btn mt-5 inline-flex">
             Mint an NFT
           </Link>
         </div>
@@ -81,7 +81,7 @@ function CardsPage() {
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
             <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
-              <PokeCard card={card} />
+              <NftCard card={card} />
             </Link>
           ))}
         </div>
@@ -93,6 +93,6 @@ function CardsPage() {
 function filterClass(active: boolean) {
   return [
     "rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors",
-    active ? "border-poke-yellow bg-poke-yellow text-poke-yellow-foreground" : "border-border bg-card hover:bg-secondary",
+    active ? "border-brand bg-brand text-brand-foreground" : "border-border bg-card hover:bg-secondary",
   ].join(" ");
 }

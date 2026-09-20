@@ -46,22 +46,16 @@
   --color-success: var(--success);
   --color-danger: var(--danger);
   --color-surface: var(--surface);
-  --color-type-fire: var(--type-fire);
-  --color-type-water: var(--type-water);
-  --color-type-grass: var(--type-grass);
-  --color-type-electric: var(--type-electric);
-  --color-type-psychic: var(--type-psychic);
-  --color-type-poison: var(--type-poison);
   --color-type-normal: var(--type-normal);
   /* Brand palette — ink gallery + pig pink */
-  --color-poke-yellow: oklch(0.65 0.21 5);
-  --color-poke-yellow-foreground: oklch(0.99 0.005 290);
-  --color-poke-blue: oklch(0.6 0.16 220);
-  --color-poke-navy: oklch(0.17 0.015 290);
-  --color-poke-navy-deep: oklch(0.12 0.015 290);
-  --color-poke-red: oklch(0.6 0.21 20);
-  --color-poke-purple: oklch(0.56 0.18 310);
-  --color-poke-green: oklch(0.6 0.15 155);
+  --color-brand: oklch(0.65 0.21 5);
+  --color-brand-foreground: oklch(0.99 0.005 290);
+  --color-link: oklch(0.6 0.16 220);
+  --color-ink: oklch(0.17 0.015 290);
+  --color-ink-deep: oklch(0.12 0.015 290);
+  --color-danger: oklch(0.6 0.21 20);
+  --color-violet: oklch(0.56 0.18 310);
+  --color-success: oklch(0.6 0.15 155);
   --font-display: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
@@ -88,12 +82,6 @@
   --accent-foreground: oklch(0.99 0.005 290);
   --success: oklch(0.6 0.15 150);
   --danger: oklch(0.55 0.2 27);
-  --type-fire: oklch(0.62 0.18 40);
-  --type-water: oklch(0.58 0.14 240);
-  --type-grass: oklch(0.58 0.13 145);
-  --type-electric: oklch(0.65 0.14 90);
-  --type-psychic: oklch(0.6 0.16 330);
-  --type-poison: oklch(0.55 0.15 300);
   --type-normal: oklch(0.55 0.03 265);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.984 0.003 247.858);
@@ -162,11 +150,11 @@
   letter-spacing: -0.02em;
 }
 
-@utility poke-btn {
+@utility primary-btn {
   display: inline-block;
   border-radius: 999px;
-  background-color: var(--color-poke-yellow);
-  color: var(--color-poke-yellow-foreground);
+  background-color: var(--color-brand);
+  color: var(--color-brand-foreground);
   font-family: var(--font-sans);
   font-weight: 700;
   padding: 0.65rem 1.4rem;
@@ -184,14 +172,14 @@
   }
 }
 
-@utility poke-btn-navy {
+@utility secondary-btn {
   background-color: transparent;
   color: var(--color-foreground);
   box-shadow: inset 0 0 0 1px var(--color-border);
 
   &:hover {
     background-color: oklch(0.65 0.21 5 / 0.08);
-    box-shadow: inset 0 0 0 1px var(--color-poke-yellow);
+    box-shadow: inset 0 0 0 1px var(--color-brand);
   }
 }
 
@@ -200,12 +188,12 @@
   transition: color 150ms ease;
 
   &:hover {
-    color: var(--color-poke-yellow);
+    color: var(--color-brand);
   }
 }
 
 @utility footer-link-active {
-  color: var(--color-poke-yellow);
+  color: var(--color-brand);
 }
 
 /* ---------- Entrance gate ---------- */
@@ -215,17 +203,6 @@
 @keyframes gate-ring-out {
   0% { transform: scale(0.2); opacity: 0.55; }
   100% { transform: scale(2.6); opacity: 0; }
-}
-@keyframes ball-float {
-  0%, 100% { transform: translateY(-8px); }
-  50% { transform: translateY(8px); }
-}
-@keyframes ball-shake {
-  0%, 100% { transform: rotate(0deg); }
-  20% { transform: rotate(-12deg); }
-  40% { transform: rotate(12deg); }
-  60% { transform: rotate(-8deg); }
-  80% { transform: rotate(8deg); }
 }
 @keyframes gate-burst {
   0% { box-shadow: 0 0 0 0 oklch(1 0 0 / 0.9); opacity: 1; }
@@ -256,8 +233,6 @@
   border: 2px solid oklch(0.86 0.17 95 / 0.35);
   animation: gate-ring-out 3.3s ease-out infinite;
 }
-.ball-float { animation: ball-float 3.2s ease-in-out infinite; }
-.ball-shake { animation: ball-shake 500ms ease-in-out 2; }
 .gate-burst { animation: gate-burst 900ms ease-out 450ms forwards; }
 .gate-pulse { animation: gate-pulse 1.8s ease-in-out infinite; }
 
@@ -267,52 +242,6 @@
   50% { transform: translateY(-14px) rotate(3deg); }
 }
 .sprite-bob { animation: sprite-bob 5s ease-in-out infinite; }
-
-/* ---------- Floating booster packs ---------- */
-@keyframes pack-float {
-  0%, 100% { transform: translateY(0) rotate(var(--pack-tilt, -6deg)); }
-  50% { transform: translateY(-18px) rotate(calc(var(--pack-tilt, -6deg) + 5deg)); }
-}
-.pack-float { animation: pack-float 6s ease-in-out infinite; }
-.pack-crimp {
-  background: repeating-linear-gradient(
-    -45deg,
-    oklch(0.97 0.01 250 / 0.9) 0 6px,
-    oklch(0.75 0.02 250 / 0.9) 6px 12px
-  );
-}
-.pack-body {
-  background:
-    radial-gradient(120% 90% at 50% 0%, oklch(0.55 0.2 300 / 0.55), transparent 60%),
-    radial-gradient(100% 80% at 80% 100%, oklch(0.6 0.22 200 / 0.5), transparent 55%),
-    linear-gradient(160deg, var(--color-poke-blue), var(--color-poke-navy) 75%);
-}
-.pack-holo {
-  background:
-    repeating-linear-gradient(
-      115deg,
-      oklch(0.85 0.15 90 / 0.14) 0 8px,
-      oklch(0.8 0.18 200 / 0.14) 8px 16px,
-      oklch(0.75 0.2 300 / 0.14) 16px 24px,
-      oklch(0.85 0.15 90 / 0.14) 24px 32px
-    );
-  mix-blend-mode: screen;
-}
-.pack-sheen {
-  background: linear-gradient(
-    115deg,
-    transparent 30%,
-    oklch(0.97 0.01 250 / 0.25) 45%,
-    transparent 60%
-  );
-  background-size: 250% 100%;
-  animation: pack-sheen-sweep 4.5s ease-in-out infinite;
-}
-@keyframes pack-sheen-sweep {
-  0% { background-position: 120% 0; }
-  55% { background-position: -40% 0; }
-  100% { background-position: -40% 0; }
-}
 
 @utility holo-sheen {
   position: relative;
@@ -339,82 +268,6 @@
   }
 }
 
-/* ---------- Purchased card booster reveal ---------- */
-@keyframes purchase-card-rise {
-  0%, 42% { opacity: 0; transform: translateY(13rem) scale(0.72) rotate(-3deg); }
-  58% { opacity: 1; transform: translateY(-1rem) scale(1.04) rotate(1deg); }
-  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
-}
-@keyframes purchase-pack-drop {
-  0%, 40% { transform: translateY(0); opacity: 1; }
-  65%, 100% { transform: translateY(22rem); opacity: 0; }
-}
-@keyframes purchase-flap-left {
-  0%, 28% { transform: translate(0, 0) rotate(-8deg); opacity: 1; }
-  55%, 100% { transform: translate(-11rem, -7rem) rotate(-55deg); opacity: 0; }
-}
-@keyframes purchase-flap-right {
-  0%, 28% { transform: translate(0, 0) rotate(8deg); opacity: 1; }
-  55%, 100% { transform: translate(11rem, -7rem) rotate(55deg); opacity: 0; }
-}
-@keyframes purchase-result-in {
-  0%, 65% { opacity: 0; transform: translateY(1rem); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-@keyframes purchase-spark-fly {
-  0%, 35% { opacity: 0; transform: translate(0, 8rem) scale(0.3); }
-  55% { opacity: 1; }
-  100% { opacity: 0; transform: translate(var(--spark-x), -15rem) scale(1.4); }
-}
-.purchase-reveal {
-  background: radial-gradient(circle at 50% 42%, oklch(0.55 0.13 250 / 0.42), transparent 42%), var(--color-poke-navy-deep);
-}
-.purchase-reveal-glow {
-  position: absolute;
-  width: min(130vw, 42rem);
-  aspect-ratio: 1;
-  border-radius: 999px;
-  background: oklch(0.7 0.13 240 / 0.22);
-  filter: blur(5rem);
-}
-.purchase-card-stage { animation: purchase-card-rise 2.7s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-.purchase-pack {
-  background: linear-gradient(to bottom, var(--color-poke-blue), var(--color-poke-navy), var(--color-poke-navy-deep));
-  animation: purchase-pack-drop 2.7s ease-in forwards;
-}
-.purchase-pack-lines {
-  background: repeating-linear-gradient(45deg, transparent, transparent 10px, oklch(1 0 0 / 0.09) 10px, oklch(1 0 0 / 0.09) 11px);
-}
-.purchase-pack-flap {
-  position: absolute;
-  top: 40%;
-  z-index: 35;
-  height: 5rem;
-  width: 8rem;
-  background: var(--color-poke-blue);
-  border-top: 2px solid oklch(1 0 0 / 0.25);
-}
-.purchase-pack-flap-left { left: 0.5rem; animation: purchase-flap-left 2.7s ease-out forwards; }
-.purchase-pack-flap-right { right: 0.5rem; animation: purchase-flap-right 2.7s ease-out forwards; }
-.purchase-result { animation: purchase-result-in 3.1s ease-out forwards; }
-.purchase-opening-label { animation: purchase-result-in 900ms ease-out reverse forwards 1.5s; }
-.purchase-spark {
-  --spark-x: 0rem;
-  position: absolute;
-  left: 50%;
-  top: 52%;
-  z-index: 45;
-  width: 0.55rem;
-  height: 0.55rem;
-  border-radius: 999px;
-  background: var(--color-poke-yellow);
-  box-shadow: 0 0 1rem var(--color-poke-yellow);
-  animation: purchase-spark-fly 2.4s ease-out forwards;
-}
-.purchase-spark-one { --spark-x: -8rem; animation-delay: 200ms; }
-.purchase-spark-two { --spark-x: 7rem; animation-delay: 350ms; }
-.purchase-spark-three { --spark-x: 1rem; animation-delay: 500ms; }
-
 @keyframes mint-ring-burst {
   0% { opacity: 0.7; transform: scale(0.15); }
   100% { opacity: 0; transform: scale(2.2); }
@@ -429,13 +282,13 @@
   to { opacity: 1; transform: translateY(0); }
 }
 .mint-reveal, .sale-celebration {
-  background: radial-gradient(circle at 50% 40%, oklch(0.55 0.13 250 / 0.48), transparent 45%), var(--color-poke-navy-deep);
+  background: radial-gradient(circle at 50% 40%, oklch(0.55 0.13 250 / 0.48), transparent 45%), var(--color-ink-deep);
 }
 .mint-energy-ring {
   position: absolute;
   width: min(75vw, 30rem);
   aspect-ratio: 1;
-  border: 4px solid var(--color-poke-yellow);
+  border: 4px solid var(--color-brand);
   border-radius: 999px;
   animation: mint-ring-burst 1.5s ease-out infinite;
 }
@@ -460,7 +313,7 @@
   position: absolute;
   top: 0;
   z-index: 0;
-  color: var(--color-poke-yellow);
+  color: var(--color-brand);
   font-size: 2rem;
   font-style: normal;
   text-shadow: 0 0 1rem oklch(0.86 0.17 95 / 0.6);
@@ -473,12 +326,8 @@
 .sale-coin-9 { left: 87%; animation-delay: 520ms; } .sale-coin-10 { left: 95%; animation-delay: 1650ms; }
 
 @media (prefers-reduced-motion: reduce) {
-  .gate-aurora, .gate-ring, .ball-float, .ball-shake, .gate-pulse, .sprite-bob, .pack-float, .pack-sheen, .welcome-ball-drop, .welcome-flash, .welcome-ball-open g, .welcome-card-pop, .welcome-spark {
+  .gate-aurora, .gate-ring, .gate-pulse, .sprite-bob, .welcome-flash, .welcome-card-pop, .welcome-spark {
     animation: none !important;
-  }
-  .purchase-card-stage, .purchase-pack, .purchase-pack-flap, .purchase-result, .purchase-opening-label, .purchase-spark {
-    animation-duration: 1ms !important;
-    animation-delay: 0ms !important;
   }
   .mint-energy-ring, .mint-reveal-card, .mint-reveal-kicker, .mint-reveal-title, .mint-reveal-copy, .sale-celebration-panel, .sale-coin {
     animation-duration: 1ms !important;
@@ -487,14 +336,6 @@
 }
 
 /* ===== Welcome (account created) ===== */
-@keyframes welcome-ball-drop {
-  0% { transform: translateY(-60vh) rotate(-20deg); }
-  60% { transform: translateY(12px) rotate(8deg); }
-  80% { transform: translateY(-10px) rotate(-4deg); }
-  100% { transform: translateY(0) rotate(0deg); }
-}
-.welcome-ball-drop { animation: welcome-ball-drop 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
-
 @keyframes welcome-flash {
   0% { transform: scale(0); opacity: 1; }
   100% { transform: scale(1); opacity: 0; }
@@ -504,15 +345,6 @@
   background: radial-gradient(circle, rgba(255,222,0,0.95), rgba(255,222,0,0) 65%);
   animation: welcome-flash 0.7s ease-out forwards;
 }
-
-@keyframes welcome-ball-half-top {
-  to { transform: translateY(-26px) rotate(-8deg); }
-}
-@keyframes welcome-ball-half-bottom {
-  to { transform: translateY(26px) rotate(8deg); }
-}
-.welcome-ball-open .welcome-ball-top { animation: welcome-ball-half-top 0.6s ease-out forwards; transform-origin: 48px 48px; }
-.welcome-ball-open .welcome-ball-bottom { animation: welcome-ball-half-bottom 0.6s ease-out forwards; transform-origin: 48px 48px; }
 
 @keyframes welcome-card-pop {
   0% { transform: scale(0.6) translateY(30px); opacity: 0; }

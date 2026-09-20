@@ -5,14 +5,14 @@ type Props = {
   compact?: boolean;
 };
 
-export function PokeCard({ card, compact = false }: Props) {
+export function NftCard({ card, compact = false }: Props) {
   const burned = card.status === "burned";
 
   return (
     <div
       className={[
         "group relative flex h-full flex-col overflow-hidden rounded-md border bg-card shadow-card transition-all duration-200 hover:-translate-y-1 hover:shadow-card-hover",
-        burned ? "border-border opacity-60" : "border-border hover:border-poke-yellow/60",
+        burned ? "border-border opacity-60" : "border-border hover:border-brand/60",
       ].join(" ")}
     >
       {/* Art — square, edge to edge */}
@@ -36,7 +36,7 @@ export function PokeCard({ card, compact = false }: Props) {
           1 / 1
         </span>
         {burned && (
-          <span className="absolute right-2 top-2 rounded bg-poke-red px-2 py-0.5 text-[10px] font-bold uppercase text-white">
+          <span className="absolute right-2 top-2 rounded bg-danger px-2 py-0.5 text-[10px] font-bold uppercase text-white">
             Burned
           </span>
         )}
@@ -46,7 +46,7 @@ export function PokeCard({ card, compact = false }: Props) {
       <div className="flex flex-1 flex-col gap-2 p-3">
         <div className="flex items-start justify-between gap-2">
           <h3 className="truncate font-display text-base leading-tight">{card.name}</h3>
-          <span className="mono-num shrink-0 text-[11px] font-bold uppercase tracking-widest text-poke-yellow">
+          <span className="mono-num shrink-0 text-[11px] font-bold uppercase tracking-widest text-brand">
             ${card.ticker}
           </span>
         </div>
@@ -63,7 +63,7 @@ export function PokeCard({ card, compact = false }: Props) {
               held by <span className="font-semibold text-foreground">{card.owner?.username ?? "—"}</span>
             </span>
             {card.list_price !== null && !burned ? (
-              <span className="mono-num shrink-0 font-bold text-poke-green">
+              <span className="mono-num shrink-0 font-bold text-success">
                 {card.list_price} SOL
               </span>
             ) : (
@@ -72,7 +72,7 @@ export function PokeCard({ card, compact = false }: Props) {
           </div>
 
           {card.list_price !== null && !burned && (
-            <div className="poke-btn w-full text-center">Buy · {card.list_price} SOL</div>
+            <div className="primary-btn w-full text-center">Buy · {card.list_price} SOL</div>
           )}
 
           <div className="mono-num truncate text-[10px] tracking-tight text-muted-foreground/70">

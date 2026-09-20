@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 import pigAsset from "@/assets/pig.webp.asset.json";
 
-const KEY = "poke-entered";
+const KEY = "jpeg-entered";
 
 // Always rendered (including in the server HTML). Visibility is controlled by
 // the `gate-active` class on <html>, which an inline script in <head> sets
@@ -45,7 +45,7 @@ export function EntranceGate() {
     } catch {
       /* ignore */
     }
-    window.dispatchEvent(new Event("poke:enter"));
+    window.dispatchEvent(new Event("jpeg:enter"));
     window.setTimeout(() => setShow(false), 1250);
   }
 
@@ -57,8 +57,8 @@ export function EntranceGate() {
     >
       {/* background energy */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-poke-yellow/10 blur-[120px]" />
-        <div className="absolute left-1/3 top-1/4 h-64 w-64 rounded-full bg-poke-yellow/5 blur-[80px]" />
+        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-brand/10 blur-[120px]" />
+        <div className="absolute left-1/3 top-1/4 h-64 w-64 rounded-full bg-brand/5 blur-[80px]" />
       </div>
 
       <button
@@ -69,9 +69,9 @@ export function EntranceGate() {
       >
         {/* The jpeg frame */}
         <span className="relative mb-8 block sm:mb-12">
-          <span className="absolute -inset-6 rounded-3xl bg-poke-yellow/10 blur-2xl transition-colors duration-1000 group-hover:bg-poke-yellow/15" />
+          <span className="absolute -inset-6 rounded-3xl bg-brand/10 blur-2xl transition-colors duration-1000 group-hover:bg-brand/15" />
           <span
-            className={`relative block h-36 w-36 overflow-hidden rounded-2xl border-[6px] border-poke-yellow bg-white shadow-[0_0_60px_rgba(0,0,0,0.55)] sm:h-48 sm:w-48 ${
+            className={`relative block h-36 w-36 overflow-hidden rounded-2xl border-[6px] border-brand bg-white shadow-[0_0_60px_rgba(0,0,0,0.55)] sm:h-48 sm:w-48 ${
               opening ? "scale-110 opacity-0 transition-all duration-700" : "animate-bounce [animation-duration:3s]"
             }`}
           >
@@ -80,7 +80,7 @@ export function EntranceGate() {
               alt=""
               className="h-full w-full object-contain p-2"
             />
-            <span className="mono-num absolute bottom-0 left-0 right-0 bg-foreground/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-poke-yellow">
+            <span className="mono-num absolute bottom-0 left-0 right-0 bg-foreground/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-brand">
               1 of 1
             </span>
           </span>
@@ -88,12 +88,12 @@ export function EntranceGate() {
 
         {/* Wordmark with glow */}
         <span className="relative mb-10 block">
-          <span className="block font-display text-6xl tracking-tighter text-poke-yellow sm:text-8xl">
+          <span className="block font-display text-6xl tracking-tighter text-brand sm:text-8xl">
             JPEG
           </span>
           <span
             aria-hidden
-            className="absolute inset-0 select-none font-display text-6xl tracking-tighter text-poke-yellow opacity-30 blur-xl sm:text-8xl"
+            className="absolute inset-0 select-none font-display text-6xl tracking-tighter text-brand opacity-30 blur-xl sm:text-8xl"
           >
             JPEG
           </span>
@@ -101,8 +101,8 @@ export function EntranceGate() {
 
         {/* CTA */}
         <span className="relative block">
-          <span className="absolute -inset-1 animate-pulse rounded-full bg-poke-yellow/30 blur-md transition duration-300 group-hover:bg-poke-yellow/50" />
-          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-white shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
+          <span className="absolute -inset-1 animate-pulse rounded-full bg-brand/30 blur-md transition duration-300 group-hover:bg-brand/50" />
+          <span className="relative block rounded-full bg-brand px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-white shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
             Tap to Enter
           </span>
         </span>
@@ -111,7 +111,7 @@ export function EntranceGate() {
       <button
         type="button"
         onClick={enter}
-        className="absolute bottom-8 z-10 font-mono text-xs uppercase tracking-widest text-muted-foreground/60 transition-colors hover:text-poke-yellow"
+        className="absolute bottom-8 z-10 font-mono text-xs uppercase tracking-widest text-muted-foreground/60 transition-colors hover:text-brand"
       >
         one jpeg · one coin · forever
       </button>
