@@ -44,10 +44,20 @@ export function SiteHeader() {
             jpeg protocol // mainnet online
           </span>
           <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">jpeg</span>
-          <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-            <span className="hidden lg:inline">
-              1/1 arena · live ownership · real coin attached
-            </span>
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+            <a
+              href={JPEG_X_URL}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="JPEG on X (@MINTJPEGX)"
+              className="-my-1 flex items-center gap-1.5 px-1 py-2 text-foreground transition-colors hover:text-brand"
+            >
+              <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z" />
+              </svg>
+              <span className="hidden sm:inline">@MINTJPEGX</span>
+            </a>
+            <CopyCa />
             <Link
               to="/docs"
               aria-label="JPEG docs and how-to"
