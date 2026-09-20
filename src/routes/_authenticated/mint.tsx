@@ -132,22 +132,6 @@ function MintPage() {
     }
   }
 
-  async function handleFindPokemon() {
-    if (!name.trim()) return;
-    setPairingBusy(true);
-    setPairingError(null);
-    try {
-      setPairing(await findPokemon({ data: {
-        name: name.trim(),
-        symbol: ticker.trim(),
-        description: description.trim(),
-      } }));
-    } catch (err) {
-      setPairingError(err instanceof Error ? err.message : "Could not find a pairing.");
-    } finally {
-      setPairingBusy(false);
-    }
-  }
 
   const canMint =
     !!name.trim() && !!ticker.trim() && !!imageUrl.trim() && available === true && !busy;
