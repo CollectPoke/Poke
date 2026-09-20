@@ -98,7 +98,7 @@ export function FundingModal({
             </p>
 
             <div className="mt-5 flex flex-col items-center gap-4">
-              <div className="rounded-xl border-2 border-border bg-white p-3">
+              <div className="rounded-xl border border-border bg-white p-3">
                 {data?.address ? (
                   <QRCode value={data.address} size={168} />
                 ) : (

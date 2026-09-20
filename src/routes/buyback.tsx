@@ -99,11 +99,11 @@ function BuybackPage() {
           <Card color="bg-poke-yellow text-poke-yellow-foreground" title="100% of fees">
             Nothing is skimmed. Every fee a Poke coin generates is used to buy $POKE.
           </Card>
-          <Card color="bg-poke-blue text-white" title="Every 10 minutes">
+          <Card color="border border-border bg-card" title="Every 10 minutes">
             The buyback runs on a {BUYBACK_INTERVAL_MS / 60000}-minute clock, not whenever someone
             feels like it.
           </Card>
-          <Card color="bg-poke-green text-white" title="Verify it yourself">
+          <Card color="border border-border bg-card" title="Verify it yourself">
             Nothing is decided behind the scenes: the clock is fixed, the amount is whatever the
             fees were, and each run links straight to its transaction on Solscan.
           </Card>
@@ -172,7 +172,7 @@ function Stat({
   return (
     <div
       className={`rounded-2xl p-4 ${
-        highlight ? "bg-poke-yellow text-poke-yellow-foreground" : "bg-white/10 text-white"
+        highlight ? "bg-poke-yellow text-poke-yellow-foreground" : "bg-secondary text-foreground"
       }`}
     >
       <p className="text-[11px] font-bold uppercase tracking-widest opacity-75">{label}</p>

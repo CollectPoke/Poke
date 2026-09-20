@@ -36,7 +36,7 @@ function DocsPage() {
   return (
     <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
       {/* Hero */}
-      <header className="relative overflow-hidden rounded-2xl border-2 border-poke-navy-deep bg-poke-blue p-8 text-center shadow-xl sm:p-12">
+      <header className="relative overflow-hidden rounded-md border border-border bg-surface p-8 text-center shadow-card sm:p-12">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-poke-yellow">
           Collector handbook
         </p>
