@@ -9,10 +9,12 @@ export const LAUNCH_COST_SOL = 0.1;
 
 export function FundingModal({
   requiredSol = LAUNCH_COST_SOL,
+  autoLaunch = false,
   onClose,
   onFunded,
 }: {
   requiredSol?: number;
+  autoLaunch?: boolean;
   onClose: () => void;
   onFunded?: () => void;
 }) {
