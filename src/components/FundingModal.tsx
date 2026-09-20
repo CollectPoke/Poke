@@ -61,9 +61,7 @@ export function FundingModal({
       <div className="w-full max-w-md rounded-2xl border-2 border-brand bg-card p-6 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-link">
-              Top up
-            </p>
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-link">Top up</p>
             <h2 className="mt-1 font-display text-2xl font-bold">
               {funded ? "You're funded!" : "Add SOL to mint"}
             </h2>
@@ -91,10 +89,9 @@ export function FundingModal({
         ) : (
           <>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              Launching costs up to{" "}
-              <strong className="text-foreground">{requiredSol} SOL</strong>.
-              Send SOL to your personal JPEG deposit address below — the moment
-              it lands, this window closes itself.
+              Launching costs up to <strong className="text-foreground">{requiredSol} SOL</strong>.
+              Send SOL to your personal JPEG deposit address below — the moment it lands, this
+              window closes itself.
             </p>
 
             <div className="mt-5 flex flex-col items-center gap-4">

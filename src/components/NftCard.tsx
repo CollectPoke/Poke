@@ -60,7 +60,8 @@ export function NftCard({ card, compact = false }: Props) {
         <div className="mt-auto space-y-2 pt-1">
           <div className="flex items-center justify-between gap-2 border-t border-border pt-2 text-[11px]">
             <span className="truncate text-muted-foreground">
-              held by <span className="font-semibold text-foreground">{card.owner?.username ?? "—"}</span>
+              held by{" "}
+              <span className="font-semibold text-foreground">{card.owner?.username ?? "—"}</span>
             </span>
             {card.list_price !== null && !burned ? (
               <span className="mono-num shrink-0 font-bold text-success">

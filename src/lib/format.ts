@@ -29,9 +29,7 @@ export function stats(m: {
     v && v > 0 ? clamp((Math.log10(v) / Math.log10(max)) * 100) : 4;
 
   const volatility =
-    m.high24h && m.low24h && m.low24h > 0
-      ? clamp(((m.high24h - m.low24h) / m.low24h) * 400)
-      : 20;
+    m.high24h && m.low24h && m.low24h > 0 ? clamp(((m.high24h - m.low24h) / m.low24h) * 400) : 20;
 
   return {
     attack: clamp(50 + (m.change24h ?? 0) * 3),

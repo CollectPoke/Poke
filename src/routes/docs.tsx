@@ -12,8 +12,7 @@ export const Route = createFileRoute("/docs")({
       { property: "og:title", content: "Docs & How to — JPEG" },
       {
         property: "og:description",
-        content:
-          "How JPEG works: one-of-one NFTs with a real coin attached and a built-in wallet.",
+        content: "How JPEG works: one-of-one NFTs with a real coin attached and a built-in wallet.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -43,8 +42,8 @@ function DocsPage() {
           Docs &amp; How to
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
-          Everything about JPEG in one place — what it is, how minting launches
-          a real coin, and how buying and selling work.
+          Everything about JPEG in one place — what it is, how minting launches a real coin, and how
+          buying and selling work.
         </p>
       </header>
 
@@ -74,22 +73,20 @@ function DocsPage() {
         <div className="space-y-6">
           <DocCard id="what" title="What is JPEG?">
             <p>
-              JPEG is an NFT launchpad where every piece comes with a coin. You
-              upload a jpeg, pick a name and a ticker, and JPEG mints it as a{" "}
-              <strong>one-of-one NFT</strong> while launching a real coin for it
-              on Solana via Pump.fun. The contract address is printed on the NFT
-              forever.
+              JPEG is an NFT launchpad where every piece comes with a coin. You upload a jpeg, pick
+              a name and a ticker, and JPEG mints it as a <strong>one-of-one NFT</strong> while
+              launching a real coin for it on Solana via Pump.fun. The contract address is printed
+              on the NFT forever.
             </p>
             <p>
-              Each name can only exist <strong>once</strong> — after{" "}
-              <strong>Dog</strong> is minted, nobody else can ever mint Dog
-              again, unless the current holder burns the NFT. That's the
-              rarity: there is exactly one of every NFT, like a 1st edition.
+              Each name can only exist <strong>once</strong> — after <strong>Dog</strong> is minted,
+              nobody else can ever mint Dog again, unless the current holder burns the NFT. That's
+              the rarity: there is exactly one of every NFT, like a 1st edition.
             </p>
             <p>
-              Everything is <strong>walletless</strong>: no extensions, no
-              Phantom, no seed phrases to lose. Your account comes with its own
-              Solana address and you do everything from the site.
+              Everything is <strong>walletless</strong>: no extensions, no Phantom, no seed phrases
+              to lose. Your account comes with its own Solana address and you do everything from the
+              site.
             </p>
           </DocCard>
 
@@ -102,12 +99,10 @@ function DocsPage() {
                 </Link>
                 .
               </li>
+              <li>Pick a collector name — this shows on every NFT you mint or own.</li>
               <li>
-                Pick a collector name — this shows on every NFT you mint or own.
-              </li>
-              <li>
-                Your account instantly gets its own{" "}
-                <strong>Solana deposit address</strong>, visible on your{" "}
+                Your account instantly gets its own <strong>Solana deposit address</strong>, visible
+                on your{" "}
                 <Link to="/account" className="font-semibold text-link underline">
                   profile
                 </Link>
@@ -118,20 +113,18 @@ function DocsPage() {
 
           <DocCard id="fund" title="Funding your wallet">
             <p>
-              Every JPEG account has a built-in Solana wallet. To fund it, send
-              SOL from anywhere (an exchange, Phantom, a friend) to the deposit
-              address on your profile page.
+              Every JPEG account has a built-in Solana wallet. To fund it, send SOL from anywhere
+              (an exchange, Phantom, a friend) to the deposit address on your profile page.
             </p>
             <p>
-              Your balance and recent transfers update live on your profile.
-              Because each account has a unique address, every launch and trade
-              is traceable back to the collector who did it.
+              Your balance and recent transfers update live on your profile. Because each account
+              has a unique address, every launch and trade is traceable back to the collector who
+              did it.
             </p>
             <p>
               You stay in control: you can <strong>send SOL out</strong> or{" "}
-              <strong>export your private key</strong> at any time from your
-              profile. Treat that key like cash — anyone who has it controls
-              your funds.
+              <strong>export your private key</strong> at any time from your profile. Treat that key
+              like cash — anyone who has it controls your funds.
             </p>
           </DocCard>
 
@@ -142,42 +135,38 @@ function DocsPage() {
                 <Link to="/mint" className="font-semibold text-link underline">
                   Mint an NFT
                 </Link>{" "}
-                and choose a name and ticker. The name is checked live — if it's
-                taken, you'll see it straight away.
+                and choose a name and ticker. The name is checked live — if it's taken, you'll see
+                it straight away.
               </li>
               <li>Add a description and drop in an image (required — it's the NFT's art).</li>
               <li>
-                Optionally tick <strong>“List for sale immediately”</strong> and
-                set a price in SOL.
+                Optionally tick <strong>“List for sale immediately”</strong> and set a price in SOL.
               </li>
               <li>
                 Hit <strong>Launch coin + mint NFT</strong>. The cost is a flat{" "}
-                <strong>0.1 SOL launch fee</strong>, taken from your JPEG wallet —
-                that covers the real Pump.fun launch and network fees.
+                <strong>0.1 SOL launch fee</strong>, taken from your JPEG wallet — that covers the
+                real Pump.fun launch and network fees.
               </li>
               <li>
-                Once Solana confirms, the real contract address appears at the
-                bottom of your NFT with a Solscan receipt, and the NFT is
-                yours.
+                Once Solana confirms, the real contract address appears at the bottom of your NFT
+                with a Solscan receipt, and the NFT is yours.
               </li>
             </ol>
           </DocCard>
 
           <DocCard id="trade" title="Buying, selling & burning">
             <p>
-              <strong>Selling:</strong> open an NFT you own and set a price, or
-              list it while minting. You can change the price or unlist any
-              time.
+              <strong>Selling:</strong> open an NFT you own and set a price, or list it while
+              minting. You can change the price or unlist any time.
             </p>
             <p>
-              <strong>Buying:</strong> open a listed NFT and hit buy. The exact
-              SOL amount moves straight from your JPEG wallet to the seller's
-              JPEG wallet on Solana — then ownership transfers to you. Every
-              sale gets a Solscan receipt in the NFT's history.
+              <strong>Buying:</strong> open a listed NFT and hit buy. The exact SOL amount moves
+              straight from your JPEG wallet to the seller's JPEG wallet on Solana — then ownership
+              transfers to you. Every sale gets a Solscan receipt in the NFT's history.
             </p>
             <p>
-              <strong>Burning:</strong> the owner can burn an NFT, destroying it
-              forever. This releases the name so someone else can mint it again.
+              <strong>Burning:</strong> the owner can burn an NFT, destroying it forever. This
+              releases the name so someone else can mint it again.
             </p>
           </DocCard>
 
@@ -205,9 +194,7 @@ function DocsPage() {
           </DocCard>
 
           <div className="rounded-xl border-2 border-brand bg-brand/15 p-6 text-center">
-            <p className="font-display text-xl font-bold text-foreground">
-              Ready to claim a name?
-            </p>
+            <p className="font-display text-xl font-bold text-foreground">Ready to claim a name?</p>
             <Link
               to="/mint"
               className="primary-btn mt-3 inline-block rounded-xl px-6 py-2.5 text-sm font-bold"
@@ -235,9 +222,7 @@ function DocCard({
       id={id}
       className="scroll-mt-24 rounded-xl border-2 border-border bg-card p-6 shadow-sm sm:p-7"
     >
-      <h2 className="mb-3 font-display text-2xl font-bold text-foreground">
-        {title}
-      </h2>
+      <h2 className="mb-3 font-display text-2xl font-bold text-foreground">{title}</h2>
       <div className="space-y-3 text-sm leading-relaxed text-muted-foreground sm:text-[15px]">
         {children}
       </div>

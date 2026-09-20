@@ -25,7 +25,9 @@ export const exportMyPrivateKey = createServerFn({ method: "POST" })
 export const withdrawSol = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) =>
-    z.object({ to: z.string().min(32).max(44), amount: z.number().positive().max(1000) }).parse(input),
+    z
+      .object({ to: z.string().min(32).max(44), amount: z.number().positive().max(1000) })
+      .parse(input),
   )
   .handler(async ({ data, context }) => {
     const { getOrCreateWallet, sendSol } = await import("./wallet.server");
@@ -77,7 +79,8 @@ export const buyCardWithSol = createServerFn({ method: "POST" })
       .order("created_at", { ascending: false })
       .limit(1)
       .maybeSingle();
-    if (ev) await supabaseAdmin.from("card_events").update({ tx_signature: signature }).eq("id", ev.id);
+    if (ev)
+      await supabaseAdmin.from("card_events").update({ tx_signature: signature }).eq("id", ev.id);
 
     return { signature, price };
   });

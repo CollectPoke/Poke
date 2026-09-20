@@ -125,7 +125,15 @@ export function SiteHeader() {
               aria-expanded={open}
               className="grid h-11 w-11 place-items-center rounded-full border border-border text-foreground transition-colors hover:bg-foreground/5"
             >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" className="h-5 w-5" aria-hidden="true">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                className="h-5 w-5"
+                aria-hidden="true"
+              >
                 {open ? (
                   <>
                     <path d="M6 6l12 12" />
@@ -152,7 +160,9 @@ export function SiteHeader() {
                   to={item.to}
                   activeOptions={{ exact: item.exact ?? false }}
                   className="rounded-xl px-4 py-3 text-foreground/80 transition-colors hover:bg-foreground/5 hover:text-foreground"
-                  activeProps={{ className: "bg-brand text-brand-foreground hover:text-brand-foreground" }}
+                  activeProps={{
+                    className: "bg-brand text-brand-foreground hover:text-brand-foreground",
+                  }}
                 >
                   {item.label}
                 </Link>
@@ -162,7 +172,9 @@ export function SiteHeader() {
                   <Link
                     to="/gallery"
                     className="rounded-xl px-4 py-3 text-foreground/80 transition-colors hover:bg-foreground/5 hover:text-foreground"
-                    activeProps={{ className: "bg-brand text-brand-foreground hover:text-brand-foreground" }}
+                    activeProps={{
+                      className: "bg-brand text-brand-foreground hover:text-brand-foreground",
+                    }}
                   >
                     My NFTs
                   </Link>

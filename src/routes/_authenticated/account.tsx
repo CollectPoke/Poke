@@ -56,7 +56,9 @@ function AccountPage() {
   const [saleToCelebrate, setSaleToCelebrate] = useState<(typeof history)[number] | null>(null);
 
   useEffect(() => {
-    const latestSale = history.find((event) => event.counterparty_id === userId && event.tx_signature && event.card);
+    const latestSale = history.find(
+      (event) => event.counterparty_id === userId && event.tx_signature && event.card,
+    );
     if (!latestSale || !latestSale.tx_signature) return;
     const seenKey = `jpeg-sale-seen:${latestSale.id}`;
     if (window.localStorage.getItem(seenKey)) return;
@@ -130,7 +132,6 @@ function AccountPage() {
 
       <WalletPanel />
 
-
       {/* Binder */}
       <div className="mt-10 flex items-center gap-4">
         <h2 className="font-display text-2xl font-bold text-foreground">My collection</h2>
@@ -162,7 +163,10 @@ function AccountPage() {
 
       {tab === "history" ? (
         history.length === 0 ? (
-          <EmptyBox title="No sales yet" text="Once you buy or sell an NFT, every sale shows up here with its Solana receipt." />
+          <EmptyBox
+            title="No sales yet"
+            text="Once you buy or sell an NFT, every sale shows up here with its Solana receipt."
+          />
         ) : (
           <ul className="mt-6 space-y-3">
             {history.map((ev) => {
@@ -186,14 +190,17 @@ function AccountPage() {
                         params={{ cardId: ev.card.id }}
                         className="font-display text-lg font-bold text-foreground hover:underline"
                       >
-                        {ev.card.name} <span className="text-muted-foreground">${ev.card.ticker}</span>
+                        {ev.card.name}{" "}
+                        <span className="text-muted-foreground">${ev.card.ticker}</span>
                       </Link>
                     ) : (
                       <span className="font-bold text-muted-foreground">NFT removed</span>
                     )}
                     <p className="text-xs text-muted-foreground">
                       {new Date(ev.created_at).toLocaleString()} ·{" "}
-                      {sold ? `to ${ev.actor?.username ?? "someone"}` : `from ${ev.counterparty?.username ?? "someone"}`}
+                      {sold
+                        ? `to ${ev.actor?.username ?? "someone"}`
+                        : `from ${ev.counterparty?.username ?? "someone"}`}
                     </p>
                   </div>
                   <span className="mono-num font-display text-lg font-bold text-foreground">
@@ -218,16 +225,21 @@ function AccountPage() {
         <p className="mt-4 text-sm text-muted-foreground">Loading your NFTs…</p>
       ) : (tab === "owned" ? owned : listed).length === 0 ? (
         tab === "listed" ? (
-          <EmptyBox title="Nothing listed" text="Open any card you own and set a price to put it on the market." />
+          <EmptyBox
+            title="Nothing listed"
+            text="Open any card you own and set a price to put it on the market."
+          />
         ) : (
           <div className="mt-4 rounded-3xl border-2 border-dashed border-ink/20 bg-card p-12 text-center">
             <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-link/10">
               <span className="text-2xl font-black text-brand">J</span>
             </div>
-            <p className="font-display text-xl font-bold text-foreground">Your collection is empty</p>
+            <p className="font-display text-xl font-bold text-foreground">
+              Your collection is empty
+            </p>
             <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
-              Every great collector starts somewhere. Mint the first NFT of a name, or buy one from the
-              market.
+              Every great collector starts somewhere. Mint the first NFT of a name, or buy one from
+              the market.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3">
               <Link to="/mint" className="primary-btn">

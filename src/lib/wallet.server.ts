@@ -196,9 +196,7 @@ export async function signSimulateAndSendTransaction(
   }
 
   const signedBase64 = Buffer.from(signed).toString("base64");
-  const transactionSignature = bs58.encode(
-    signed.subarray(signaturesStart, signaturesStart + 64),
-  );
+  const transactionSignature = bs58.encode(signed.subarray(signaturesStart, signaturesStart + 64));
   const beforeLamports = Math.round((await getBalanceSol(from.public_key)) * LAMPORTS_PER_SOL);
   const simulation = await rpc<{
     value: { err: unknown; logs?: string[]; accounts?: Array<{ lamports: number } | null> | null };
@@ -216,7 +214,10 @@ export async function signSimulateAndSendTransaction(
       err: simulation.value.err,
       logs: simulation.value.logs?.slice(-10),
     });
-    const detail = simulation.value.logs?.filter((line) => /error|failed/i.test(line)).slice(-2).join(" | ");
+    const detail = simulation.value.logs
+      ?.filter((line) => /error|failed/i.test(line))
+      .slice(-2)
+      .join(" | ");
     throw new Error(
       `The Pump.fun launch simulation failed. No SOL was spent.${detail ? ` (${detail})` : ""}`,
     );
@@ -231,7 +232,6 @@ export async function signSimulateAndSendTransaction(
   }
 
   if (onPrepared) await onPrepared(transactionSignature);
-
 
   const submittedSignature = await rpc<string>("sendTransaction", [
     signedBase64,
@@ -255,7 +255,9 @@ export async function confirmSignature(signature: string): Promise<void> {
     }
     await new Promise((resolve) => setTimeout(resolve, 1000));
   }
-  throw new Error("The launch is still confirming on Solana. Try minting again shortly to resume it.");
+  throw new Error(
+    "The launch is still confirming on Solana. Try minting again shortly to resume it.",
+  );
 }
 
 /**
@@ -291,7 +293,12 @@ function u64le(value: number): number[] {
 }
 
 /** Build a legacy transaction message: single SystemProgram transfer. */
-function buildTransferMessage(from: string, to: string, lamports: number, blockhash: string): Uint8Array {
+function buildTransferMessage(
+  from: string,
+  to: string,
+  lamports: number,
+  blockhash: string,
+): Uint8Array {
   const keys = [from, to, SYSTEM_PROGRAM];
   const bytes: number[] = [];
   // header: 1 required signature, 0 readonly signed, 1 readonly unsigned (system program)
@@ -308,7 +315,11 @@ function buildTransferMessage(from: string, to: string, lamports: number, blockh
   return new Uint8Array(bytes);
 }
 
-export async function sendSol(from: WalletRow, toAddress: string, amountSol: number): Promise<string> {
+export async function sendSol(
+  from: WalletRow,
+  toAddress: string,
+  amountSol: number,
+): Promise<string> {
   const lamports = Math.round(amountSol * LAMPORTS_PER_SOL);
   if (!Number.isFinite(lamports) || lamports <= 0) throw new Error("Invalid amount");
   if (toAddress === from.public_key) throw new Error("That is your own wallet address");
@@ -319,7 +330,9 @@ export async function sendSol(from: WalletRow, toAddress: string, amountSol: num
   }
 
   const secret = secretKeyFrom(from);
-  const latest = await rpc<{ value: { blockhash: string } }>("getLatestBlockhash", [{ commitment: "confirmed" }]);
+  const latest = await rpc<{ value: { blockhash: string } }>("getLatestBlockhash", [
+    { commitment: "confirmed" },
+  ]);
   const blockhash = latest.value.blockhash;
 
   const message = buildTransferMessage(from.public_key, toAddress, lamports, blockhash);
