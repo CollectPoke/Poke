@@ -41,7 +41,7 @@ export function SiteHeader() {
       <div className="bg-poke-navy-deep">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-[10px] text-white/70 sm:px-5 sm:text-[11px]">
           <span className="mono-num hidden truncate uppercase tracking-[0.18em] xs:inline sm:inline">
-            one name · one card · forever
+            one jpeg · one coin · forever
           </span>
           <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">poke</span>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
