@@ -249,6 +249,7 @@ function MintPage() {
                   </div>
                 </div>
               )}
+                </div>
               </section>
 
               <section className="border-t border-border pt-10">
