@@ -11,12 +11,12 @@ export function NftCard({ card, compact = false }: Props) {
   return (
     <div
       className={[
-        "group relative flex h-full flex-col overflow-hidden border bg-card shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover",
+        "group relative flex h-full flex-col overflow-hidden rounded-3xl border bg-card p-3 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover",
         burned ? "border-border opacity-60" : "border-border hover:border-brand/60",
       ].join(" ")}
     >
       {/* Art — square, edge to edge */}
-      <div className="relative aspect-square w-full overflow-hidden bg-secondary">
+      <div className="relative aspect-square w-full overflow-hidden rounded-2xl bg-secondary">
         {card.image_url ? (
           <img
             src={card.image_url}
@@ -32,7 +32,7 @@ export function NftCard({ card, compact = false }: Props) {
           </div>
         )}
 
-        <span className="mono-num absolute left-2 top-2 border border-foreground/20 bg-background/80 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-foreground backdrop-blur">
+        <span className="mono-num absolute left-2 top-2 rounded-lg border border-foreground/10 bg-background/90 px-2 py-1 text-[10px] font-bold text-foreground backdrop-blur">
           1 / 1
         </span>
         {burned && (
@@ -45,7 +45,7 @@ export function NftCard({ card, compact = false }: Props) {
       {/* Meta */}
       <div className="flex flex-1 flex-col gap-2 p-3">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="truncate font-display text-base font-black uppercase leading-tight tracking-normal">
+          <h3 className="truncate font-display text-base font-black leading-tight tracking-normal">
             {card.name}
           </h3>
           <span className="mono-num shrink-0 text-[11px] font-bold uppercase tracking-widest text-brand">
@@ -75,7 +75,7 @@ export function NftCard({ card, compact = false }: Props) {
           </div>
 
           {card.list_price !== null && !burned && (
-            <div className="primary-btn w-full text-center">Acquire · {card.list_price} SOL</div>
+            <div className="w-full rounded-2xl bg-foreground px-4 py-3 text-center text-sm font-extrabold text-background">Acquire · {card.list_price} SOL</div>
           )}
 
           <div className="mono-num truncate text-[10px] tracking-tight text-muted-foreground/70">
