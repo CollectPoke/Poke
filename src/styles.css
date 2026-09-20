@@ -53,7 +53,7 @@
   --color-type-psychic: var(--type-psychic);
   --color-type-poison: var(--type-poison);
   --color-type-normal: var(--type-normal);
-  /* Pokémon.com-style brand palette */
+  /* Brand palette */
   --color-poke-yellow: oklch(0.86 0.17 95);
   --color-poke-yellow-foreground: oklch(0.24 0.04 260);
   --color-poke-blue: oklch(0.55 0.13 250);
@@ -267,7 +267,7 @@
 .gate-burst { animation: gate-burst 900ms ease-out 450ms forwards; }
 .gate-pulse { animation: gate-pulse 1.8s ease-in-out infinite; }
 
-/* ---------- Pokémon flavour ---------- */
+/* ---------- Flavour ---------- */
 @keyframes sprite-bob {
   0%, 100% { transform: translateY(0) rotate(-3deg); }
   50% { transform: translateY(-14px) rotate(3deg); }
@@ -492,7 +492,7 @@
   }
 }
 
-/* ===== Welcome trainer (account created) ===== */
+/* ===== Welcome (account created) ===== */
 @keyframes welcome-ball-drop {
   0% { transform: translateY(-60vh) rotate(-20deg); }
   60% { transform: translateY(12px) rotate(8deg); }

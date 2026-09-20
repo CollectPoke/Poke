@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 
+import pigMascot from "@/assets/pig-mascot.png";
+
 const KEY = "poke-entered";
 
 // Always rendered (including in the server HTML). Visibility is controlled by
@@ -65,52 +67,35 @@ export function EntranceGate() {
         aria-label="Enter Poke"
         className="group relative z-10 flex flex-col items-center focus:outline-none"
       >
-        {/* Poké Ball */}
+        {/* The jpeg frame */}
         <span className="relative mb-8 block sm:mb-12">
-          {/* hover glow ring */}
-          <span className="absolute -inset-6 rounded-full bg-white/5 blur-2xl transition-colors duration-1000 group-hover:bg-poke-yellow/10" />
+          <span className="absolute -inset-6 rounded-3xl bg-white/5 blur-2xl transition-colors duration-1000 group-hover:bg-poke-yellow/15" />
           <span
-            className={`relative block h-32 w-32 sm:h-44 sm:w-44 overflow-hidden rounded-full border-[10px] border-[#0a0f1e] shadow-[0_0_50px_rgba(0,0,0,0.5)] ${
-              opening ? "ball-shake" : "animate-bounce [animation-duration:3s]"
+            className={`relative block h-36 w-36 overflow-hidden rounded-2xl border-[6px] border-poke-yellow bg-white shadow-[0_0_60px_rgba(0,0,0,0.55)] sm:h-48 sm:w-48 ${
+              opening ? "scale-110 opacity-0 transition-all duration-700" : "animate-bounce [animation-duration:3s]"
             }`}
           >
-            <span
-              className={`absolute left-0 top-0 h-1/2 w-full bg-gradient-to-b from-[#ff1c1c] to-[#c40000] transition-transform duration-700 ${
-                opening ? "-translate-y-[130%] -rotate-12" : ""
-              }`}
+            <img
+              src={pigMascot}
+              alt=""
+              width={816}
+              height={816}
+              className="h-full w-full object-contain p-2"
             />
-            <span
-              className={`absolute bottom-0 left-0 h-1/2 w-full bg-gradient-to-t from-[#f0f0f0] to-white transition-transform duration-700 ${
-                opening ? "translate-y-[130%] rotate-12" : ""
-              }`}
-            />
-            <span
-              className={`absolute left-0 top-1/2 h-4 w-full -translate-y-1/2 bg-[#0a0f1e] transition-opacity duration-500 ${
-                opening ? "opacity-0" : ""
-              }`}
-            />
-            <span
-              className={`absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 sm:h-16 sm:w-16 -translate-y-1/2 items-center justify-center rounded-full bg-[#0a0f1e] shadow-lg transition-all duration-500 ${
-                opening ? "scale-0 opacity-0" : ""
-              }`}
-            >
-              <span className="flex h-7 w-7 items-center justify-center rounded-full border-4 sm:h-10 sm:w-10 sm:border-[6px] border-[#0a0f1e] bg-white">
-                <span className="h-2 w-2 rounded-full bg-slate-200" />
-              </span>
+            <span className="mono-num absolute bottom-0 left-0 right-0 bg-poke-navy/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-poke-yellow">
+              1 of 1
             </span>
-            {/* burst */}
-            <span className={`absolute inset-0 rounded-full ${opening ? "gate-burst" : "hidden"}`} />
           </span>
         </span>
 
         {/* Wordmark with glow */}
         <span className="relative mb-10 block">
-          <span className="block font-display text-6xl sm:text-8xl tracking-tighter text-poke-yellow">
+          <span className="block font-display text-6xl tracking-tighter text-poke-yellow sm:text-8xl">
             POKE
           </span>
           <span
             aria-hidden
-            className="absolute inset-0 select-none font-display text-6xl sm:text-8xl tracking-tighter text-poke-yellow opacity-30 blur-xl"
+            className="absolute inset-0 select-none font-display text-6xl tracking-tighter text-poke-yellow opacity-30 blur-xl sm:text-8xl"
           >
             POKE
           </span>
@@ -119,7 +104,7 @@ export function EntranceGate() {
         {/* CTA */}
         <span className="relative block">
           <span className="absolute -inset-1 animate-pulse rounded-full bg-poke-yellow/30 blur-md transition duration-300 group-hover:bg-poke-yellow/50" />
-          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base sm:px-14 sm:py-4 sm:text-xl font-black uppercase tracking-[0.2em] text-[#060b18] shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95">
+          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-[#060b18] shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
             Tap to Enter
           </span>
         </span>
@@ -130,7 +115,7 @@ export function EntranceGate() {
         onClick={enter}
         className="absolute bottom-8 z-10 font-mono text-xs uppercase tracking-widest text-blue-400/30 transition-colors hover:text-blue-400/70"
       >
-        System Ready • Awaiting Trainer
+        System Ready • Awaiting Collector
       </button>
     </div>
   );

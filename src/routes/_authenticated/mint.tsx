@@ -7,24 +7,21 @@ import { ArtworkDrop } from "@/components/ArtworkDrop";
 import { FundingModal } from "@/components/FundingModal";
 import { MintReveal } from "@/components/MintReveal";
 import { PokeCard } from "@/components/PokeCard";
-import { rarityStyle, typeStyle } from "@/lib/cards";
 import { useAuth } from "@/lib/auth";
 import type { CardWithPeople } from "@/lib/cards";
 import { launchCoinAndMintCard } from "@/lib/launch.functions";
 import { isNameAvailable } from "@/lib/queries";
-import { pokemonArtwork } from "@/lib/pairings";
-import { suggestPairing, type PairingSuggestion } from "@/lib/pairing.functions";
 import { getMyWallet } from "@/lib/wallet.functions";
 
 export const Route = createFileRoute("/_authenticated/mint")({
   head: () => ({
     meta: [
-      { title: "Mint a card · Poke" },
+      { title: "Mint an NFT · Poke" },
       {
         name: "description",
         content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
       },
-      { property: "og:title", content: "Mint a card · Poke" },
+      { property: "og:title", content: "Mint an NFT · Poke" },
       {
         property: "og:description",
         content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
@@ -52,12 +49,8 @@ function MintPage() {
   const [mintedCard, setMintedCard] = useState<CardWithPeople | null>(null);
   const [launchSignature, setLaunchSignature] = useState<string | null>(null);
   const [showFunding, setShowFunding] = useState(false);
-  const [pairing, setPairing] = useState<PairingSuggestion | null>(null);
-  const [pairingBusy, setPairingBusy] = useState(false);
-  const [pairingError, setPairingError] = useState<string | null>(null);
   const launchCoin = useServerFn(launchCoinAndMintCard);
   const fetchWallet = useServerFn(getMyWallet);
-  const findPokemon = useServerFn(suggestPairing);
 
   const { data: wallet } = useQuery({
     queryKey: ["my-wallet"],
@@ -93,7 +86,7 @@ function MintPage() {
 
   const preview: CardWithPeople = {
     id: "preview",
-    name: name.trim() || "Your card",
+    name: name.trim() || "Your NFT",
     name_key: "",
     ticker: ticker.trim().toUpperCase() || "TICKER",
     description: description || null,
@@ -133,28 +126,12 @@ function MintPage() {
       });
       setLaunchSignature(result.signature);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not mint the card.");
+      setError(err instanceof Error ? err.message : "Could not mint the NFT.");
     } finally {
       setBusy(false);
     }
   }
 
-  async function handleFindPokemon() {
-    if (!name.trim()) return;
-    setPairingBusy(true);
-    setPairingError(null);
-    try {
-      setPairing(await findPokemon({ data: {
-        name: name.trim(),
-        symbol: ticker.trim(),
-        description: description.trim(),
-      } }));
-    } catch (err) {
-      setPairingError(err instanceof Error ? err.message : "Could not find a pairing.");
-    } finally {
-      setPairingBusy(false);
-    }
-  }
 
   const canMint =
     !!name.trim() && !!ticker.trim() && !!imageUrl.trim() && available === true && !busy;
@@ -162,9 +139,9 @@ function MintPage() {
   return (
     <>
     <main className="mx-auto max-w-6xl px-5 py-10">
-      <h1 className="font-display text-4xl font-bold">Mint a card</h1>
+      <h1 className="font-display text-4xl font-bold">Mint an NFT</h1>
       <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-        Every mint launches a real Pump.fun coin on Solana and becomes a card. Once
+        Every mint launches a real Pump.fun coin on Solana and becomes an NFT. Once
         "Dog" is minted, nobody else can ever mint Dog — unless the holder burns it.
       </p>
 
@@ -190,13 +167,13 @@ function MintPage() {
         <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
         <div>
           <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
-          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The card appears only after Solana confirms it. Mainnet spending is irreversible.</p>
+          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The NFT appears only after Solana confirms it. Mainnet spending is irreversible.</p>
         </div>
       </div>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]">
         <form onSubmit={handleMint} className="space-y-5">
-          <Field label="Card name" hint="Permanent and unique">
+          <Field label="NFT name" hint="Permanent and unique">
             <input
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -241,68 +218,13 @@ function MintPage() {
             {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
           </Field>
 
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <div className="flex flex-wrap items-start justify-between gap-3">
-              <div>
-                <p className="text-sm font-semibold">Pair with a Pokémon</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  Not sure which Pokémon fits your coin? The Pokédex matches it for
-                  you — typing, rarity and the reason behind the call.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={handleFindPokemon}
-                disabled={!name.trim() || !ticker.trim() || pairingBusy}
-                className="poke-btn-navy shrink-0 !py-2 !px-4 text-xs disabled:opacity-40"
-              >
-                {pairingBusy ? "Consulting the Pokédex…" : "Find my Pokémon"}
-              </button>
-            </div>
-            {!name.trim() || !ticker.trim() ? (
-              !pairing && (
-                <p className="mt-3 text-xs text-muted-foreground">
-                  Type your card name and ticker above first, then tap the button.
-                </p>
-              )
-            ) : null}
-            {pairingError && <p className="mt-3 text-xs font-medium text-poke-red">{pairingError}</p>}
-            {pairing && (
-              <div className="mt-4 flex gap-4 rounded-xl bg-muted/50 p-4">
-                {pokemonArtwork(pairing.pokedex_id) ? (
-                  <img
-                    src={pokemonArtwork(pairing.pokedex_id)!}
-                    alt={pairing.pokemon_name}
-                    className="h-20 w-20 shrink-0 object-contain"
-                  />
-                ) : null}
-                <div className="min-w-0">
-                  <div className="flex flex-wrap items-center gap-2">
-                    <span className="font-display text-xl font-bold">{pairing.pokemon_name}</span>
-                    {pairing.pokedex_id ? (
-                      <span className="mono-num text-xs text-muted-foreground">
-                        #{String(pairing.pokedex_id).padStart(3, "0")}
-                      </span>
-                    ) : null}
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${rarityStyle(pairing.rarity)}`}>
-                      {pairing.rarity}
-                    </span>
-                    <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold ${typeStyle(pairing.card_type).chip}`}>
-                      {pairing.card_type}
-                    </span>
-                  </div>
-                  <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground">{pairing.explanation}</p>
-                </div>
-              </div>
-            )}
-          </div>
 
           <div className="rounded-2xl border border-border bg-card p-4">
             <div className="flex items-center justify-between gap-4">
               <div>
                 <p className="text-sm font-semibold">List for sale immediately</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  Put the card straight on the market after minting.
+                  Put the NFT straight on the market after minting.
                 </p>
               </div>
               <button
@@ -357,7 +279,7 @@ function MintPage() {
           {error && <p className="text-sm font-medium text-poke-red">{error}</p>}
 
           <button type="submit" disabled={!canMint} className="poke-btn disabled:opacity-40">
-            {busy ? "Launching on Pump.fun…" : `Launch coin + mint card · ${totalCost.toFixed(3)} SOL`}
+            {busy ? "Launching on Pump.fun…" : `Launch coin + mint NFT · ${totalCost.toFixed(3)} SOL`}
           </button>
           {busy ? <p className="text-xs text-muted-foreground">Preparing, checking, signing and confirming your Solana launch. Keep this page open.</p> : null}
         </form>

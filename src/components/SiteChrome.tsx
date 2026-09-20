@@ -7,7 +7,7 @@ const POKE_CA = "HNPFcpRpPsDdVfx9Las1af3YYpFBq3T8wcEhgRfdpoke";
 
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
-  { to: "/cards", label: "All cards" },
+  { to: "/cards", label: "All NFTs" },
   { to: "/mint", label: "Mint" },
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
@@ -41,11 +41,11 @@ export function SiteHeader() {
       <div className="bg-poke-navy-deep">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-[10px] text-white/70 sm:px-5 sm:text-[11px]">
           <span className="mono-num hidden truncate uppercase tracking-[0.18em] xs:inline sm:inline">
-            one name · one card · forever
+            one jpeg · one coin · forever
           </span>
           <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">poke</span>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-            <span className="hidden lg:inline">Burn a card and its name frees up again.</span>
+            <span className="hidden lg:inline">Burn an NFT and its name frees up again.</span>
             <button
               type="button"
               onClick={() => {
@@ -125,7 +125,7 @@ export function SiteHeader() {
             {user ? (
               <>
                 <Link to="/gallery" className={linkClass} activeProps={linkActive}>
-                  My Cards
+                  My NFTs
                 </Link>
                 <Link
                   to="/account"
@@ -137,10 +137,10 @@ export function SiteHeader() {
                   </span>
                   <span className="flex min-w-0 flex-col leading-none">
                     <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
-                      Trainer
+                      Collector
                     </span>
                     <span className="truncate text-sm font-bold text-white transition-colors group-hover:text-poke-yellow">
-                      {username ?? "Trainer"}
+                      {username ?? "Collector"}
                     </span>
                   </span>
                   <span
@@ -155,7 +155,7 @@ export function SiteHeader() {
               </Link>
             )}
             <Link to="/mint" className="poke-btn ml-2 !py-2 !px-4 text-sm">
-              Mint a card
+              Mint an NFT
             </Link>
           </nav>
 
@@ -209,7 +209,7 @@ export function SiteHeader() {
                     className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
                     activeProps={{ className: "bg-poke-yellow text-poke-navy hover:text-poke-navy" }}
                   >
-                    My Cards
+                    My NFTs
                   </Link>
                   <Link
                     to="/account"
@@ -221,10 +221,10 @@ export function SiteHeader() {
                     </span>
                     <span className="flex min-w-0 flex-col leading-none">
                       <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
-                        Trainer
+                        Collector
                       </span>
                       <span className="truncate text-base font-bold text-white">
-                        {username ?? "Trainer"}
+                        {username ?? "Collector"}
                       </span>
                     </span>
                   </Link>
@@ -247,8 +247,8 @@ export function SiteHeader() {
 
 const footerExplore: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
-  { to: "/mint", label: "Mint a card" },
-  { to: "/cards", label: "All cards" },
+  { to: "/mint", label: "Mint an NFT" },
+  { to: "/cards", label: "All NFTs" },
   { to: "/buy", label: "Buy" },
   { to: "/sell", label: "Sell" },
   { to: "/buyback", label: "Buybacks" },
@@ -256,16 +256,16 @@ const footerExplore: { to: string; label: string; exact?: boolean }[] = [
 
 const footerAccount: { to: string; label: string }[] = [
   { to: "/auth", label: "Sign in / Create account" },
-  { to: "/account", label: "My binder" },
-  { to: "/gallery", label: "My Cards" },
-  { to: "/mint", label: "Launch a card (0.1 SOL flat fee)" },
+  { to: "/account", label: "My collection" },
+  { to: "/gallery", label: "My NFTs" },
+  { to: "/mint", label: "Launch an NFT (0.1 SOL flat fee)" },
 ];
 
 const footerHowTo: { to: string; label: string }[] = [
   { to: "/docs#what", label: "What is Poke?" },
   { to: "/docs#start", label: "Getting started" },
   { to: "/docs#fund", label: "Funding your wallet" },
-  { to: "/docs#mint", label: "Minting a card" },
+  { to: "/docs#mint", label: "Minting an NFT" },
   { to: "/docs#trade", label: "Buying, selling & burning" },
   { to: "/docs#buyback", label: "Fees & the $POKE buyback" },
   { to: "/docs#faq", label: "FAQ" },
@@ -283,8 +283,8 @@ export function SiteFooter() {
             <span className="font-display text-xl font-bold text-poke-yellow">Poke</span>
           </div>
           <p className="text-xs leading-relaxed">
-            One name · one card · forever. Every coin launched on Poke becomes a one-of-one trading
-            card with a real Pump.fun launch — burn a card and its name frees up again.
+            One jpeg · one coin · forever. Every NFT minted on Poke launches a real Pump.fun coin
+            attached to it — burn an NFT and its name frees up again.
           </p>
           <button
             type="button"
@@ -371,9 +371,8 @@ export function SiteFooter() {
             (it covers the launch and network fees).
           </p>
           <p>
-            Pokémon and card artwork belong to Nintendo, Creatures and GAME FREAK / The Pokémon
-            Company — no affiliation. Crypto is risky: never deposit more than you can afford to
-            lose.
+            Artwork belongs to the people who upload it. Crypto is risky: never deposit more than
+            you can afford to lose.
           </p>
           <p>© {new Date().getFullYear()} Poke · collectpoke.fun</p>
         </div>

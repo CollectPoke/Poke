@@ -6,7 +6,7 @@ import { acceptOffer, declineOffer, makeOffer, withdrawOffer } from "@/lib/offer
 import { offersForCard } from "@/lib/queries";
 
 /**
- * Offers on a card: owners see incoming requests and accept or decline them,
+ * Offers on an NFT: owners see incoming requests and accept or decline them,
  * everyone else can ask the owner to sell at their own price.
  */
 export function OfferPanel({
@@ -82,13 +82,13 @@ export function OfferPanel({
   return (
     <div className="mt-4 rounded-2xl border border-border bg-card p-5 shadow-card">
       <h3 className="font-display text-lg font-bold">
-        {isOwner ? "Offers on your card" : "Make an offer"}
+        {isOwner ? "Offers on your NFT" : "Make an offer"}
       </h3>
 
       {isOwner ? (
         incoming.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">
-            No offers yet. Trainers can ask to buy this card at their own price.
+            No offers yet. Collectors can ask to buy this NFT at their own price.
           </p>
         ) : (
           <ul className="mt-3 space-y-2">
@@ -100,7 +100,7 @@ export function OfferPanel({
                 <div className="min-w-0 flex-1">
                   <p className="text-sm font-bold">
                     <span className="mono-num text-poke-blue">{o.price} SOL</span> from{" "}
-                    {o.buyer?.username ?? "a trainer"}
+                    {o.buyer?.username ?? "a collector"}
                   </p>
                   {o.message ? (
                     <p className="mt-0.5 truncate text-xs text-muted-foreground">"{o.message}"</p>

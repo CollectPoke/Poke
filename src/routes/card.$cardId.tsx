@@ -14,10 +14,10 @@ import { burnCard, buyCardWithSol } from "@/lib/wallet.functions";
 export const Route = createFileRoute("/card/$cardId")({
   head: () => ({
     meta: [
-      { title: "Card · Poke" },
-      { name: "description", content: "A one-of-one card launched on Poke." },
-      { property: "og:title", content: "Card · Poke" },
-      { property: "og:description", content: "A one-of-one card launched on Poke." },
+      { title: "NFT · Poke" },
+      { name: "description", content: "A one-of-one NFT launched on Poke." },
+      { property: "og:title", content: "NFT · Poke" },
+      { property: "og:description", content: "A one-of-one NFT launched on Poke." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -25,15 +25,15 @@ export const Route = createFileRoute("/card/$cardId")({
   component: CardPage,
   errorComponent: () => (
     <main className="mx-auto max-w-2xl px-5 py-20 text-center">
-      <h1 className="font-display text-2xl font-bold">This card didn't load</h1>
+      <h1 className="font-display text-2xl font-bold">This NFT didn't load</h1>
       <Link to="/cards" className="poke-btn mt-6 inline-flex">
-        Back to all cards
+        Back to all NFTs
       </Link>
     </main>
   ),
   notFoundComponent: () => (
     <main className="mx-auto max-w-2xl px-5 py-20 text-center">
-      <h1 className="font-display text-2xl font-bold">Card not found</h1>
+      <h1 className="font-display text-2xl font-bold">NFT not found</h1>
     </main>
   ),
 });
@@ -96,8 +96,8 @@ function CardPage() {
       const res = await burnOnChain({ data: { cardId } });
       setBurnNote(
         res.refunded
-          ? `Card burned — ${res.amount} SOL burn reward sent to your wallet.`
-          : "Card burned. The burn reward could not be sent right now.",
+          ? `NFT burned — ${res.amount} SOL burn reward sent to your wallet.`
+          : "NFT burned. The burn reward could not be sent right now.",
       );
     },
     onSuccess: () => {
@@ -114,9 +114,9 @@ function CardPage() {
   if (!card) {
     return (
       <main className="mx-auto max-w-2xl px-5 py-20 text-center">
-        <h1 className="font-display text-2xl font-bold">Card not found</h1>
+        <h1 className="font-display text-2xl font-bold">NFT not found</h1>
         <Link to="/cards" className="poke-btn mt-6 inline-flex">
-          Back to all cards
+          Back to all NFTs
         </Link>
       </main>
     );
@@ -142,7 +142,7 @@ function CardPage() {
     <>
     <main className="mx-auto max-w-5xl px-5 py-10">
       <Link to="/cards" className="text-xs font-semibold text-muted-foreground hover:underline">
-        ← All cards
+        ← All NFTs
       </Link>
 
       <div className="mt-4 grid gap-8 md:grid-cols-[320px_1fr]">
@@ -198,7 +198,7 @@ function CardPage() {
             {!user ? (
               <div>
                 <p className="text-sm text-muted-foreground">
-                  Sign in to buy this card or mint one of your own.
+                  Sign in to buy this NFT or mint one of your own.
                 </p>
                 <Link to="/auth" className="poke-btn mt-3 inline-flex">
                   Sign in
@@ -210,7 +210,7 @@ function CardPage() {
               </p>
             ) : isOwner ? (
               <div className="space-y-3">
-                <p className="text-sm font-semibold">You own this card.</p>
+                <p className="text-sm font-semibold">You own this NFT.</p>
                 {card.list_price === null ? (
                   <div className="flex flex-wrap gap-2">
                     <input
@@ -251,7 +251,7 @@ function CardPage() {
                   disabled={action.isPending}
                   className="block text-xs font-semibold text-poke-red underline underline-offset-4"
                 >
-                  Burn this card
+                  Burn this NFT
                 </button>
               </div>
             ) : card.list_price !== null ? (
@@ -273,7 +273,7 @@ function CardPage() {
               </div>
             ) : (
               <p className="text-sm text-muted-foreground">
-                This card is not for sale right now.
+                This NFT is not for sale right now.
               </p>
             )}
             {error && <p className="mt-3 text-sm font-medium text-poke-red">{error}</p>}
@@ -333,7 +333,7 @@ function CardPage() {
                 <Link to="/auth" className="font-bold text-poke-blue underline">
                   Sign in
                 </Link>{" "}
-                to see this card's full history.
+                to see this NFT's full history.
               </p>
             ) : (events ?? []).length === 0 ? (
               <p className="p-4 text-sm text-muted-foreground">Nothing yet.</p>

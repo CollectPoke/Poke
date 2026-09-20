@@ -19,9 +19,9 @@ export function SaleCelebration({ cardName, ticker, imageUrl, price, buyer, sign
         <div className="mx-auto size-28 overflow-hidden rounded-full border-4 border-poke-yellow bg-secondary shadow-2xl">
           {imageUrl ? <img src={imageUrl} alt={cardName} className="h-full w-full object-cover" /> : <span className="flex h-full items-center justify-center font-display text-4xl font-bold text-poke-navy">{cardName.slice(0, 1)}</span>}
         </div>
-        <p className="mt-5 font-display text-sm font-bold uppercase tracking-[0.2em] text-poke-yellow">Card sold!</p>
+        <p className="mt-5 font-display text-sm font-bold uppercase tracking-[0.2em] text-poke-yellow">NFT sold!</p>
         <h2 id="sale-celebration-title" className="mt-1 font-display text-4xl font-extrabold text-primary-foreground">You made a sale</h2>
-        <p className="mt-2 text-primary-foreground/70">{cardName} <span className="font-bold">${ticker}</span> found a new trainer: {buyer}.</p>
+        <p className="mt-2 text-primary-foreground/70">{cardName} <span className="font-bold">${ticker}</span> found a new collector: {buyer}.</p>
         <div className="my-5 rounded-2xl border border-poke-yellow/35 bg-poke-yellow/10 p-4">
           <p className="text-xs font-bold uppercase tracking-widest text-primary-foreground/55">Received</p>
           <p className="mono-num mt-1 font-display text-4xl font-extrabold text-poke-yellow">{price === null ? "—" : formatPokeCoin(price)} SOL</p>

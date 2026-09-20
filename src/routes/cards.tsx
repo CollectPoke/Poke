@@ -8,15 +8,15 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/cards")({
   head: () => ({
     meta: [
-      { title: "All cards · Poke" },
+      { title: "All NFTs · Poke" },
       {
         name: "description",
-        content: "Browse every one-of-one card launched on Poke. One name, one card, forever.",
+        content: "Browse every one-of-one NFT launched on Poke. One name, one NFT, forever.",
       },
-      { property: "og:title", content: "All cards · Poke" },
+      { property: "og:title", content: "All NFTs · Poke" },
       {
         property: "og:description",
-        content: "Browse every one-of-one card launched on Poke. One name, one card, forever.",
+        content: "Browse every one-of-one NFT launched on Poke. One name, one NFT, forever.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -43,7 +43,7 @@ function CardsPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
-      <h1 className="font-display text-4xl font-bold">All cards</h1>
+      <h1 className="font-display text-4xl font-bold">All NFTs</h1>
       <p className="mt-1 text-sm text-muted-foreground">
         Every name can only be minted once. If you see it here, it can never be launched again.
       </p>
@@ -64,7 +64,7 @@ function CardsPage() {
       </div>
 
       {isLoading ? (
-        <p className="mt-10 text-sm text-muted-foreground">Loading cards…</p>
+        <p className="mt-10 text-sm text-muted-foreground">Loading NFTs…</p>
       ) : error ? (
         <p className="mt-10 text-sm text-poke-red">Could not load cards. Try refreshing.</p>
       ) : cards.length === 0 ? (
@@ -74,7 +74,7 @@ function CardsPage() {
             Be the first to claim a name before someone else does.
           </p>
           <Link to="/mint" className="poke-btn mt-5 inline-flex">
-            Mint a card
+            Mint an NFT
           </Link>
         </div>
       ) : (

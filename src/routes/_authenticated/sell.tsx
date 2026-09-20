@@ -11,10 +11,10 @@ import type { CardWithPeople } from "@/lib/cards";
 export const Route = createFileRoute("/_authenticated/sell")({
   head: () => ({
     meta: [
-      { title: "Sell cards · Poke" },
-      { name: "description", content: "List your Poke cards for sale in SOL." },
-      { property: "og:title", content: "Sell cards · Poke" },
-      { property: "og:description", content: "List your Poke cards for sale in SOL." },
+      { title: "Sell NFTs · Poke" },
+      { name: "description", content: "List your Poke NFTs for sale in SOL." },
+      { property: "og:title", content: "Sell NFTs · Poke" },
+      { property: "og:description", content: "List your Poke NFTs for sale in SOL." },
     ],
   }),
   component: SellPage,
@@ -82,23 +82,23 @@ function SellPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Sell</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        List your cards for sale in SOL, or wait for trainers to send you an offer. Either way the
+        List your NFTs for sale in SOL, or wait for collectors to send you an offer. Either way the
         SOL lands straight in your Poke wallet.
       </p>
 
       {isLoading ? (
-        <p className="mt-10 text-sm text-muted-foreground">Loading your cards…</p>
+        <p className="mt-10 text-sm text-muted-foreground">Loading your NFTs…</p>
       ) : owned.length === 0 ? (
         <div className="mt-10 rounded-2xl border border-dashed border-border p-12 text-center">
-          <p className="font-display text-xl font-bold">You don't own any cards yet</p>
+          <p className="font-display text-xl font-bold">You don't own any NFTs yet</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Mint or buy a card first, then list it here.
+            Mint or buy an NFT first, then list it here.
           </p>
           <Link to="/mint" className="poke-btn mt-5 inline-flex">
-            Mint a card
+            Mint an NFT
           </Link>
           <Link to="/buy" className="ml-3 inline-flex rounded-xl border-2 border-border bg-card px-5 py-2.5 text-sm font-bold text-muted-foreground transition-colors hover:bg-secondary">
-            Browse cards for sale
+            Browse NFTs for sale
           </Link>
         </div>
       ) : (

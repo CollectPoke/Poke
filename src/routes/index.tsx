@@ -8,17 +8,17 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Poke · One name, one card, forever" },
+      { title: "Poke · One jpeg, one coin, forever" },
       {
         name: "description",
         content:
-          "Launch a coin on Poke and it becomes a one-of-one trading card. Only one Dog can ever exist. Buy, sell, mint and burn.",
+          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached. Buy, sell, mint and burn.",
       },
-      { property: "og:title", content: "Poke · One name, one card, forever" },
+      { property: "og:title", content: "Poke · One jpeg, one coin, forever" },
       {
         property: "og:description",
         content:
-          "Launch a coin on Poke and it becomes a one-of-one trading card. Only one Dog can ever exist.",
+          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -48,25 +48,26 @@ function Home() {
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr]">
           <div className="text-white">
             <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
-              One name, one card, forever
+              One jpeg, one coin, forever
             </span>
             <h1 className="mt-4 font-display text-5xl font-bold leading-[1.05] drop-shadow sm:text-6xl">
-              Launch your coin as a card nobody can copy.
+              Mint your jpeg. Get a coin with it.
             </h1>
             <p className="mt-4 max-w-lg text-base text-white/85">
-              Every coin launched on Poke comes out as a trading card, with its contract address
-              printed at the bottom. Only one "Dog" can ever exist. Mint it, hold it, sell it — or
-              burn it and set the name free.
+              Upload an image, pick a name and a ticker. Poke mints it as a one-of-one NFT and
+              launches a real coin for it on Pump.fun, with the contract address printed right on
+              the piece. Only one of each name can ever exist. Hold it, sell it — or burn it and
+              set the name free.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link to="/mint" className="poke-btn">
-                Mint a card
+                Mint an NFT
               </Link>
               <Link
                 to="/cards"
                 className="rounded-full border-2 border-white/60 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/10"
               >
-                Browse all cards
+                Browse all NFTs
               </Link>
             </div>
           </div>
@@ -86,7 +87,7 @@ function Home() {
               </div>
             ) : (
               <div className="rotate-[-3deg] rounded-2xl border-4 border-poke-yellow bg-card/95 p-8 text-center">
-                <p className="font-display text-xl font-bold">No cards minted yet</p>
+                <p className="font-display text-xl font-bold">No NFTs minted yet</p>
                 <p className="mt-1 text-sm text-muted-foreground">
                   The first name is still up for grabs.
                 </p>
@@ -103,14 +104,14 @@ function Home() {
           <Tile color="bg-poke-yellow text-poke-navy" step="01" title="Claim the name">
             Pick a name and ticker. If it's taken, it's gone — the site refuses a second one.
           </Tile>
-          <Tile color="bg-poke-blue text-white" step="02" title="Mint the card">
-            Your coin prints as a card with its image, ticker and contract address.
+          <Tile color="bg-poke-blue text-white" step="02" title="Mint the NFT">
+            Your jpeg becomes a one-of-one NFT with its ticker and coin address on it.
           </Tile>
           <Tile color="bg-poke-green text-white" step="03" title="Trade it">
             List it for sale, and anyone with an account can buy it. Ownership moves instantly.
           </Tile>
           <Tile color="bg-poke-purple text-white" step="04" title="Or burn it">
-            Burning retires the card and releases the name for someone else to claim.
+            Burning retires the NFT and releases the name for someone else to claim.
           </Tile>
         </div>
       </section>
@@ -155,7 +156,7 @@ function Home() {
               Every name is still available. Claim one.
             </p>
             <Link to="/mint" className="poke-btn mt-5 inline-flex">
-              Mint the first card
+              Mint the first NFT
             </Link>
           </div>
         ) : restCards.length > 0 ? (
@@ -168,7 +169,7 @@ function Home() {
           </div>
         ) : (
           <p className="mt-5 text-sm text-muted-foreground">
-            The newest 10 are up in the hero — <Link to="/cards" className="font-semibold text-poke-blue hover:underline">see every card →</Link>
+            The newest 10 are up in the hero — <Link to="/cards" className="font-semibold text-poke-blue hover:underline">see every NFT →</Link>
           </p>
         )}
 
