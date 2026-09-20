@@ -61,15 +61,15 @@ function BuybackPage() {
 
   return (
     <main>
-      <section className="bg-poke-navy">
-        <div className="mx-auto max-w-6xl px-5 py-14 text-white">
+      <section className="border-b border-border bg-white">
+        <div className="mx-auto max-w-6xl px-5 py-14 text-foreground">
           <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-yellow-foreground">
             100% of fees · every 10 minutes
           </span>
           <h1 className="mt-4 font-display text-4xl font-bold sm:text-5xl">
             Every fee buys back $POKE.
           </h1>
-          <p className="mt-3 max-w-2xl text-white/80">
+          <p className="mt-3 max-w-2xl text-muted-foreground">
             Every coin launched on JPEG pays fees, and 100% of them go one place: buying $POKE on
             the open market. It runs every 10 minutes, and every single run is posted here with its
             Solscan transaction so you can check it yourself.

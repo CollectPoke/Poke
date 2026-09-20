@@ -28,8 +28,8 @@ export function BuybackTicker({ withCta = false }: { withCta?: boolean }) {
   const urgent = seconds !== null && seconds <= 60;
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/10 bg-poke-navy text-white shadow-card">
-      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-white/10 px-5 py-3">
+    <div className="overflow-hidden rounded-2xl border border-border bg-card text-foreground shadow-card">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-border px-5 py-3">
         <span className="flex items-center gap-2 text-[11px] font-bold uppercase tracking-widest text-poke-green">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-poke-green opacity-75" />
@@ -37,12 +37,12 @@ export function BuybackTicker({ withCta = false }: { withCta?: boolean }) {
           </span>
           Live
         </span>
-        <span className="text-[11px] font-bold uppercase tracking-widest text-white/50">
+        <span className="text-[11px] font-bold uppercase tracking-widest text-muted-foreground">
           Fee engine · 100% → $POKE buyback
         </span>
       </div>
 
-      <div className="grid grid-cols-2 gap-px bg-white/10 sm:grid-cols-4">
+      <div className="grid grid-cols-2 gap-px bg-border sm:grid-cols-4">
         <Cell
           label="Next buyback"
           value={seconds === null ? "--:--" : countdownLabel(seconds * 1000)}
@@ -57,14 +57,14 @@ export function BuybackTicker({ withCta = false }: { withCta?: boolean }) {
       </div>
 
       <div className="px-5 py-4">
-        <div className="flex h-2.5 overflow-hidden rounded-full bg-white/10">
+        <div className="flex h-2.5 overflow-hidden rounded-full bg-muted">
           <div className="h-full w-full bg-poke-green" />
         </div>
         <div className="mt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] font-bold uppercase tracking-widest">
           <span className="text-poke-green">100% buys back $POKE</span>
-          <span className="text-white/45">0% team · 0% treasury · 0% skim</span>
+          <span className="text-muted-foreground">0% team · 0% treasury · 0% skim</span>
         </div>
-        <p className="mt-3 text-xs leading-relaxed text-white/60">
+        <p className="mt-3 text-xs leading-relaxed text-muted-foreground">
           No 70/15/10/5 split to remember — there is one number. Every run is timed on a fixed
           10-minute clock (nobody picks the moment) and lands on-chain with a Solscan link, so you
           can verify the amount and the timing yourself instead of trusting a dashboard.
@@ -84,8 +84,8 @@ export function BuybackTicker({ withCta = false }: { withCta?: boolean }) {
 
 function Cell({ label, value, accent }: { label: string; value: string; accent?: string | undefined }) {
   return (
-    <div className="bg-poke-navy px-5 py-4">
-      <p className="text-[10px] font-bold uppercase tracking-widest text-white/50">{label}</p>
+    <div className="bg-muted px-5 py-4">
+      <p className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{label}</p>
       <p className={`mono-num mt-1 text-2xl font-bold tabular-nums ${accent ?? ""}`}>{value}</p>
     </div>
   );

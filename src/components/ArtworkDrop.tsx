@@ -139,10 +139,10 @@ export function ArtworkDrop({
               className="absolute inset-0 h-full w-full object-contain p-3"
             />
             <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-poke-navy/90 to-transparent px-4 pb-3 pt-10 text-center">
-              <p className="text-sm font-bold text-white">
+              <p className="text-sm font-bold text-foreground">
                 {uploading ? "Uploading…" : "Artwork ready"}
               </p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-muted-foreground">
                 {uploading ? "One moment." : "Drop another image to replace it."}
               </p>
             </div>

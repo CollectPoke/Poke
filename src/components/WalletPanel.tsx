@@ -183,7 +183,7 @@ export function WalletPanel() {
               placeholder="0.00"
               className="mono-num w-full rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-poke-blue"
             />
-            <span className="rounded-lg bg-poke-navy px-2.5 py-1.5 text-xs font-bold text-white">SOL</span>
+            <span className="rounded-lg bg-foreground px-2.5 py-1.5 text-xs font-bold text-background">SOL</span>
           </div>
           <button
             onClick={() => send.mutate()}
