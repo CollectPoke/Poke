@@ -56,7 +56,7 @@ export function FundingModal({
       className="fixed inset-0 z-50 flex items-center justify-center bg-poke-navy-deep/80 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
-      aria-label="Top up your Poke wallet"
+      aria-label="Top up your JPEG wallet"
     >
       <div className="w-full max-w-md rounded-2xl border-2 border-poke-yellow bg-card p-6 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4">

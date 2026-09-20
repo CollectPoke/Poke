@@ -14,10 +14,10 @@ import { burnCard, buyCardWithSol } from "@/lib/wallet.functions";
 export const Route = createFileRoute("/card/$cardId")({
   head: () => ({
     meta: [
-      { title: "NFT · Poke" },
-      { name: "description", content: "A one-of-one NFT launched on Poke." },
-      { property: "og:title", content: "NFT · Poke" },
-      { property: "og:description", content: "A one-of-one NFT launched on Poke." },
+      { title: "NFT · JPEG" },
+      { name: "description", content: "A one-of-one NFT launched on JPEG." },
+      { property: "og:title", content: "NFT · JPEG" },
+      { property: "og:description", content: "A one-of-one NFT launched on JPEG." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -268,7 +268,7 @@ function CardPage() {
                 </button>
 
                 <span className="w-full text-xs text-muted-foreground">
-                  Paid straight from your Poke wallet to the owner, on Solana.
+                  Paid straight from your JPEG wallet to the owner, on Solana.
                 </span>
               </div>
             ) : (

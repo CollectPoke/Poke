@@ -8,15 +8,15 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/cards")({
   head: () => ({
     meta: [
-      { title: "All NFTs · Poke" },
+      { title: "All NFTs · JPEG" },
       {
         name: "description",
-        content: "Browse every one-of-one NFT launched on Poke. One name, one NFT, forever.",
+        content: "Browse every one-of-one NFT launched on JPEG. One name, one NFT, forever.",
       },
-      { property: "og:title", content: "All NFTs · Poke" },
+      { property: "og:title", content: "All NFTs · JPEG" },
       {
         property: "og:description",
-        content: "Browse every one-of-one NFT launched on Poke. One name, one NFT, forever.",
+        content: "Browse every one-of-one NFT launched on JPEG. One name, one NFT, forever.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

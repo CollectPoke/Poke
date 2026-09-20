@@ -11,9 +11,9 @@ import type { CardWithPeople } from "@/lib/cards";
 export const Route = createFileRoute("/_authenticated/sell")({
   head: () => ({
     meta: [
-      { title: "Sell NFTs · Poke" },
+      { title: "Sell NFTs · JPEG" },
       { name: "description", content: "List your Poke NFTs for sale in SOL." },
-      { property: "og:title", content: "Sell NFTs · Poke" },
+      { property: "og:title", content: "Sell NFTs · JPEG" },
       { property: "og:description", content: "List your Poke NFTs for sale in SOL." },
     ],
   }),
@@ -83,7 +83,7 @@ function SellPage() {
       <h1 className="font-display text-4xl font-bold">Sell</h1>
       <p className="mt-1 text-sm text-muted-foreground">
         List your NFTs for sale in SOL, or wait for collectors to send you an offer. Either way the
-        SOL lands straight in your Poke wallet.
+        SOL lands straight in your JPEG wallet.
       </p>
 
       {isLoading ? (

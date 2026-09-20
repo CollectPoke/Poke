@@ -16,15 +16,15 @@ import { getMyWallet } from "@/lib/wallet.functions";
 export const Route = createFileRoute("/_authenticated/mint")({
   head: () => ({
     meta: [
-      { title: "Mint an NFT · Poke" },
+      { title: "Mint an NFT · JPEG" },
       {
         name: "description",
-        content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
+        content: "Launch a coin as a one-of-one JPEG. Each name can only exist once.",
       },
-      { property: "og:title", content: "Mint an NFT · Poke" },
+      { property: "og:title", content: "Mint an NFT · JPEG" },
       {
         property: "og:description",
-        content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
+        content: "Launch a coin as a one-of-one JPEG. Each name can only exist once.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -167,7 +167,7 @@ function MintPage() {
         <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
         <div>
           <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
-          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The NFT appears only after Solana confirms it. Mainnet spending is irreversible.</p>
+          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your JPEG wallet signs the Pump.fun launch. The NFT appears only after Solana confirms it. Mainnet spending is irreversible.</p>
         </div>
       </div>
 

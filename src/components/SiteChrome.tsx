@@ -67,7 +67,7 @@ export function SiteHeader() {
             </button>
             <Link
               to="/docs"
-              aria-label="Poke docs and how-to"
+              aria-label="JPEG docs and how-to"
               className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-white transition-colors hover:text-poke-yellow"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
@@ -79,7 +79,7 @@ export function SiteHeader() {
               href="https://github.com/CollectPoke/poke"
               target="_blank"
               rel="noreferrer"
-              aria-label="Poke on GitHub"
+              aria-label="JPEG on GitHub"
               className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-white transition-colors hover:text-poke-yellow"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
@@ -91,7 +91,7 @@ export function SiteHeader() {
               href="https://x.com/CollectPokeFun"
               target="_blank"
               rel="noreferrer"
-              aria-label="Poke on X"
+              aria-label="JPEG on X"
               className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-white transition-colors hover:text-poke-yellow"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
@@ -263,7 +263,7 @@ const footerAccount: { to: string; label: string }[] = [
 ];
 
 const footerHowTo: { to: string; label: string }[] = [
-  { to: "/docs#what", label: "What is Poke?" },
+  { to: "/docs#what", label: "What is JPEG?" },
   { to: "/docs#start", label: "Getting started" },
   { to: "/docs#fund", label: "Funding your wallet" },
   { to: "/docs#mint", label: "Minting an NFT" },
@@ -284,7 +284,7 @@ export function SiteFooter() {
             <span className="font-display text-xl font-bold text-poke-yellow">Poke</span>
           </div>
           <p className="text-xs leading-relaxed">
-            One jpeg · one coin · forever. Every NFT minted on Poke launches a real Pump.fun coin
+            One jpeg · one coin · forever. Every NFT minted on JPEG launches a real Pump.fun coin
             attached to it — burn an NFT and its name frees up again.
           </p>
           <button
@@ -309,7 +309,7 @@ export function SiteFooter() {
               href="https://x.com/CollectPokeFun"
               target="_blank"
               rel="noreferrer"
-              aria-label="Poke on X"
+              aria-label="JPEG on X"
               className="text-white/80 transition-colors hover:text-poke-yellow"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4.5 w-4.5" aria-hidden="true">
@@ -320,7 +320,7 @@ export function SiteFooter() {
               href="https://github.com/CollectPoke/poke"
               target="_blank"
               rel="noreferrer"
-              aria-label="Poke on GitHub"
+              aria-label="JPEG on GitHub"
               className="text-white/80 transition-colors hover:text-poke-yellow"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4.5 w-4.5" aria-hidden="true">
@@ -375,7 +375,7 @@ export function SiteFooter() {
             Artwork belongs to the people who upload it. Crypto is risky: never deposit more than
             you can afford to lose.
           </p>
-          <p>© {new Date().getFullYear()} Poke · collectpoke.fun</p>
+          <p>© {new Date().getFullYear()} JPEG · mintjpeg.com</p>
         </div>
       </div>
     </footer>

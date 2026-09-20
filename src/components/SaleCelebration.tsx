@@ -25,7 +25,7 @@ export function SaleCelebration({ cardName, ticker, imageUrl, price, buyer, sign
         <div className="my-5 rounded-2xl border border-poke-yellow/35 bg-poke-yellow/10 p-4">
           <p className="text-xs font-bold uppercase tracking-widest text-primary-foreground/55">Received</p>
           <p className="mono-num mt-1 font-display text-4xl font-extrabold text-poke-yellow">{price === null ? "—" : formatPokeCoin(price)} SOL</p>
-          <p className="mt-1 text-xs text-primary-foreground/55">Sent directly to your Poke wallet</p>
+          <p className="mt-1 text-xs text-primary-foreground/55">Sent directly to your JPEG wallet</p>
         </div>
         <Button onClick={onClose} className="h-12 w-full rounded-full bg-poke-yellow font-display font-bold text-poke-yellow-foreground hover:bg-poke-yellow/90">Collect & continue</Button>
         <Button asChild variant="ghost" className="mt-2 text-primary-foreground/65 hover:bg-primary-foreground/10 hover:text-primary-foreground"><a href={`https://solscan.io/tx/${signature}`} target="_blank" rel="noreferrer">View receipt on Solscan ↗</a></Button>

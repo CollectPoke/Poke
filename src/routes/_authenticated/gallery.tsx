@@ -10,12 +10,12 @@ import { formatPokeCoin } from "@/lib/cards";
 export const Route = createFileRoute("/_authenticated/gallery")({
   head: () => ({
     meta: [
-      { title: "My NFTs · Poke" },
-      { name: "description", content: "Every NFT you minted on Poke, with its artwork and coin." },
-      { property: "og:title", content: "My NFTs · Poke" },
+      { title: "My NFTs · JPEG" },
+      { name: "description", content: "Every NFT you minted on JPEG, with its artwork and coin." },
+      { property: "og:title", content: "My NFTs · JPEG" },
       {
         property: "og:description",
-        content: "Every NFT you minted on Poke, with its artwork and coin.",
+        content: "Every NFT you minted on JPEG, with its artwork and coin.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

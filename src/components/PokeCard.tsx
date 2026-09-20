@@ -5,7 +5,7 @@ type Props = {
   compact?: boolean;
 };
 
-export function PokeCard({ card, compact = false }: Props) {
+export function JPEGCard({ card, compact = false }: Props) {
   const burned = card.status === "burned";
 
   return (

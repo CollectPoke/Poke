@@ -3,17 +3,17 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 export const Route = createFileRoute("/docs")({
   head: () => ({
     meta: [
-      { title: "Docs & How to — Poke" },
+      { title: "Docs & How to — JPEG" },
       {
         name: "description",
         content:
-          "Everything you need to know about Poke: how minting launches a real coin, how the built-in wallet works, buying, selling, burning and the 10-minute $POKE buyback.",
+          "Everything you need to know about JPEG: how minting launches a real coin, how the built-in wallet works, buying, selling, burning and the 10-minute $POKE buyback.",
       },
-      { property: "og:title", content: "Docs & How to — Poke" },
+      { property: "og:title", content: "Docs & How to — JPEG" },
       {
         property: "og:description",
         content:
-          "How Poke works: one-of-one NFTs with a real coin attached, a built-in wallet, and fees that buy back $POKE every 10 minutes.",
+          "How JPEG works: one-of-one NFTs with a real coin attached, a built-in wallet, and fees that buy back $POKE every 10 minutes.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -23,7 +23,7 @@ export const Route = createFileRoute("/docs")({
 });
 
 const sections = [
-  { id: "what", title: "What is Poke?" },
+  { id: "what", title: "What is JPEG?" },
   { id: "start", title: "Getting started" },
   { id: "fund", title: "Funding your wallet" },
   { id: "mint", title: "Minting an NFT" },
@@ -44,7 +44,7 @@ function DocsPage() {
           Docs &amp; How to
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-sm text-card/85 sm:text-base">
-          Everything about Poke in one place — what it is, how minting launches
+          Everything about JPEG in one place — what it is, how minting launches
           a real coin, and how buying, selling and the buyback work.
         </p>
       </header>
@@ -73,10 +73,10 @@ function DocsPage() {
 
         {/* Body */}
         <div className="space-y-6">
-          <DocCard id="what" title="What is Poke?">
+          <DocCard id="what" title="What is JPEG?">
             <p>
-              Poke is an NFT launchpad where every piece comes with a coin. You
-              upload a jpeg, pick a name and a ticker, and Poke mints it as a{" "}
+              JPEG is an NFT launchpad where every piece comes with a coin. You
+              upload a jpeg, pick a name and a ticker, and JPEG mints it as a{" "}
               <strong>one-of-one NFT</strong> while launching a real coin for it
               on Solana via Pump.fun. The contract address is printed on the NFT
               forever.
@@ -119,7 +119,7 @@ function DocsPage() {
 
           <DocCard id="fund" title="Funding your wallet">
             <p>
-              Every Poke account has a built-in Solana wallet. To fund it, send
+              Every JPEG account has a built-in Solana wallet. To fund it, send
               SOL from anywhere (an exchange, Phantom, a friend) to the deposit
               address on your profile page.
             </p>
@@ -153,7 +153,7 @@ function DocsPage() {
               </li>
               <li>
                 Hit <strong>Launch coin + mint NFT</strong>. The cost is a flat{" "}
-                <strong>0.1 SOL launch fee</strong>, taken from your Poke wallet —
+                <strong>0.1 SOL launch fee</strong>, taken from your JPEG wallet —
                 that covers the real Pump.fun launch and network fees.
               </li>
               <li>
@@ -172,8 +172,8 @@ function DocsPage() {
             </p>
             <p>
               <strong>Buying:</strong> open a listed NFT and hit buy. The exact
-              SOL amount moves straight from your Poke wallet to the seller's
-              Poke wallet on Solana — then ownership transfers to you. Every
+              SOL amount moves straight from your JPEG wallet to the seller's
+              JPEG wallet on Solana — then ownership transfers to you. Every
               sale gets a Solscan receipt in the NFT's history.
             </p>
             <p>
@@ -184,7 +184,7 @@ function DocsPage() {
 
           <DocCard id="buyback" title="Fees & the $POKE buyback">
             <p>
-              100% of the fees from coins launched on Poke are used to{" "}
+              100% of the fees from coins launched on JPEG are used to{" "}
               <strong>buy back $POKE</strong>. A run happens every{" "}
               <strong>10 minutes</strong>, and every run is posted to the{" "}
               <Link to="/buyback" className="font-semibold text-poke-blue underline">
