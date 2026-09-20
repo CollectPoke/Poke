@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ArtworkDrop } from "@/components/ArtworkDrop";
 import { FundingModal } from "@/components/FundingModal";
 import { MintReveal } from "@/components/MintReveal";
-import { NftCard } from "@/components/NftCard";
+import { Button } from "@/components/ui/button";
 import { useAuth } from "@/lib/auth";
 import type { CardWithPeople } from "@/lib/cards";
 import { launchCoinAndMintCard } from "@/lib/launch.functions";
@@ -59,11 +59,6 @@ function MintPage() {
   });
   const totalCost = 0.1;
   const underfunded = wallet !== undefined && wallet.balance < totalCost;
-
-  // Pop the funding window as soon as we know the balance is too low.
-  useEffect(() => {
-    if (underfunded) setShowFunding(true);
-  }, [underfunded]);
 
   useEffect(() => {
     const trimmed = name.trim();
@@ -139,170 +134,195 @@ function MintPage() {
 
   return (
     <>
-      <main className="mx-auto max-w-6xl px-5 py-10">
-        <h1 className="font-display text-4xl font-bold">Mint an NFT</h1>
-        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-          Every mint launches a real Pump.fun coin on Solana and becomes an NFT. Once "Dog" is
-          minted, nobody else can ever mint Dog — unless the holder burns it.
-        </p>
-
-        {underfunded && (
-          <button
-            type="button"
-            onClick={() => setShowFunding(true)}
-            className="mt-5 flex w-full items-start gap-3 rounded-2xl border-2 border-danger bg-danger/10 p-4 text-left shadow-sm transition-colors hover:border-danger/70"
-          >
-            <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-danger font-bold text-white">
-              !
-            </span>
+      <main className="mx-auto max-w-5xl px-4 py-8 sm:px-6 sm:py-14">
+        <div className="border border-foreground bg-background">
+          <header className="flex items-end justify-between gap-6 border-b border-foreground p-5 sm:p-7">
             <div>
-              <p className="text-sm font-bold">
-                Your wallet needs SOL — balance {wallet.balance.toFixed(4)} SOL
-              </p>
-              <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-                This launch costs {totalCost.toFixed(3)} SOL. Tap here to see your deposit address
-                and QR code.
+              <h1 className="text-3xl font-bold uppercase leading-none tracking-normal sm:text-4xl">
+                JPEG Launch
+              </h1>
+              <p className="mt-2 text-[11px] font-medium uppercase text-muted-foreground">
+                One image. One NFT. One coin.
               </p>
             </div>
-          </button>
-        )}
+            <div className="shrink-0 text-right">
+              <p className="text-[10px] font-bold uppercase text-muted-foreground">Network</p>
+              <p className="mono-num mt-1 text-xs sm:text-sm">SOL / Mainnet</p>
+            </div>
+          </header>
 
-        <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-brand bg-card p-4 shadow-sm">
-          <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-brand-foreground">
-            ◎
-          </span>
-          <div>
-            <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
-            <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-              Your JPEG wallet signs the Pump.fun launch. The NFT appears only after Solana confirms
-              it. Mainnet spending is irreversible.
-            </p>
-          </div>
-        </div>
-
-        <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]">
-          <form onSubmit={handleMint} className="space-y-5">
-            <Field label="NFT name" hint="Permanent and unique">
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Dog"
-                maxLength={32}
-                className={inputClass}
-              />
-              {name.trim() && (
-                <p className="mt-1.5 text-xs font-semibold">
-                  {checking ? (
-                    <span className="text-muted-foreground">Checking availability…</span>
-                  ) : available === true ? (
-                    <span className="text-success">"{name.trim()}" is available.</span>
-                  ) : available === false ? (
-                    <span className="text-danger">"{name.trim()}" is already taken.</span>
-                  ) : null}
+          <form onSubmit={handleMint} className="grid lg:grid-cols-[minmax(0,1fr)_340px]">
+            <div className="space-y-12 p-5 sm:p-8 lg:border-r lg:border-foreground">
+              <section>
+                <StepTitle number="01" title="Identity" />
+                <p className="mb-8 max-w-xl text-sm leading-relaxed text-muted-foreground">
+                  Claim a permanent name and launch its attached Pump.fun coin.
                 </p>
-              )}
-            </Field>
-
-            <Field label="Ticker">
-              <input
-                value={ticker}
-                onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                placeholder="DOG"
-                maxLength={10}
-                className={inputClass}
-              />
-            </Field>
-
-            <Field label="Description">
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={3}
-                placeholder="What is this coin about?"
-                className={inputClass}
-              />
-            </Field>
-
-            <Field label="Image">
-              {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
-            </Field>
-
-            <div className="rounded-2xl border border-border bg-card p-4">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-sm font-semibold">List for sale immediately</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">
-                    Put the NFT straight on the market after minting.
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  role="switch"
-                  aria-checked={listPrice !== ""}
-                  onClick={() => setListPrice(listPrice === "" ? "1" : "")}
-                  className={[
-                    "relative h-7 w-12 shrink-0 rounded-full transition-colors",
-                    listPrice !== "" ? "bg-success" : "bg-border",
-                  ].join(" ")}
-                >
-                  <span
-                    className={[
-                      "absolute top-0.5 size-6 rounded-full bg-white shadow transition-all",
-                      listPrice !== "" ? "left-[22px]" : "left-0.5",
-                    ].join(" ")}
-                  />
-                </button>
-              </div>
-              {listPrice !== "" && (
-                <div className="mt-3 flex items-center gap-2">
-                  <div className="relative flex-1">
+                <div className="space-y-7">
+                  <Field label="NFT name" hint="Permanent and unique">
                     <input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      value={listPrice}
-                      onChange={(e) => setListPrice(e.target.value)}
-                      placeholder="2.5"
-                      className={`${inputClass} pr-14 font-mono`}
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Dog"
+                      maxLength={32}
+                      className={inputClass}
                     />
-                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                      SOL
-                    </span>
+                    {name.trim() && (
+                      <p className="mt-1.5 text-xs font-semibold">
+                        {checking ? (
+                          <span className="text-muted-foreground">Checking availability…</span>
+                        ) : available === true ? (
+                          <span className="text-success">"{name.trim()}" is available.</span>
+                        ) : available === false ? (
+                          <span className="text-danger">"{name.trim()}" is already taken.</span>
+                        ) : null}
+                      </p>
+                    )}
+                  </Field>
+
+                  <div className="grid gap-7 sm:grid-cols-[160px_1fr]">
+                    <Field label="Ticker">
+                      <input
+                        value={ticker}
+                        onChange={(e) => setTicker(e.target.value.toUpperCase())}
+                        placeholder="DOG"
+                        maxLength={10}
+                        className={inputClass}
+                      />
+                    </Field>
+
+                    <Field label="Description">
+                      <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        rows={1}
+                        placeholder="What is this coin about?"
+                        className={inputClass}
+                      />
+                    </Field>
                   </div>
                 </div>
-              )}
+              </section>
+
+              <section className="border-t border-border pt-10">
+                <StepTitle number="02" title="Sale settings" />
+                <div className="flex items-center justify-between gap-4 border-y border-border py-5">
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-sm font-semibold">List for sale immediately</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        Put the NFT straight on the market after minting.
+                      </p>
+                    </div>
+                    <Button
+                      type="button"
+                      role="switch"
+                      aria-checked={listPrice !== ""}
+                      onClick={() => setListPrice(listPrice === "" ? "1" : "")}
+                      variant="outline"
+                      className={[
+                        "relative h-7 w-12 shrink-0 rounded-full border-foreground p-0 shadow-none transition-colors hover:bg-muted",
+                        listPrice !== "" ? "bg-foreground hover:bg-foreground/90" : "bg-background",
+                      ].join(" ")}
+                    >
+                      <span
+                        className={[
+                          "absolute top-0.5 size-5.5 rounded-full bg-background shadow transition-all",
+                          listPrice !== "" ? "left-[22px]" : "left-0.5",
+                        ].join(" ")}
+                      />
+                    </Button>
+                  </div>
+                  {listPrice !== "" && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <div className="relative flex-1">
+                        <input
+                          type="number"
+                          min={0}
+                          step="0.01"
+                          value={listPrice}
+                          onChange={(e) => setListPrice(e.target.value)}
+                          placeholder="2.5"
+                          className={`${inputClass} pr-14 font-mono`}
+                        />
+                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                          SOL
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </section>
+
+              <section className="border-t border-border pt-10">
+                <StepTitle number="03" title="Funding" />
+                <div className="bg-foreground p-5 text-background">
+                  <div className="flex items-start justify-between gap-5">
+                    <div>
+                      <p className="text-[10px] font-bold uppercase text-background/60">
+                        Wallet balance
+                      </p>
+                      <p className="mono-num mt-1 text-2xl">
+                        {wallet ? wallet.balance.toFixed(4) : "—"} SOL
+                      </p>
+                    </div>
+                    <span className="mono-num text-[10px] uppercase text-background/70">
+                      {underfunded ? "Funding required" : "Ready"}
+                    </span>
+                  </div>
+                  <div className="mt-5 flex items-end justify-between gap-5 border-t border-background/20 pt-5">
+                    <p className="max-w-sm text-xs leading-relaxed text-background/70">
+                      Flat mainnet launch cost: {totalCost.toFixed(3)} SOL. Your personal JPEG
+                      wallet signs the transaction.
+                    </p>
+                    {underfunded ? (
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setShowFunding(true)}
+                        className="shrink-0 rounded-none border-background bg-transparent text-background shadow-none hover:bg-background hover:text-foreground"
+                      >
+                        Add SOL
+                      </Button>
+                    ) : null}
+                  </div>
+                </div>
+              </section>
+
+              {error && <p className="text-sm font-medium text-danger">{error}</p>}
             </div>
 
-            <div className="rounded-2xl border border-border bg-card p-4">
-              <p className="text-sm font-semibold">Launch fee</p>
-              <p className="mt-0.5 text-xs text-muted-foreground">
-                One flat fee per launch — it covers the coin launch, network and Pump.fun fees.
-              </p>
-              <p className="mt-2 text-xs text-muted-foreground">
-                Total from your wallet:{" "}
-                <span className="font-mono font-semibold">{totalCost.toFixed(3)} SOL</span> (flat
-                launch fee)
-              </p>
-            </div>
-
-            {error && <p className="text-sm font-medium text-danger">{error}</p>}
-
-            <button type="submit" disabled={!canMint} className="primary-btn disabled:opacity-40">
-              {busy
-                ? "Launching on Pump.fun…"
-                : `Launch coin + mint NFT · ${totalCost.toFixed(3)} SOL`}
-            </button>
-            {busy ? (
-              <p className="text-xs text-muted-foreground">
-                Preparing, checking, signing and confirming your Solana launch. Keep this page open.
-              </p>
-            ) : null}
+            <aside className="flex flex-col bg-muted/50 p-5 sm:p-8">
+              <StepTitle number="04" title="Artwork" />
+              {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
+              <div className="mt-6 border-t border-border pt-5">
+                <div className="flex items-end justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="truncate text-xl font-bold">{preview.name}</p>
+                    <p className="mt-1 text-xs text-muted-foreground">1 / 1 original</p>
+                  </div>
+                  <p className="mono-num shrink-0 text-xs font-bold">${preview.ticker}</p>
+                </div>
+                {preview.description ? (
+                  <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                    {preview.description}
+                  </p>
+                ) : null}
+              </div>
+              <div className="mt-auto pt-10">
+                <Button
+                  type="submit"
+                  disabled={!canMint}
+                  className="h-16 w-full rounded-none bg-foreground text-xs font-bold uppercase text-background shadow-none hover:bg-foreground/85"
+                >
+                  {busy ? "Launching…" : `Launch · ${totalCost.toFixed(3)} SOL`}
+                </Button>
+                <p className="mt-3 text-center text-[10px] uppercase text-muted-foreground">
+                  Final on Solana after confirmation
+                </p>
+              </div>
+            </aside>
           </form>
-
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">Preview</p>
-            <NftCard card={preview} />
-          </div>
         </div>
       </main>
       {showFunding ? (
@@ -324,7 +344,16 @@ function MintPage() {
 }
 
 const inputClass =
-  "w-full rounded-xl border-2 border-border bg-card px-3.5 py-2.5 text-sm text-foreground shadow-sm outline-none transition-colors placeholder:text-muted-foreground focus:border-link";
+  "w-full rounded-none border-0 border-b border-foreground bg-transparent px-0 py-2 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground/50 focus:border-b-2";
+
+function StepTitle({ number, title }: { number: string; title: string }) {
+  return (
+    <div className="mb-6 flex items-baseline gap-4">
+      <span className="mono-num text-xs">{number}.</span>
+      <h2 className="text-lg font-bold uppercase tracking-normal">{title}</h2>
+    </div>
+  );
+}
 
 function Field({
   label,
@@ -337,9 +366,9 @@ function Field({
 }) {
   return (
     <div>
-      <label className="mb-1.5 flex items-baseline gap-2">
-        <span className="text-sm font-semibold">{label}</span>
-        {hint && <span className="text-xs text-muted-foreground">{hint}</span>}
+      <label className="mb-1.5 flex flex-wrap items-baseline gap-2">
+        <span className="text-[10px] font-bold uppercase">{label}</span>
+        {hint && <span className="text-[10px] uppercase text-muted-foreground">{hint}</span>}
       </label>
       {children}
     </div>

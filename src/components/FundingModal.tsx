@@ -3,6 +3,7 @@ import { useServerFn } from "@tanstack/react-start";
 import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { getMyWallet } from "@/lib/wallet.functions";
 
 export const LAUNCH_COST_SOL = 0.1;
@@ -53,32 +54,34 @@ export function FundingModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink-deep/80 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/70 p-4 backdrop-blur-sm"
       role="dialog"
       aria-modal="true"
       aria-label="Top up your JPEG wallet"
     >
-      <div className="w-full max-w-md rounded-2xl border-2 border-brand bg-card p-6 shadow-2xl sm:p-7">
+      <div className="w-full max-w-md border border-foreground bg-background p-6 shadow-2xl sm:p-7">
         <div className="flex items-start justify-between gap-4">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-link">Top up</p>
+            <p className="text-[10px] font-bold uppercase text-muted-foreground">Wallet funding</p>
             <h2 className="mt-1 font-display text-2xl font-bold">
               {funded ? "You're funded!" : "Add SOL to mint"}
             </h2>
           </div>
-          <button
+          <Button
             type="button"
+            variant="outline"
+            size="icon"
             onClick={onClose}
             aria-label="Close"
-            className="inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
+            className="size-8 shrink-0 rounded-none shadow-none"
           >
             ✕
-          </button>
+          </Button>
         </div>
 
         {funded ? (
-          <div className="mt-5 rounded-xl border-2 border-success/40 bg-success/10 p-4 text-center">
-            <p className="text-3xl">✅</p>
+          <div className="mt-5 border border-foreground bg-muted p-4 text-center">
+            <p className="text-2xl">✓</p>
             <p className="mt-2 text-sm font-bold text-foreground">
               {balance?.toFixed(4)} SOL received
             </p>
@@ -95,7 +98,7 @@ export function FundingModal({
             </p>
 
             <div className="mt-5 flex flex-col items-center gap-4">
-              <div className="rounded-xl border border-border bg-white p-3">
+              <div className="border border-border bg-background p-3">
                 {data?.address ? (
                   <QRCode value={data.address} size={168} />
                 ) : (
@@ -105,20 +108,21 @@ export function FundingModal({
                 )}
               </div>
 
-              <button
+              <Button
                 type="button"
+                variant="outline"
                 onClick={copyAddress}
-                className="w-full rounded-xl border-2 border-border bg-secondary/50 px-3 py-2.5 text-center transition-colors hover:border-link"
+                className="h-auto w-full whitespace-normal rounded-none px-3 py-2.5 text-center shadow-none hover:border-foreground"
               >
                 <span className="block break-all font-mono text-xs text-foreground">
                   {data?.address ?? "…"}
                 </span>
-                <span className="mt-1 block text-xs font-bold text-link">
+                <span className="mt-1 block text-xs font-bold text-foreground">
                   {copied ? "Address copied!" : "Tap to copy"}
                 </span>
-              </button>
+              </Button>
 
-              <div className="w-full rounded-xl bg-secondary/60 px-4 py-3 text-sm">
+              <div className="w-full border-y border-border bg-muted px-4 py-3 text-sm">
                 <div className="flex items-center justify-between">
                   <span className="text-muted-foreground">Your balance</span>
                   <span className="mono-num font-bold text-foreground">
@@ -134,7 +138,7 @@ export function FundingModal({
               </div>
 
               <p className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span className="pulse inline-block size-2 rounded-full bg-brand" />
+                <span className="pulse inline-block size-2 rounded-full bg-foreground" />
                 Watching for your deposit — updates automatically
               </p>
             </div>
@@ -142,9 +146,9 @@ export function FundingModal({
         )}
 
         {funded && (
-          <button type="button" onClick={onClose} className="primary-btn mt-5 w-full">
+          <Button type="button" onClick={onClose} className="mt-5 h-12 w-full rounded-none">
             Back to minting
-          </button>
+          </Button>
         )}
       </div>
     </div>
