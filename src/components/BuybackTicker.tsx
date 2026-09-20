@@ -72,7 +72,7 @@ export function BuybackTicker({ withCta = false }: { withCta?: boolean }) {
         {withCta && (
           <Link
             to="/buyback"
-            className="mt-4 inline-flex rounded-full bg-poke-yellow px-4 py-2 text-xs font-bold uppercase tracking-widest text-foreground transition-transform hover:scale-[1.03]"
+            className="mt-4 inline-flex rounded-full bg-poke-yellow px-4 py-2 text-xs font-bold uppercase tracking-widest text-poke-yellow-foreground transition-transform hover:scale-[1.03]"
           >
             Verify every run →
           </Link>

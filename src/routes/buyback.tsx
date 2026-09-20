@@ -63,7 +63,7 @@ function BuybackPage() {
     <main>
       <section className="bg-poke-navy">
         <div className="mx-auto max-w-6xl px-5 py-14 text-white">
-          <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-foreground">
+          <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-yellow-foreground">
             100% of fees · every 10 minutes
           </span>
           <h1 className="mt-4 font-display text-4xl font-bold sm:text-5xl">
@@ -96,7 +96,7 @@ function BuybackPage() {
 
       <section className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid gap-4 sm:grid-cols-3">
-          <Card color="bg-poke-yellow text-foreground" title="100% of fees">
+          <Card color="bg-poke-yellow text-poke-yellow-foreground" title="100% of fees">
             Nothing is skimmed. Every fee a Poke coin generates is used to buy $POKE.
           </Card>
           <Card color="bg-poke-blue text-white" title="Every 10 minutes">
@@ -172,7 +172,7 @@ function Stat({
   return (
     <div
       className={`rounded-2xl p-4 ${
-        highlight ? "bg-poke-yellow text-foreground" : "bg-white/10 text-white"
+        highlight ? "bg-poke-yellow text-poke-yellow-foreground" : "bg-white/10 text-white"
       }`}
     >
       <p className="text-[11px] font-bold uppercase tracking-widest opacity-75">{label}</p>

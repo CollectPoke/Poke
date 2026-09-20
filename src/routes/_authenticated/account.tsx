@@ -81,7 +81,7 @@ function AccountPage() {
                   <div className="z-20 size-5 rounded-full border-4 border-poke-navy bg-card" />
                 </div>
               </div>
-              <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-poke-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-foreground shadow-sm">
+              <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-poke-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-poke-yellow-foreground shadow-sm">
                 Collector
               </span>
             </div>

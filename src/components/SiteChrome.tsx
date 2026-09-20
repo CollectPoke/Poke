@@ -17,7 +17,7 @@ const navItems: { to: string; label: string; exact?: boolean }[] = [
 
 const linkClass =
   "rounded-full px-3.5 py-1.5 text-white/75 transition-colors hover:bg-white/10 hover:text-white";
-const linkActive = { className: "bg-poke-yellow text-foreground hover:text-foreground" };
+const linkActive = { className: "bg-poke-yellow text-poke-yellow-foreground hover:text-poke-yellow-foreground" };
 
 export function SiteHeader() {
   const { user, username } = useAuth();
@@ -197,7 +197,7 @@ export function SiteHeader() {
                   to={item.to}
                   activeOptions={{ exact: item.exact ?? false }}
                   className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                  activeProps={{ className: "bg-poke-yellow text-foreground hover:text-foreground" }}
+                  activeProps={{ className: "bg-poke-yellow text-poke-yellow-foreground hover:text-poke-yellow-foreground" }}
                 >
                   {item.label}
                 </Link>
@@ -207,7 +207,7 @@ export function SiteHeader() {
                   <Link
                     to="/gallery"
                     className="rounded-xl px-4 py-3 text-white/80 transition-colors hover:bg-white/10 hover:text-white"
-                    activeProps={{ className: "bg-poke-yellow text-foreground hover:text-foreground" }}
+                    activeProps={{ className: "bg-poke-yellow text-poke-yellow-foreground hover:text-poke-yellow-foreground" }}
                   >
                     My NFTs
                   </Link>

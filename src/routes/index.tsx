@@ -47,7 +47,7 @@ function Home() {
       <section className="relative overflow-hidden bg-poke-blue">
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr]">
           <div className="text-white">
-            <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-foreground">
+            <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-yellow-foreground">
               One jpeg, one coin, forever
             </span>
             <h1 className="mt-4 font-display text-5xl font-bold leading-[1.05] drop-shadow sm:text-6xl">
@@ -101,7 +101,7 @@ function Home() {
       <section className="mx-auto max-w-6xl px-5 py-14">
         <h2 className="font-display text-3xl font-bold">How it works</h2>
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <Tile color="bg-poke-yellow text-foreground" step="01" title="Claim the name">
+          <Tile color="bg-poke-yellow text-poke-yellow-foreground" step="01" title="Claim the name">
             Pick a name and ticker. If it's taken, it's gone — the site refuses a second one.
           </Tile>
           <Tile color="bg-poke-blue text-white" step="02" title="Mint the NFT">
@@ -121,7 +121,7 @@ function Home() {
         <div className="overflow-hidden rounded-2xl bg-poke-navy text-white shadow-card">
           <div className="grid gap-6 p-7 md:grid-cols-[1.3fr_1fr] md:items-center">
             <div>
-              <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-foreground">
+              <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-yellow-foreground">
                 100% of fees
               </span>
               <h2 className="mt-3 font-display text-3xl font-bold">
