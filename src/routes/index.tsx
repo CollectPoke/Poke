@@ -65,34 +65,58 @@ function Home() {
               Create a one-of-one collectible, launch its coin, then collect and trade inside JPEG.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/mint" className="inline-flex items-center gap-2 rounded-2xl bg-foreground px-6 py-4 text-sm font-extrabold text-background shadow-card transition-transform active:scale-95">
+              <Link
+                to="/mint"
+                className="inline-flex items-center gap-2 rounded-2xl bg-foreground px-6 py-4 text-sm font-extrabold text-background shadow-card transition-transform active:scale-95"
+              >
                 Start minting <ImagePlus className="size-4" />
               </Link>
-              <Link to="/cards" className="inline-flex items-center gap-2 rounded-2xl border border-foreground/15 bg-card/80 px-6 py-4 text-sm font-extrabold text-foreground transition-colors hover:bg-card">
+              <Link
+                to="/cards"
+                className="inline-flex items-center gap-2 rounded-2xl border border-foreground/15 bg-card/80 px-6 py-4 text-sm font-extrabold text-foreground transition-colors hover:bg-card"
+              >
                 Browse market <ArrowRight className="size-4" />
               </Link>
             </div>
           </div>
           <div className="pointer-events-none absolute -bottom-10 right-1 hidden h-[88%] w-[42%] rotate-3 overflow-hidden rounded-[2rem] border-8 border-card bg-card p-2 shadow-2xl sm:block">
             {featured?.image_url ? (
-              <img src={featured.image_url} alt="" className="size-full rounded-[1.35rem] object-cover" />
+              <img
+                src={featured.image_url}
+                alt=""
+                className="size-full rounded-[1.35rem] object-cover"
+              />
             ) : (
-              <div className="grid size-full place-items-center rounded-[1.35rem] bg-secondary"><img src={pigAsset.url} alt="" className="w-3/4" /></div>
+              <div className="grid size-full place-items-center rounded-[1.35rem] bg-secondary">
+                <img src={pigAsset.url} alt="" className="w-3/4" />
+              </div>
             )}
           </div>
         </div>
 
         <aside className="arena-panel p-6 lg:col-span-4">
           <div className="flex items-center justify-between">
-            <div><p className="text-xs font-bold text-brand">PLAYER HUB</p><h2 className="mt-1 text-2xl">{user ? "Welcome back" : "Ready player?"}</h2></div>
-            <div className="grid size-14 place-items-center rounded-2xl bg-secondary"><img src={pigAsset.url} alt="" className="size-11" /></div>
+            <div>
+              <p className="text-xs font-bold text-brand">PLAYER HUB</p>
+              <h2 className="mt-1 text-2xl">{user ? "Welcome back" : "Ready player?"}</h2>
+            </div>
+            <div className="grid size-14 place-items-center rounded-2xl bg-secondary">
+              <img src={pigAsset.url} alt="" className="size-11" />
+            </div>
           </div>
           <div className="mt-7 grid gap-3">
             <DashboardStat icon={<ImagePlus />} label="Mint fee" value="0.1 SOL" />
             <DashboardStat icon={<WalletCards />} label="Edition" value="1 of 1" />
-            <DashboardStat icon={<Coins />} label="Collectibles live" value={String(feed.length).padStart(2, "0")} />
+            <DashboardStat
+              icon={<Coins />}
+              label="Collectibles live"
+              value={String(feed.length).padStart(2, "0")}
+            />
           </div>
-          <Link to={user ? "/account" : "/auth"} className="mt-6 flex w-full justify-center rounded-2xl bg-foreground px-5 py-4 text-sm font-extrabold text-background transition-transform active:scale-[0.98]">
+          <Link
+            to={user ? "/account" : "/auth"}
+            className="mt-6 flex w-full justify-center rounded-2xl bg-foreground px-5 py-4 text-sm font-extrabold text-background transition-transform active:scale-[0.98]"
+          >
             {user ? "Open my player hub" : "Create player account"}
           </Link>
         </aside>
@@ -101,13 +125,20 @@ function Home() {
       <section className="py-12">
         <div className="mb-7 flex items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-extrabold text-brand">LIVE MARKETPLACE · {String(feed.length).padStart(2, "0")}</p>
+            <p className="text-xs font-extrabold text-brand">
+              LIVE MARKETPLACE · {String(feed.length).padStart(2, "0")}
+            </p>
             <h2 className="mt-2 text-3xl sm:text-4xl">New in the arcade</h2>
           </div>
-          <Link to="/cards" className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground">View all <ArrowRight className="size-4" /></Link>
+          <Link
+            to="/cards"
+            className="inline-flex items-center gap-2 text-sm font-bold text-muted-foreground transition-colors hover:text-foreground"
+          >
+            View all <ArrowRight className="size-4" />
+          </Link>
         </div>
         {latest.length === 0 ? (
-           <div className="arena-panel grid min-h-64 place-items-center px-6 text-center">
+          <div className="arena-panel grid min-h-64 place-items-center px-6 text-center">
             <div>
               <img src={pigAsset.url} alt="" className="mx-auto size-20" />
               <h3 className="mt-3 text-2xl">The arcade is waiting</h3>
@@ -131,11 +162,24 @@ function Home() {
   );
 }
 
-function DashboardStat({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) {
+function DashboardStat({
+  icon,
+  label,
+  value,
+}: {
+  icon: React.ReactNode;
+  label: string;
+  value: string;
+}) {
   return (
     <div className="flex items-center gap-4 rounded-2xl border border-border bg-secondary/60 p-4">
-      <span className="grid size-11 place-items-center rounded-xl bg-card text-brand [&>svg]:size-5">{icon}</span>
-      <div><p className="text-xs font-bold text-muted-foreground">{label}</p><p className="mt-0.5 text-lg font-extrabold">{value}</p></div>
+      <span className="grid size-11 place-items-center rounded-xl bg-card text-brand [&>svg]:size-5">
+        {icon}
+      </span>
+      <div>
+        <p className="text-xs font-bold text-muted-foreground">{label}</p>
+        <p className="mt-0.5 text-lg font-extrabold">{value}</p>
+      </div>
     </div>
   );
 }
@@ -165,7 +209,7 @@ function FeedPost({ card }: { card: CardWithPeople }) {
 
         <div className="mt-4 min-w-0">
           <div className="flex items-baseline justify-between gap-3">
-             <span className="truncate text-base font-extrabold">{card.name}</span>
+            <span className="truncate text-base font-extrabold">{card.name}</span>
             <span className="mono-num shrink-0 text-xs text-muted-foreground">${card.ticker}</span>
           </div>
           <p className="mt-1 truncate text-xs text-muted-foreground">
