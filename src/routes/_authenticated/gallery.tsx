@@ -78,9 +78,9 @@ function GalleryPage() {
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-extrabold text-poke-navy sm:text-4xl">My Cards</h1>
+        <h1 className="font-display text-3xl font-extrabold text-poke-navy sm:text-4xl">My NFTs</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
-          Every card you have minted, with its image and the Pokémon it was paired with.
+          Every NFT you have minted, with its image and the Pokémon it was paired with.
         </p>
       </header>
 
@@ -89,7 +89,7 @@ function GalleryPage() {
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Search your cards…"
+            placeholder="Search your NFTs…"
             className="w-full rounded-xl border-2 border-border bg-card px-4 py-2.5 text-sm font-medium outline-none focus:border-poke-blue sm:max-w-xs"
           />
           <div className="flex flex-1 flex-wrap items-center gap-2">
@@ -142,10 +142,10 @@ function GalleryPage() {
         <div className="mt-8 rounded-3xl border-2 border-dashed border-poke-navy/20 bg-card p-12 text-center">
           <p className="font-display text-xl font-bold text-poke-navy">Nothing here yet</p>
           <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
-            Mint a card and it shows up here with its artwork and pairing.
+            Mint an NFT and it shows up here with its artwork and pairing.
           </p>
           <Link to="/mint" className="poke-btn mt-5 inline-block">
-            Mint a card
+            Mint an NFT
           </Link>
         </div>
       ) : (

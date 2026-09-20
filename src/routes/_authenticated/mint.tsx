@@ -16,12 +16,12 @@ import { getMyWallet } from "@/lib/wallet.functions";
 export const Route = createFileRoute("/_authenticated/mint")({
   head: () => ({
     meta: [
-      { title: "Mint a card · Poke" },
+      { title: "Mint an NFT · Poke" },
       {
         name: "description",
         content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
       },
-      { property: "og:title", content: "Mint a card · Poke" },
+      { property: "og:title", content: "Mint an NFT · Poke" },
       {
         property: "og:description",
         content: "Launch a coin as a one-of-one Poke card. Each name can only exist once.",
@@ -126,7 +126,7 @@ function MintPage() {
       });
       setLaunchSignature(result.signature);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not mint the card.");
+      setError(err instanceof Error ? err.message : "Could not mint the NFT.");
     } finally {
       setBusy(false);
     }
@@ -139,9 +139,9 @@ function MintPage() {
   return (
     <>
     <main className="mx-auto max-w-6xl px-5 py-10">
-      <h1 className="font-display text-4xl font-bold">Mint a card</h1>
+      <h1 className="font-display text-4xl font-bold">Mint an NFT</h1>
       <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-        Every mint launches a real Pump.fun coin on Solana and becomes a card. Once
+        Every mint launches a real Pump.fun coin on Solana and becomes an NFT. Once
         "Dog" is minted, nobody else can ever mint Dog — unless the holder burns it.
       </p>
 
@@ -167,7 +167,7 @@ function MintPage() {
         <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-poke-yellow font-bold text-poke-yellow-foreground">◎</span>
         <div>
           <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
-          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The card appears only after Solana confirms it. Mainnet spending is irreversible.</p>
+          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your Poke wallet signs the Pump.fun launch. The NFT appears only after Solana confirms it. Mainnet spending is irreversible.</p>
         </div>
       </div>
 
@@ -224,7 +224,7 @@ function MintPage() {
               <div>
                 <p className="text-sm font-semibold">List for sale immediately</p>
                 <p className="mt-0.5 text-xs text-muted-foreground">
-                  Put the card straight on the market after minting.
+                  Put the NFT straight on the market after minting.
                 </p>
               </div>
               <button

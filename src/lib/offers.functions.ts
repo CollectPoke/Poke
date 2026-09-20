@@ -25,7 +25,7 @@ export const makeOffer = createServerFn({ method: "POST" })
     if (error) throw error;
     if (!card) throw new Error("Card not found");
     if (card.status !== "minted") throw new Error("This card has been burned");
-    if (card.owner_id === context.userId) throw new Error("You already own this card");
+    if (card.owner_id === context.userId) throw new Error("You already own this NFT");
 
     const { error: insErr } = await supabaseAdmin.from("card_offers").insert({
       card_id: data.cardId,
@@ -34,7 +34,7 @@ export const makeOffer = createServerFn({ method: "POST" })
       message: data.message ?? null,
     });
     if (insErr) {
-      if (insErr.code === "23505") throw new Error("You already have an open offer on this card.");
+      if (insErr.code === "23505") throw new Error("You already have an open offer on this NFT.");
       throw insErr;
     }
     return { ok: true };
@@ -56,7 +56,7 @@ export const withdrawOffer = createServerFn({ method: "POST" })
     return { ok: true };
   });
 
-/** The card owner turns an offer down. */
+/** The NFT owner turns an offer down. */
 export const declineOffer = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .inputValidator((input: unknown) => z.object({ offerId: z.string().uuid() }).parse(input))
@@ -70,7 +70,7 @@ export const declineOffer = createServerFn({ method: "POST" })
     if (error) throw error;
     if (!offer) throw new Error("Offer not found");
     const ownerId = (offer.card as unknown as { owner_id: string } | null)?.owner_id;
-    if (ownerId !== context.userId) throw new Error("This offer isn't on a card you own");
+    if (ownerId !== context.userId) throw new Error("This offer isn't on an NFT you own");
     if (offer.status !== "pending") throw new Error("This offer is no longer open");
 
     const { error: upErr } = await supabaseAdmin
@@ -82,8 +82,8 @@ export const declineOffer = createServerFn({ method: "POST" })
   });
 
 /**
- * The card owner accepts an offer: the buyer's SOL is checked and moved to the
- * owner's wallet, then the card changes hands.
+ * The NFT owner accepts an offer: the buyer's SOL is checked and moved to the
+ * owner's wallet, then the NFT changes hands.
  */
 export const acceptOffer = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
@@ -101,7 +101,7 @@ export const acceptOffer = createServerFn({ method: "POST" })
     if (!offer) throw new Error("Offer not found");
     const card = offer.card as unknown as { id: string; owner_id: string; status: string } | null;
     if (!card) throw new Error("Card not found");
-    if (card.owner_id !== context.userId) throw new Error("This offer isn't on a card you own");
+    if (card.owner_id !== context.userId) throw new Error("This offer isn't on an NFT you own");
     if (card.status !== "minted") throw new Error("This card has been burned");
     if (offer.status !== "pending") throw new Error("This offer is no longer open");
 
@@ -125,7 +125,7 @@ export const acceptOffer = createServerFn({ method: "POST" })
       .eq("id", card.id);
     if (upErr) {
       throw new Error(
-        `Payment sent (${signature}) but the card didn't change hands: ${upErr.message}. Keep this signature.`,
+        `Payment sent (${signature}) but the NFT didn't change hands: ${upErr.message}. Keep this signature.`,
       );
     }
 
@@ -139,7 +139,7 @@ export const acceptOffer = createServerFn({ method: "POST" })
     });
 
     await supabaseAdmin.from("card_offers").update({ status: "accepted" }).eq("id", offer.id);
-    // Every other open offer on this card is now moot.
+    // Every other open offer on this NFT is now moot.
     await supabaseAdmin
       .from("card_offers")
       .update({ status: "declined" })

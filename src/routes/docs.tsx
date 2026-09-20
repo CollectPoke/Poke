@@ -26,7 +26,7 @@ const sections = [
   { id: "what", title: "What is Poke?" },
   { id: "start", title: "Getting started" },
   { id: "fund", title: "Funding your wallet" },
-  { id: "mint", title: "Minting a card" },
+  { id: "mint", title: "Minting an NFT" },
   { id: "trade", title: "Buying, selling & burning" },
   { id: "buyback", title: "Fees & the $POKE buyback" },
   { id: "faq", title: "FAQ" },
@@ -38,7 +38,7 @@ function DocsPage() {
       {/* Hero */}
       <header className="relative overflow-hidden rounded-2xl border-2 border-poke-navy-deep bg-poke-blue p-8 text-center shadow-xl sm:p-12">
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-poke-yellow">
-          Trainer handbook
+          Collector handbook
         </p>
         <h1 className="mt-2 font-display text-4xl font-bold text-card sm:text-5xl">
           Docs &amp; How to
@@ -76,15 +76,15 @@ function DocsPage() {
           <DocCard id="what" title="What is Poke?">
             <p>
               Poke is a launchpad where every coin becomes a{" "}
-              <strong>one-of-one trading card</strong>. When someone mints{" "}
+              <strong>one-of-one NFT</strong>. When someone mints{" "}
               <strong>Dog</strong>, a real coin launches on Solana via Pump.fun
-              and its contract address is printed on the card forever.
+              and its contract address is printed on the NFT forever.
             </p>
             <p>
               Each name can only exist <strong>once</strong> — after{" "}
               <strong>Dog</strong> is minted, nobody else can ever mint Dog
-              again, unless the current holder burns the card. That's the
-              rarity: there is exactly one of every card, like a 1st edition.
+              again, unless the current holder burns the NFT. That's the
+              rarity: there is exactly one of every NFT, like a 1st edition.
             </p>
             <p>
               Everything is <strong>walletless</strong>: no extensions, no
@@ -103,7 +103,7 @@ function DocsPage() {
                 .
               </li>
               <li>
-                Pick a trainer name — this shows on every card you mint or own.
+                Pick a collector name — this shows on every NFT you mint or own.
               </li>
               <li>
                 Your account instantly gets its own{" "}
@@ -125,7 +125,7 @@ function DocsPage() {
             <p>
               Your balance and recent transfers update live on your profile.
               Because each account has a unique address, every launch and trade
-              is traceable back to the trainer who did it.
+              is traceable back to the collector who did it.
             </p>
             <p>
               You stay in control: you can <strong>send SOL out</strong> or{" "}
@@ -135,17 +135,17 @@ function DocsPage() {
             </p>
           </DocCard>
 
-          <DocCard id="mint" title="Minting a card">
+          <DocCard id="mint" title="Minting an NFT">
             <ol className="list-decimal space-y-2 pl-5">
               <li>
                 Go to{" "}
                 <Link to="/mint" className="font-semibold text-poke-blue underline">
-                  Mint a card
+                  Mint an NFT
                 </Link>{" "}
                 and choose a name and ticker. The name is checked live — if it's
                 taken, you'll see it straight away.
               </li>
-              <li>Add a description and drop in an image (required — it's the card's art).</li>
+              <li>Add a description and drop in an image (required — it's the NFT's art).</li>
               <li>
                 Optionally tick <strong>“List for sale immediately”</strong> and
                 set a price in SOL.
@@ -157,7 +157,7 @@ function DocsPage() {
               </li>
               <li>
                 Once Solana confirms, the real contract address appears at the
-                bottom of your card with a Solscan receipt, and the card is
+                bottom of your card with a Solscan receipt, and the NFT is
                 yours.
               </li>
             </ol>
@@ -174,7 +174,7 @@ function DocsPage() {
 
           <DocCard id="trade" title="Buying, selling & burning">
             <p>
-              <strong>Selling:</strong> open a card you own and set a price, or
+              <strong>Selling:</strong> open an NFT you own and set a price, or
               list it while minting. You can change the price or unlist any
               time.
             </p>
@@ -182,10 +182,10 @@ function DocsPage() {
               <strong>Buying:</strong> open a listed card and hit buy. The exact
               SOL amount moves straight from your Poke wallet to the seller's
               Poke wallet on Solana — then ownership transfers to you. Every
-              sale gets a Solscan receipt in the card's history.
+              sale gets a Solscan receipt in the NFT's history.
             </p>
             <p>
-              <strong>Burning:</strong> the owner can burn a card, destroying it
+              <strong>Burning:</strong> the owner can burn an NFT, destroying it
               forever. This releases the name so someone else can mint it again.
             </p>
           </DocCard>
@@ -213,10 +213,10 @@ function DocsPage() {
             />
             <Faq
               q="What happens if the name I want is taken?"
-              a="You can't mint it while its card exists. The only way a name frees up is if the current holder burns the card."
+              a="You can't mint it while its card exists. The only way a name frees up is if the current holder burns the NFT."
             />
             <Faq
-              q="Can I change a card after minting?"
+              q="Can I change an NFT after minting?"
               a="Only the sale price and listing status. The name, ticker, image, description and contract address are locked forever."
             />
             <Faq
@@ -233,7 +233,7 @@ function DocsPage() {
               to="/mint"
               className="poke-btn mt-3 inline-block rounded-xl px-6 py-2.5 text-sm font-bold"
             >
-              Mint your first card
+              Mint your first NFT
             </Link>
           </div>
         </div>

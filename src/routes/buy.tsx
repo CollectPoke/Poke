@@ -52,7 +52,7 @@ function BuyPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Buy</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        Cards other trainers have listed for sale. Tap a card to buy it with your Poke wallet.
+        Cards other collectors have listed for sale. Tap an NFT to buy it with your Poke wallet.
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-2">
@@ -82,10 +82,10 @@ function BuyPage() {
         <div className="mt-10 rounded-2xl border border-dashed border-border p-12 text-center">
           <p className="font-display text-xl font-bold">Nothing for sale right now</p>
           <p className="mt-1 text-sm text-muted-foreground">
-            Check back soon — or browse every card ever minted.
+            Check back soon — or browse every NFT ever minted.
           </p>
           <Link to="/cards" className="poke-btn mt-5 inline-flex">
-            All cards
+            All NFTs
           </Link>
         </div>
       ) : (

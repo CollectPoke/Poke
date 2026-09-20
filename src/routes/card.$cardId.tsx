@@ -15,9 +15,9 @@ export const Route = createFileRoute("/card/$cardId")({
   head: () => ({
     meta: [
       { title: "Card · Poke" },
-      { name: "description", content: "A one-of-one card launched on Poke." },
+      { name: "description", content: "A one-of-one NFT launched on Poke." },
       { property: "og:title", content: "Card · Poke" },
-      { property: "og:description", content: "A one-of-one card launched on Poke." },
+      { property: "og:description", content: "A one-of-one NFT launched on Poke." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -142,7 +142,7 @@ function CardPage() {
     <>
     <main className="mx-auto max-w-5xl px-5 py-10">
       <Link to="/cards" className="text-xs font-semibold text-muted-foreground hover:underline">
-        ← All cards
+        ← All NFTs
       </Link>
 
       <div className="mt-4 grid gap-8 md:grid-cols-[320px_1fr]">
@@ -198,7 +198,7 @@ function CardPage() {
             {!user ? (
               <div>
                 <p className="text-sm text-muted-foreground">
-                  Sign in to buy this card or mint one of your own.
+                  Sign in to buy this NFT or mint one of your own.
                 </p>
                 <Link to="/auth" className="poke-btn mt-3 inline-flex">
                   Sign in
@@ -210,7 +210,7 @@ function CardPage() {
               </p>
             ) : isOwner ? (
               <div className="space-y-3">
-                <p className="text-sm font-semibold">You own this card.</p>
+                <p className="text-sm font-semibold">You own this NFT.</p>
                 {card.list_price === null ? (
                   <div className="flex flex-wrap gap-2">
                     <input
@@ -251,7 +251,7 @@ function CardPage() {
                   disabled={action.isPending}
                   className="block text-xs font-semibold text-poke-red underline underline-offset-4"
                 >
-                  Burn this card
+                  Burn this NFT
                 </button>
               </div>
             ) : card.list_price !== null ? (
@@ -333,7 +333,7 @@ function CardPage() {
                 <Link to="/auth" className="font-bold text-poke-blue underline">
                   Sign in
                 </Link>{" "}
-                to see this card's full history.
+                to see this NFT's full history.
               </p>
             ) : (events ?? []).length === 0 ? (
               <p className="p-4 text-sm text-muted-foreground">Nothing yet.</p>

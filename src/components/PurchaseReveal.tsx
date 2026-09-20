@@ -60,7 +60,7 @@ export function PurchaseReveal({ card, signature, onClose }: Props) {
 
         <div className="purchase-result absolute inset-x-0 bottom-0 z-40 text-center">
           <p className="font-display text-sm font-bold uppercase tracking-[0.18em] text-poke-yellow">
-            Added to your binder
+            Added to your collection
           </p>
           <h2 id="purchase-reveal-title" className="mt-1 font-display text-3xl font-extrabold text-primary-foreground">
             You caught {card.name}!
@@ -68,7 +68,7 @@ export function PurchaseReveal({ card, signature, onClose }: Props) {
           <p className="mt-1 text-sm text-primary-foreground/65">${card.ticker} now belongs to you.</p>
           <div className="mt-4 flex flex-col items-stretch gap-2">
             <Button onClick={onClose} className="h-12 rounded-full bg-poke-yellow font-display font-bold text-poke-yellow-foreground hover:bg-poke-yellow/90">
-              View my card
+              View my NFT
             </Button>
             <Button asChild variant="ghost" className="text-primary-foreground/70 hover:bg-primary-foreground/10 hover:text-primary-foreground">
               <a href={`https://solscan.io/tx/${signature}`} target="_blank" rel="noreferrer">

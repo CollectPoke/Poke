@@ -77,7 +77,7 @@ export function PokeCard({ card, compact = false }: Props) {
             </div>
           )}
 
-          {/* Contract address, always at the bottom of the card */}
+          {/* Contract address, always at the bottom of the NFT */}
           <div className="mt-1.5 rounded-md bg-poke-navy px-2 py-1">
             <span className="mono-num block truncate text-[10px] tracking-tight text-poke-yellow">
               CA {shortAddress(card.contract_address, 8)}

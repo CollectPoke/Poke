@@ -78,7 +78,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       .maybeSingle();
     if (launch.error) throw launch.error;
     if (launch.data && launch.data.creator_id !== context.userId) {
-      throw new Error(`"${name}" is already being launched by another trainer.`);
+      throw new Error(`"${name}" is already being launched by another collector.`);
     }
 
     if (!launch.data) {
@@ -238,7 +238,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
 
       if (outcome === "landed") {
         message =
-          "Your coin launched on Solana but the card wasn't finished. Hit mint again with the same name to finish it — you won't be charged twice.";
+          "Your coin launched on Solana but the NFT wasn't finished. Hit mint again with the same name to finish it — you won't be charged twice.";
       }
       await supabaseAdmin
         .from("coin_launches")

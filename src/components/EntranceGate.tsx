@@ -130,7 +130,7 @@ export function EntranceGate() {
         onClick={enter}
         className="absolute bottom-8 z-10 font-mono text-xs uppercase tracking-widest text-blue-400/30 transition-colors hover:text-blue-400/70"
       >
-        System Ready • Awaiting Trainer
+        System Ready • Awaiting Collector
       </button>
     </div>
   );

@@ -73,7 +73,7 @@ export async function myCards(userId: string) {
   return (data ?? []) as unknown as CardWithPeople[];
 }
 
-/** Every card this user minted, whether they still own it or not. */
+/** Every NFT this user minted, whether they still own it or not. */
 export async function myMintedCards(userId: string) {
   const { data, error } = await supabase
     .from("cards")
@@ -126,7 +126,7 @@ export type CardOffer = {
 const OFFER_SELECT =
   "id, card_id, buyer_id, price, message, status, created_at, buyer:profiles!card_offers_buyer_id_fkey(username), card:cards(id, name, ticker, image_url)";
 
-/** Open offers on one card (visible to the card's owner and to each buyer). */
+/** Open offers on one card (visible to the NFT's owner and to each buyer). */
 export async function offersForCard(cardId: string) {
   const { data, error } = await supabase
     .from("card_offers")

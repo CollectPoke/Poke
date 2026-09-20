@@ -15,10 +15,10 @@ import { SOLSCAN_TX } from "@/lib/buybacks";
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
     meta: [
-      { title: "My binder · Poke" },
-      { name: "description", content: "The one-of-one Poke cards you own." },
-      { property: "og:title", content: "My binder · Poke" },
-      { property: "og:description", content: "The one-of-one Poke cards you own." },
+      { title: "My collection · Poke" },
+      { name: "description", content: "The one-of-one Poke NFTs you own." },
+      { property: "og:title", content: "My collection · Poke" },
+      { property: "og:description", content: "The one-of-one Poke NFTs you own." },
     ],
   }),
   component: AccountPage,
@@ -66,7 +66,7 @@ function AccountPage() {
 
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
-      {/* Trainer card */}
+      {/* Collector card */}
       <section className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-[0_10px_40px_-15px_oklch(0.24_0.045_260/0.25)] sm:p-8">
         <div className="pointer-events-none absolute -right-32 -top-32 size-64 rounded-full bg-poke-yellow/10" />
         <div className="pointer-events-none absolute -bottom-24 -left-24 size-48 rounded-full bg-poke-blue/10" />
@@ -82,7 +82,7 @@ function AccountPage() {
                 </div>
               </div>
               <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-poke-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-poke-navy shadow-sm">
-                Trainer
+                Collector
               </span>
             </div>
             <div>
@@ -95,7 +95,7 @@ function AccountPage() {
 
           <div className="flex flex-wrap items-center gap-3">
             <Link to="/mint" className="poke-btn">
-              Mint a card
+              Mint an NFT
             </Link>
             <button
               onClick={signOut}
@@ -109,7 +109,7 @@ function AccountPage() {
         {/* Stats */}
         <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Stat
-            label="Cards owned"
+            label="NFTs owned"
             value={owned.length}
             className="border-poke-blue/25 bg-poke-blue/10"
             labelClass="text-poke-navy"
@@ -137,7 +137,7 @@ function AccountPage() {
 
       {/* Binder */}
       <div className="mt-10 flex items-center gap-4">
-        <h2 className="font-display text-2xl font-bold text-poke-navy">My binder</h2>
+        <h2 className="font-display text-2xl font-bold text-poke-navy">My collection</h2>
         <div className="flex items-center gap-1.5">
           <span className="h-2 w-8 rounded-full bg-poke-yellow" />
           <span className="h-2 w-2 rounded-full bg-border" />
@@ -166,7 +166,7 @@ function AccountPage() {
 
       {tab === "history" ? (
         history.length === 0 ? (
-          <EmptyBox title="No sales yet" text="Once you buy or sell a card, every sale shows up here with its Solana receipt." />
+          <EmptyBox title="No sales yet" text="Once you buy or sell an NFT, every sale shows up here with its Solana receipt." />
         ) : (
           <ul className="mt-6 space-y-3">
             {history.map((ev) => {
@@ -193,7 +193,7 @@ function AccountPage() {
                         {ev.card.name} <span className="text-muted-foreground">${ev.card.ticker}</span>
                       </Link>
                     ) : (
-                      <span className="font-bold text-muted-foreground">Card removed</span>
+                      <span className="font-bold text-muted-foreground">NFT removed</span>
                     )}
                     <p className="text-xs text-muted-foreground">
                       {new Date(ev.created_at).toLocaleString()} ·{" "}
@@ -219,7 +219,7 @@ function AccountPage() {
           </ul>
         )
       ) : isLoading ? (
-        <p className="mt-4 text-sm text-muted-foreground">Loading your cards…</p>
+        <p className="mt-4 text-sm text-muted-foreground">Loading your NFTs…</p>
       ) : (tab === "owned" ? owned : listed).length === 0 ? (
         tab === "listed" ? (
           <EmptyBox title="Nothing listed" text="Open any card you own and set a price to put it on the market." />
@@ -231,14 +231,14 @@ function AccountPage() {
                 <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 bg-poke-navy" />
               </div>
             </div>
-            <p className="font-display text-xl font-bold text-poke-navy">Your binder is empty</p>
+            <p className="font-display text-xl font-bold text-poke-navy">Your collection is empty</p>
             <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
-              Every great trainer starts somewhere. Mint the first card of a name, or buy one from the
+              Every great collector starts somewhere. Mint the first NFT of a name, or buy one from the
               market.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3">
               <Link to="/mint" className="poke-btn">
-                Mint a card
+                Mint an NFT
               </Link>
               <Link
                 to="/cards"
@@ -269,7 +269,7 @@ function AccountPage() {
           ticker={saleToCelebrate.card.ticker}
           imageUrl={saleToCelebrate.card.image_url}
           price={saleToCelebrate.price}
-          buyer={saleToCelebrate.actor?.username ?? "a new trainer"}
+          buyer={saleToCelebrate.actor?.username ?? "a new collector"}
           signature={saleToCelebrate.tx_signature}
           onClose={() => setSaleToCelebrate(null)}
         />

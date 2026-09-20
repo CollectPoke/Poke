@@ -50,7 +50,7 @@ export const buyCardWithSol = createServerFn({ method: "POST" })
     if (!card) throw new Error("Card not found");
     if (card.status !== "minted") throw new Error("This card has been burned");
     if (!card.list_price) throw new Error("This card is not for sale");
-    if (card.owner_id === context.userId) throw new Error("You already own this card");
+    if (card.owner_id === context.userId) throw new Error("You already own this NFT");
 
     const buyerWallet = await getOrCreateWallet(context.userId);
     const { getOrCreateWallet: gw } = await import("./wallet.server");
@@ -82,7 +82,7 @@ export const buyCardWithSol = createServerFn({ method: "POST" })
     return { signature, price };
   });
 
-/** Burn a card you own. Pays a small 0.01 SOL burn reward back to your wallet. */
+/** Burn an NFT you own. Pays a small 0.01 SOL burn reward back to your wallet. */
 export const BURN_REFUND_SOL = 0.01;
 
 export const burnCard = createServerFn({ method: "POST" })
@@ -99,7 +99,7 @@ export const burnCard = createServerFn({ method: "POST" })
       .maybeSingle();
     if (error) throw error;
     if (!card) throw new Error("Card not found");
-    if (card.owner_id !== context.userId) throw new Error("You do not own this card");
+    if (card.owner_id !== context.userId) throw new Error("You do not own this NFT");
     if (card.status !== "minted") throw new Error("This card has already been burned");
 
     const { error: upErr } = await supabaseAdmin

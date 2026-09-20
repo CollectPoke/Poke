@@ -41,7 +41,7 @@ function AuthPage() {
       <main className="mx-auto max-w-md px-5 py-20 text-center">
         <h1 className="font-display text-3xl font-bold">You're signed in</h1>
         <Link to="/account" className="poke-btn mt-6 inline-flex">
-          Go to my binder
+          Go to my collection
         </Link>
       </main>
     );
@@ -97,7 +97,7 @@ function AuthPage() {
     <main className="mx-auto max-w-md px-5 py-14">
       <div className="rounded-3xl border border-border bg-card p-7 shadow-card">
         <h1 className="font-display text-3xl font-bold">
-          {mode === "signin" ? "Welcome back, trainer" : "Create your account"}
+          {mode === "signin" ? "Welcome back, collector" : "Create your account"}
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           Accounts let you mint, buy, sell and burn cards.
@@ -122,7 +122,7 @@ function AuthPage() {
             <input
               value={username}
               onChange={(e) => setUsername(e.target.value)}
-              placeholder="Trainer name"
+              placeholder="Collector name"
               className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm outline-none focus:border-poke-blue"
             />
           )}
