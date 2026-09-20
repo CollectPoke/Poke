@@ -64,16 +64,16 @@ function Home() {
             <p className="mt-5 max-w-lg text-base font-semibold leading-relaxed text-foreground/70 sm:text-lg">
               Create a one-of-one collectible, launch its coin, then collect and trade inside JPEG.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 grid gap-3 sm:flex sm:flex-wrap">
               <Link
                 to="/mint"
-                className="inline-flex items-center gap-2 rounded-2xl bg-foreground px-6 py-4 text-sm font-extrabold text-background shadow-card transition-transform active:scale-95"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl bg-foreground px-6 py-4 text-sm font-extrabold text-background shadow-card transition-transform active:scale-95"
               >
                 Start minting <ImagePlus className="size-4" />
               </Link>
               <Link
                 to="/cards"
-                className="inline-flex items-center gap-2 rounded-2xl border border-foreground/15 bg-card/80 px-6 py-4 text-sm font-extrabold text-foreground transition-colors hover:bg-card"
+                className="inline-flex items-center justify-center gap-2 rounded-2xl border border-foreground/15 bg-card/80 px-6 py-4 text-sm font-extrabold text-foreground transition-colors hover:bg-card"
               >
                 Browse market <ArrowRight className="size-4" />
               </Link>
@@ -123,8 +123,8 @@ function Home() {
       </section>
 
       <section className="py-12">
-        <div className="mb-7 flex items-end justify-between gap-4">
-          <div>
+        <div className="mb-7 grid grid-cols-[minmax(0,1fr)_auto] items-end gap-4">
+          <div className="min-w-0">
             <p className="text-xs font-extrabold text-brand">
               LIVE MARKETPLACE · {String(feed.length).padStart(2, "0")}
             </p>
