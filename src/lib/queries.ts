@@ -9,10 +9,7 @@ export async function listCards(opts?: {
   limit?: number;
   sort?: "newest" | "priciest";
 }) {
-  let q = supabase
-    .from("cards")
-    .select(CARD_SELECT)
-    .eq("status", "minted");
+  let q = supabase.from("cards").select(CARD_SELECT).eq("status", "minted");
   q =
     opts?.sort === "priciest"
       ? q

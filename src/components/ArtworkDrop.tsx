@@ -38,9 +38,9 @@ function toHex(bytes: Uint8Array): string {
   let out = "";
   const chunk = 0x8000;
   for (let i = 0; i < bytes.length; i += chunk) {
-    out += Array.from(bytes.subarray(i, i + chunk), (b) =>
-      b.toString(16).padStart(2, "0"),
-    ).join("");
+    out += Array.from(bytes.subarray(i, i + chunk), (b) => b.toString(16).padStart(2, "0")).join(
+      "",
+    );
   }
   return "\\x" + out;
 }
@@ -126,9 +126,7 @@ export function ArtworkDrop({
         }}
         className={[
           "group relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed transition-colors",
-          dragging
-            ? "border-link bg-link/10"
-            : "border-border bg-card hover:border-link/60",
+          dragging ? "border-link bg-link/10" : "border-border bg-card hover:border-link/60",
         ].join(" ")}
       >
         {preview ? (
@@ -153,9 +151,7 @@ export function ArtworkDrop({
               +
             </p>
             <p className="mt-4 font-display text-2xl font-bold">Drop your image here</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              or click to choose a picture
-            </p>
+            <p className="mt-2 text-sm text-muted-foreground">or click to choose a picture</p>
             <p className="mt-1 text-xs text-muted-foreground/70">
               Any image works — PNG, JPG, GIF, WebP and more, up to 20 MB
             </p>

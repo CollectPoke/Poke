@@ -11,9 +11,7 @@ export const Route = createFileRoute("/api/public/artwork/$id")({
           return new Response("Not found", { status: 404 });
         }
 
-        const { supabaseAdmin } = await import(
-          "@/integrations/supabase/client.server"
-        );
+        const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
         const { data, error } = await supabaseAdmin
           .from("artwork")
           .select("mime, data")
@@ -25,10 +23,7 @@ export const Route = createFileRoute("/api/public/artwork/$id")({
         }
 
         const hex = String(data.data ?? "");
-        const bytes = Buffer.from(
-          hex.startsWith("\\x") ? hex.slice(2) : hex,
-          "hex",
-        );
+        const bytes = Buffer.from(hex.startsWith("\\x") ? hex.slice(2) : hex, "hex");
         if (bytes.length === 0) {
           return new Response("Not found", { status: 404 });
         }

@@ -38,7 +38,6 @@ function GalleryPage() {
     enabled: !!userId,
   });
 
-
   const priceOf = (c: { list_price: number | null; last_price: number | null }) =>
     c.list_price ?? c.last_price ?? null;
 
@@ -78,7 +77,9 @@ function GalleryPage() {
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-extrabold text-foreground sm:text-4xl">My NFTs</h1>
+        <h1 className="font-display text-3xl font-extrabold text-foreground sm:text-4xl">
+          My NFTs
+        </h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
           Every NFT you have minted, with its artwork and the coin attached to it.
         </p>
@@ -93,7 +94,9 @@ function GalleryPage() {
             className="w-full rounded-xl border-2 border-border bg-card px-4 py-2.5 text-sm font-medium outline-none focus:border-link sm:max-w-xs"
           />
           <div className="flex flex-1 flex-wrap items-center gap-2">
-            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Sort</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+              Sort
+            </span>
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as typeof sort)}
@@ -134,7 +137,6 @@ function GalleryPage() {
           Showing {shown.length} of {cards?.length ?? 0} cards
         </p>
       </div>
-
 
       {isLoading ? (
         <p className="mt-8 text-sm text-muted-foreground">Loading your gallery…</p>
@@ -179,13 +181,19 @@ function GalleryPage() {
 
                   <dl className="mono-num mt-3 grid grid-cols-2 gap-3 text-sm">
                     <div>
-                      <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Listed at</dt>
+                      <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                        Listed at
+                      </dt>
                       <dd className="text-foreground">
-                        {card.list_price !== null ? `${formatSolAmount(card.list_price)} SOL` : "Not for sale"}
+                        {card.list_price !== null
+                          ? `${formatSolAmount(card.list_price)} SOL`
+                          : "Not for sale"}
                       </dd>
                     </div>
                     <div>
-                      <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Last sale</dt>
+                      <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                        Last sale
+                      </dt>
                       <dd className="text-foreground">
                         {card.last_price !== null ? `${formatSolAmount(card.last_price)} SOL` : "—"}
                       </dd>
@@ -209,4 +217,3 @@ function GalleryPage() {
     </main>
   );
 }
-

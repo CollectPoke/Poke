@@ -12,9 +12,17 @@ export const PUBLIC_ORIGIN = "https://mintjpeg.com";
 
 const launchSchema = z.object({
   name: z.string().trim().min(1).max(32),
-  ticker: z.string().trim().min(1).max(10).regex(/^[A-Za-z0-9]+$/),
+  ticker: z
+    .string()
+    .trim()
+    .min(1)
+    .max(10)
+    .regex(/^[A-Za-z0-9]+$/),
   description: z.string().trim().max(600),
-  imageUrl: z.string().trim().regex(/^\/api\/public\/artwork\/[0-9a-f-]{36}$/i),
+  imageUrl: z
+    .string()
+    .trim()
+    .regex(/^\/api\/public\/artwork\/[0-9a-f-]{36}$/i),
   listPrice: z.number().positive().max(1_000_000).nullable(),
   devBuySol: z.number().min(0).max(0).default(0),
 });
@@ -44,7 +52,8 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       .eq("id", artworkId)
       .eq("owner_id", context.userId)
       .maybeSingle();
-    if (artwork.error || !artwork.data) throw new Error("That image is not available to this account.");
+    if (artwork.error || !artwork.data)
+      throw new Error("That image is not available to this account.");
 
     const activeCard = await supabaseAdmin
       .from("cards")
@@ -101,7 +110,8 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
         .select("id, creator_id, mint_address, tx_signature, status")
         .single();
       if (inserted.error) {
-        if (inserted.error.code === "23505") throw new Error(`"${name}" is already being launched.`);
+        if (inserted.error.code === "23505")
+          throw new Error(`"${name}" is already being launched.`);
         throw inserted.error;
       }
       launch = inserted;
@@ -135,12 +145,15 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
             encoding: "base64",
           }),
         });
-        if (!response.ok) throw new Error("Pump.fun could not prepare this launch. No SOL was spent.");
-        const built = z.object({
-          transaction: z.string().min(100),
-          mintPublicKey: z.string().min(32).max(50),
-          solLamports: z.union([z.string(), z.number()]),
-        }).parse(await response.json());
+        if (!response.ok)
+          throw new Error("Pump.fun could not prepare this launch. No SOL was spent.");
+        const built = z
+          .object({
+            transaction: z.string().min(100),
+            mintPublicKey: z.string().min(32).max(50),
+            solLamports: z.union([z.string(), z.number()]),
+          })
+          .parse(await response.json());
         if (Number(built.solLamports) !== devBuyLamports) {
           throw new Error("Pump.fun returned an unexpected launch amount. No SOL was spent.");
         }
@@ -210,7 +223,10 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       if (!transactionSent || !signature) {
         await supabaseAdmin
           .from("coin_launches")
-          .update({ status: "failed", error_message: `${message} No SOL was taken from your wallet.` })
+          .update({
+            status: "failed",
+            error_message: `${message} No SOL was taken from your wallet.`,
+          })
           .eq("id", launchId);
         throw new Error(`${message} No SOL was taken from your wallet.`);
       }

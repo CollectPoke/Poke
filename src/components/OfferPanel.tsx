@@ -44,9 +44,7 @@ export function OfferPanel({
 
   const act = useMutation({
     mutationFn: async (
-      input:
-        | { kind: "make" }
-        | { kind: "withdraw" | "accept" | "decline"; offerId: string },
+      input: { kind: "make" } | { kind: "withdraw" | "accept" | "decline"; offerId: string },
     ) => {
       if (input.kind === "make") {
         const value = Number(price);
@@ -129,8 +127,8 @@ export function OfferPanel({
       ) : mine ? (
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <p className="text-sm">
-            Your offer of <span className="mono-num font-bold text-link">{mine.price} SOL</span>{" "}
-            is waiting on the owner.
+            Your offer of <span className="mono-num font-bold text-link">{mine.price} SOL</span> is
+            waiting on the owner.
           </p>
           <button
             onClick={() => act.mutate({ kind: "withdraw", offerId: mine.id })}
@@ -176,9 +174,7 @@ export function OfferPanel({
       )}
 
       {note ? (
-        <p
-          className={`mt-3 text-sm font-semibold ${note.bad ? "text-danger" : "text-success"}`}
-        >
+        <p className={`mt-3 text-sm font-semibold ${note.bad ? "text-danger" : "text-success"}`}>
           {note.text}
         </p>
       ) : null}

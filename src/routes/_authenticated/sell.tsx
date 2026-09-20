@@ -15,6 +15,8 @@ export const Route = createFileRoute("/_authenticated/sell")({
       { name: "description", content: "List your JPEG NFTs for sale in SOL." },
       { property: "og:title", content: "Sell NFTs · JPEG" },
       { property: "og:description", content: "List your JPEG NFTs for sale in SOL." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: SellPage,
@@ -97,7 +99,10 @@ function SellPage() {
           <Link to="/mint" className="primary-btn mt-5 inline-flex">
             Mint an NFT
           </Link>
-          <Link to="/buy" className="ml-3 inline-flex rounded-xl border-2 border-border bg-card px-5 py-2.5 text-sm font-bold text-muted-foreground transition-colors hover:bg-secondary">
+          <Link
+            to="/buy"
+            className="ml-3 inline-flex rounded-xl border-2 border-border bg-card px-5 py-2.5 text-sm font-bold text-muted-foreground transition-colors hover:bg-secondary"
+          >
             Browse NFTs for sale
           </Link>
         </div>
@@ -198,7 +203,11 @@ function SellRow({
               />
               <span className="text-sm font-bold text-muted-foreground">SOL</span>
             </div>
-            <button onClick={onList} disabled={busy} className="primary-btn !py-2.5 disabled:opacity-50">
+            <button
+              onClick={onList}
+              disabled={busy}
+              className="primary-btn !py-2.5 disabled:opacity-50"
+            >
               List for sale
             </button>
           </>

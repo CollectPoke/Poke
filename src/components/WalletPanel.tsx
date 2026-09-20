@@ -67,7 +67,8 @@ export function WalletPanel() {
         <div>
           <h2 className="font-display text-2xl font-bold text-foreground">Your JPEG wallet</h2>
           <p className="text-sm text-muted-foreground">
-            Built into your account — no wallet app needed. Send SOL to the address below to top it up.
+            Built into your account — no wallet app needed. Send SOL to the address below to top it
+            up.
           </p>
         </div>
         <div className="rounded-2xl border-2 border-brand/50 bg-brand/15 px-5 py-3 text-right">
@@ -93,7 +94,9 @@ export function WalletPanel() {
             {wallet.isLoading ? "…" : `${(wallet.data?.balance ?? 0).toFixed(4)} SOL`}
           </p>
           {wallet.isError ? (
-            <p className="mt-0.5 text-[10px] font-bold text-danger">Couldn't reach the chain — hit Refresh.</p>
+            <p className="mt-0.5 text-[10px] font-bold text-danger">
+              Couldn't reach the chain — hit Refresh.
+            </p>
           ) : null}
           {pendingCount > 0 ? (
             <p className="mt-0.5 text-[10px] font-bold text-link">
@@ -127,12 +130,17 @@ export function WalletPanel() {
         </div>
         {activity.length === 0 ? (
           <p className="mt-2 text-sm text-muted-foreground">
-            {wallet.isLoading ? "Checking the chain…" : "No transfers yet. They appear here as they happen."}
+            {wallet.isLoading
+              ? "Checking the chain…"
+              : "No transfers yet. They appear here as they happen."}
           </p>
         ) : (
           <ul className="mt-3 divide-y divide-border">
             {activity.map((a) => (
-              <li key={a.signature} className="flex items-center justify-between gap-3 py-2 text-sm">
+              <li
+                key={a.signature}
+                className="flex items-center justify-between gap-3 py-2 text-sm"
+              >
                 <span
                   className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase ${
                     a.status === "pending"
@@ -142,7 +150,11 @@ export function WalletPanel() {
                         : "bg-success/15 text-success"
                   }`}
                 >
-                  {a.status === "pending" ? "Confirming" : a.status === "failed" ? "Failed" : "Confirmed"}
+                  {a.status === "pending"
+                    ? "Confirming"
+                    : a.status === "failed"
+                      ? "Failed"
+                      : "Confirmed"}
                 </span>
                 <span className="mono-num flex-1 truncate text-xs text-muted-foreground">
                   {a.signature.slice(0, 8)}…{a.signature.slice(-8)}
@@ -164,7 +176,6 @@ export function WalletPanel() {
         )}
       </div>
 
-
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         {/* Withdraw */}
         <div className="rounded-2xl border border-border p-4">
@@ -183,7 +194,9 @@ export function WalletPanel() {
               placeholder="0.00"
               className="mono-num w-full rounded-xl border-2 border-border bg-card px-3 py-2 text-sm outline-none focus:border-link"
             />
-            <span className="rounded-lg bg-foreground px-2.5 py-1.5 text-xs font-bold text-background">SOL</span>
+            <span className="rounded-lg bg-foreground px-2.5 py-1.5 text-xs font-bold text-background">
+              SOL
+            </span>
           </div>
           <button
             onClick={() => send.mutate()}
@@ -208,8 +221,8 @@ export function WalletPanel() {
         <div className="rounded-2xl border border-border p-4">
           <p className="font-display text-lg font-bold text-foreground">Export private key</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            This key controls all the SOL in your JPEG wallet. Anyone who sees it can take your funds —
-            never share it, and never show it on stream.
+            This key controls all the SOL in your JPEG wallet. Anyone who sees it can take your
+            funds — never share it, and never show it on stream.
           </p>
           {showKey ? (
             <div className="mt-3">

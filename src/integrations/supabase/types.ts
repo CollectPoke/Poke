@@ -141,6 +141,51 @@ export type Database = {
           },
         ]
       }
+      card_sale_reservations: {
+        Row: {
+          buyer_id: string
+          card_id: string
+          created_at: string
+          expires_at: string
+          offer_id: string | null
+          price: number
+          seller_id: string
+        }
+        Insert: {
+          buyer_id: string
+          card_id: string
+          created_at?: string
+          expires_at?: string
+          offer_id?: string | null
+          price: number
+          seller_id: string
+        }
+        Update: {
+          buyer_id?: string
+          card_id?: string
+          created_at?: string
+          expires_at?: string
+          offer_id?: string | null
+          price?: number
+          seller_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "card_sale_reservations_card_id_fkey"
+            columns: ["card_id"]
+            isOneToOne: true
+            referencedRelation: "cards"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "card_sale_reservations_offer_id_fkey"
+            columns: ["offer_id"]
+            isOneToOne: false
+            referencedRelation: "card_offers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       cards: {
         Row: {
           contract_address: string
@@ -355,6 +400,44 @@ export type Database = {
           isOneToOne: true
           isSetofReturn: false
         }
+      }
+      complete_card_sale: {
+        Args: { _buyer_id: string; _card_id: string; _tx_signature: string }
+        Returns: {
+          contract_address: string
+          created_at: string
+          creator_id: string
+          description: string | null
+          id: string
+          image_url: string | null
+          last_price: number | null
+          launch_id: string | null
+          launch_tx_signature: string | null
+          list_price: number | null
+          mint_price: number
+          name: string
+          name_key: string
+          owner_id: string
+          status: string
+          ticker: string
+        }
+        SetofOptions: {
+          from: "*"
+          to: "cards"
+          isOneToOne: true
+          isSetofReturn: false
+        }
+      }
+      release_card_sale: {
+        Args: { _buyer_id: string; _card_id: string }
+        Returns: undefined
+      }
+      reserve_card_sale: {
+        Args: { _buyer_id: string; _card_id: string; _offer_id?: string }
+        Returns: {
+          price: number
+          seller_id: string
+        }[]
       }
     }
     Enums: {

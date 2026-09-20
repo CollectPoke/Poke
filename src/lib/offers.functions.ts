@@ -117,34 +117,34 @@ export const acceptOffer = createServerFn({ method: "POST" })
       );
     }
 
-    const signature = await sendSol(buyerWallet, sellerWallet.public_key, price);
+    const reservation = await supabaseAdmin.rpc("reserve_card_sale", {
+      _card_id: card.id,
+      _buyer_id: offer.buyer_id,
+      _offer_id: offer.id,
+    });
+    if (reservation.error) throw reservation.error;
 
-    const { error: upErr } = await supabaseAdmin
-      .from("cards")
-      .update({ owner_id: offer.buyer_id, list_price: null, last_price: price })
-      .eq("id", card.id);
-    if (upErr) {
-      throw new Error(
-        `Payment sent (${signature}) but the NFT didn't change hands: ${upErr.message}. Keep this signature.`,
-      );
+    let signature: string;
+    try {
+      signature = await sendSol(buyerWallet, sellerWallet.public_key, price);
+    } catch (error) {
+      await supabaseAdmin.rpc("release_card_sale", {
+        _card_id: card.id,
+        _buyer_id: offer.buyer_id,
+      });
+      throw error;
     }
 
-    await supabaseAdmin.from("card_events").insert({
-      card_id: card.id,
-      kind: "sale",
-      actor_id: offer.buyer_id,
-      counterparty_id: context.userId,
-      price,
-      tx_signature: signature,
+    const completed = await supabaseAdmin.rpc("complete_card_sale", {
+      _card_id: card.id,
+      _buyer_id: offer.buyer_id,
+      _tx_signature: signature,
     });
-
-    await supabaseAdmin.from("card_offers").update({ status: "accepted" }).eq("id", offer.id);
-    // Every other open offer on this NFT is now moot.
-    await supabaseAdmin
-      .from("card_offers")
-      .update({ status: "declined" })
-      .eq("card_id", card.id)
-      .eq("status", "pending");
+    if (completed.error) {
+      throw new Error(
+        `Payment sent (${signature}) but the NFT didn't change hands: ${completed.error.message}. Keep this signature.`,
+      );
+    }
 
     return { signature, price };
   });

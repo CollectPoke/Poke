@@ -112,14 +112,16 @@ function MintPage() {
     setBusy(true);
     setError(null);
     try {
-      const result = await launchCoin({ data: {
-        name,
-        ticker,
-        description,
-        imageUrl,
-        listPrice: listPrice ? Number(listPrice) : null,
-        devBuySol: 0,
-      } });
+      const result = await launchCoin({
+        data: {
+          name,
+          ticker,
+          description,
+          imageUrl,
+          listPrice: listPrice ? Number(listPrice) : null,
+          devBuySol: 0,
+        },
+      });
       setMintedCard({
         ...result.card,
         owner: { username: username ?? "you" },
@@ -132,174 +134,191 @@ function MintPage() {
     }
   }
 
-
   const canMint =
     !!name.trim() && !!ticker.trim() && !!imageUrl.trim() && available === true && !busy;
 
   return (
     <>
-    <main className="mx-auto max-w-6xl px-5 py-10">
-      <h1 className="font-display text-4xl font-bold">Mint an NFT</h1>
-      <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
-        Every mint launches a real Pump.fun coin on Solana and becomes an NFT. Once
-        "Dog" is minted, nobody else can ever mint Dog — unless the holder burns it.
-      </p>
+      <main className="mx-auto max-w-6xl px-5 py-10">
+        <h1 className="font-display text-4xl font-bold">Mint an NFT</h1>
+        <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
+          Every mint launches a real Pump.fun coin on Solana and becomes an NFT. Once "Dog" is
+          minted, nobody else can ever mint Dog — unless the holder burns it.
+        </p>
 
-      {underfunded && (
-        <button
-          type="button"
-          onClick={() => setShowFunding(true)}
-          className="mt-5 flex w-full items-start gap-3 rounded-2xl border-2 border-danger bg-danger/10 p-4 text-left shadow-sm transition-colors hover:border-danger/70"
-        >
-          <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-danger font-bold text-white">!</span>
-          <div>
-            <p className="text-sm font-bold">
-              Your wallet needs SOL — balance {wallet.balance.toFixed(4)} SOL
-            </p>
-            <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-              This launch costs {totalCost.toFixed(3)} SOL. Tap here to see your deposit address and QR code.
-            </p>
-          </div>
-        </button>
-      )}
-
-      <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-brand bg-card p-4 shadow-sm">
-        <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-brand-foreground">◎</span>
-        <div>
-          <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
-          <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">Your JPEG wallet signs the Pump.fun launch. The NFT appears only after Solana confirms it. Mainnet spending is irreversible.</p>
-        </div>
-      </div>
-
-      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]">
-        <form onSubmit={handleMint} className="space-y-5">
-          <Field label="NFT name" hint="Permanent and unique">
-            <input
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Dog"
-              maxLength={32}
-              className={inputClass}
-            />
-            {name.trim() && (
-              <p className="mt-1.5 text-xs font-semibold">
-                {checking ? (
-                  <span className="text-muted-foreground">Checking availability…</span>
-                ) : available === true ? (
-                  <span className="text-success">"{name.trim()}" is available.</span>
-                ) : available === false ? (
-                  <span className="text-danger">"{name.trim()}" is already taken.</span>
-                ) : null}
+        {underfunded && (
+          <button
+            type="button"
+            onClick={() => setShowFunding(true)}
+            className="mt-5 flex w-full items-start gap-3 rounded-2xl border-2 border-danger bg-danger/10 p-4 text-left shadow-sm transition-colors hover:border-danger/70"
+          >
+            <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-danger font-bold text-white">
+              !
+            </span>
+            <div>
+              <p className="text-sm font-bold">
+                Your wallet needs SOL — balance {wallet.balance.toFixed(4)} SOL
               </p>
-            )}
-          </Field>
-
-          <Field label="Ticker">
-            <input
-              value={ticker}
-              onChange={(e) => setTicker(e.target.value.toUpperCase())}
-              placeholder="DOG"
-              maxLength={10}
-              className={inputClass}
-            />
-          </Field>
-
-          <Field label="Description">
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              rows={3}
-              placeholder="What is this coin about?"
-              className={inputClass}
-            />
-          </Field>
-
-          <Field label="Image">
-            {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
-          </Field>
-
-
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <div className="flex items-center justify-between gap-4">
-              <div>
-                <p className="text-sm font-semibold">List for sale immediately</p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
-                  Put the NFT straight on the market after minting.
-                </p>
-              </div>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={listPrice !== ""}
-                onClick={() => setListPrice(listPrice === "" ? "1" : "")}
-                className={[
-                  "relative h-7 w-12 shrink-0 rounded-full transition-colors",
-                  listPrice !== "" ? "bg-success" : "bg-border",
-                ].join(" ")}
-              >
-                <span
-                  className={[
-                    "absolute top-0.5 size-6 rounded-full bg-white shadow transition-all",
-                    listPrice !== "" ? "left-[22px]" : "left-0.5",
-                  ].join(" ")}
-                />
-              </button>
+              <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+                This launch costs {totalCost.toFixed(3)} SOL. Tap here to see your deposit address
+                and QR code.
+              </p>
             </div>
-            {listPrice !== "" && (
-              <div className="mt-3 flex items-center gap-2">
-                <div className="relative flex-1">
-                  <input
-                    type="number"
-                    min={0}
-                    step="0.01"
-                    value={listPrice}
-                    onChange={(e) => setListPrice(e.target.value)}
-                    placeholder="2.5"
-                    className={`${inputClass} pr-14 font-mono`}
-                  />
-                  <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                    SOL
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <p className="text-sm font-semibold">Launch fee</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              One flat fee per launch — it covers the coin launch, network and Pump.fun fees.
-            </p>
-            <p className="mt-2 text-xs text-muted-foreground">
-              Total from your wallet: <span className="font-mono font-semibold">{totalCost.toFixed(3)} SOL</span>{" "}
-              (flat launch fee)
-            </p>
-          </div>
-
-          {error && <p className="text-sm font-medium text-danger">{error}</p>}
-
-          <button type="submit" disabled={!canMint} className="primary-btn disabled:opacity-40">
-            {busy ? "Launching on Pump.fun…" : `Launch coin + mint NFT · ${totalCost.toFixed(3)} SOL`}
           </button>
-          {busy ? <p className="text-xs text-muted-foreground">Preparing, checking, signing and confirming your Solana launch. Keep this page open.</p> : null}
-        </form>
+        )}
 
-        <div className="lg:sticky lg:top-28 lg:self-start">
-          <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">Preview</p>
-          <NftCard card={preview} />
+        <div className="mt-5 flex items-start gap-3 rounded-2xl border-2 border-brand bg-card p-4 shadow-sm">
+          <span className="mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-brand font-bold text-brand-foreground">
+            ◎
+          </span>
+          <div>
+            <p className="text-sm font-bold">Real mainnet launch · {totalCost.toFixed(3)} SOL</p>
+            <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
+              Your JPEG wallet signs the Pump.fun launch. The NFT appears only after Solana confirms
+              it. Mainnet spending is irreversible.
+            </p>
+          </div>
         </div>
-      </div>
-    </main>
-    {showFunding ? (
-      <FundingModal
-        requiredSol={totalCost}
-        onClose={() => setShowFunding(false)}
-        onFunded={() => setTimeout(() => setShowFunding(false), 1800)}
-      />
-    ) : null}
-    {mintedCard && launchSignature ? (
-      <MintReveal card={mintedCard} signature={launchSignature} onContinue={() => navigate({ to: "/card/$cardId", params: { cardId: mintedCard.id } })} />
-    ) : null}
+
+        <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_320px]">
+          <form onSubmit={handleMint} className="space-y-5">
+            <Field label="NFT name" hint="Permanent and unique">
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Dog"
+                maxLength={32}
+                className={inputClass}
+              />
+              {name.trim() && (
+                <p className="mt-1.5 text-xs font-semibold">
+                  {checking ? (
+                    <span className="text-muted-foreground">Checking availability…</span>
+                  ) : available === true ? (
+                    <span className="text-success">"{name.trim()}" is available.</span>
+                  ) : available === false ? (
+                    <span className="text-danger">"{name.trim()}" is already taken.</span>
+                  ) : null}
+                </p>
+              )}
+            </Field>
+
+            <Field label="Ticker">
+              <input
+                value={ticker}
+                onChange={(e) => setTicker(e.target.value.toUpperCase())}
+                placeholder="DOG"
+                maxLength={10}
+                className={inputClass}
+              />
+            </Field>
+
+            <Field label="Description">
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                rows={3}
+                placeholder="What is this coin about?"
+                className={inputClass}
+              />
+            </Field>
+
+            <Field label="Image">
+              {user && <ArtworkDrop userId={user.id} onUploaded={setImageUrl} />}
+            </Field>
+
+            <div className="rounded-2xl border border-border bg-card p-4">
+              <div className="flex items-center justify-between gap-4">
+                <div>
+                  <p className="text-sm font-semibold">List for sale immediately</p>
+                  <p className="mt-0.5 text-xs text-muted-foreground">
+                    Put the NFT straight on the market after minting.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  role="switch"
+                  aria-checked={listPrice !== ""}
+                  onClick={() => setListPrice(listPrice === "" ? "1" : "")}
+                  className={[
+                    "relative h-7 w-12 shrink-0 rounded-full transition-colors",
+                    listPrice !== "" ? "bg-success" : "bg-border",
+                  ].join(" ")}
+                >
+                  <span
+                    className={[
+                      "absolute top-0.5 size-6 rounded-full bg-white shadow transition-all",
+                      listPrice !== "" ? "left-[22px]" : "left-0.5",
+                    ].join(" ")}
+                  />
+                </button>
+              </div>
+              {listPrice !== "" && (
+                <div className="mt-3 flex items-center gap-2">
+                  <div className="relative flex-1">
+                    <input
+                      type="number"
+                      min={0}
+                      step="0.01"
+                      value={listPrice}
+                      onChange={(e) => setListPrice(e.target.value)}
+                      placeholder="2.5"
+                      className={`${inputClass} pr-14 font-mono`}
+                    />
+                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                      SOL
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            <div className="rounded-2xl border border-border bg-card p-4">
+              <p className="text-sm font-semibold">Launch fee</p>
+              <p className="mt-0.5 text-xs text-muted-foreground">
+                One flat fee per launch — it covers the coin launch, network and Pump.fun fees.
+              </p>
+              <p className="mt-2 text-xs text-muted-foreground">
+                Total from your wallet:{" "}
+                <span className="font-mono font-semibold">{totalCost.toFixed(3)} SOL</span> (flat
+                launch fee)
+              </p>
+            </div>
+
+            {error && <p className="text-sm font-medium text-danger">{error}</p>}
+
+            <button type="submit" disabled={!canMint} className="primary-btn disabled:opacity-40">
+              {busy
+                ? "Launching on Pump.fun…"
+                : `Launch coin + mint NFT · ${totalCost.toFixed(3)} SOL`}
+            </button>
+            {busy ? (
+              <p className="text-xs text-muted-foreground">
+                Preparing, checking, signing and confirming your Solana launch. Keep this page open.
+              </p>
+            ) : null}
+          </form>
+
+          <div className="lg:sticky lg:top-28 lg:self-start">
+            <p className="mb-2 text-xs uppercase tracking-widest text-muted-foreground">Preview</p>
+            <NftCard card={preview} />
+          </div>
+        </div>
+      </main>
+      {showFunding ? (
+        <FundingModal
+          requiredSol={totalCost}
+          onClose={() => setShowFunding(false)}
+          onFunded={() => setShowFunding(false)}
+        />
+      ) : null}
+      {mintedCard && launchSignature ? (
+        <MintReveal
+          card={mintedCard}
+          signature={launchSignature}
+          onContinue={() => navigate({ to: "/card/$cardId", params: { cardId: mintedCard.id } })}
+        />
+      ) : null}
     </>
   );
 }
@@ -326,4 +345,3 @@ function Field({
     </div>
   );
 }
-

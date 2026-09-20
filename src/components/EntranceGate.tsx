@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import pigAsset from "@/assets/pig.webp.asset.json";
 
@@ -10,6 +10,7 @@ const KEY = "jpeg-entered";
 export function EntranceGate() {
   const [show, setShow] = useState(true);
   const [opening, setOpening] = useState(false);
+  const closeTimer = useRef<number | null>(null);
 
   useEffect(() => {
     let already = false;
@@ -37,6 +38,13 @@ export function EntranceGate() {
     };
   }, [show]);
 
+  useEffect(
+    () => () => {
+      if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    },
+    [],
+  );
+
   function enter() {
     if (opening) return;
     setOpening(true);
@@ -46,7 +54,7 @@ export function EntranceGate() {
       /* ignore */
     }
     window.dispatchEvent(new Event("jpeg:enter"));
-    window.setTimeout(() => setShow(false), 1250);
+    closeTimer.current = window.setTimeout(() => setShow(false), 1250);
   }
 
   return (
@@ -72,14 +80,12 @@ export function EntranceGate() {
           <span className="absolute -inset-6 rounded-3xl bg-brand/10 blur-2xl transition-colors duration-1000 group-hover:bg-brand/15" />
           <span
             className={`relative block h-36 w-36 overflow-hidden rounded-2xl border-[6px] border-brand bg-white shadow-[0_0_60px_rgba(0,0,0,0.55)] sm:h-48 sm:w-48 ${
-              opening ? "scale-110 opacity-0 transition-all duration-700" : "animate-bounce [animation-duration:3s]"
+              opening
+                ? "scale-110 opacity-0 transition-all duration-700"
+                : "animate-bounce [animation-duration:3s]"
             }`}
           >
-            <img
-              src={pigAsset.url}
-              alt=""
-              className="h-full w-full object-contain p-2"
-            />
+            <img src={pigAsset.url} alt="" className="h-full w-full object-contain p-2" />
             <span className="mono-num absolute bottom-0 left-0 right-0 bg-foreground/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-brand">
               1 of 1
             </span>

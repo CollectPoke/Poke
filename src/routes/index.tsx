@@ -18,8 +18,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: "JPEG · One jpeg, one coin, forever" },
       {
         property: "og:description",
-        content:
-          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached.",
+        content: "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -63,17 +62,12 @@ function Home() {
               <img src={pigAsset.url} alt="" className="size-7" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="py-2 text-lg text-muted-foreground">
-                Got a jpeg? Give it a coin.
-              </p>
+              <p className="py-2 text-lg text-muted-foreground">Got a jpeg? Give it a coin.</p>
               <div className="mt-1 flex items-center justify-between gap-3">
                 <p className="text-xs text-muted-foreground">
                   1/1 NFT · real Pump.fun coin · 0.1 SOL flat
                 </p>
-                <Link
-                  to="/mint"
-                  className="primary-btn shrink-0 !px-5 !py-1.5 text-sm"
-                >
+                <Link to="/mint" className="primary-btn shrink-0 !px-5 !py-1.5 text-sm">
                   Mint
                 </Link>
               </div>
@@ -115,10 +109,22 @@ function Home() {
           <div className="rounded-2xl border border-border bg-card p-4">
             <h2 className="text-base font-extrabold">How JPEG works</h2>
             <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
-              <li><span className="font-bold text-foreground">Claim a name.</span> If it's taken, it's gone forever — one of each, ever.</li>
-              <li><span className="font-bold text-foreground">Mint the NFT.</span> Your jpeg + ticker + a real coin on Pump.fun.</li>
-              <li><span className="font-bold text-foreground">Trade it.</span> List it, get offers, sell instantly.</li>
-              <li><span className="font-bold text-foreground">Or burn it.</span> The name frees up for someone else.</li>
+              <li>
+                <span className="font-bold text-foreground">Claim a name.</span> If it's taken, it's
+                gone forever — one of each, ever.
+              </li>
+              <li>
+                <span className="font-bold text-foreground">Mint the NFT.</span> Your jpeg + ticker
+                + a real coin on Pump.fun.
+              </li>
+              <li>
+                <span className="font-bold text-foreground">Trade it.</span> List it, get offers,
+                sell instantly.
+              </li>
+              <li>
+                <span className="font-bold text-foreground">Or burn it.</span> The name frees up for
+                someone else.
+              </li>
             </ul>
             <Link
               to="/docs"
@@ -152,11 +158,7 @@ function FeedPost({ card }: { card: CardWithPeople }) {
 
   return (
     <li className="border-b border-border transition-colors hover:bg-foreground/[0.02]">
-      <Link
-        to="/card/$cardId"
-        params={{ cardId: card.id }}
-        className="flex gap-3 px-4 py-3"
-      >
+      <Link to="/card/$cardId" params={{ cardId: card.id }} className="flex gap-3 px-4 py-3">
         {/* art */}
         <div className="relative size-14 shrink-0 overflow-hidden rounded-xl border border-border bg-muted">
           {card.image_url ? (
@@ -172,9 +174,7 @@ function FeedPost({ card }: { card: CardWithPeople }) {
           {/* header row */}
           <div className="flex items-baseline gap-1.5 text-[15px]">
             <span className="truncate font-bold">{card.name}</span>
-            <span className="mono-num shrink-0 text-sm text-muted-foreground">
-              ${card.ticker}
-            </span>
+            <span className="mono-num shrink-0 text-sm text-muted-foreground">${card.ticker}</span>
             <span className="shrink-0 text-sm text-muted-foreground">
               · {timeAgo(card.created_at)}
             </span>
