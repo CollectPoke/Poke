@@ -371,9 +371,8 @@ export function SiteFooter() {
             (it covers the launch and network fees).
           </p>
           <p>
-            Pokémon and card artwork belong to Nintendo, Creatures and GAME FREAK / The Pokémon
-            Company — no affiliation. Crypto is risky: never deposit more than you can afford to
-            lose.
+            Artwork belongs to the people who upload it. Crypto is risky: never deposit more than
+            you can afford to lose.
           </p>
           <p>© {new Date().getFullYear()} Poke · collectpoke.fun</p>
         </div>
