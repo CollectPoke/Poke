@@ -96,7 +96,8 @@ export function FundingModal({
           <>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Launching costs up to <strong className="text-foreground">{requiredSol} SOL</strong>.
-              Send SOL to your personal JPEG deposit address below — {autoLaunch
+              Send SOL to your personal JPEG deposit address below —{" "}
+              {autoLaunch
                 ? "the moment it lands, your launch starts automatically."
                 : "the moment it lands, this window closes itself."}
             </p>
