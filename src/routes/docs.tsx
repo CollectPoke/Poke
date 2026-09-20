@@ -7,13 +7,13 @@ export const Route = createFileRoute("/docs")({
       {
         name: "description",
         content:
-          "Everything you need to know about JPEG: how minting launches a real coin, how the built-in wallet works, buying, selling, burning and the 10-minute $POKE buyback.",
+          "Everything you need to know about JPEG: minting, wallets, buying, selling, and burning one-of-one NFTs.",
       },
       { property: "og:title", content: "Docs & How to — JPEG" },
       {
         property: "og:description",
         content:
-          "How JPEG works: one-of-one NFTs with a real coin attached, a built-in wallet, and fees that buy back $POKE every 10 minutes.",
+          "How JPEG works: one-of-one NFTs with a real coin attached and a built-in wallet.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -28,7 +28,6 @@ const sections = [
   { id: "fund", title: "Funding your wallet" },
   { id: "mint", title: "Minting an NFT" },
   { id: "trade", title: "Buying, selling & burning" },
-  { id: "buyback", title: "Fees & the $POKE buyback" },
   { id: "faq", title: "FAQ" },
 ];
 
@@ -45,7 +44,7 @@ function DocsPage() {
         </h1>
         <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
           Everything about JPEG in one place — what it is, how minting launches
-          a real coin, and how buying, selling and the buyback work.
+          a real coin, and how buying and selling work.
         </p>
       </header>
 
@@ -179,18 +178,6 @@ function DocsPage() {
             <p>
               <strong>Burning:</strong> the owner can burn an NFT, destroying it
               forever. This releases the name so someone else can mint it again.
-            </p>
-          </DocCard>
-
-          <DocCard id="buyback" title="Fees & the $POKE buyback">
-            <p>
-              100% of the fees from coins launched on JPEG are used to{" "}
-              <strong>buy back $POKE</strong>. A run happens every{" "}
-              <strong>10 minutes</strong>, and every run is posted to the{" "}
-              <Link to="/buyback" className="font-semibold text-link underline">
-                Buybacks
-              </Link>{" "}
-              page with its Solscan transaction — fully verifiable on-chain.
             </p>
           </DocCard>
 

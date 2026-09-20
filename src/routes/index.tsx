@@ -2,7 +2,6 @@ import pigAsset from "@/assets/pig.webp.asset.json";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
-import { BuybackTicker } from "@/components/BuybackTicker";
 import { useAuth } from "@/lib/auth";
 import type { CardWithPeople } from "@/lib/cards";
 import { listCards } from "@/lib/queries";
@@ -113,8 +112,6 @@ function Home() {
       {/* ─── Right rail ─── */}
       <aside className="hidden lg:block">
         <div className="sticky top-4 space-y-4 py-4">
-          <BuybackTicker />
-
           <div className="rounded-2xl border border-border bg-card p-4">
             <h2 className="text-base font-extrabold">How JPEG works</h2>
             <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
@@ -128,19 +125,6 @@ function Home() {
               className="mt-4 inline-block text-sm font-semibold text-brand hover:underline"
             >
               Read the how-to →
-            </Link>
-          </div>
-
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <h2 className="text-base font-extrabold">100% of fees buy back $POKE</h2>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Every 10 minutes, on-chain, with a Solscan link for every run. 0% team.
-            </p>
-            <Link
-              to="/buyback"
-              className="mt-3 inline-block text-sm font-semibold text-brand hover:underline"
-            >
-              Verify the log →
             </Link>
           </div>
 

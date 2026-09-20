@@ -91,7 +91,7 @@ function MintPage() {
     ticker: ticker.trim().toUpperCase() || "TICKER",
     description: description || null,
     image_url: imageUrl || null,
-    contract_address: "PokeXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    contract_address: "JPEGXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
     creator_id: "",
     owner_id: "",
     status: "minted",

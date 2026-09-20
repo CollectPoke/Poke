@@ -10,7 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { myCards, mySaleHistory } from "@/lib/queries";
 import { formatSolAmount } from "@/lib/cards";
-import { SOLSCAN_TX } from "@/lib/buybacks";
+const SOLSCAN_TX = (signature: string) => `https://solscan.io/tx/${signature}`;
 
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
@@ -58,7 +58,7 @@ function AccountPage() {
   useEffect(() => {
     const latestSale = history.find((event) => event.counterparty_id === userId && event.tx_signature && event.card);
     if (!latestSale || !latestSale.tx_signature) return;
-    const seenKey = `poke-sale-seen:${latestSale.id}`;
+    const seenKey = `jpeg-sale-seen:${latestSale.id}`;
     if (window.localStorage.getItem(seenKey)) return;
     window.localStorage.setItem(seenKey, "1");
     setSaleToCelebrate(latestSale);
@@ -74,12 +74,8 @@ function AccountPage() {
         <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-5">
             <div className="relative">
-              <div className="size-20 rounded-full bg-gradient-to-tr from-ink to-link p-1 shadow-lg sm:size-24">
-                <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-card">
-                  <div className="absolute inset-x-0 top-0 h-1/2 bg-danger" />
-                  <div className="absolute top-1/2 z-10 h-1 w-full -translate-y-1/2 bg-border" />
-                  <div className="z-20 size-5 rounded-full border-4 border-ink bg-card" />
-                </div>
+              <div className="grid size-20 place-items-center rounded-full bg-brand text-3xl font-black text-brand-foreground shadow-lg sm:size-24">
+                {(username ?? "J").slice(0, 1).toUpperCase()}
               </div>
               <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-brand px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-foreground shadow-sm">
                 Collector
@@ -226,10 +222,7 @@ function AccountPage() {
         ) : (
           <div className="mt-4 rounded-3xl border-2 border-dashed border-ink/20 bg-card p-12 text-center">
             <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-link/10">
-              <div className="relative size-8 overflow-hidden rounded-full border-2 border-ink bg-card">
-                <div className="absolute inset-x-0 top-0 h-1/2 bg-danger" />
-                <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 bg-border" />
-              </div>
+              <span className="text-2xl font-black text-brand">J</span>
             </div>
             <p className="font-display text-xl font-bold text-foreground">Your collection is empty</p>
             <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
