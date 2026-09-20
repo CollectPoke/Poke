@@ -12,13 +12,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached.  Buy, sell, mint and burn.",
+          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached. Buy, sell, mint and burn.",
       },
       { property: "og:title", content: "Poke · One jpeg, one coin, forever" },
       {
         property: "og:description",
         content:
-          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached. ",
+          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -48,15 +48,16 @@ function Home() {
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr]">
           <div className="text-white">
             <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-navy">
-              One name, one NFT, forever
+              One jpeg, one coin, forever
             </span>
             <h1 className="mt-4 font-display text-5xl font-bold leading-[1.05] drop-shadow sm:text-6xl">
-              Launch your coin as an NFT nobody can copy.
+              Mint your jpeg. Get a coin with it.
             </h1>
             <p className="mt-4 max-w-lg text-base text-white/85">
-              Every coin launched on Poke comes out as a NFT, with its contract address
-              printed at the bottom. Only one "Dog" can ever exist. Mint it, hold it, sell it — or
-              burn it and set the name free.
+              Upload an image, pick a name and a ticker. Poke mints it as a one-of-one NFT and
+              launches a real coin for it on Pump.fun, with the contract address printed right on
+              the piece. Only one of each name can ever exist. Hold it, sell it — or burn it and
+              set the name free.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link to="/mint" className="poke-btn">
@@ -104,7 +105,7 @@ function Home() {
             Pick a name and ticker. If it's taken, it's gone — the site refuses a second one.
           </Tile>
           <Tile color="bg-poke-blue text-white" step="02" title="Mint the NFT">
-            Your coin prints as an NFT with its image, ticker and contract address.
+            Your jpeg becomes a one-of-one NFT with its ticker and coin address on it.
           </Tile>
           <Tile color="bg-poke-green text-white" step="03" title="Trade it">
             List it for sale, and anyone with an account can buy it. Ownership moves instantly.
