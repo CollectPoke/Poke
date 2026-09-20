@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
 const RAW_LIMIT = 20 * 1024 * 1024; // accept any image up to 20 MB…
@@ -111,8 +112,9 @@ export function ArtworkDrop({
 
   return (
     <div>
-      <button
+      <Button
         type="button"
+        variant="outline"
         onClick={() => inputRef.current?.click()}
         onDragOver={(e) => {
           e.preventDefault();
@@ -125,8 +127,8 @@ export function ArtworkDrop({
           void handleFile(e.dataTransfer.files?.[0]);
         }}
         className={[
-          "group relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed transition-colors",
-          dragging ? "border-link bg-link/10" : "border-border bg-card hover:border-link/60",
+          "group relative flex aspect-square h-auto w-full whitespace-normal rounded-none border border-dashed p-0 shadow-none transition-colors",
+          dragging ? "border-foreground bg-muted" : "border-border bg-background hover:border-foreground",
         ].join(" ")}
       >
         {preview ? (
@@ -136,8 +138,8 @@ export function ArtworkDrop({
               alt="Artwork preview"
               className="absolute inset-0 h-full w-full object-contain p-3"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-4 pb-3 pt-10 text-center">
-              <p className="text-sm font-bold text-foreground">
+            <div className="absolute inset-x-0 bottom-0 border-t border-border bg-background/95 px-4 py-3 text-center backdrop-blur">
+              <p className="text-xs font-bold uppercase text-foreground">
                 {uploading ? "Uploading…" : "Artwork ready"}
               </p>
               <p className="text-xs text-muted-foreground">
@@ -147,17 +149,17 @@ export function ArtworkDrop({
           </>
         ) : (
           <div className="px-6 text-center">
-            <p className="font-display text-6xl leading-none text-muted-foreground/60 transition-colors group-hover:text-link/70">
+            <span className="mx-auto grid size-12 place-items-center border border-foreground text-2xl font-normal transition-colors group-hover:bg-foreground group-hover:text-background">
               +
-            </p>
-            <p className="mt-4 font-display text-2xl font-bold">Drop your image here</p>
-            <p className="mt-2 text-sm text-muted-foreground">or click to choose a picture</p>
-            <p className="mt-1 text-xs text-muted-foreground/70">
-              Any image works — PNG, JPG, GIF, WebP and more, up to 20 MB
+            </span>
+            <p className="mt-4 text-xs font-bold uppercase">Upload artwork</p>
+            <p className="mt-2 text-xs text-muted-foreground">Drop an image or click to browse</p>
+            <p className="mt-1 text-[10px] uppercase text-muted-foreground/70">
+              PNG, JPG, GIF, WebP · 20 MB max
             </p>
           </div>
         )}
-      </button>
+      </Button>
       <input
         ref={inputRef}
         type="file"
