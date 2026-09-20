@@ -138,7 +138,9 @@ function MintPage() {
         <div className="border border-foreground bg-background">
           <header className="flex items-end justify-between gap-6 border-b border-foreground p-5 sm:p-7">
             <div>
-              <h1 className="text-3xl font-bold uppercase leading-none sm:text-4xl">JPEG Launch</h1>
+              <h1 className="text-3xl font-bold uppercase leading-none tracking-normal sm:text-4xl">
+                JPEG Launch
+              </h1>
               <p className="mt-2 text-[11px] font-medium uppercase text-muted-foreground">
                 One image. One NFT. One coin.
               </p>
@@ -311,7 +313,7 @@ function MintPage() {
                 <Button
                   type="submit"
                   disabled={!canMint}
-                  className="h-16 w-full rounded-none text-xs font-bold uppercase"
+                  className="h-16 w-full rounded-none bg-foreground text-xs font-bold uppercase text-background shadow-none hover:bg-foreground/85"
                 >
                   {busy ? "Launching…" : `Launch · ${totalCost.toFixed(3)} SOL`}
                 </Button>
@@ -348,7 +350,7 @@ function StepTitle({ number, title }: { number: string; title: string }) {
   return (
     <div className="mb-6 flex items-baseline gap-4">
       <span className="mono-num text-xs">{number}.</span>
-      <h2 className="text-lg font-bold uppercase">{title}</h2>
+      <h2 className="text-lg font-bold uppercase tracking-normal">{title}</h2>
     </div>
   );
 }
