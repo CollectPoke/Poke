@@ -63,11 +63,10 @@ export function EntranceGate() {
         opening ? "gate-leaving" : ""
       }`}
     >
-      {/* background energy */}
+       {/* bright cinema frame */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-6 border border-border sm:inset-10" />
-        <div className="absolute left-1/2 top-0 h-full w-px bg-gradient-to-b from-transparent via-brand/40 to-transparent" />
-        <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-brand/30 to-transparent" />
+         <div className="absolute inset-6 rounded-[2rem] border border-border bg-card/40 sm:inset-10" />
+         <div className="absolute inset-x-0 top-0 h-3 bg-brand" />
       </div>
 
       <button
@@ -76,41 +75,32 @@ export function EntranceGate() {
         aria-label="Enter JPEG"
         className="group relative z-10 flex flex-col items-center focus:outline-none"
       >
-        {/* The jpeg frame */}
+         {/* The mascot ticket */}
         <span className="relative mb-8 block sm:mb-12">
-          <span className="absolute -inset-6 bg-brand/10 blur-2xl transition-colors duration-1000 group-hover:bg-brand/20" />
+           <span className="absolute -inset-8 rounded-full bg-brand/20 transition-transform duration-500 group-hover:scale-110" />
           <span
-            className={`relative block h-36 w-36 overflow-hidden border border-brand bg-surface shadow-card sm:h-48 sm:w-48 ${
+             className={`relative block h-36 w-36 overflow-hidden rounded-[2rem] border-4 border-card bg-secondary shadow-card sm:h-48 sm:w-48 ${
               opening
                 ? "scale-110 opacity-0 transition-all duration-700"
                 : "animate-bounce [animation-duration:3s]"
             }`}
           >
             <img src={pigAsset.url} alt="" className="h-full w-full object-contain p-2" />
-            <span className="mono-num absolute bottom-0 left-0 right-0 bg-foreground/90 py-1 text-center text-[10px] uppercase tracking-[0.2em] text-brand">
-              1 of 1
-            </span>
+             <span className="absolute bottom-0 left-0 right-0 bg-foreground py-2 text-center text-[10px] font-bold text-background">PLAYER ONE</span>
           </span>
         </span>
 
-        {/* Wordmark with glow */}
+         {/* Wordmark */}
         <span className="relative mb-10 block">
-          <span className="block font-display text-6xl tracking-tighter text-brand sm:text-8xl">
-            JPEG
-          </span>
-          <span
-            aria-hidden
-            className="absolute inset-0 select-none font-display text-6xl tracking-tighter text-brand opacity-30 blur-xl sm:text-8xl"
-          >
+           <span className="block font-display text-6xl font-extrabold text-foreground sm:text-8xl">
             JPEG
           </span>
         </span>
 
         {/* CTA */}
         <span className="relative block">
-          <span className="absolute -inset-1 animate-pulse bg-brand/30 blur-md transition duration-300 group-hover:bg-brand/50" />
-          <span className="relative block border border-brand bg-brand px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-brand-foreground shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
-            Enter Arena
+           <span className="relative block rounded-2xl bg-foreground px-9 py-3.5 text-base font-black text-background shadow-2xl transition-all group-hover:-translate-y-1 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
+             Tap to enter
           </span>
         </span>
       </button>
