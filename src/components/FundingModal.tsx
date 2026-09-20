@@ -9,10 +9,12 @@ export const LAUNCH_COST_SOL = 0.1;
 
 export function FundingModal({
   requiredSol = LAUNCH_COST_SOL,
+  autoLaunch = false,
   onClose,
   onFunded,
 }: {
   requiredSol?: number;
+  autoLaunch?: boolean;
   onClose: () => void;
   onFunded?: () => void;
 }) {
@@ -63,7 +65,7 @@ export function FundingModal({
           <div>
             <p className="text-[10px] font-bold uppercase text-muted-foreground">Wallet funding</p>
             <h2 className="mt-1 font-display text-2xl font-bold">
-              {funded ? "You're funded!" : "Add SOL to mint"}
+              {funded ? (autoLaunch ? "Launching now…" : "You're funded!") : "Add SOL to mint"}
             </h2>
           </div>
           <Button
@@ -85,15 +87,19 @@ export function FundingModal({
               {balance?.toFixed(4)} SOL received
             </p>
             <p className="mt-1 text-xs text-muted-foreground">
-              Your wallet has enough to launch. You're good to go.
+              {autoLaunch
+                ? "Starting your launch automatically — no extra click needed."
+                : "Your wallet has enough to launch. You're good to go."}
             </p>
           </div>
         ) : (
           <>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Launching costs up to <strong className="text-foreground">{requiredSol} SOL</strong>.
-              Send SOL to your personal JPEG deposit address below — the moment it lands, this
-              window closes itself.
+              Send SOL to your personal JPEG deposit address below —{" "}
+              {autoLaunch
+                ? "the moment it lands, your launch starts automatically."
+                : "the moment it lands, this window closes itself."}
             </p>
 
             <div className="mt-5 flex flex-col items-center gap-4">
@@ -134,7 +140,7 @@ export function FundingModal({
           </>
         )}
 
-        {funded && (
+        {funded && !autoLaunch && (
           <Button type="button" onClick={onClose} className="mt-5 h-12 w-full rounded-none">
             Back to minting
           </Button>

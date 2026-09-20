@@ -75,7 +75,9 @@ export function NftCard({ card, compact = false }: Props) {
           </div>
 
           {card.list_price !== null && !burned && (
-            <div className="w-full rounded-2xl bg-foreground px-4 py-3 text-center text-sm font-extrabold text-background">Acquire · {card.list_price} SOL</div>
+            <div className="w-full rounded-2xl bg-foreground px-4 py-3 text-center text-sm font-extrabold text-background">
+              Acquire · {card.list_price} SOL
+            </div>
           )}
 
           <div className="mono-num truncate text-[10px] tracking-tight text-muted-foreground/70">
