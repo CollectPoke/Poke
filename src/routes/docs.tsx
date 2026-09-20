@@ -13,7 +13,7 @@ export const Route = createFileRoute("/docs")({
       {
         property: "og:description",
         content:
-          "How Poke works: one-of-one coin cards, real Pump.fun launches, a built-in wallet, and fees that buy back $POKE every 10 minutes.",
+          "How Poke works: one-of-one NFTs with a real coin attached, a built-in wallet, and fees that buy back $POKE every 10 minutes.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -75,10 +75,11 @@ function DocsPage() {
         <div className="space-y-6">
           <DocCard id="what" title="What is Poke?">
             <p>
-              Poke is a launchpad where every coin becomes a{" "}
-              <strong>one-of-one NFT</strong>. When someone mints{" "}
-              <strong>Dog</strong>, a real coin launches on Solana via Pump.fun
-              and its contract address is printed on the NFT forever.
+              Poke is an NFT launchpad where every piece comes with a coin. You
+              upload a jpeg, pick a name and a ticker, and Poke mints it as a{" "}
+              <strong>one-of-one NFT</strong> while launching a real coin for it
+              on Solana via Pump.fun. The contract address is printed on the NFT
+              forever.
             </p>
             <p>
               Each name can only exist <strong>once</strong> — after{" "}
@@ -151,25 +152,16 @@ function DocsPage() {
                 set a price in SOL.
               </li>
               <li>
-                Hit <strong>Launch coin + mint card</strong>. The cost is a flat{" "}
+                Hit <strong>Launch coin + mint NFT</strong>. The cost is a flat{" "}
                 <strong>0.1 SOL launch fee</strong>, taken from your Poke wallet —
                 that covers the real Pump.fun launch and network fees.
               </li>
               <li>
                 Once Solana confirms, the real contract address appears at the
-                bottom of your card with a Solscan receipt, and the NFT is
+                bottom of your NFT with a Solscan receipt, and the NFT is
                 yours.
               </li>
             </ol>
-            <p>
-              Not sure which Pokémon fits your coin? Tap{" "}
-              <strong className="font-semibold">Find my Pokémon</strong> on the{" "}
-              <Link to="/mint" className="font-semibold text-poke-blue underline">
-                Mint page
-              </Link>{" "}
-              — it suggests a Pokémon with a short reason, a typing and a rarity,
-              right next to your card preview.
-            </p>
           </DocCard>
 
           <DocCard id="trade" title="Buying, selling & burning">
@@ -179,7 +171,7 @@ function DocsPage() {
               time.
             </p>
             <p>
-              <strong>Buying:</strong> open a listed card and hit buy. The exact
+              <strong>Buying:</strong> open a listed NFT and hit buy. The exact
               SOL amount moves straight from your Poke wallet to the seller's
               Poke wallet on Solana — then ownership transfers to you. Every
               sale gets a Solscan receipt in the NFT's history.
@@ -205,7 +197,7 @@ function DocsPage() {
           <DocCard id="faq" title="FAQ">
             <Faq
               q="Is this real money?"
-              a="Yes. Deposits, mints and card sales move real mainnet SOL between real Solana addresses. Transfers are irreversible."
+              a="Yes. Deposits, mints and NFT sales move real mainnet SOL between real Solana addresses. Transfers are irreversible."
             />
             <Faq
               q="Do I need a wallet app?"
@@ -213,15 +205,15 @@ function DocsPage() {
             />
             <Faq
               q="What happens if the name I want is taken?"
-              a="You can't mint it while its card exists. The only way a name frees up is if the current holder burns the NFT."
+              a="You can't mint it while its NFT exists. The only way a name frees up is if the current holder burns the NFT."
             />
             <Faq
               q="Can I change an NFT after minting?"
               a="Only the sale price and listing status. The name, ticker, image, description and contract address are locked forever."
             />
             <Faq
-              q="Is Poke affiliated with Pokémon?"
-              a="No. Poke is an independent fan-style project and is not affiliated with Nintendo, Creatures Inc. or GAME FREAK."
+              q="Who owns the artwork?"
+              a="Whoever uploads it. Only upload images you have the right to use — anything you mint is public and permanent."
             />
           </DocCard>
 
