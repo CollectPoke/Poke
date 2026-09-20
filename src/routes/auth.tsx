@@ -4,17 +4,16 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable/index";
 import { useAuth } from "@/lib/auth";
-import { WelcomeTrainer } from "@/components/WelcomeTrainer";
 
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
       { title: "Sign in · Poke" },
-      { name: "description", content: "Sign in to mint, buy and sell one-of-one Poke cards." },
+      { name: "description", content: "Sign in to mint, buy and sell one-of-one NFTs on Poke." },
       { property: "og:title", content: "Sign in · Poke" },
       {
         property: "og:description",
-        content: "Sign in to mint, buy and sell one-of-one Poke cards.",
+        content: "Sign in to mint, buy and sell one-of-one NFTs on Poke.",
       },
     ],
   }),
