@@ -40,6 +40,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       getBalanceSol,
       getDeployerSigner,
       getOrCreateWallet,
+      sendSol,
       signSimulateAndSendTransaction,
       signatureOutcome,
     } = await import("@/lib/wallet.server");
