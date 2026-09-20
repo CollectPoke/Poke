@@ -346,8 +346,14 @@ function MintPage() {
       {showFunding ? (
         <FundingModal
           requiredSol={totalCost}
-          onClose={() => setShowFunding(false)}
-          onFunded={() => setShowFunding(false)}
+          autoLaunch={pendingLaunch}
+          onClose={() => {
+            setPendingLaunch(false);
+            setShowFunding(false);
+          }}
+          onFunded={() => {
+            if (!pendingLaunch) setShowFunding(false);
+          }}
         />
       ) : null}
       {mintedCard && launchSignature ? (
