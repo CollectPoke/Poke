@@ -17,13 +17,13 @@ import {
 export const Route = createFileRoute("/buyback")({
   head: () => ({
     meta: [
-      { title: "Buybacks · Poke" },
+      { title: "Buybacks · JPEG" },
       {
         name: "description",
         content:
-          "100% of the fees from every coin launched on Poke buy back $POKE. Every 10 minutes, with the Solscan transaction for each run.",
+          "100% of the fees from every coin launched on JPEG buy back $POKE. Every 10 minutes, with the Solscan transaction for each run.",
       },
-      { property: "og:title", content: "Poke buybacks · every 10 minutes" },
+      { property: "og:title", content: "JPEG buybacks · every 10 minutes" },
       {
         property: "og:description",
         content: "100% of launch fees buy back $POKE every 10 minutes. Every run has a Solscan link.",
@@ -70,7 +70,7 @@ function BuybackPage() {
             Every fee buys back $POKE.
           </h1>
           <p className="mt-3 max-w-2xl text-white/80">
-            Every coin launched on Poke pays fees, and 100% of them go one place: buying $POKE on
+            Every coin launched on JPEG pays fees, and 100% of them go one place: buying $POKE on
             the open market. It runs every 10 minutes, and every single run is posted here with its
             Solscan transaction so you can check it yourself.
           </p>
@@ -97,7 +97,7 @@ function BuybackPage() {
       <section className="mx-auto max-w-6xl px-5 py-12">
         <div className="grid gap-4 sm:grid-cols-3">
           <Card color="bg-poke-yellow text-poke-yellow-foreground" title="100% of fees">
-            Nothing is skimmed. Every fee a Poke coin generates is used to buy $POKE.
+            Nothing is skimmed. Every fee a JPEG coin generates is used to buy $POKE.
           </Card>
           <Card color="border border-border bg-card" title="Every 10 minutes">
             The buyback runs on a {BUYBACK_INTERVAL_MS / 60000}-minute clock, not whenever someone
@@ -126,7 +126,7 @@ function BuybackPage() {
             <div className="px-5 py-14 text-center">
               <p className="font-display text-xl font-bold">No buybacks yet</p>
               <p className="mx-auto mt-1 max-w-md text-sm text-muted-foreground">
-                The first run posts here the moment coins launched on Poke start generating fees.
+                The first run posts here the moment coins launched on JPEG start generating fees.
                 Every entry will carry its Solscan link.
               </p>
             </div>

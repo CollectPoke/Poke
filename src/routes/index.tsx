@@ -8,13 +8,13 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Poke · One jpeg, one coin, forever" },
+      { title: "JPEG · One jpeg, one coin, forever" },
       {
         name: "description",
         content:
           "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached. Buy, sell, mint and burn.",
       },
-      { property: "og:title", content: "Poke · One jpeg, one coin, forever" },
+      { property: "og:title", content: "JPEG · One jpeg, one coin, forever" },
       {
         property: "og:description",
         content:
@@ -60,7 +60,7 @@ function Home() {
               the coin.
             </h1>
             <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
-              Upload an image, pick a name and a ticker. Poke mints it as a one-of-one and launches
+              Upload an image, pick a name and a ticker. JPEG mints it as a one-of-one and launches
               a real coin for it on Pump.fun, with the contract address printed on the piece. Only
               one of each name can ever exist — hold it, sell it, or burn it and set the name free.
             </p>
@@ -130,7 +130,7 @@ function Home() {
                 Every fee buys back $POKE — every 10 minutes.
               </h2>
               <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-                Coins launched on Poke pay fees, and all of it goes into buying $POKE on the open
+                Coins launched on JPEG pay fees, and all of it goes into buying $POKE on the open
                 market. Every run is posted with its Solscan transaction, so you can check it
                 yourself.
               </p>

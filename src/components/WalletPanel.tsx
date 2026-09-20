@@ -65,7 +65,7 @@ export function WalletPanel() {
     <section className="mt-8 overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-[0_10px_40px_-15px_oklch(0.24_0.045_260/0.25)] sm:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="font-display text-2xl font-bold text-foreground">Your Poke wallet</h2>
+          <h2 className="font-display text-2xl font-bold text-foreground">Your JPEG wallet</h2>
           <p className="text-sm text-muted-foreground">
             Built into your account — no wallet app needed. Send SOL to the address below to top it up.
           </p>
@@ -208,7 +208,7 @@ export function WalletPanel() {
         <div className="rounded-2xl border border-border p-4">
           <p className="font-display text-lg font-bold text-foreground">Export private key</p>
           <p className="mt-1 text-xs text-muted-foreground">
-            This key controls all the SOL in your Poke wallet. Anyone who sees it can take your funds —
+            This key controls all the SOL in your JPEG wallet. Anyone who sees it can take your funds —
             never share it, and never show it on stream.
           </p>
           {showKey ? (

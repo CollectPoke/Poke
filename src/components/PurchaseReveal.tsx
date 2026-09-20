@@ -38,7 +38,7 @@ export function PurchaseReveal({ card, signature, onClose }: Props) {
 
       <div className="relative flex h-[min(780px,94dvh)] w-full max-w-sm flex-col items-center justify-center">
         <p className="purchase-opening-label absolute top-2 font-display text-sm font-bold uppercase tracking-[0.22em] text-poke-yellow">
-          Opening your Poke pack…
+          Opening your JPEG…
         </p>
 
         <div className="purchase-card-stage absolute top-14 z-20 w-[min(74vw,280px)]">

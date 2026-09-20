@@ -64,7 +64,7 @@ export function EntranceGate() {
       <button
         type="button"
         onClick={enter}
-        aria-label="Enter Poke"
+        aria-label="Enter JPEG"
         className="group relative z-10 flex flex-col items-center focus:outline-none"
       >
         {/* The jpeg frame */}
@@ -89,13 +89,13 @@ export function EntranceGate() {
         {/* Wordmark with glow */}
         <span className="relative mb-10 block">
           <span className="block font-display text-6xl tracking-tighter text-poke-yellow sm:text-8xl">
-            POKE
+            JPEG
           </span>
           <span
             aria-hidden
             className="absolute inset-0 select-none font-display text-6xl tracking-tighter text-poke-yellow opacity-30 blur-xl sm:text-8xl"
           >
-            POKE
+            JPEG
           </span>
         </span>
 

@@ -8,12 +8,12 @@ import { useAuth } from "@/lib/auth";
 export const Route = createFileRoute("/auth")({
   head: () => ({
     meta: [
-      { title: "Sign in · Poke" },
-      { name: "description", content: "Sign in to mint, buy and sell one-of-one NFTs on Poke." },
-      { property: "og:title", content: "Sign in · Poke" },
+      { title: "Sign in · JPEG" },
+      { name: "description", content: "Sign in to mint, buy and sell one-of-one NFTs on JPEG." },
+      { property: "og:title", content: "Sign in · JPEG" },
       {
         property: "og:description",
-        content: "Sign in to mint, buy and sell one-of-one NFTs on Poke.",
+        content: "Sign in to mint, buy and sell one-of-one NFTs on JPEG.",
       },
     ],
   }),

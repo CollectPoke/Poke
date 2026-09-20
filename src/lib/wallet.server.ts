@@ -209,7 +209,7 @@ export async function signSimulateAndSendTransaction(
     }
   }
   if (signerIndex < 0 || signerIndex >= requiredSignatures) {
-    throw new Error("Your Poke wallet is not an authorized signer for this launch");
+    throw new Error("Your JPEG wallet is not an authorized signer for this launch");
   }
   const feePayer = message.subarray(keysStart, keysStart + 32);
   if (!feePayer.every((byte, i) => byte === publicKey[i])) {

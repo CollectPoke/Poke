@@ -15,10 +15,10 @@ import { SOLSCAN_TX } from "@/lib/buybacks";
 export const Route = createFileRoute("/_authenticated/account")({
   head: () => ({
     meta: [
-      { title: "My collection · Poke" },
-      { name: "description", content: "The one-of-one Poke NFTs you own." },
-      { property: "og:title", content: "My collection · Poke" },
-      { property: "og:description", content: "The one-of-one Poke NFTs you own." },
+      { title: "My collection · JPEG" },
+      { name: "description", content: "The one-of-one JPEG NFTs you own." },
+      { property: "og:title", content: "My collection · JPEG" },
+      { property: "og:description", content: "The one-of-one JPEG NFTs you own." },
     ],
   }),
   component: AccountPage,

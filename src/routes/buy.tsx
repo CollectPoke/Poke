@@ -8,15 +8,15 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/buy")({
   head: () => ({
     meta: [
-      { title: "Buy NFTs · Poke" },
+      { title: "Buy NFTs · JPEG" },
       {
         name: "description",
-        content: "Every Poke NFT listed for sale right now. One name, one NFT, forever.",
+        content: "Every JPEG NFT listed for sale right now. One name, one NFT, forever.",
       },
-      { property: "og:title", content: "Buy NFTs · Poke" },
+      { property: "og:title", content: "Buy NFTs · JPEG" },
       {
         property: "og:description",
-        content: "Every Poke NFT listed for sale right now. One name, one NFT, forever.",
+        content: "Every JPEG NFT listed for sale right now. One name, one NFT, forever.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -52,7 +52,7 @@ function BuyPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       <h1 className="font-display text-4xl font-bold">Buy</h1>
       <p className="mt-1 text-sm text-muted-foreground">
-        NFTs other collectors have listed for sale. Tap an NFT to buy it with your Poke wallet.
+        NFTs other collectors have listed for sale. Tap an NFT to buy it with your JPEG wallet.
       </p>
 
       <div className="mt-6 flex flex-wrap items-center gap-2">

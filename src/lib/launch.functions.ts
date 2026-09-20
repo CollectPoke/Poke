@@ -8,7 +8,7 @@ export const LAUNCH_FEE_LAMPORTS = 100_000_000;
 
 // Pump.fun's indexer fetches the metadata URI from the public internet, so it
 // can never point at a dev/preview origin or the coin launches with no image.
-export const PUBLIC_ORIGIN = "https://collectpoke.fun";
+export const PUBLIC_ORIGIN = "https://mintjpeg.com";
 
 const launchSchema = z.object({
   name: z.string().trim().min(1).max(32),
@@ -53,7 +53,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
       .eq("name_key", nameKey)
       .eq("status", "minted")
       .maybeSingle();
-    if (activeCard.data) throw new Error(`"${name}" has already been launched on Poke.`);
+    if (activeCard.data) throw new Error(`"${name}" has already been launched on JPEG.`);
 
     // Pump.fun rejects launches with a zero (or dust) first buy, so send a
     // ~$0.10 dev buy (0.001 SOL). It is covered by the flat 0.1 SOL fee.
@@ -65,7 +65,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
     const balance = await getBalanceSol(wallet.public_key);
     if (balance < requiredSol) {
       throw new Error(
-        `You need at least ${requiredSol.toFixed(3)} SOL in your Poke wallet. Current balance: ${balance.toFixed(4)} SOL.`,
+        `You need at least ${requiredSol.toFixed(3)} SOL in your JPEG wallet. Current balance: ${balance.toFixed(4)} SOL.`,
       );
     }
 
