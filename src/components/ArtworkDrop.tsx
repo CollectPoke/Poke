@@ -128,7 +128,9 @@ export function ArtworkDrop({
         }}
         className={[
           "group relative flex aspect-square h-auto w-full whitespace-normal rounded-none border border-dashed p-0 shadow-none transition-colors",
-          dragging ? "border-foreground bg-muted" : "border-border bg-background hover:border-foreground",
+          dragging
+            ? "border-foreground bg-muted"
+            : "border-border bg-background hover:border-foreground",
         ].join(" ")}
       >
         {preview ? (

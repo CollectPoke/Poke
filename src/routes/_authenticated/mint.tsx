@@ -158,46 +158,46 @@ function MintPage() {
                 </p>
                 <div className="space-y-7">
                   <Field label="NFT name" hint="Permanent and unique">
-              <input
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Dog"
-                maxLength={32}
-                className={inputClass}
-              />
-              {name.trim() && (
-                <p className="mt-1.5 text-xs font-semibold">
-                  {checking ? (
-                    <span className="text-muted-foreground">Checking availability…</span>
-                  ) : available === true ? (
-                    <span className="text-success">"{name.trim()}" is available.</span>
-                  ) : available === false ? (
-                    <span className="text-danger">"{name.trim()}" is already taken.</span>
-                  ) : null}
-                </p>
-              )}
+                    <input
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      placeholder="Dog"
+                      maxLength={32}
+                      className={inputClass}
+                    />
+                    {name.trim() && (
+                      <p className="mt-1.5 text-xs font-semibold">
+                        {checking ? (
+                          <span className="text-muted-foreground">Checking availability…</span>
+                        ) : available === true ? (
+                          <span className="text-success">"{name.trim()}" is available.</span>
+                        ) : available === false ? (
+                          <span className="text-danger">"{name.trim()}" is already taken.</span>
+                        ) : null}
+                      </p>
+                    )}
                   </Field>
 
                   <div className="grid gap-7 sm:grid-cols-[160px_1fr]">
-                  <Field label="Ticker">
-              <input
-                value={ticker}
-                onChange={(e) => setTicker(e.target.value.toUpperCase())}
-                placeholder="DOG"
-                maxLength={10}
-                className={inputClass}
-              />
-                  </Field>
+                    <Field label="Ticker">
+                      <input
+                        value={ticker}
+                        onChange={(e) => setTicker(e.target.value.toUpperCase())}
+                        placeholder="DOG"
+                        maxLength={10}
+                        className={inputClass}
+                      />
+                    </Field>
 
-                  <Field label="Description">
-              <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                rows={1}
-                placeholder="What is this coin about?"
-                className={inputClass}
-              />
-                  </Field>
+                    <Field label="Description">
+                      <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        rows={1}
+                        placeholder="What is this coin about?"
+                        className={inputClass}
+                      />
+                    </Field>
                   </div>
                 </div>
               </section>
@@ -205,50 +205,50 @@ function MintPage() {
               <section className="border-t border-border pt-10">
                 <StepTitle number="02" title="Sale settings" />
                 <div className="flex items-center justify-between gap-4 border-y border-border py-5">
-              <div className="flex items-center justify-between gap-4">
-                <div>
-                  <p className="text-sm font-semibold">List for sale immediately</p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">
-                    Put the NFT straight on the market after minting.
-                  </p>
-                </div>
-                <Button
-                  type="button"
-                  role="switch"
-                  aria-checked={listPrice !== ""}
-                  onClick={() => setListPrice(listPrice === "" ? "1" : "")}
-                  variant="outline"
-                  className={[
-                    "relative h-7 w-12 shrink-0 rounded-full border-foreground p-0 shadow-none transition-colors hover:bg-muted",
-                    listPrice !== "" ? "bg-foreground hover:bg-foreground/90" : "bg-background",
-                  ].join(" ")}
-                >
-                  <span
-                    className={[
-                      "absolute top-0.5 size-5.5 rounded-full bg-background shadow transition-all",
-                      listPrice !== "" ? "left-[22px]" : "left-0.5",
-                    ].join(" ")}
-                  />
-                </Button>
-              </div>
-              {listPrice !== "" && (
-                <div className="mt-3 flex items-center gap-2">
-                  <div className="relative flex-1">
-                    <input
-                      type="number"
-                      min={0}
-                      step="0.01"
-                      value={listPrice}
-                      onChange={(e) => setListPrice(e.target.value)}
-                      placeholder="2.5"
-                       className={`${inputClass} pr-14 font-mono`}
-                    />
-                    <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
-                      SOL
-                    </span>
+                  <div className="flex items-center justify-between gap-4">
+                    <div>
+                      <p className="text-sm font-semibold">List for sale immediately</p>
+                      <p className="mt-0.5 text-xs text-muted-foreground">
+                        Put the NFT straight on the market after minting.
+                      </p>
+                    </div>
+                    <Button
+                      type="button"
+                      role="switch"
+                      aria-checked={listPrice !== ""}
+                      onClick={() => setListPrice(listPrice === "" ? "1" : "")}
+                      variant="outline"
+                      className={[
+                        "relative h-7 w-12 shrink-0 rounded-full border-foreground p-0 shadow-none transition-colors hover:bg-muted",
+                        listPrice !== "" ? "bg-foreground hover:bg-foreground/90" : "bg-background",
+                      ].join(" ")}
+                    >
+                      <span
+                        className={[
+                          "absolute top-0.5 size-5.5 rounded-full bg-background shadow transition-all",
+                          listPrice !== "" ? "left-[22px]" : "left-0.5",
+                        ].join(" ")}
+                      />
+                    </Button>
                   </div>
-                </div>
-              )}
+                  {listPrice !== "" && (
+                    <div className="mt-3 flex items-center gap-2">
+                      <div className="relative flex-1">
+                        <input
+                          type="number"
+                          min={0}
+                          step="0.01"
+                          value={listPrice}
+                          onChange={(e) => setListPrice(e.target.value)}
+                          placeholder="2.5"
+                          className={`${inputClass} pr-14 font-mono`}
+                        />
+                        <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold uppercase tracking-widest text-muted-foreground">
+                          SOL
+                        </span>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </section>
 
@@ -257,8 +257,12 @@ function MintPage() {
                 <div className="bg-foreground p-5 text-background">
                   <div className="flex items-start justify-between gap-5">
                     <div>
-                      <p className="text-[10px] font-bold uppercase text-background/60">Wallet balance</p>
-                      <p className="mono-num mt-1 text-2xl">{wallet ? wallet.balance.toFixed(4) : "—"} SOL</p>
+                      <p className="text-[10px] font-bold uppercase text-background/60">
+                        Wallet balance
+                      </p>
+                      <p className="mono-num mt-1 text-2xl">
+                        {wallet ? wallet.balance.toFixed(4) : "—"} SOL
+                      </p>
                     </div>
                     <span className="mono-num text-[10px] uppercase text-background/70">
                       {underfunded ? "Funding required" : "Ready"}
@@ -266,10 +270,16 @@ function MintPage() {
                   </div>
                   <div className="mt-5 flex items-end justify-between gap-5 border-t border-background/20 pt-5">
                     <p className="max-w-sm text-xs leading-relaxed text-background/70">
-                      Flat mainnet launch cost: {totalCost.toFixed(3)} SOL. Your personal JPEG wallet signs the transaction.
+                      Flat mainnet launch cost: {totalCost.toFixed(3)} SOL. Your personal JPEG
+                      wallet signs the transaction.
                     </p>
                     {underfunded ? (
-                      <Button type="button" variant="outline" onClick={() => setShowFunding(true)} className="shrink-0 rounded-none border-background bg-transparent text-background shadow-none hover:bg-background hover:text-foreground">
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => setShowFunding(true)}
+                        className="shrink-0 rounded-none border-background bg-transparent text-background shadow-none hover:bg-background hover:text-foreground"
+                      >
                         Add SOL
                       </Button>
                     ) : null}
@@ -277,7 +287,7 @@ function MintPage() {
                 </div>
               </section>
 
-            {error && <p className="text-sm font-medium text-danger">{error}</p>}
+              {error && <p className="text-sm font-medium text-danger">{error}</p>}
             </div>
 
             <aside className="flex flex-col bg-muted/50 p-5 sm:p-8">
@@ -291,13 +301,23 @@ function MintPage() {
                   </div>
                   <p className="mono-num shrink-0 text-xs font-bold">${preview.ticker}</p>
                 </div>
-                {preview.description ? <p className="mt-4 text-xs leading-relaxed text-muted-foreground">{preview.description}</p> : null}
+                {preview.description ? (
+                  <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
+                    {preview.description}
+                  </p>
+                ) : null}
               </div>
               <div className="mt-auto pt-10">
-                <Button type="submit" disabled={!canMint} className="h-16 w-full rounded-none text-xs font-bold uppercase">
+                <Button
+                  type="submit"
+                  disabled={!canMint}
+                  className="h-16 w-full rounded-none text-xs font-bold uppercase"
+                >
                   {busy ? "Launching…" : `Launch · ${totalCost.toFixed(3)} SOL`}
                 </Button>
-                <p className="mt-3 text-center text-[10px] uppercase text-muted-foreground">Final on Solana after confirmation</p>
+                <p className="mt-3 text-center text-[10px] uppercase text-muted-foreground">
+                  Final on Solana after confirmation
+                </p>
               </div>
             </aside>
           </form>
