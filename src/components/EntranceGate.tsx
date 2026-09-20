@@ -108,9 +108,9 @@ export function EntranceGate() {
 
         {/* CTA */}
         <span className="relative block">
-           <span className="absolute -inset-1 animate-pulse bg-brand/30 blur-md transition duration-300 group-hover:bg-brand/50" />
-           <span className="relative block border border-brand bg-brand px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-brand-foreground shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
-             Enter Arena
+          <span className="absolute -inset-1 animate-pulse bg-brand/30 blur-md transition duration-300 group-hover:bg-brand/50" />
+          <span className="relative block border border-brand bg-brand px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-brand-foreground shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
+            Enter Arena
           </span>
         </span>
       </button>

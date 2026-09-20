@@ -52,7 +52,13 @@ function Home() {
   return (
     <main>
       <section className="arena-stage relative min-h-[calc(100svh-92px)] overflow-hidden border-b border-border">
-        <img src={arenaImage} alt="" width={1920} height={900} className="absolute inset-0 h-full w-full object-cover opacity-55" />
+        <img
+          src={arenaImage}
+          alt=""
+          width={1920}
+          height={900}
+          className="absolute inset-0 h-full w-full object-cover opacity-55"
+        />
         <div className="absolute inset-0 bg-gradient-to-r from-background via-background/65 to-background/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/35" />
 
@@ -64,14 +70,24 @@ function Home() {
               <span className="h-px w-16 bg-brand/50" />
             </div>
             <h1 className="max-w-4xl text-5xl font-black uppercase leading-[0.88] tracking-normal sm:text-7xl lg:text-8xl">
-              Mint the artifact.<br /><span className="text-brand">Launch its coin.</span>
+              Mint the artifact.
+              <br />
+              <span className="text-brand">Launch its coin.</span>
             </h1>
             <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/65 sm:text-lg">
-              Every JPEG is a one-of-one digital collectible with its own live coin. Claim the name, own the original, trade the signal.
+              Every JPEG is a one-of-one digital collectible with its own live coin. Claim the name,
+              own the original, trade the signal.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/mint" className="primary-btn !px-8 !py-4">Initialize mint</Link>
-              <Link to="/cards" className="secondary-btn hud-label inline-flex items-center px-8 py-4">Enter market</Link>
+              <Link to="/mint" className="primary-btn !px-8 !py-4">
+                Initialize mint
+              </Link>
+              <Link
+                to="/cards"
+                className="secondary-btn hud-label inline-flex items-center px-8 py-4"
+              >
+                Enter market
+              </Link>
             </div>
             <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-border/80 bg-background/45 backdrop-blur-sm">
               <HudStat label="Mint fee" value="0.1 SOL" />
@@ -82,7 +98,12 @@ function Home() {
 
           <aside className="arena-panel arena-enter self-end p-5 [animation-delay:180ms]">
             <div className="flex items-center justify-between border-b border-border pb-4">
-              <div><p className="hud-label text-brand">Player terminal</p><h2 className="mt-1 text-xl uppercase tracking-normal">{user ? "Access granted" : "Ready to deploy?"}</h2></div>
+              <div>
+                <p className="hud-label text-brand">Player terminal</p>
+                <h2 className="mt-1 text-xl uppercase tracking-normal">
+                  {user ? "Access granted" : "Ready to deploy?"}
+                </h2>
+              </div>
               <img src={pigAsset.url} alt="" className="size-12 object-contain" />
             </div>
             <div className="space-y-4 py-5 text-sm text-muted-foreground">
@@ -91,7 +112,10 @@ function Home() {
               <TerminalStep number="03" text="Launch the NFT and coin" />
               <TerminalStep number="04" text="List, collect, trade or burn" />
             </div>
-            <Link to={user ? "/account" : "/auth"} className="secondary-btn hud-label flex w-full justify-center px-5 py-3">
+            <Link
+              to={user ? "/account" : "/auth"}
+              className="secondary-btn hud-label flex w-full justify-center px-5 py-3"
+            >
               {user ? "Open account" : "Create player account"}
             </Link>
           </aside>
@@ -100,16 +124,41 @@ function Home() {
 
       <section className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
         <div className="mb-8 flex items-end justify-between gap-4 border-b border-border pb-5">
-          <div><p className="hud-label text-brand">Live registry // {String(feed.length).padStart(3, "0")}</p><h2 className="mt-2 text-3xl uppercase tracking-normal sm:text-4xl">Latest artifacts</h2></div>
-          <Link to="/cards" className="hud-label text-muted-foreground transition-colors hover:text-brand">View all →</Link>
+          <div>
+            <p className="hud-label text-brand">
+              Live registry // {String(feed.length).padStart(3, "0")}
+            </p>
+            <h2 className="mt-2 text-3xl uppercase tracking-normal sm:text-4xl">
+              Latest artifacts
+            </h2>
+          </div>
+          <Link
+            to="/cards"
+            className="hud-label text-muted-foreground transition-colors hover:text-brand"
+          >
+            View all →
+          </Link>
         </div>
         {latest.length === 0 ? (
           <div className="arena-panel grid min-h-64 place-items-center px-6 text-center">
-            <div><p className="hud-label text-brand">Registry empty</p><h3 className="mt-3 text-2xl uppercase tracking-normal">The first name is still unclaimed</h3><p className="mt-2 text-sm text-muted-foreground">Deploy the first artifact into the arena.</p><Link to="/mint" className="primary-btn mt-6 inline-flex">Mint first NFT</Link></div>
+            <div>
+              <p className="hud-label text-brand">Registry empty</p>
+              <h3 className="mt-3 text-2xl uppercase tracking-normal">
+                The first name is still unclaimed
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Deploy the first artifact into the arena.
+              </p>
+              <Link to="/mint" className="primary-btn mt-6 inline-flex">
+                Mint first NFT
+              </Link>
+            </div>
           </div>
         ) : (
           <ul className="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
-            {latest.map((card) => <FeedPost key={card.id} card={card} />)}
+            {latest.map((card) => (
+              <FeedPost key={card.id} card={card} />
+            ))}
           </ul>
         )}
       </section>
@@ -118,11 +167,22 @@ function Home() {
 }
 
 function HudStat({ label, value }: { label: string; value: string }) {
-  return <div className="border-r border-border px-3 py-4 last:border-r-0 sm:px-5"><p className="hud-label text-muted-foreground">{label}</p><p className="mono-num mt-1 text-base font-bold sm:text-lg">{value}</p></div>;
+  return (
+    <div className="border-r border-border px-3 py-4 last:border-r-0 sm:px-5">
+      <p className="hud-label text-muted-foreground">{label}</p>
+      <p className="mono-num mt-1 text-base font-bold sm:text-lg">{value}</p>
+    </div>
+  );
 }
 
 function TerminalStep({ number, text }: { number: string; text: string }) {
-  return <div className="flex items-center gap-3"><span className="mono-num text-xs text-brand">{number}</span><span className="h-px w-5 bg-border" /><span>{text}</span></div>;
+  return (
+    <div className="flex items-center gap-3">
+      <span className="mono-num text-xs text-brand">{number}</span>
+      <span className="h-px w-5 bg-border" />
+      <span>{text}</span>
+    </div>
+  );
 }
 
 function FeedPost({ card }: { card: CardWithPeople }) {

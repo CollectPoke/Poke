@@ -45,7 +45,9 @@ export function NftCard({ card, compact = false }: Props) {
       {/* Meta */}
       <div className="flex flex-1 flex-col gap-2 p-3">
         <div className="flex items-start justify-between gap-2">
-          <h3 className="truncate font-display text-base font-black uppercase leading-tight tracking-normal">{card.name}</h3>
+          <h3 className="truncate font-display text-base font-black uppercase leading-tight tracking-normal">
+            {card.name}
+          </h3>
           <span className="mono-num shrink-0 text-[11px] font-bold uppercase tracking-widest text-brand">
             ${card.ticker}
           </span>

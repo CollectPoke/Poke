@@ -42,7 +42,9 @@ export function SiteHeader() {
           </span>
           <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">jpeg</span>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-            <span className="hidden lg:inline">1/1 arena · live ownership · real coin attached</span>
+            <span className="hidden lg:inline">
+              1/1 arena · live ownership · real coin attached
+            </span>
             <Link
               to="/docs"
               aria-label="JPEG docs and how-to"
@@ -63,7 +65,9 @@ export function SiteHeader() {
             <span className="font-display text-xl font-black leading-none text-foreground tracking-normal sm:text-2xl">
               JPEG
             </span>
-            <span className="hud-label hidden border-l border-border pl-2 text-muted-foreground sm:inline">Arena</span>
+            <span className="hud-label hidden border-l border-border pl-2 text-muted-foreground sm:inline">
+              Arena
+            </span>
           </Link>
 
           <nav className="hidden items-center gap-1 text-sm font-medium lg:flex">
@@ -86,7 +90,7 @@ export function SiteHeader() {
                 <Link
                   to="/account"
                   activeProps={{ className: "border-brand/60" }}
-                   className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden border border-border bg-secondary py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-brand/60"
+                  className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden border border-border bg-secondary py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-brand/60"
                 >
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-violet shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)] transition-shadow group-hover:shadow-[0_0_16px_oklch(0.85_0.16_95/0.55)]">
                     <img src={pigAsset.url} alt="" className="h-5 w-5 drop-shadow" />
@@ -124,7 +128,7 @@ export function SiteHeader() {
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-             className="grid h-11 w-11 place-items-center border border-border text-foreground transition-colors hover:border-brand hover:text-brand"
+              className="grid h-11 w-11 place-items-center border border-border text-foreground transition-colors hover:border-brand hover:text-brand"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -239,7 +243,7 @@ const footerHowTo: { to: string; label: string }[] = [
 
 export function SiteFooter() {
   return (
-     <footer className="mt-16 border-t border-border bg-background text-muted-foreground">
+    <footer className="mt-16 border-t border-border bg-background text-muted-foreground">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
           <div className="flex items-center gap-2.5">
