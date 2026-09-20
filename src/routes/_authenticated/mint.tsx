@@ -49,12 +49,8 @@ function MintPage() {
   const [mintedCard, setMintedCard] = useState<CardWithPeople | null>(null);
   const [launchSignature, setLaunchSignature] = useState<string | null>(null);
   const [showFunding, setShowFunding] = useState(false);
-  const [pairing, setPairing] = useState<PairingSuggestion | null>(null);
-  const [pairingBusy, setPairingBusy] = useState(false);
-  const [pairingError, setPairingError] = useState<string | null>(null);
   const launchCoin = useServerFn(launchCoinAndMintCard);
   const fetchWallet = useServerFn(getMyWallet);
-  const findPokemon = useServerFn(suggestPairing);
 
   const { data: wallet } = useQuery({
     queryKey: ["my-wallet"],
