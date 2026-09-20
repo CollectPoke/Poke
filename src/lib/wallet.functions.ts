@@ -47,7 +47,6 @@ export const buyCardWithSol = createServerFn({ method: "POST" })
     const reservation = await supabaseAdmin.rpc("reserve_card_sale", {
       _card_id: data.cardId,
       _buyer_id: context.userId,
-      _offer_id: undefined,
     });
     if (reservation.error) throw reservation.error;
     const reserved = reservation.data?.[0];
