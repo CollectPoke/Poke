@@ -85,7 +85,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
     const origin = PUBLIC_ORIGIN;
     let launch = await supabaseAdmin
       .from("coin_launches")
-      .select("id, creator_id, mint_address, tx_signature, status")
+      .select("id, creator_id, mint_address, tx_signature, fee_tx_signature, status")
       .eq("name_key", nameKey)
       .eq("status", "pending")
       .maybeSingle();
@@ -112,7 +112,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           initial_buy_sol: devBuyLamports / 1_000_000_000,
           status: "pending",
         })
-        .select("id, creator_id, mint_address, tx_signature, status")
+        .select("id, creator_id, mint_address, tx_signature, fee_tx_signature, status")
         .single();
       if (inserted.error) {
         if (inserted.error.code === "23505")
