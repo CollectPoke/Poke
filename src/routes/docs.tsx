@@ -40,10 +40,10 @@ function DocsPage() {
         <p className="text-xs font-bold uppercase tracking-[0.3em] text-poke-yellow">
           Collector handbook
         </p>
-        <h1 className="mt-2 font-display text-4xl font-bold text-card sm:text-5xl">
+        <h1 className="mt-2 font-display text-4xl font-bold text-foreground sm:text-5xl">
           Docs &amp; How to
         </h1>
-        <p className="mx-auto mt-3 max-w-xl text-sm text-card/85 sm:text-base">
+        <p className="mx-auto mt-3 max-w-xl text-sm text-muted-foreground sm:text-base">
           Everything about JPEG in one place — what it is, how minting launches
           a real coin, and how buying, selling and the buyback work.
         </p>
