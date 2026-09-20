@@ -35,6 +35,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
     const {
       confirmSignature,
       getBalanceSol,
+      getDeployerSigner,
       getOrCreateWallet,
       signSimulateAndSendTransaction,
       signatureOutcome,
@@ -70,6 +71,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
     const requiredSol = budgetLamports / 1_000_000_000;
 
     const wallet = await getOrCreateWallet(context.userId);
+    const deployer = getDeployerSigner();
     const balance = await getBalanceSol(wallet.public_key);
     if (balance < requiredSol) {
       throw new Error(
@@ -132,7 +134,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
           body: JSON.stringify({
             user: wallet.public_key,
             feePayer: wallet.public_key,
-            creator: wallet.public_key,
+            creator: deployer.public_key,
             name,
             symbol: ticker,
             uri: `${origin}/api/public/coin-metadata/${launchId}`,
@@ -171,6 +173,7 @@ export const launchCoinAndMintCard = createServerFn({ method: "POST" })
             signature = preparedSignature;
             transactionSent = true;
           },
+          [deployer],
         );
       }
 
