@@ -321,6 +321,64 @@ export function SiteFooter() {
   );
 }
 
+function CopyCa() {
+  const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!copied) return;
+    const t = window.setTimeout(() => setCopied(false), 1600);
+    return () => window.clearTimeout(t);
+  }, [copied]);
+
+  return (
+    <button
+      type="button"
+      onClick={() => {
+        navigator.clipboard
+          .writeText(JPEG_CA)
+          .then(() => setCopied(true))
+          .catch(() => setCopied(false));
+      }}
+      aria-label={copied ? "Contract address copied" : "Copy JPEG contract address"}
+      title={JPEG_CA}
+      className="hud-label -my-1 flex max-w-[150px] items-center gap-1.5 border border-border bg-secondary px-2 py-1.5 text-[10px] text-foreground/70 transition-colors hover:border-brand/60 hover:text-brand sm:max-w-none sm:text-[10px]"
+    >
+      <span className="font-bold text-brand">CA</span>
+      <span className="mono-num truncate">
+        {copied ? "copied!" : JPEG_CA}
+      </span>
+      {copied ? (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-3 w-3 shrink-0 text-brand"
+          aria-hidden="true"
+        >
+          <path d="M20 6L9 17l-5-5" />
+        </svg>
+      ) : (
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          className="h-3 w-3 shrink-0"
+          aria-hidden="true"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" />
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </svg>
+      )}
+    </button>
+  );
+}
+
 function FooterColumn({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
