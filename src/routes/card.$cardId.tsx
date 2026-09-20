@@ -93,12 +93,8 @@ function CardPage() {
         if (err) throw err;
         return;
       }
-      const res = await burnOnChain({ data: { cardId } });
-      setBurnNote(
-        res.refunded
-          ? `NFT burned — ${res.amount} SOL burn reward sent to your wallet.`
-          : "NFT burned. The burn reward could not be sent right now.",
-      );
+      await burnOnChain({ data: { cardId } });
+      setBurnNote("NFT burned.");
     },
     onSuccess: () => {
       setError(null);
