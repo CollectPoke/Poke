@@ -51,60 +51,60 @@ function Home() {
 
   return (
     <main>
-      <section className="arena-stage relative min-h-[calc(100svh-92px)] overflow-hidden border-b border-border">
+      <section className="arena-stage relative overflow-hidden border-b border-border">
         <img
           src={arenaImage}
           alt=""
           width={1920}
           height={900}
-          className="absolute inset-0 h-full w-full object-cover opacity-55"
+          className="absolute inset-0 h-full w-full object-cover opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/65 to-background/20" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/35" />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-background/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-background/60" />
 
-        <div className="relative mx-auto grid min-h-[calc(100svh-92px)] max-w-7xl gap-10 px-5 py-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:px-8 lg:py-16">
-          <div className="arena-enter max-w-4xl self-end">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-5 py-16 sm:py-20 lg:grid-cols-[minmax(0,1fr)_340px] lg:px-8">
+          <div className="arena-enter max-w-3xl">
             <div className="mb-5 flex items-center gap-3">
               <span className="size-2 animate-pulse bg-brand" />
               <span className="hud-label text-brand">Launch arena online</span>
               <span className="h-px w-16 bg-brand/50" />
             </div>
-            <h1 className="max-w-4xl text-5xl font-black uppercase leading-[0.88] tracking-normal sm:text-7xl lg:text-8xl">
+            <h1 className="text-4xl font-black uppercase leading-[0.92] tracking-normal sm:text-5xl lg:text-6xl">
               Mint the artifact.
               <br />
               <span className="text-brand">Launch its coin.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/65 sm:text-lg">
+            <p className="mt-5 max-w-lg text-base leading-relaxed text-foreground/70">
               Every JPEG is a one-of-one digital collectible with its own live coin. Claim the name,
               own the original, trade the signal.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link to="/mint" className="primary-btn !px-8 !py-4">
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link to="/mint" className="primary-btn !px-7 !py-3.5">
                 Initialize mint
               </Link>
               <Link
                 to="/cards"
-                className="secondary-btn hud-label inline-flex items-center px-8 py-4"
+                className="secondary-btn hud-label inline-flex items-center px-7 py-3.5"
               >
                 Enter market
               </Link>
             </div>
-            <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-border/80 bg-background/45 backdrop-blur-sm">
+            <div className="mt-9 grid max-w-xl grid-cols-3 border border-border bg-background/60 backdrop-blur-sm">
               <HudStat label="Mint fee" value="0.1 SOL" />
               <HudStat label="Edition" value="1 / 1" />
               <HudStat label="Network" value="SOL" />
             </div>
           </div>
 
-          <aside className="arena-panel arena-enter self-end p-5 [animation-delay:180ms]">
+          <aside className="arena-panel arena-enter p-5 [animation-delay:180ms]">
             <div className="flex items-center justify-between border-b border-border pb-4">
               <div>
                 <p className="hud-label text-brand">Player terminal</p>
-                <h2 className="mt-1 text-xl uppercase tracking-normal">
+                <h2 className="mt-1 text-lg uppercase tracking-normal">
                   {user ? "Access granted" : "Ready to deploy?"}
                 </h2>
               </div>
-              <img src={pigAsset.url} alt="" className="size-12 object-contain" />
+              <img src={pigAsset.url} alt="" className="size-11 object-contain" />
             </div>
             <div className="space-y-4 py-5 text-sm text-muted-foreground">
               <TerminalStep number="01" text="Upload one original JPEG" />
