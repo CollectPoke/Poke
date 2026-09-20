@@ -82,7 +82,7 @@ export function OfferPanel({
   return (
     <div className="mt-4 rounded-2xl border border-border bg-card p-5 shadow-card">
       <h3 className="font-display text-lg font-bold">
-        {isOwner ? "Offers on your card" : "Make an offer"}
+        {isOwner ? "Offers on your NFT" : "Make an offer"}
       </h3>
 
       {isOwner ? (
