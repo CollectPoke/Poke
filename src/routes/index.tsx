@@ -44,29 +44,31 @@ function Home() {
   return (
     <main>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-poke-blue">
-        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr]">
-          <div className="text-white">
-            <span className="inline-block rounded-full bg-poke-yellow px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-poke-yellow-foreground">
-              One jpeg, one coin, forever
+      <section className="relative overflow-hidden border-b border-border">
+        <div className="pointer-events-none absolute -left-40 -top-40 size-[520px] rounded-full bg-poke-yellow/10 blur-[140px]" />
+        <div className="pointer-events-none absolute -right-32 bottom-0 size-[420px] rounded-full bg-poke-purple/10 blur-[140px]" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-10 px-5 py-20 md:grid-cols-[1fr_1.05fr]">
+          <div>
+            <span className="mono-num inline-block border border-poke-yellow/50 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.25em] text-poke-yellow">
+              1 jpeg / 1 coin / forever
             </span>
-            <h1 className="mt-4 font-display text-5xl font-bold leading-[1.05] drop-shadow sm:text-6xl">
-              Mint your jpeg. Get a coin with it.
+            <h1 className="mt-5 font-display text-5xl leading-[0.92] sm:text-7xl">
+              Mint the
+              <br />
+              <span className="text-poke-yellow">jpeg.</span> Launch
+              <br />
+              the coin.
             </h1>
-            <p className="mt-4 max-w-lg text-base text-white/85">
-              Upload an image, pick a name and a ticker. Poke mints it as a one-of-one NFT and
-              launches a real coin for it on Pump.fun, with the contract address printed right on
-              the piece. Only one of each name can ever exist. Hold it, sell it — or burn it and
-              set the name free.
+            <p className="mt-6 max-w-lg text-base leading-relaxed text-muted-foreground">
+              Upload an image, pick a name and a ticker. Poke mints it as a one-of-one and launches
+              a real coin for it on Pump.fun, with the contract address printed on the piece. Only
+              one of each name can ever exist — hold it, sell it, or burn it and set the name free.
             </p>
-            <div className="mt-7 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-wrap gap-3">
               <Link to="/mint" className="poke-btn">
                 Mint an NFT
               </Link>
-              <Link
-                to="/cards"
-                className="rounded-full border-2 border-white/60 px-5 py-2.5 text-sm font-bold text-white transition-colors hover:bg-white/10"
-              >
+              <Link to="/cards" className="poke-btn poke-btn-navy">
                 Browse all NFTs
               </Link>
             </div>
@@ -75,22 +77,22 @@ function Home() {
             {heroCards.length > 0 ? (
               <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                 {heroCards.map((card) => (
-                  <Link
-                    key={card.id}
-                    to="/card/$cardId"
-                    params={{ cardId: card.id }}
-                    className="transition-transform hover:scale-[1.03]"
-                  >
+                  <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
                     <PokeCard card={card} compact />
                   </Link>
                 ))}
               </div>
             ) : (
-              <div className="rotate-[-3deg] rounded-2xl border-4 border-poke-yellow bg-card/95 p-8 text-center">
-                <p className="font-display text-xl font-bold">No NFTs minted yet</p>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  The first name is still up for grabs.
-                </p>
+              <div className="relative grid aspect-square w-full place-items-center overflow-hidden rounded-md border border-dashed border-border bg-card/60">
+                <div className="px-8 text-center">
+                  <p className="mono-num text-[11px] uppercase tracking-[0.3em] text-poke-yellow">
+                    Empty gallery
+                  </p>
+                  <p className="mt-3 font-display text-2xl">No NFTs minted yet</p>
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    The first name is still up for grabs.
+                  </p>
+                </div>
               </div>
             )}
           </div>
