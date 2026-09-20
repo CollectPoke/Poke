@@ -14,8 +14,8 @@ const navItems: { to: string; label: string; exact?: boolean }[] = [
 ];
 
 const linkClass =
-  "rounded-full px-3.5 py-1.5 text-foreground/70 transition-colors hover:bg-foreground/5 hover:text-foreground";
-const linkActive = { className: "bg-brand text-brand-foreground hover:text-brand-foreground" };
+  "hud-label border-b border-transparent px-3 py-2 text-foreground/60 transition-colors hover:border-foreground/40 hover:text-foreground";
+const linkActive = { className: "border-brand text-brand hover:text-brand" };
 
 export function SiteHeader() {
   const { user, username } = useAuth();
@@ -35,18 +35,20 @@ export function SiteHeader() {
 
   return (
     <header className="sticky top-0 z-30">
-      <div className="bg-white">
+      <div className="border-b border-border/60 bg-background">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-[10px] text-foreground/60 sm:px-5 sm:text-[11px]">
-          <span className="mono-num hidden truncate uppercase tracking-[0.18em] xs:inline sm:inline">
-            one jpeg · one coin · forever
+          <span className="mono-num hidden truncate uppercase tracking-[0.18em] text-brand xs:inline sm:inline">
+            jpeg protocol // mainnet online
           </span>
           <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">jpeg</span>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
-            <span className="hidden lg:inline">Burn an NFT and its name frees up again.</span>
+            <span className="hidden lg:inline">
+              1/1 arena · live ownership · real coin attached
+            </span>
             <Link
               to="/docs"
               aria-label="JPEG docs and how-to"
-              className="-my-1 flex items-center gap-1.5 rounded-full px-1 py-2 text-foreground transition-colors hover:text-brand"
+              className="-my-1 flex items-center gap-1.5 px-1 py-2 text-foreground transition-colors hover:text-brand"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" className="h-4 w-4" aria-hidden="true">
                 <path d="M6.5 2A2.5 2.5 0 0 0 4 4.5v13A2.5 2.5 0 0 0 6.5 20H20a1 1 0 0 0 0-2H6.5a.5.5 0 0 1 0-1H20a1 1 0 0 0 1-1V3a1 1 0 0 0-1-1H6.5Zm2 3h8a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-.78.41L15 11l-1.22.91A.5.5 0 0 1 13 11.5v-6a.5.5 0 0 1 .5-.5Z" />
@@ -56,12 +58,15 @@ export function SiteHeader() {
           </div>
         </div>
       </div>
-      <div className="border-b border-border bg-white/95 backdrop-blur">
+      <div className="border-b border-border bg-background/90 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex min-w-0 items-center gap-2.5">
             <img src={pigAsset.url} alt="" className="h-8 w-8 shrink-0 drop-shadow sm:h-9 sm:w-9" />
-            <span className="font-display text-xl font-bold leading-none text-brand tracking-tight sm:text-2xl">
+            <span className="font-display text-xl font-black leading-none text-foreground tracking-normal sm:text-2xl">
               JPEG
+            </span>
+            <span className="hud-label hidden border-l border-border pl-2 text-muted-foreground sm:inline">
+              Arena
             </span>
           </Link>
 
@@ -85,7 +90,7 @@ export function SiteHeader() {
                 <Link
                   to="/account"
                   activeProps={{ className: "border-brand/60" }}
-                  className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden rounded-full border border-border bg-secondary py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-brand/60"
+                  className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden border border-border bg-secondary py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-brand/60"
                 >
                   <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-brand to-violet shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)] transition-shadow group-hover:shadow-[0_0_16px_oklch(0.85_0.16_95/0.55)]">
                     <img src={pigAsset.url} alt="" className="h-5 w-5 drop-shadow" />
@@ -123,7 +128,7 @@ export function SiteHeader() {
               onClick={() => setOpen((v) => !v)}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
-              className="grid h-11 w-11 place-items-center rounded-full border border-border text-foreground transition-colors hover:bg-foreground/5"
+              className="grid h-11 w-11 place-items-center border border-border text-foreground transition-colors hover:border-brand hover:text-brand"
             >
               <svg
                 viewBox="0 0 24 24"
@@ -152,7 +157,7 @@ export function SiteHeader() {
         </div>
 
         {open ? (
-          <div className="border-t border-border bg-white lg:hidden">
+          <div className="border-t border-border bg-background lg:hidden">
             <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 text-base font-medium">
               {navItems.map((item) => (
                 <Link
@@ -238,7 +243,7 @@ const footerHowTo: { to: string; label: string }[] = [
 
 export function SiteFooter() {
   return (
-    <footer className="mt-16 border-t border-border bg-white text-muted-foreground">
+    <footer className="mt-16 border-t border-border bg-background text-muted-foreground">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
           <div className="flex items-center gap-2.5">

@@ -1,4 +1,5 @@
 import pigAsset from "@/assets/pig.webp.asset.json";
+import arenaImage from "@/assets/jpeg-arena.jpg";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
@@ -46,108 +47,141 @@ function Home() {
 
   const feed = cards ?? [];
 
-  return (
-    <main className="mx-auto grid max-w-6xl gap-0 px-0 sm:px-5 lg:grid-cols-[minmax(0,600px)_320px] lg:justify-center lg:gap-8">
-      {/* ─── Feed column ─── */}
-      <section className="min-h-screen border-x border-border">
-        {/* sticky feed header */}
-        <div className="sticky top-0 z-10 border-b border-border bg-background/80 px-4 py-3 backdrop-blur">
-          <h1 className="text-lg font-extrabold tracking-tight">Home</h1>
-        </div>
+  const latest = feed.slice(0, 6);
 
-        {/* composer */}
-        <div className="border-b border-border px-4 py-3">
-          <div className="flex gap-3">
-            <div className="grid size-10 shrink-0 place-items-center rounded-full bg-brand/15">
-              <img src={pigAsset.url} alt="" className="size-7" />
+  return (
+    <main>
+      <section className="arena-stage relative min-h-[calc(100svh-92px)] overflow-hidden border-b border-border">
+        <img
+          src={arenaImage}
+          alt=""
+          width={1920}
+          height={900}
+          className="absolute inset-0 h-full w-full object-cover opacity-55"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-background via-background/65 to-background/20" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-transparent to-background/35" />
+
+        <div className="relative mx-auto grid min-h-[calc(100svh-92px)] max-w-7xl gap-10 px-5 py-12 lg:grid-cols-[minmax(0,1fr)_340px] lg:items-end lg:px-8 lg:py-16">
+          <div className="arena-enter max-w-4xl self-end">
+            <div className="mb-5 flex items-center gap-3">
+              <span className="size-2 animate-pulse bg-brand" />
+              <span className="hud-label text-brand">Launch arena online</span>
+              <span className="h-px w-16 bg-brand/50" />
             </div>
-            <div className="min-w-0 flex-1">
-              <p className="py-2 text-lg text-muted-foreground">Got a jpeg? Give it a coin.</p>
-              <div className="mt-1 flex items-center justify-between gap-3">
-                <p className="text-xs text-muted-foreground">
-                  1/1 NFT · real Pump.fun coin · 0.1 SOL flat
-                </p>
-                <Link to="/mint" className="primary-btn shrink-0 !px-5 !py-1.5 text-sm">
-                  Mint
-                </Link>
-              </div>
+            <h1 className="max-w-4xl text-5xl font-black uppercase leading-[0.88] tracking-normal sm:text-7xl lg:text-8xl">
+              Mint the artifact.
+              <br />
+              <span className="text-brand">Launch its coin.</span>
+            </h1>
+            <p className="mt-6 max-w-xl text-base leading-relaxed text-foreground/65 sm:text-lg">
+              Every JPEG is a one-of-one digital collectible with its own live coin. Claim the name,
+              own the original, trade the signal.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <Link to="/mint" className="primary-btn !px-8 !py-4">
+                Initialize mint
+              </Link>
+              <Link
+                to="/cards"
+                className="secondary-btn hud-label inline-flex items-center px-8 py-4"
+              >
+                Enter market
+              </Link>
+            </div>
+            <div className="mt-10 grid max-w-2xl grid-cols-3 border-y border-border/80 bg-background/45 backdrop-blur-sm">
+              <HudStat label="Mint fee" value="0.1 SOL" />
+              <HudStat label="Edition" value="1 / 1" />
+              <HudStat label="Network" value="SOL" />
             </div>
           </div>
-        </div>
 
-        {/* feed */}
-        {feed.length === 0 ? (
-          <div className="px-6 py-16 text-center">
-            <p className="text-xl font-extrabold">Nothing minted yet</p>
-            <p className="mt-2 text-sm text-muted-foreground">
-              Every name is still up for grabs. The first jpeg writes history.
-            </p>
-            <Link to="/mint" className="primary-btn mt-6 inline-flex">
-              Mint the first NFT
+          <aside className="arena-panel arena-enter self-end p-5 [animation-delay:180ms]">
+            <div className="flex items-center justify-between border-b border-border pb-4">
+              <div>
+                <p className="hud-label text-brand">Player terminal</p>
+                <h2 className="mt-1 text-xl uppercase tracking-normal">
+                  {user ? "Access granted" : "Ready to deploy?"}
+                </h2>
+              </div>
+              <img src={pigAsset.url} alt="" className="size-12 object-contain" />
+            </div>
+            <div className="space-y-4 py-5 text-sm text-muted-foreground">
+              <TerminalStep number="01" text="Upload one original JPEG" />
+              <TerminalStep number="02" text="Claim its permanent name" />
+              <TerminalStep number="03" text="Launch the NFT and coin" />
+              <TerminalStep number="04" text="List, collect, trade or burn" />
+            </div>
+            <Link
+              to={user ? "/account" : "/auth"}
+              className="secondary-btn hud-label flex w-full justify-center px-5 py-3"
+            >
+              {user ? "Open account" : "Create player account"}
             </Link>
+          </aside>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 py-14 lg:px-8">
+        <div className="mb-8 flex items-end justify-between gap-4 border-b border-border pb-5">
+          <div>
+            <p className="hud-label text-brand">
+              Live registry // {String(feed.length).padStart(3, "0")}
+            </p>
+            <h2 className="mt-2 text-3xl uppercase tracking-normal sm:text-4xl">
+              Latest artifacts
+            </h2>
+          </div>
+          <Link
+            to="/cards"
+            className="hud-label text-muted-foreground transition-colors hover:text-brand"
+          >
+            View all →
+          </Link>
+        </div>
+        {latest.length === 0 ? (
+          <div className="arena-panel grid min-h-64 place-items-center px-6 text-center">
+            <div>
+              <p className="hud-label text-brand">Registry empty</p>
+              <h3 className="mt-3 text-2xl uppercase tracking-normal">
+                The first name is still unclaimed
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Deploy the first artifact into the arena.
+              </p>
+              <Link to="/mint" className="primary-btn mt-6 inline-flex">
+                Mint first NFT
+              </Link>
+            </div>
           </div>
         ) : (
-          <ul>
-            {feed.map((card) => (
+          <ul className="grid gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+            {latest.map((card) => (
               <FeedPost key={card.id} card={card} />
             ))}
           </ul>
         )}
-
-        {feed.length > 0 && (
-          <div className="border-t border-border px-4 py-4 text-center">
-            <Link to="/cards" className="text-sm font-semibold text-brand hover:underline">
-              Show every NFT →
-            </Link>
-          </div>
-        )}
       </section>
-
-      {/* ─── Right rail ─── */}
-      <aside className="hidden lg:block">
-        <div className="sticky top-4 space-y-4 py-4">
-          <div className="rounded-2xl border border-border bg-card p-4">
-            <h2 className="text-base font-extrabold">How JPEG works</h2>
-            <ul className="mt-3 space-y-3 text-sm text-muted-foreground">
-              <li>
-                <span className="font-bold text-foreground">Claim a name.</span> If it's taken, it's
-                gone forever — one of each, ever.
-              </li>
-              <li>
-                <span className="font-bold text-foreground">Mint the NFT.</span> Your jpeg + ticker
-                + a real coin on Pump.fun.
-              </li>
-              <li>
-                <span className="font-bold text-foreground">Trade it.</span> List it, get offers,
-                sell instantly.
-              </li>
-              <li>
-                <span className="font-bold text-foreground">Or burn it.</span> The name frees up for
-                someone else.
-              </li>
-            </ul>
-            <Link
-              to="/docs"
-              className="mt-4 inline-block text-sm font-semibold text-brand hover:underline"
-            >
-              Read the how-to →
-            </Link>
-          </div>
-
-          {!user && (
-            <div className="rounded-2xl border border-border bg-card p-4">
-              <h2 className="text-base font-extrabold">New here?</h2>
-              <p className="mt-1 text-sm text-muted-foreground">
-                One account = one wallet. No seed phrases, no extensions.
-              </p>
-              <Link to="/auth" className="primary-btn mt-4 inline-flex w-full justify-center">
-                Create account
-              </Link>
-            </div>
-          )}
-        </div>
-      </aside>
     </main>
+  );
+}
+
+function HudStat({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="border-r border-border px-3 py-4 last:border-r-0 sm:px-5">
+      <p className="hud-label text-muted-foreground">{label}</p>
+      <p className="mono-num mt-1 text-base font-bold sm:text-lg">{value}</p>
+    </div>
+  );
+}
+
+function TerminalStep({ number, text }: { number: string; text: string }) {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="mono-num text-xs text-brand">{number}</span>
+      <span className="h-px w-5 bg-border" />
+      <span>{text}</span>
+    </div>
   );
 }
 
@@ -157,23 +191,23 @@ function FeedPost({ card }: { card: CardWithPeople }) {
   const owner = card.owner?.username ?? "collector";
 
   return (
-    <li className="border-b border-border transition-colors hover:bg-foreground/[0.02]">
-      <Link to="/card/$cardId" params={{ cardId: card.id }} className="flex gap-3 px-4 py-3">
+    <li className="bg-background transition-colors hover:bg-card">
+      <Link to="/card/$cardId" params={{ cardId: card.id }} className="block p-3">
         {/* art */}
-        <div className="relative size-14 shrink-0 overflow-hidden rounded-xl border border-border bg-muted">
+        <div className="relative aspect-[4/3] w-full overflow-hidden border border-border bg-muted">
           {card.image_url ? (
             <img src={card.image_url} alt="" className="size-full object-cover" />
           ) : (
             <div className="grid size-full place-items-center">
-              <img src={pigAsset.url} alt="" className="size-8" />
+              <img src={pigAsset.url} alt="" className="size-20" />
             </div>
           )}
         </div>
 
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 px-1 pb-1 pt-4">
           {/* header row */}
           <div className="flex items-baseline gap-1.5 text-[15px]">
-            <span className="truncate font-bold">{card.name}</span>
+            <span className="truncate text-lg font-black uppercase">{card.name}</span>
             <span className="mono-num shrink-0 text-sm text-muted-foreground">${card.ticker}</span>
             <span className="shrink-0 text-sm text-muted-foreground">
               · {timeAgo(card.created_at)}

@@ -59,14 +59,15 @@ export function EntranceGate() {
 
   return (
     <div
-      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden px-6 bg-white ${
+      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden bg-background px-6 ${
         opening ? "gate-leaving" : ""
       }`}
     >
       {/* background energy */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-brand/10 blur-[120px]" />
-        <div className="absolute left-1/3 top-1/4 h-64 w-64 rounded-full bg-brand/5 blur-[80px]" />
+        <div className="absolute inset-6 border border-border sm:inset-10" />
+        <div className="absolute left-1/2 top-0 h-full w-px bg-gradient-to-b from-transparent via-brand/40 to-transparent" />
+        <div className="absolute left-0 top-1/2 h-px w-full bg-gradient-to-r from-transparent via-brand/30 to-transparent" />
       </div>
 
       <button
@@ -77,9 +78,9 @@ export function EntranceGate() {
       >
         {/* The jpeg frame */}
         <span className="relative mb-8 block sm:mb-12">
-          <span className="absolute -inset-6 rounded-3xl bg-brand/10 blur-2xl transition-colors duration-1000 group-hover:bg-brand/15" />
+          <span className="absolute -inset-6 bg-brand/10 blur-2xl transition-colors duration-1000 group-hover:bg-brand/20" />
           <span
-            className={`relative block h-36 w-36 overflow-hidden rounded-2xl border-[6px] border-brand bg-white shadow-[0_0_60px_rgba(0,0,0,0.55)] sm:h-48 sm:w-48 ${
+            className={`relative block h-36 w-36 overflow-hidden border border-brand bg-surface shadow-card sm:h-48 sm:w-48 ${
               opening
                 ? "scale-110 opacity-0 transition-all duration-700"
                 : "animate-bounce [animation-duration:3s]"
@@ -107,9 +108,9 @@ export function EntranceGate() {
 
         {/* CTA */}
         <span className="relative block">
-          <span className="absolute -inset-1 animate-pulse rounded-full bg-brand/30 blur-md transition duration-300 group-hover:bg-brand/50" />
-          <span className="relative block rounded-full bg-brand px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-white shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
-            Tap to Enter
+          <span className="absolute -inset-1 animate-pulse bg-brand/30 blur-md transition duration-300 group-hover:bg-brand/50" />
+          <span className="relative block border border-brand bg-brand px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-brand-foreground shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
+            Enter Arena
           </span>
         </span>
       </button>
