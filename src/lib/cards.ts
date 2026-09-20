@@ -87,7 +87,7 @@ export function rarityStyle(rarity: string): string {
     case "Uncommon":
       return "bg-poke-green text-white";
     default:
-      return "bg-poke-navy/10 text-poke-navy";
+      return "bg-poke-navy/10 text-foreground";
   }
 }
 

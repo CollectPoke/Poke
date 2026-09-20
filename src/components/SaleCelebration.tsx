@@ -17,7 +17,7 @@ export function SaleCelebration({ cardName, ticker, imageUrl, price, buyer, sign
       {Array.from({ length: 10 }).map((_, index) => <i key={index} className={`sale-coin sale-coin-${index + 1}`}>◎</i>)}
       <div className="sale-celebration-panel relative w-full max-w-sm text-center">
         <div className="mx-auto size-28 overflow-hidden rounded-full border-4 border-poke-yellow bg-secondary shadow-2xl">
-          {imageUrl ? <img src={imageUrl} alt={cardName} className="h-full w-full object-cover" /> : <span className="flex h-full items-center justify-center font-display text-4xl font-bold text-poke-navy">{cardName.slice(0, 1)}</span>}
+          {imageUrl ? <img src={imageUrl} alt={cardName} className="h-full w-full object-cover" /> : <span className="flex h-full items-center justify-center font-display text-4xl font-bold text-foreground">{cardName.slice(0, 1)}</span>}
         </div>
         <p className="mt-5 font-display text-sm font-bold uppercase tracking-[0.2em] text-poke-yellow">NFT sold!</p>
         <h2 id="sale-celebration-title" className="mt-1 font-display text-4xl font-extrabold text-primary-foreground">You made a sale</h2>
