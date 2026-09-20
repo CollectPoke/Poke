@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
 
+export const JPEG_CA = "CTkcddxng5gpG3NUSgrNCjPh8kKsPNE7oe9FRSobJPEG";
+export const JPEG_X_URL = "https://x.com/MINTJPEGX";
+
 const navItems: { to: string; label: string; exact?: boolean }[] = [
   { to: "/", label: "Home", exact: true },
   { to: "/cards", label: "All NFTs" },
