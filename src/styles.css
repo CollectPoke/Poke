@@ -239,77 +239,6 @@
   color: var(--color-brand);
 }
 
-/* ---------- Entrance gate ---------- */
-@keyframes gate-fade-out {
-  to {
-    opacity: 0;
-    visibility: hidden;
-  }
-}
-@keyframes gate-ring-out {
-  0% {
-    transform: scale(0.2);
-    opacity: 0.55;
-  }
-  100% {
-    transform: scale(2.6);
-    opacity: 0;
-  }
-}
-@keyframes gate-burst {
-  0% {
-    box-shadow: 0 0 0 0 oklch(1 0 0 / 0.9);
-    opacity: 1;
-  }
-  100% {
-    box-shadow: 0 0 0 120vmax oklch(1 0 0 / 0);
-    opacity: 0;
-  }
-}
-@keyframes gate-pulse {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-4px);
-  }
-}
-@keyframes aurora-drift {
-  0%,
-  100% {
-    transform: translate3d(0, 0, 0) scale(1);
-  }
-  50% {
-    transform: translate3d(3%, -3%, 0) scale(1.1);
-  }
-}
-
-.gate-leaving {
-  animation: gate-fade-out 700ms ease 550ms forwards;
-}
-.gate-aurora {
-  background:
-    radial-gradient(45% 45% at 25% 30%, oklch(0.55 0.13 250 / 0.55), transparent 70%),
-    radial-gradient(40% 40% at 78% 65%, oklch(0.5 0.17 305 / 0.5), transparent 70%),
-    radial-gradient(35% 35% at 55% 85%, oklch(0.55 0.2 27 / 0.35), transparent 70%);
-  animation: aurora-drift 9s ease-in-out infinite;
-}
-.gate-ring {
-  position: absolute;
-  height: 20rem;
-  width: 20rem;
-  border-radius: 999px;
-  border: 2px solid oklch(0.86 0.17 95 / 0.35);
-  animation: gate-ring-out 3.3s ease-out infinite;
-}
-.gate-burst {
-  animation: gate-burst 900ms ease-out 450ms forwards;
-}
-.gate-pulse {
-  animation: gate-pulse 1.8s ease-in-out infinite;
-}
-
 /* ---------- Flavour ---------- */
 @keyframes sprite-bob {
   0%,
@@ -588,14 +517,3 @@
   animation: welcome-sparkle 1.4s ease-out infinite;
 }
 
-/* Entrance gate: page stays fully hidden until "Tap to Enter" is clicked. */
-.gate-overlay {
-  display: none;
-}
-html.gate-active .gate-overlay {
-  display: flex;
-}
-html.gate-active,
-html.gate-active body {
-  overflow: hidden !important;
-}
