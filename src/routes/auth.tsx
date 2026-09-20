@@ -33,12 +33,7 @@ function AuthPage() {
   const [justSignedUp, setJustSignedUp] = useState(false);
 
   if (justSignedUp) {
-    return (
-      <WelcomeTrainer
-        username={username.trim()}
-        onDone={() => navigate({ to: "/account" })}
-      />
-    );
+    navigate({ to: "/account" });
   }
 
   if (user) {
