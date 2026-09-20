@@ -309,7 +309,7 @@ function MintPage() {
         <FundingModal
           requiredSol={totalCost}
           onClose={() => setShowFunding(false)}
-          onFunded={() => setTimeout(() => setShowFunding(false), 1800)}
+          onFunded={() => setShowFunding(false)}
         />
       ) : null}
       {mintedCard && launchSignature ? (

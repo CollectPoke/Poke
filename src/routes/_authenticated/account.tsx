@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
@@ -51,7 +51,7 @@ function AccountPage() {
     queryFn: () => mySaleHistory(userId),
     enabled: !!userId,
   });
-  const history = sales ?? [];
+  const history = useMemo(() => sales ?? [], [sales]);
   const [tab, setTab] = useState<"owned" | "listed" | "history">("owned");
   const [saleToCelebrate, setSaleToCelebrate] = useState<(typeof history)[number] | null>(null);
 
