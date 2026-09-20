@@ -19,6 +19,8 @@ export const Route = createFileRoute("/_authenticated/account")({
       { name: "description", content: "The one-of-one JPEG NFTs you own." },
       { property: "og:title", content: "My collection · JPEG" },
       { property: "og:description", content: "The one-of-one JPEG NFTs you own." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AccountPage,

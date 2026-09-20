@@ -15,6 +15,8 @@ export const Route = createFileRoute("/_authenticated/sell")({
       { name: "description", content: "List your JPEG NFTs for sale in SOL." },
       { property: "og:title", content: "Sell NFTs · JPEG" },
       { property: "og:description", content: "List your JPEG NFTs for sale in SOL." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: SellPage,

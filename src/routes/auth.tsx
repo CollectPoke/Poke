@@ -15,6 +15,8 @@ export const Route = createFileRoute("/auth")({
         property: "og:description",
         content: "Sign in to mint, buy and sell one-of-one NFTs on JPEG.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: AuthPage,
