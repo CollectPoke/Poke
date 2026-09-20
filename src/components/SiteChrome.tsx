@@ -1,5 +1,5 @@
 import pigAsset from "@/assets/pig.webp.asset.json";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useHydrated, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
@@ -24,6 +24,7 @@ export function SiteHeader() {
   const { user, username } = useAuth();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const hydrated = useHydrated();
 
   useEffect(() => {
     setOpen(false);
@@ -36,15 +37,17 @@ export function SiteHeader() {
     };
   }, [open]);
 
+  if (!hydrated) return null;
+
   return (
     <header className="sticky top-0 z-30">
       <div className="border-b border-border/60 bg-background">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-1.5 text-[10px] text-foreground/60 sm:px-5 sm:text-[11px]">
-          <span className="mono-num hidden truncate uppercase tracking-[0.18em] text-brand xs:inline sm:inline">
+        <div className="mx-auto grid max-w-6xl grid-cols-[minmax(0,1fr)_auto] items-center gap-2 px-4 py-1.5 text-[10px] text-foreground/60 sm:px-5 sm:text-[11px]">
+          <span className="mono-num hidden min-w-0 truncate uppercase tracking-[0.18em] text-brand xs:inline sm:inline">
             jpeg protocol // mainnet online
           </span>
           <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">jpeg</span>
-          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
+          <div className="flex min-w-0 items-center justify-end gap-1.5 sm:gap-3">
             <a
               href={JPEG_X_URL}
               target="_blank"
@@ -255,6 +258,10 @@ const footerHowTo: { to: string; label: string }[] = [
 ];
 
 export function SiteFooter() {
+  const hydrated = useHydrated();
+
+  if (!hydrated) return null;
+
   return (
     <footer className="mt-16 border-t border-border bg-background text-muted-foreground">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
@@ -341,12 +348,14 @@ function CopyCa() {
       }}
       aria-label={copied ? "Contract address copied" : "Copy JPEG contract address"}
       title={JPEG_CA}
-      className="-my-1 flex max-w-[170px] items-center gap-1.5 border border-border bg-secondary px-2 py-1.5 text-[10px] text-foreground/70 transition-colors hover:border-brand/60 hover:text-brand sm:max-w-none"
+      className="-my-1 flex min-w-0 max-w-[150px] items-center gap-1.5 overflow-hidden border border-border bg-secondary px-2 py-1.5 text-[10px] text-foreground/70 transition-colors hover:border-brand/60 hover:text-brand sm:max-w-[260px] lg:max-w-none"
     >
       <span className="flex-none text-[9px] font-bold uppercase tracking-[0.2em] text-brand">
         CA
       </span>
-      <span className="mono-num normal-case tracking-normal">{copied ? "copied!" : JPEG_CA}</span>
+      <span className="mono-num min-w-0 truncate normal-case tracking-normal">
+        {copied ? "copied!" : JPEG_CA}
+      </span>
       {copied ? (
         <svg
           viewBox="0 0 24 24"
