@@ -89,13 +89,13 @@ export function EntranceGate() {
         {/* Wordmark with glow */}
         <span className="relative mb-10 block">
           <span className="block font-display text-6xl tracking-tighter text-poke-yellow sm:text-8xl">
-            POKE
+            JPEG
           </span>
           <span
             aria-hidden
             className="absolute inset-0 select-none font-display text-6xl tracking-tighter text-poke-yellow opacity-30 blur-xl sm:text-8xl"
           >
-            POKE
+            JPEG
           </span>
         </span>
 

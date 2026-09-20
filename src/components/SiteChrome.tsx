@@ -44,7 +44,7 @@ export function SiteHeader() {
           <span className="mono-num hidden truncate uppercase tracking-[0.18em] xs:inline sm:inline">
             one jpeg · one coin · forever
           </span>
-          <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">poke</span>
+          <span className="mono-num truncate uppercase tracking-[0.18em] sm:hidden">jpeg</span>
           <div className="flex shrink-0 items-center gap-3 sm:gap-4">
             <span className="hidden lg:inline">Burn an NFT and its name frees up again.</span>
             <button
@@ -107,7 +107,7 @@ export function SiteHeader() {
           <Link to="/" className="flex min-w-0 items-center gap-2.5">
             <img src={pigAsset.url} alt="" className="h-8 w-8 shrink-0 drop-shadow sm:h-9 sm:w-9" />
             <span className="font-display text-xl font-bold leading-none text-poke-yellow tracking-tight sm:text-2xl">
-              Poke
+              JPEG
             </span>
           </Link>
 
