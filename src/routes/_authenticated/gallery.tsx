@@ -1,22 +1,21 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { PokeCard } from "@/components/PokeCard";
 import { useAuth } from "@/lib/auth";
 import { myMintedCards } from "@/lib/queries";
-import { listPairings, pokemonArtwork, type PairingRow } from "@/lib/pairings";
 import { formatPokeCoin } from "@/lib/cards";
 
 export const Route = createFileRoute("/_authenticated/gallery")({
   head: () => ({
     meta: [
-      { title: "My Cards · Poke" },
-      { name: "description", content: "Every card you minted on Poke, with its image and Pokémon pairing." },
-      { property: "og:title", content: "My Cards · Poke" },
+      { title: "My NFTs · Poke" },
+      { name: "description", content: "Every NFT you minted on Poke, with its artwork and coin." },
+      { property: "og:title", content: "My NFTs · Poke" },
       {
         property: "og:description",
-        content: "Every card you minted on Poke, with its image and Pokémon pairing.",
+        content: "Every NFT you minted on Poke, with its artwork and coin.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
