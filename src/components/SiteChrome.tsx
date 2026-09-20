@@ -343,7 +343,9 @@ function CopyCa() {
       title={JPEG_CA}
       className="-my-1 flex max-w-[170px] items-center gap-1.5 border border-border bg-secondary px-2 py-1.5 text-[10px] text-foreground/70 transition-colors hover:border-brand/60 hover:text-brand sm:max-w-none"
     >
-      <span className="flex-none text-[9px] font-bold uppercase tracking-[0.2em] text-brand">CA</span>
+      <span className="flex-none text-[9px] font-bold uppercase tracking-[0.2em] text-brand">
+        CA
+      </span>
       <span className="mono-num normal-case tracking-normal">{copied ? "copied!" : JPEG_CA}</span>
       {copied ? (
         <svg
