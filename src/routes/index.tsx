@@ -8,17 +8,17 @@ import { listCards } from "@/lib/queries";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Poke · One name, one NFT, forever" },
+      { title: "Poke · One jpeg, one coin, forever" },
       {
         name: "description",
         content:
-          "Launch a coin on Poke and it becomes a one-of-one NFT. Only one Dog can ever exist. Buy, sell, mint and burn.",
+          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached.  Buy, sell, mint and burn.",
       },
-      { property: "og:title", content: "Poke · One name, one NFT, forever" },
+      { property: "og:title", content: "Poke · One jpeg, one coin, forever" },
       {
         property: "og:description",
         content:
-          "Launch a coin on Poke and it becomes a one-of-one NFT. Only one Dog can ever exist.",
+          "Mint your jpeg as a one-of-one NFT with a real Pump.fun coin attached. ",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
