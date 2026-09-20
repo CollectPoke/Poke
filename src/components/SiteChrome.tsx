@@ -1,5 +1,5 @@
 import pigAsset from "@/assets/pig.webp.asset.json";
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useHydrated, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
 import { useAuth } from "@/lib/auth";
@@ -24,6 +24,7 @@ export function SiteHeader() {
   const { user, username } = useAuth();
   const [open, setOpen] = useState(false);
   const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const hydrated = useHydrated();
 
   useEffect(() => {
     setOpen(false);
@@ -35,6 +36,8 @@ export function SiteHeader() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  if (!hydrated) return null;
 
   return (
     <header className="sticky top-0 z-30">
@@ -255,6 +258,10 @@ const footerHowTo: { to: string; label: string }[] = [
 ];
 
 export function SiteFooter() {
+  const hydrated = useHydrated();
+
+  if (!hydrated) return null;
+
   return (
     <footer className="mt-16 border-t border-border bg-background text-muted-foreground">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
