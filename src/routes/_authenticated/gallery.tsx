@@ -38,17 +38,6 @@ function GalleryPage() {
     enabled: !!userId,
   });
 
-  const { data: pairings } = useQuery({ queryKey: ["pairings"], queryFn: () => listPairings(200) });
-
-  const pairingFor = useMemo(() => {
-    const byKey = new Map<string, PairingRow>();
-    for (const p of pairings ?? []) {
-      byKey.set(p.coin_name.trim().toLowerCase(), p);
-      byKey.set(p.coin_symbol.trim().toLowerCase(), p);
-    }
-    return (name: string, ticker: string) =>
-      byKey.get(name.trim().toLowerCase()) ?? byKey.get(ticker.trim().toLowerCase()) ?? null;
-  }, [pairings]);
 
   const priceOf = (c: { list_price: number | null; last_price: number | null }) =>
     c.list_price ?? c.last_price ?? null;
