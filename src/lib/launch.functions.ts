@@ -5,6 +5,9 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 // Flat mandatory launch fee — covers the launch, network + Pump.fun fees.
 export const LAUNCH_FEE_LAMPORTS = 100_000_000;
+// What actually leaves the creator wallet to the JPEG deployer after the coin
+// lands. The rest of the 0.1 SOL covers the dev buy, mint rent + network fees.
+const PROTOCOL_FEE_LAMPORTS = 90_000_000;
 
 // Pump.fun's indexer fetches the metadata URI from the public internet, so it
 // can never point at a dev/preview origin or the coin launches with no image.
