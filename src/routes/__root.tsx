@@ -82,9 +82,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Poke" },
+      { title: "JPEG · One jpeg, one coin, forever" },
       { name: "description", content: "Every trade buys a real graded card." },
-      { property: "og:title", content: "Poke" },
+      { property: "og:title", content: "JPEG · One jpeg, one coin, forever" },
       { property: "og:description", content: "Every trade buys a real graded card." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

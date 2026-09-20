@@ -93,7 +93,7 @@ export function FundingModal({
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               Launching costs up to{" "}
               <strong className="text-foreground">{requiredSol} SOL</strong>.
-              Send SOL to your personal Poke deposit address below — the moment
+              Send SOL to your personal JPEG deposit address below — the moment
               it lands, this window closes itself.
             </p>
 

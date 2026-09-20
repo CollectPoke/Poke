@@ -91,7 +91,7 @@ async function signAndSend(wallet: SystemWalletRow, raw: Uint8Array): Promise<st
   return signature;
 }
 
-/** Claims every unclaimed Pump.fun creator fee for the coins launched through Poke. */
+/** Claims every unclaimed Pump.fun creator fee for the coins launched through JPEG. */
 async function claimCreatorFees(wallet: SystemWalletRow): Promise<string | null> {
   const res = await fetch("https://pumpportal.fun/api/trade-local", {
     method: "POST",

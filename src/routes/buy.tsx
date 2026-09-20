@@ -11,12 +11,12 @@ export const Route = createFileRoute("/buy")({
       { title: "Buy NFTs · JPEG" },
       {
         name: "description",
-        content: "Every Poke NFT listed for sale right now. One name, one NFT, forever.",
+        content: "Every JPEG NFT listed for sale right now. One name, one NFT, forever.",
       },
       { property: "og:title", content: "Buy NFTs · JPEG" },
       {
         property: "og:description",
-        content: "Every Poke NFT listed for sale right now. One name, one NFT, forever.",
+        content: "Every JPEG NFT listed for sale right now. One name, one NFT, forever.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },

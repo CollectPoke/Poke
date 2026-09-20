@@ -12,9 +12,9 @@ export const Route = createFileRoute("/_authenticated/sell")({
   head: () => ({
     meta: [
       { title: "Sell NFTs · JPEG" },
-      { name: "description", content: "List your Poke NFTs for sale in SOL." },
+      { name: "description", content: "List your JPEG NFTs for sale in SOL." },
       { property: "og:title", content: "Sell NFTs · JPEG" },
-      { property: "og:description", content: "List your Poke NFTs for sale in SOL." },
+      { property: "og:description", content: "List your JPEG NFTs for sale in SOL." },
     ],
   }),
   component: SellPage,

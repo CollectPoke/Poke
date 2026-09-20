@@ -64,7 +64,7 @@ export function EntranceGate() {
       <button
         type="button"
         onClick={enter}
-        aria-label="Enter Poke"
+        aria-label="Enter JPEG"
         className="group relative z-10 flex flex-col items-center focus:outline-none"
       >
         {/* The jpeg frame */}
