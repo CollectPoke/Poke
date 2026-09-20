@@ -3,13 +3,13 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { PokeCard } from "@/components/PokeCard";
+import { NftCard } from "@/components/NftCard";
 import { WalletPanel } from "@/components/WalletPanel";
 import { SaleCelebration } from "@/components/SaleCelebration";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
 import { myCards, mySaleHistory } from "@/lib/queries";
-import { formatPokeCoin } from "@/lib/cards";
+import { formatSolAmount } from "@/lib/cards";
 import { SOLSCAN_TX } from "@/lib/buybacks";
 
 export const Route = createFileRoute("/_authenticated/account")({
@@ -68,20 +68,20 @@ function AccountPage() {
     <main className="mx-auto max-w-6xl px-5 py-10">
       {/* Collector card */}
       <section className="relative overflow-hidden rounded-3xl border border-border bg-card p-6 shadow-[0_10px_40px_-15px_oklch(0.24_0.045_260/0.25)] sm:p-8">
-        <div className="pointer-events-none absolute -right-32 -top-32 size-64 rounded-full bg-poke-yellow/10" />
-        <div className="pointer-events-none absolute -bottom-24 -left-24 size-48 rounded-full bg-poke-blue/10" />
+        <div className="pointer-events-none absolute -right-32 -top-32 size-64 rounded-full bg-brand/10" />
+        <div className="pointer-events-none absolute -bottom-24 -left-24 size-48 rounded-full bg-link/10" />
 
         <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div className="flex items-center gap-5">
             <div className="relative">
-              <div className="size-20 rounded-full bg-gradient-to-tr from-poke-navy to-poke-blue p-1 shadow-lg sm:size-24">
+              <div className="size-20 rounded-full bg-gradient-to-tr from-ink to-link p-1 shadow-lg sm:size-24">
                 <div className="relative flex h-full w-full items-center justify-center overflow-hidden rounded-full bg-card">
-                  <div className="absolute inset-x-0 top-0 h-1/2 bg-poke-red" />
+                  <div className="absolute inset-x-0 top-0 h-1/2 bg-danger" />
                   <div className="absolute top-1/2 z-10 h-1 w-full -translate-y-1/2 bg-border" />
-                  <div className="z-20 size-5 rounded-full border-4 border-poke-navy bg-card" />
+                  <div className="z-20 size-5 rounded-full border-4 border-ink bg-card" />
                 </div>
               </div>
-              <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-poke-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-poke-yellow-foreground shadow-sm">
+              <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-brand px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-brand-foreground shadow-sm">
                 Collector
               </span>
             </div>
@@ -94,7 +94,7 @@ function AccountPage() {
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
-            <Link to="/mint" className="poke-btn">
+            <Link to="/mint" className="primary-btn">
               Mint an NFT
             </Link>
             <button
@@ -111,23 +111,23 @@ function AccountPage() {
           <Stat
             label="NFTs owned"
             value={owned.length}
-            className="border-poke-blue/25 bg-poke-blue/10"
+            className="border-link/25 bg-link/10"
             labelClass="text-foreground"
-            valueClass="text-poke-blue"
+            valueClass="text-link"
           />
           <Stat
             label="Listed for sale"
             value={listed.length}
-            className="border-poke-yellow/40 bg-poke-yellow/15"
+            className="border-brand/40 bg-brand/15"
             labelClass="text-muted-foreground"
             valueClass="text-foreground"
           />
           <Stat
             label="Minted by you"
             value={owned.filter((c) => c.creator_id === userId).length}
-            className="border-poke-red/20 bg-poke-red/10"
-            labelClass="text-poke-red"
-            valueClass="text-poke-red"
+            className="border-danger/20 bg-danger/10"
+            labelClass="text-danger"
+            valueClass="text-danger"
           />
         </div>
       </section>
@@ -139,7 +139,7 @@ function AccountPage() {
       <div className="mt-10 flex items-center gap-4">
         <h2 className="font-display text-2xl font-bold text-foreground">My collection</h2>
         <div className="flex items-center gap-1.5">
-          <span className="h-2 w-8 rounded-full bg-poke-yellow" />
+          <span className="h-2 w-8 rounded-full bg-brand" />
           <span className="h-2 w-2 rounded-full bg-border" />
           <span className="h-2 w-2 rounded-full bg-border" />
         </div>
@@ -178,7 +178,7 @@ function AccountPage() {
                 >
                   <span
                     className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${
-                      sold ? "bg-poke-red/15 text-poke-red" : "bg-poke-green/15 text-foreground"
+                      sold ? "bg-danger/15 text-danger" : "bg-success/15 text-foreground"
                     }`}
                   >
                     {sold ? "Sold" : "Bought"}
@@ -201,14 +201,14 @@ function AccountPage() {
                     </p>
                   </div>
                   <span className="mono-num font-display text-lg font-bold text-foreground">
-                    {ev.price !== null ? `${formatPokeCoin(ev.price)} SOL` : "—"}
+                    {ev.price !== null ? `${formatSolAmount(ev.price)} SOL` : "—"}
                   </span>
                   {ev.tx_signature && (
                     <a
                       href={SOLSCAN_TX(ev.tx_signature)}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-xs font-bold text-poke-blue underline"
+                      className="text-xs font-bold text-link underline"
                     >
                       Solscan
                     </a>
@@ -224,10 +224,10 @@ function AccountPage() {
         tab === "listed" ? (
           <EmptyBox title="Nothing listed" text="Open any card you own and set a price to put it on the market." />
         ) : (
-          <div className="mt-4 rounded-3xl border-2 border-dashed border-poke-navy/20 bg-card p-12 text-center">
-            <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-poke-blue/10">
-              <div className="relative size-8 overflow-hidden rounded-full border-2 border-poke-navy bg-card">
-                <div className="absolute inset-x-0 top-0 h-1/2 bg-poke-red" />
+          <div className="mt-4 rounded-3xl border-2 border-dashed border-ink/20 bg-card p-12 text-center">
+            <div className="mx-auto mb-4 flex size-16 items-center justify-center rounded-full bg-link/10">
+              <div className="relative size-8 overflow-hidden rounded-full border-2 border-ink bg-card">
+                <div className="absolute inset-x-0 top-0 h-1/2 bg-danger" />
                 <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 bg-border" />
               </div>
             </div>
@@ -237,7 +237,7 @@ function AccountPage() {
               market.
             </p>
             <div className="mt-5 flex flex-wrap justify-center gap-3">
-              <Link to="/mint" className="poke-btn">
+              <Link to="/mint" className="primary-btn">
                 Mint an NFT
               </Link>
               <Link
@@ -258,7 +258,7 @@ function AccountPage() {
               params={{ cardId: card.id }}
               className="transition-transform duration-300 hover:-translate-y-2"
             >
-              <PokeCard card={card} />
+              <NftCard card={card} />
             </Link>
           ))}
         </div>
@@ -315,7 +315,7 @@ function Tab({
       onClick={onClick}
       className={`rounded-full border-2 px-4 py-1.5 text-xs font-bold transition-colors ${
         active
-          ? "border-poke-navy bg-border text-poke-yellow"
+          ? "border-ink bg-border text-brand"
           : "border-border bg-card text-foreground hover:bg-secondary"
       }`}
     >
@@ -326,7 +326,7 @@ function Tab({
 
 function EmptyBox({ title, text }: { title: string; text: string }) {
   return (
-    <div className="mt-4 rounded-3xl border-2 border-dashed border-poke-navy/20 bg-card p-12 text-center">
+    <div className="mt-4 rounded-3xl border-2 border-dashed border-ink/20 bg-card p-12 text-center">
       <p className="font-display text-xl font-bold text-foreground">{title}</p>
       <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">{text}</p>
     </div>

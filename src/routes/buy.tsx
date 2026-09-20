@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
-import { PokeCard } from "@/components/PokeCard";
+import { NftCard } from "@/components/NftCard";
 import { listCards } from "@/lib/queries";
 
 export const Route = createFileRoute("/buy")({
@@ -60,12 +60,12 @@ function BuyPage() {
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search name or ticker"
-          className="w-full rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-poke-blue sm:w-56"
+          className="w-full rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-link sm:w-56"
         />
         <select
           value={sort}
           onChange={(e) => setSort(e.target.value as SortKey)}
-          className="rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-poke-blue"
+          className="rounded-full border border-border bg-card px-4 py-2.5 text-sm outline-none focus:border-link"
           aria-label="Sort NFTs"
         >
           <option value="newest">Newest</option>
@@ -77,14 +77,14 @@ function BuyPage() {
       {isLoading ? (
         <p className="mt-10 text-sm text-muted-foreground">Loading NFTs…</p>
       ) : error ? (
-        <p className="mt-10 text-sm text-poke-red">Could not load cards. Try refreshing.</p>
+        <p className="mt-10 text-sm text-danger">Could not load cards. Try refreshing.</p>
       ) : cards.length === 0 ? (
         <div className="mt-10 rounded-2xl border border-dashed border-border p-12 text-center">
           <p className="font-display text-xl font-bold">Nothing for sale right now</p>
           <p className="mt-1 text-sm text-muted-foreground">
             Check back soon — or browse every NFT ever minted.
           </p>
-          <Link to="/cards" className="poke-btn mt-5 inline-flex">
+          <Link to="/cards" className="primary-btn mt-5 inline-flex">
             All NFTs
           </Link>
         </div>
@@ -92,7 +92,7 @@ function BuyPage() {
         <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {cards.map((card) => (
             <Link key={card.id} to="/card/$cardId" params={{ cardId: card.id }}>
-              <PokeCard card={card} />
+              <NftCard card={card} />
             </Link>
           ))}
         </div>

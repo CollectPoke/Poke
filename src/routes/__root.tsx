@@ -113,7 +113,7 @@ function RootShell({ children }: { children: ReactNode }) {
           // the page, so the homepage never flashes behind it.
           dangerouslySetInnerHTML={{
             __html:
-              'try{if(sessionStorage.getItem("poke-entered")!=="1")document.documentElement.classList.add("gate-active")}catch(e){document.documentElement.classList.add("gate-active")}',
+              'try{if(sessionStorage.getItem("jpeg-entered")!=="1")document.documentElement.classList.add("gate-active")}catch(e){document.documentElement.classList.add("gate-active")}',
           }}
         />
         <HeadContent />

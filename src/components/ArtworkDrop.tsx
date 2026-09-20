@@ -127,8 +127,8 @@ export function ArtworkDrop({
         className={[
           "group relative flex aspect-[3/4] w-full items-center justify-center overflow-hidden rounded-2xl border-2 border-dashed transition-colors",
           dragging
-            ? "border-poke-blue bg-poke-blue/10"
-            : "border-border bg-card hover:border-poke-blue/60",
+            ? "border-link bg-link/10"
+            : "border-border bg-card hover:border-link/60",
         ].join(" ")}
       >
         {preview ? (
@@ -138,7 +138,7 @@ export function ArtworkDrop({
               alt="Artwork preview"
               className="absolute inset-0 h-full w-full object-contain p-3"
             />
-            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-poke-navy/90 to-transparent px-4 pb-3 pt-10 text-center">
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-ink/90 to-transparent px-4 pb-3 pt-10 text-center">
               <p className="text-sm font-bold text-foreground">
                 {uploading ? "Uploading…" : "Artwork ready"}
               </p>
@@ -149,7 +149,7 @@ export function ArtworkDrop({
           </>
         ) : (
           <div className="px-6 text-center">
-            <p className="font-display text-6xl leading-none text-muted-foreground/60 transition-colors group-hover:text-poke-blue/70">
+            <p className="font-display text-6xl leading-none text-muted-foreground/60 transition-colors group-hover:text-link/70">
               +
             </p>
             <p className="mt-4 font-display text-2xl font-bold">Drop your image here</p>
@@ -172,7 +172,7 @@ export function ArtworkDrop({
           e.target.value = "";
         }}
       />
-      {error && <p className="mt-1.5 text-xs font-semibold text-poke-red">{error}</p>}
+      {error && <p className="mt-1.5 text-xs font-semibold text-danger">{error}</p>}
     </div>
   );
 }

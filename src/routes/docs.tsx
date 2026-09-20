@@ -37,7 +37,7 @@ function DocsPage() {
     <main className="mx-auto w-full max-w-6xl px-4 py-10 sm:px-6">
       {/* Hero */}
       <header className="relative overflow-hidden rounded-md border border-border bg-surface p-8 text-center shadow-card sm:p-12">
-        <p className="text-xs font-bold uppercase tracking-[0.3em] text-poke-yellow">
+        <p className="text-xs font-bold uppercase tracking-[0.3em] text-brand">
           Collector handbook
         </p>
         <h1 className="mt-2 font-display text-4xl font-bold text-foreground sm:text-5xl">
@@ -61,7 +61,7 @@ function DocsPage() {
                 <li key={s.id}>
                   <a
                     href={`#${s.id}`}
-                    className="block rounded-lg px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-secondary hover:text-poke-blue"
+                    className="block rounded-lg px-3 py-1.5 text-sm text-foreground transition-colors hover:bg-secondary hover:text-link"
                   >
                     {s.title}
                   </a>
@@ -98,7 +98,7 @@ function DocsPage() {
             <ol className="list-decimal space-y-2 pl-5">
               <li>
                 Create an account with email &amp; password or Google on the{" "}
-                <Link to="/auth" className="font-semibold text-poke-blue underline">
+                <Link to="/auth" className="font-semibold text-link underline">
                   sign-in page
                 </Link>
                 .
@@ -109,7 +109,7 @@ function DocsPage() {
               <li>
                 Your account instantly gets its own{" "}
                 <strong>Solana deposit address</strong>, visible on your{" "}
-                <Link to="/account" className="font-semibold text-poke-blue underline">
+                <Link to="/account" className="font-semibold text-link underline">
                   profile
                 </Link>
                 .
@@ -140,7 +140,7 @@ function DocsPage() {
             <ol className="list-decimal space-y-2 pl-5">
               <li>
                 Go to{" "}
-                <Link to="/mint" className="font-semibold text-poke-blue underline">
+                <Link to="/mint" className="font-semibold text-link underline">
                   Mint an NFT
                 </Link>{" "}
                 and choose a name and ticker. The name is checked live — if it's
@@ -187,7 +187,7 @@ function DocsPage() {
               100% of the fees from coins launched on JPEG are used to{" "}
               <strong>buy back $POKE</strong>. A run happens every{" "}
               <strong>10 minutes</strong>, and every run is posted to the{" "}
-              <Link to="/buyback" className="font-semibold text-poke-blue underline">
+              <Link to="/buyback" className="font-semibold text-link underline">
                 Buybacks
               </Link>{" "}
               page with its Solscan transaction — fully verifiable on-chain.
@@ -217,13 +217,13 @@ function DocsPage() {
             />
           </DocCard>
 
-          <div className="rounded-xl border-2 border-poke-yellow bg-poke-yellow/15 p-6 text-center">
+          <div className="rounded-xl border-2 border-brand bg-brand/15 p-6 text-center">
             <p className="font-display text-xl font-bold text-foreground">
               Ready to claim a name?
             </p>
             <Link
               to="/mint"
-              className="poke-btn mt-3 inline-block rounded-xl px-6 py-2.5 text-sm font-bold"
+              className="primary-btn mt-3 inline-block rounded-xl px-6 py-2.5 text-sm font-bold"
             >
               Mint your first NFT
             </Link>

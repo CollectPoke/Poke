@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 
 import { OfferPanel } from "@/components/OfferPanel";
-import { PokeCard } from "@/components/PokeCard";
+import { NftCard } from "@/components/NftCard";
 import { PurchaseReveal } from "@/components/PurchaseReveal";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/lib/auth";
@@ -26,7 +26,7 @@ export const Route = createFileRoute("/card/$cardId")({
   errorComponent: () => (
     <main className="mx-auto max-w-2xl px-5 py-20 text-center">
       <h1 className="font-display text-2xl font-bold">This NFT didn't load</h1>
-      <Link to="/cards" className="poke-btn mt-6 inline-flex">
+      <Link to="/cards" className="primary-btn mt-6 inline-flex">
         Back to all NFTs
       </Link>
     </main>
@@ -115,7 +115,7 @@ function CardPage() {
     return (
       <main className="mx-auto max-w-2xl px-5 py-20 text-center">
         <h1 className="font-display text-2xl font-bold">NFT not found</h1>
-        <Link to="/cards" className="poke-btn mt-6 inline-flex">
+        <Link to="/cards" className="primary-btn mt-6 inline-flex">
           Back to all NFTs
         </Link>
       </main>
@@ -147,7 +147,7 @@ function CardPage() {
 
       <div className="mt-4 grid gap-8 md:grid-cols-[320px_1fr]">
         <div className="md:sticky md:top-28 md:self-start">
-          <PokeCard card={card} />
+          <NftCard card={card} />
         </div>
 
         <div>
@@ -184,12 +184,12 @@ function CardPage() {
 
           <div className="mt-6 rounded-2xl border border-border bg-secondary p-4">
             <p className="text-[10px] uppercase tracking-widest text-muted-foreground">Pump.fun contract address</p>
-            <p className="mono-num mt-1 break-all text-xs text-poke-yellow">
+            <p className="mono-num mt-1 break-all text-xs text-brand">
               {card.contract_address}
             </p>
             <div className="mt-3 flex flex-wrap gap-4 text-xs font-semibold">
-              <a href={`https://pump.fun/coin/${card.contract_address}`} target="_blank" rel="noreferrer" className="text-poke-yellow underline underline-offset-4">View on Pump.fun ↗</a>
-              {card.launch_tx_signature ? <a href={`https://solscan.io/tx/${card.launch_tx_signature}`} target="_blank" rel="noreferrer" className="text-poke-yellow underline underline-offset-4">Launch receipt ↗</a> : null}
+              <a href={`https://pump.fun/coin/${card.contract_address}`} target="_blank" rel="noreferrer" className="text-brand underline underline-offset-4">View on Pump.fun ↗</a>
+              {card.launch_tx_signature ? <a href={`https://solscan.io/tx/${card.launch_tx_signature}`} target="_blank" rel="noreferrer" className="text-brand underline underline-offset-4">Launch receipt ↗</a> : null}
             </div>
           </div>
 
@@ -200,7 +200,7 @@ function CardPage() {
                 <p className="text-sm text-muted-foreground">
                   Sign in to buy this NFT or mint one of your own.
                 </p>
-                <Link to="/auth" className="poke-btn mt-3 inline-flex">
+                <Link to="/auth" className="primary-btn mt-3 inline-flex">
                   Sign in
                 </Link>
               </div>
@@ -220,12 +220,12 @@ function CardPage() {
                       value={price}
                       onChange={(e) => setPrice(e.target.value)}
                       placeholder="Price in SOL"
-                      className="w-40 rounded-full border border-border bg-background px-4 py-2 text-sm outline-none focus:border-poke-blue"
+                      className="w-40 rounded-full border border-border bg-background px-4 py-2 text-sm outline-none focus:border-link"
                     />
                     <button
                       onClick={() => action.mutate("list")}
                       disabled={action.isPending}
-                      className="poke-btn"
+                      className="primary-btn"
                     >
                       List for sale
                     </button>
@@ -249,7 +249,7 @@ function CardPage() {
                       action.mutate("burn");
                   }}
                   disabled={action.isPending}
-                  className="block text-xs font-semibold text-poke-red underline underline-offset-4"
+                  className="block text-xs font-semibold text-danger underline underline-offset-4"
                 >
                   Burn this NFT
                 </button>
@@ -262,7 +262,7 @@ function CardPage() {
                 <button
                   onClick={() => action.mutate("buy")}
                   disabled={action.isPending}
-                  className="poke-btn w-full px-8 py-4 text-lg font-extrabold uppercase tracking-wide sm:w-auto"
+                  className="primary-btn w-full px-8 py-4 text-lg font-extrabold uppercase tracking-wide sm:w-auto"
                 >
                   {action.isPending ? "Buying…" : `Buy for ${card.list_price} SOL`}
                 </button>
@@ -276,16 +276,16 @@ function CardPage() {
                 This NFT is not for sale right now.
               </p>
             )}
-            {error && <p className="mt-3 text-sm font-medium text-poke-red">{error}</p>}
+            {error && <p className="mt-3 text-sm font-medium text-danger">{error}</p>}
             {burnNote && (
-              <p className="mt-3 text-sm font-medium text-poke-green">{burnNote}</p>
+              <p className="mt-3 text-sm font-medium text-success">{burnNote}</p>
             )}
             {txSig && (
               <a
                 href={`https://solscan.io/tx/${txSig}`}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-3 block text-sm font-bold text-poke-blue underline"
+                className="mt-3 block text-sm font-bold text-link underline"
               >
                 Payment confirmed — view on Solscan
               </a>
@@ -310,7 +310,7 @@ function CardPage() {
                     <span
                       className={`rounded-full px-3 py-1 font-semibold ${
                         i === owners.length - 1
-                          ? "bg-poke-yellow/25 text-foreground"
+                          ? "bg-brand/25 text-foreground"
                           : "bg-secondary text-muted-foreground"
                       }`}
                     >
@@ -330,7 +330,7 @@ function CardPage() {
           <div className="mt-2 divide-y divide-border rounded-2xl border border-border bg-card">
             {!user ? (
               <p className="p-4 text-sm text-muted-foreground">
-                <Link to="/auth" className="font-bold text-poke-blue underline">
+                <Link to="/auth" className="font-bold text-link underline">
                   Sign in
                 </Link>{" "}
                 to see this NFT's full history.
@@ -343,9 +343,9 @@ function CardPage() {
                   <span
                     className={`rounded-full px-2.5 py-0.5 text-[11px] font-bold uppercase ${
                       ev.kind === "sale"
-                        ? "bg-poke-green/15 text-poke-green"
+                        ? "bg-success/15 text-success"
                         : ev.kind === "burn"
-                          ? "bg-poke-red/15 text-poke-red"
+                          ? "bg-danger/15 text-danger"
                           : "bg-secondary text-muted-foreground"
                     }`}
                   >
@@ -367,7 +367,7 @@ function CardPage() {
                       href={`https://solscan.io/tx/${ev.tx_signature}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-xs font-bold text-poke-blue underline"
+                      className="text-xs font-bold text-link underline"
                     >
                       Solscan
                     </a>
