@@ -78,7 +78,7 @@ function GalleryPage() {
   return (
     <main className="mx-auto max-w-6xl px-5 py-10">
       <header className="flex flex-col gap-2">
-        <h1 className="font-display text-3xl font-extrabold text-poke-navy sm:text-4xl">My NFTs</h1>
+        <h1 className="font-display text-3xl font-extrabold text-foreground sm:text-4xl">My NFTs</h1>
         <p className="max-w-2xl text-sm text-muted-foreground">
           Every NFT you have minted, with its artwork and the coin attached to it.
         </p>
@@ -97,7 +97,7 @@ function GalleryPage() {
             <select
               value={sort}
               onChange={(e) => setSort(e.target.value as typeof sort)}
-              className="rounded-xl border-2 border-border bg-card px-3 py-2 text-sm font-bold text-poke-navy outline-none focus:border-poke-blue"
+              className="rounded-xl border-2 border-border bg-card px-3 py-2 text-sm font-bold text-foreground outline-none focus:border-poke-blue"
             >
               <option value="newest">Newest first</option>
               <option value="oldest">Oldest first</option>
@@ -140,7 +140,7 @@ function GalleryPage() {
         <p className="mt-8 text-sm text-muted-foreground">Loading your gallery…</p>
       ) : shown.length === 0 ? (
         <div className="mt-8 rounded-3xl border-2 border-dashed border-poke-navy/20 bg-card p-12 text-center">
-          <p className="font-display text-xl font-bold text-poke-navy">Nothing here yet</p>
+          <p className="font-display text-xl font-bold text-foreground">Nothing here yet</p>
           <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
             Mint an NFT and it shows up here with its artwork and pairing.
           </p>
@@ -173,20 +173,20 @@ function GalleryPage() {
                     )}
                   </div>
 
-                  <h2 className="mt-2 font-display text-2xl font-bold text-poke-navy">
+                  <h2 className="mt-2 font-display text-2xl font-bold text-foreground">
                     {card.name} <span className="text-muted-foreground">${card.ticker}</span>
                   </h2>
 
                   <dl className="mono-num mt-3 grid grid-cols-2 gap-3 text-sm">
                     <div>
                       <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Listed at</dt>
-                      <dd className="text-poke-navy">
+                      <dd className="text-foreground">
                         {card.list_price !== null ? `${formatPokeCoin(card.list_price)} SOL` : "Not for sale"}
                       </dd>
                     </div>
                     <div>
                       <dt className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Last sale</dt>
-                      <dd className="text-poke-navy">
+                      <dd className="text-foreground">
                         {card.last_price !== null ? `${formatPokeCoin(card.last_price)} SOL` : "—"}
                       </dd>
                     </div>
@@ -196,7 +196,7 @@ function GalleryPage() {
                     <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">
                       Attached coin
                     </p>
-                    <p className="mono-num mt-2 break-all text-xs text-poke-navy">
+                    <p className="mono-num mt-2 break-all text-xs text-foreground">
                       {card.contract_address}
                     </p>
                   </div>

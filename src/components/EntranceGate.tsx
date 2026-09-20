@@ -51,13 +51,13 @@ export function EntranceGate() {
 
   return (
     <div
-      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden px-6 bg-[#060b18] ${
+      className={`gate-overlay fixed inset-0 z-[100] flex-col items-center justify-center overflow-hidden px-6 bg-[#111014] ${
         opening ? "gate-leaving" : ""
       }`}
     >
       {/* background energy */}
       <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-blue-600/10 blur-[120px]" />
+        <div className="absolute left-1/2 top-1/2 h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 animate-pulse rounded-full bg-poke-yellow/10 blur-[120px]" />
         <div className="absolute left-1/3 top-1/4 h-64 w-64 rounded-full bg-poke-yellow/5 blur-[80px]" />
       </div>
 
@@ -102,7 +102,7 @@ export function EntranceGate() {
         {/* CTA */}
         <span className="relative block">
           <span className="absolute -inset-1 animate-pulse rounded-full bg-poke-yellow/30 blur-md transition duration-300 group-hover:bg-poke-yellow/50" />
-          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-[#060b18] shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
+          <span className="relative block rounded-full bg-poke-yellow px-9 py-3.5 text-base font-black uppercase tracking-[0.2em] text-[#111014] shadow-2xl transition-all group-hover:brightness-110 group-active:scale-95 sm:px-14 sm:py-4 sm:text-xl">
             Tap to Enter
           </span>
         </span>
@@ -111,9 +111,9 @@ export function EntranceGate() {
       <button
         type="button"
         onClick={enter}
-        className="absolute bottom-8 z-10 font-mono text-xs uppercase tracking-widest text-blue-400/30 transition-colors hover:text-blue-400/70"
+        className="absolute bottom-8 z-10 font-mono text-xs uppercase tracking-widest text-muted-foreground/60 transition-colors hover:text-poke-yellow"
       >
-        System Ready • Awaiting Collector
+        one jpeg · one coin · forever
       </button>
     </div>
   );

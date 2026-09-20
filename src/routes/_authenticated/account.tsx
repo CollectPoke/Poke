@@ -81,12 +81,12 @@ function AccountPage() {
                   <div className="z-20 size-5 rounded-full border-4 border-poke-navy bg-card" />
                 </div>
               </div>
-              <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-poke-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-poke-navy shadow-sm">
+              <span className="absolute -bottom-1 -right-1 rounded-full border-2 border-card bg-poke-yellow px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider text-poke-yellow-foreground shadow-sm">
                 Collector
               </span>
             </div>
             <div>
-              <h1 className="font-display text-3xl font-extrabold leading-tight text-poke-navy sm:text-4xl">
+              <h1 className="font-display text-3xl font-extrabold leading-tight text-foreground sm:text-4xl">
                 {username ?? "…"}
               </h1>
               <p className="mt-0.5 text-sm font-medium text-muted-foreground">{user?.email}</p>
@@ -112,15 +112,15 @@ function AccountPage() {
             label="NFTs owned"
             value={owned.length}
             className="border-poke-blue/25 bg-poke-blue/10"
-            labelClass="text-poke-navy"
+            labelClass="text-foreground"
             valueClass="text-poke-blue"
           />
           <Stat
             label="Listed for sale"
             value={listed.length}
             className="border-poke-yellow/40 bg-poke-yellow/15"
-            labelClass="text-poke-navy/70"
-            valueClass="text-poke-navy"
+            labelClass="text-muted-foreground"
+            valueClass="text-foreground"
           />
           <Stat
             label="Minted by you"
@@ -137,7 +137,7 @@ function AccountPage() {
 
       {/* Binder */}
       <div className="mt-10 flex items-center gap-4">
-        <h2 className="font-display text-2xl font-bold text-poke-navy">My collection</h2>
+        <h2 className="font-display text-2xl font-bold text-foreground">My collection</h2>
         <div className="flex items-center gap-1.5">
           <span className="h-2 w-8 rounded-full bg-poke-yellow" />
           <span className="h-2 w-2 rounded-full bg-border" />
@@ -158,7 +158,7 @@ function AccountPage() {
         </Tab>
         <Link
           to="/gallery"
-          className="ml-auto rounded-full border-2 border-border bg-card px-3.5 py-1.5 text-xs font-bold text-poke-navy transition-colors hover:bg-secondary"
+          className="ml-auto rounded-full border-2 border-border bg-card px-3.5 py-1.5 text-xs font-bold text-foreground transition-colors hover:bg-secondary"
         >
           Open my gallery →
         </Link>
@@ -178,7 +178,7 @@ function AccountPage() {
                 >
                   <span
                     className={`rounded-full px-2.5 py-1 text-[11px] font-bold ${
-                      sold ? "bg-poke-red/15 text-poke-red" : "bg-poke-green/15 text-poke-navy"
+                      sold ? "bg-poke-red/15 text-poke-red" : "bg-poke-green/15 text-foreground"
                     }`}
                   >
                     {sold ? "Sold" : "Bought"}
@@ -188,7 +188,7 @@ function AccountPage() {
                       <Link
                         to="/card/$cardId"
                         params={{ cardId: ev.card.id }}
-                        className="font-display text-lg font-bold text-poke-navy hover:underline"
+                        className="font-display text-lg font-bold text-foreground hover:underline"
                       >
                         {ev.card.name} <span className="text-muted-foreground">${ev.card.ticker}</span>
                       </Link>
@@ -200,7 +200,7 @@ function AccountPage() {
                       {sold ? `to ${ev.actor?.username ?? "someone"}` : `from ${ev.counterparty?.username ?? "someone"}`}
                     </p>
                   </div>
-                  <span className="mono-num font-display text-lg font-bold text-poke-navy">
+                  <span className="mono-num font-display text-lg font-bold text-foreground">
                     {ev.price !== null ? `${formatPokeCoin(ev.price)} SOL` : "—"}
                   </span>
                   {ev.tx_signature && (
@@ -231,7 +231,7 @@ function AccountPage() {
                 <div className="absolute top-1/2 h-0.5 w-full -translate-y-1/2 bg-poke-navy" />
               </div>
             </div>
-            <p className="font-display text-xl font-bold text-poke-navy">Your collection is empty</p>
+            <p className="font-display text-xl font-bold text-foreground">Your collection is empty</p>
             <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">
               Every great collector starts somewhere. Mint the first NFT of a name, or buy one from the
               market.
@@ -242,7 +242,7 @@ function AccountPage() {
               </Link>
               <Link
                 to="/cards"
-                className="rounded-xl border-2 border-border bg-card px-5 py-2.5 text-sm font-bold text-poke-navy transition-colors hover:bg-secondary"
+                className="rounded-xl border-2 border-border bg-card px-5 py-2.5 text-sm font-bold text-foreground transition-colors hover:bg-secondary"
               >
                 Browse the market
               </Link>
@@ -316,7 +316,7 @@ function Tab({
       className={`rounded-full border-2 px-4 py-1.5 text-xs font-bold transition-colors ${
         active
           ? "border-poke-navy bg-poke-navy text-poke-yellow"
-          : "border-border bg-card text-poke-navy hover:bg-secondary"
+          : "border-border bg-card text-foreground hover:bg-secondary"
       }`}
     >
       {children}
@@ -327,7 +327,7 @@ function Tab({
 function EmptyBox({ title, text }: { title: string; text: string }) {
   return (
     <div className="mt-4 rounded-3xl border-2 border-dashed border-poke-navy/20 bg-card p-12 text-center">
-      <p className="font-display text-xl font-bold text-poke-navy">{title}</p>
+      <p className="font-display text-xl font-bold text-foreground">{title}</p>
       <p className="mx-auto mt-1 max-w-sm text-sm text-muted-foreground">{text}</p>
     </div>
   );

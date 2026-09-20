@@ -93,6 +93,6 @@ function CardsPage() {
 function filterClass(active: boolean) {
   return [
     "rounded-full border px-3.5 py-1.5 text-sm font-semibold transition-colors",
-    active ? "border-poke-navy bg-poke-navy text-white" : "border-border bg-card hover:bg-secondary",
+    active ? "border-poke-yellow bg-poke-yellow text-poke-yellow-foreground" : "border-border bg-card hover:bg-secondary",
   ].join(" ");
 }
