@@ -348,14 +348,20 @@ export async function sendSol(
 
   // poll for confirmation (up to ~30s)
   for (let i = 0; i < 30; i++) {
-    const st = await rpc<{ value: Array<{ confirmationStatus?: string; err?: unknown } | null> }>(
-      "getSignatureStatuses",
-      [[sig], { searchTransactionHistory: true }],
-    );
-    const s = st.value?.[0];
-    if (s) {
-      if (s.err) throw new Error("The transfer failed on Solana");
-      if (s.confirmationStatus === "confirmed" || s.confirmationStatus === "finalized") break;
+    try {
+      const st = await rpc<{ value: Array<{ confirmationStatus?: string; err?: unknown } | null> }>(
+        "getSignatureStatuses",
+        [[sig], { searchTransactionHistory: true }],
+      );
+      const s = st.value?.[0];
+      if (s) {
+        if (s.err) throw new Error("The transfer failed on Solana");
+        if (s.confirmationStatus === "confirmed" || s.confirmationStatus === "finalized") break;
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message === "The transfer failed on Solana") throw error;
+      // Once sendTransaction returned a signature, a temporary RPC read failure
+      // must not make the caller retry and accidentally send the payment twice.
     }
     await new Promise((r) => setTimeout(r, 1000));
   }
