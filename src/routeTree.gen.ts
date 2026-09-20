@@ -13,7 +13,6 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BuyRouteImport } from './routes/buy'
-import { Route as BuybackRouteImport } from './routes/buyback'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
@@ -21,7 +20,6 @@ import { Route as AuthenticatedGalleryRouteImport } from './routes/_authenticate
 import { Route as AuthenticatedMintRouteImport } from './routes/_authenticated/mint'
 import { Route as AuthenticatedSellRouteImport } from './routes/_authenticated/sell'
 import { Route as CardCardIdRouteImport } from './routes/card.$cardId'
-import { Route as ApiPublicBuybackRunRouteImport } from './routes/api/public/buyback-run'
 import { Route as ApiPublicArtworkIdRouteImport } from './routes/api/public/artwork.$id'
 import { Route as ApiPublicCoinMetadataIdRouteImport } from './routes/api/public/coin-metadata.$id'
 
@@ -42,11 +40,6 @@ const AuthRoute = AuthRouteImport.update({
 const BuyRoute = BuyRouteImport.update({
   id: '/buy',
   path: '/buy',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BuybackRoute = BuybackRouteImport.update({
-  id: '/buyback',
-  path: '/buyback',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CardsRoute = CardsRouteImport.update({
@@ -84,11 +77,6 @@ const CardCardIdRoute = CardCardIdRouteImport.update({
   path: '/card/$cardId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicBuybackRunRoute = ApiPublicBuybackRunRouteImport.update({
-  id: '/api/public/buyback-run',
-  path: '/api/public/buyback-run',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicArtworkIdRoute = ApiPublicArtworkIdRouteImport.update({
   id: '/api/public/artwork/$id',
   path: '/api/public/artwork/$id',
@@ -104,7 +92,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/buy': typeof BuyRoute
-  '/buyback': typeof BuybackRoute
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
   '/account': typeof AuthenticatedAccountRoute
@@ -112,7 +99,6 @@ export interface FileRoutesByFullPath {
   '/mint': typeof AuthenticatedMintRoute
   '/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
-  '/api/public/buyback-run': typeof ApiPublicBuybackRunRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
@@ -120,7 +106,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/buy': typeof BuyRoute
-  '/buyback': typeof BuybackRoute
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
   '/account': typeof AuthenticatedAccountRoute
@@ -128,7 +113,6 @@ export interface FileRoutesByTo {
   '/mint': typeof AuthenticatedMintRoute
   '/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
-  '/api/public/buyback-run': typeof ApiPublicBuybackRunRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
@@ -138,7 +122,6 @@ export interface FileRoutesById {
   '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/buy': typeof BuyRoute
-  '/buyback': typeof BuybackRoute
   '/cards': typeof CardsRoute
   '/docs': typeof DocsRoute
   '/_authenticated/account': typeof AuthenticatedAccountRoute
@@ -146,7 +129,6 @@ export interface FileRoutesById {
   '/_authenticated/mint': typeof AuthenticatedMintRoute
   '/_authenticated/sell': typeof AuthenticatedSellRoute
   '/card/$cardId': typeof CardCardIdRoute
-  '/api/public/buyback-run': typeof ApiPublicBuybackRunRoute
   '/api/public/artwork/$id': typeof ApiPublicArtworkIdRoute
   '/api/public/coin-metadata/$id': typeof ApiPublicCoinMetadataIdRoute
 }
@@ -156,7 +138,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/buy'
-    | '/buyback'
     | '/cards'
     | '/docs'
     | '/account'
@@ -164,7 +145,6 @@ export interface FileRouteTypes {
     | '/mint'
     | '/sell'
     | '/card/$cardId'
-    | '/api/public/buyback-run'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -172,7 +152,6 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/buy'
-    | '/buyback'
     | '/cards'
     | '/docs'
     | '/account'
@@ -180,7 +159,6 @@ export interface FileRouteTypes {
     | '/mint'
     | '/sell'
     | '/card/$cardId'
-    | '/api/public/buyback-run'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
   id:
@@ -189,7 +167,6 @@ export interface FileRouteTypes {
     | '/_authenticated'
     | '/auth'
     | '/buy'
-    | '/buyback'
     | '/cards'
     | '/docs'
     | '/_authenticated/account'
@@ -197,7 +174,6 @@ export interface FileRouteTypes {
     | '/_authenticated/mint'
     | '/_authenticated/sell'
     | '/card/$cardId'
-    | '/api/public/buyback-run'
     | '/api/public/artwork/$id'
     | '/api/public/coin-metadata/$id'
   fileRoutesById: FileRoutesById
@@ -207,11 +183,9 @@ export interface RootRouteChildren {
   AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   BuyRoute: typeof BuyRoute
-  BuybackRoute: typeof BuybackRoute
   CardsRoute: typeof CardsRoute
   DocsRoute: typeof DocsRoute
   CardCardIdRoute: typeof CardCardIdRoute
-  ApiPublicBuybackRunRoute: typeof ApiPublicBuybackRunRoute
   ApiPublicArtworkIdRoute: typeof ApiPublicArtworkIdRoute
   ApiPublicCoinMetadataIdRoute: typeof ApiPublicCoinMetadataIdRoute
 }
@@ -244,13 +218,6 @@ declare module '@tanstack/react-router' {
       path: '/buy'
       fullPath: '/buy'
       preLoaderRoute: typeof BuyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/buyback': {
-      id: '/buyback'
-      path: '/buyback'
-      fullPath: '/buyback'
-      preLoaderRoute: typeof BuybackRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/cards': {
@@ -302,13 +269,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CardCardIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/buyback-run': {
-      id: '/api/public/buyback-run'
-      path: '/api/public/buyback-run'
-      fullPath: '/api/public/buyback-run'
-      preLoaderRoute: typeof ApiPublicBuybackRunRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public/artwork/$id': {
       id: '/api/public/artwork/$id'
       path: '/api/public/artwork/$id'
@@ -348,11 +308,9 @@ const rootRouteChildren: RootRouteChildren = {
   AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   BuyRoute: BuyRoute,
-  BuybackRoute: BuybackRoute,
   CardsRoute: CardsRoute,
   DocsRoute: DocsRoute,
   CardCardIdRoute: CardCardIdRoute,
-  ApiPublicBuybackRunRoute: ApiPublicBuybackRunRoute,
   ApiPublicArtworkIdRoute: ApiPublicArtworkIdRoute,
   ApiPublicCoinMetadataIdRoute: ApiPublicCoinMetadataIdRoute,
 }
