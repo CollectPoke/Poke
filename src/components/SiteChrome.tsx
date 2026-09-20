@@ -1,3 +1,4 @@
+import pigAsset from "@/assets/pig.webp.asset.json";
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
@@ -101,11 +102,11 @@ export function SiteHeader() {
           </div>
         </div>
       </div>
-      <div className="border-b-4 border-poke-yellow bg-poke-navy shadow-md">
+      <div className="border-b border-border bg-poke-navy/95 backdrop-blur">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-2.5 sm:px-5 sm:py-3">
           <Link to="/" className="flex min-w-0 items-center gap-2.5">
-            <img src="/favicon.png" alt="" className="h-8 w-8 shrink-0 drop-shadow sm:h-9 sm:w-9" />
-            <span className="font-display text-xl font-bold leading-none text-poke-yellow drop-shadow-[0_2px_0_oklch(0.19_0.04_260)] sm:text-2xl">
+            <img src={pigAsset.url} alt="" className="h-8 w-8 shrink-0 drop-shadow sm:h-9 sm:w-9" />
+            <span className="font-display text-xl font-bold leading-none text-poke-yellow tracking-tight sm:text-2xl">
               Poke
             </span>
           </Link>
@@ -132,8 +133,8 @@ export function SiteHeader() {
                   activeProps={{ className: "border-poke-yellow/60 bg-white/10" }}
                   className="group relative flex max-w-[180px] items-center gap-2.5 overflow-hidden rounded-full border border-white/10 bg-white/5 py-1 pl-1 pr-3.5 transition-all duration-300 hover:border-poke-yellow/60 hover:bg-white/10"
                 >
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-amber-500 shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)] transition-shadow group-hover:shadow-[0_0_16px_oklch(0.85_0.16_95/0.55)]">
-                    <img src="/favicon.png" alt="" className="h-5 w-5 drop-shadow" />
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-poke-purple shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)] transition-shadow group-hover:shadow-[0_0_16px_oklch(0.85_0.16_95/0.55)]">
+                    <img src={pigAsset.url} alt="" className="h-5 w-5 drop-shadow" />
                   </span>
                   <span className="flex min-w-0 flex-col leading-none">
                     <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
@@ -216,8 +217,8 @@ export function SiteHeader() {
                     className="group mx-1 flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 px-3 py-2.5 transition-colors hover:border-poke-yellow/50 hover:bg-white/10"
                     activeProps={{ className: "border-poke-yellow/60 bg-white/10" }}
                   >
-                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-amber-500 shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)]">
-                      <img src="/favicon.png" alt="" className="h-6 w-6 drop-shadow" />
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-gradient-to-br from-poke-yellow to-poke-purple shadow-[0_0_10px_oklch(0.85_0.16_95/0.35)]">
+                      <img src={pigAsset.url} alt="" className="h-6 w-6 drop-shadow" />
                     </span>
                     <span className="flex min-w-0 flex-col leading-none">
                       <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-poke-yellow/80">
@@ -275,11 +276,11 @@ export function SiteFooter() {
   const [caCopied, setCaCopied] = useState(false);
 
   return (
-    <footer className="mt-16 border-t-4 border-poke-yellow bg-poke-navy text-white/70">
+    <footer className="mt-16 border-t border-border bg-poke-navy text-muted-foreground">
       <div className="mx-auto grid max-w-6xl gap-8 px-5 py-12 text-sm sm:grid-cols-2 lg:grid-cols-4">
         <div className="space-y-3">
           <div className="flex items-center gap-2.5">
-            <img src="/favicon.png" alt="" className="h-8 w-8" />
+            <img src={pigAsset.url} alt="" className="h-8 w-8" />
             <span className="font-display text-xl font-bold text-poke-yellow">Poke</span>
           </div>
           <p className="text-xs leading-relaxed">
