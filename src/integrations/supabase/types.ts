@@ -304,51 +304,6 @@ export type Database = {
         }
         Relationships: []
       }
-      pairings: {
-        Row: {
-          card_type: string | null
-          coin_description: string | null
-          coin_name: string
-          coin_symbol: string
-          created_at: string
-          created_by: string | null
-          explanation: string
-          id: string
-          pokedex_id: number | null
-          pokemon_name: string
-          pokemon_types: string[]
-          rarity: string
-        }
-        Insert: {
-          card_type?: string | null
-          coin_description?: string | null
-          coin_name: string
-          coin_symbol: string
-          created_at?: string
-          created_by?: string | null
-          explanation: string
-          id?: string
-          pokedex_id?: number | null
-          pokemon_name: string
-          pokemon_types?: string[]
-          rarity?: string
-        }
-        Update: {
-          card_type?: string | null
-          coin_description?: string | null
-          coin_name?: string
-          coin_symbol?: string
-          created_at?: string
-          created_by?: string | null
-          explanation?: string
-          id?: string
-          pokedex_id?: number | null
-          pokemon_name?: string
-          pokemon_types?: string[]
-          rarity?: string
-        }
-        Relationships: []
-      }
       profiles: {
         Row: {
           created_at: string
