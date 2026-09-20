@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import pigAsset from "@/assets/pig.webp.asset.json";
 
@@ -10,6 +10,7 @@ const KEY = "jpeg-entered";
 export function EntranceGate() {
   const [show, setShow] = useState(true);
   const [opening, setOpening] = useState(false);
+  const closeTimer = useRef<number | null>(null);
 
   useEffect(() => {
     let already = false;
@@ -37,6 +38,13 @@ export function EntranceGate() {
     };
   }, [show]);
 
+  useEffect(
+    () => () => {
+      if (closeTimer.current !== null) window.clearTimeout(closeTimer.current);
+    },
+    [],
+  );
+
   function enter() {
     if (opening) return;
     setOpening(true);
@@ -46,7 +54,7 @@ export function EntranceGate() {
       /* ignore */
     }
     window.dispatchEvent(new Event("jpeg:enter"));
-    window.setTimeout(() => setShow(false), 1250);
+    closeTimer.current = window.setTimeout(() => setShow(false), 1250);
   }
 
   return (
