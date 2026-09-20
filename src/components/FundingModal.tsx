@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { useServerFn } from "@tanstack/react-start";
-import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
@@ -98,16 +97,6 @@ export function FundingModal({
             </p>
 
             <div className="mt-5 flex flex-col items-center gap-4">
-              <div className="border border-border bg-background p-3">
-                {data?.address ? (
-                  <QRCode value={data.address} size={168} />
-                ) : (
-                  <div className="flex size-[168px] items-center justify-center text-xs text-muted-foreground">
-                    Loading address…
-                  </div>
-                )}
-              </div>
-
               <Button
                 type="button"
                 variant="outline"
